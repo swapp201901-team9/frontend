@@ -13,6 +13,12 @@ uniforms for organizations/communities/schools/clubs etc.
 This web service also provides 
 individual/group identification and group voting systems.
 
+## Abstract
+
+Please reference our github wiki page for more information about the project.
+(https://github.com/swapp201901-team9/full-stack-web-development/wiki)
+
+
 ## Getting Started
 
 will soon be updated
