@@ -5,8 +5,10 @@ class index(TemplateView):
     template_name = 'main/index.html'
 
     def get_context_data(self, **kwargs):
+        self.request.session.flush()
         context = super().get_context_data(**kwargs)
-        context['session'] = {'username':'admin'}
+        context['session'] = self.request.session
+        return context
 
 class login(TemplateView):
     template_name = 'main/index.html'

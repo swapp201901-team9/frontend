@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
 {% block member_info %}
-{% if session %}
+{% if session.is_loggedin %}
     welcome {{ session.username }}!</br>
+    <a href="/member/mypage/">mypage</a> first</br>
 {% else %}
-    login first</br>
+    <a href="/member/login/">login</a> first</br>
+    not a member? <a href="/member/join/">join</a>!</br>
 {% endif %}
 {% endblock %}
