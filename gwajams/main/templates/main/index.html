@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
-{% block member_info %}
-{% if session.is_loggedin %}
-    welcome {{ session.username }}!</br>
-    <a href="/member/mypage/">mypage</a> first</br>
-{% else %}
-    <a href="/member/login/">login</a> first</br>
-    not a member? <a href="/member/join/">join</a>!</br>
-{% endif %}
+{% block content %}
+<h2>Design Template</h2>
+<form action='/' method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if is_loggedin %}
+    <input type="submit" value="upload" />
+    {% endif %}
+</form>
 {% endblock %}

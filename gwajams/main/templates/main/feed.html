@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Design Feed</h2>
+<ul>
+{% for design in object_list %}
+    <li><a href='#'>{{ design }}</a></li>    
+{% endfor %}
+</ul>
+{% endblock %}

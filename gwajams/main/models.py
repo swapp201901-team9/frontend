@@ -1,6 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+BLACK = 'BK'
+BEIGE = 'BG'
+BLUE = 'BL'
+IVORY = 'IV'
+PINK = 'PK'
+RED = 'RD'
+WHITE = 'WT'
+COLOR_CHOICES = (
+    (BLACK, 'Black'),
+    (BEIGE, 'Beige'),
+    (BLUE, 'Blue'),
+    (IVORY, 'Ivory'),
+    (PINK, 'Pink'),
+    (RED, 'Red'),
+    (WHITE, 'White'),
+)
+
 class Group(models.Model):
     group_type = models.CharField(max_length=50)
     group_name = models.CharField(max_length=50)
@@ -8,7 +25,7 @@ class Group(models.Model):
     def __str__(self):
         return self.group_name
 
-class User(models.Model):
+class GwajamUser(models.Model):
     username = models.OneToOneField(User, on_delete=models.CASCADE)
     groups = models.ManyToManyField('Group')
 
@@ -16,24 +33,7 @@ class User(models.Model):
         return str(self.username)
 
 class Design(models.Model):
-    BLACK = 'BK'
-    BEIGE = 'BG'
-    BLUE = 'BL'
-    IVORY = 'IV'
-    PINK = 'PK'
-    RED = 'RD'
-    WHITE = 'WT'
-    COLOR_CHOICES = (
-        (BLACK, 'Black'),
-        (BEIGE, 'Beige'),
-        (BLUE, 'Blue'),
-        (IVORY, 'Ivory'),
-        (PINK, 'Pink'),
-        (RED, 'Red'),
-        (WHITE, 'White'),
-    )
-    
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(GwajamUser, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     likes = models.IntegerField(default=0)
     detail_body = models.CharField(
