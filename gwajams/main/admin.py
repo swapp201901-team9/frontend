@@ -1,3 +1,6 @@
 from django.contrib import admin
+from main.models import Design, User, Group
 
-# Register your models here.
+admin.site.register(Group)
+admin.site.register(User)
+admin.site.register(Design)
