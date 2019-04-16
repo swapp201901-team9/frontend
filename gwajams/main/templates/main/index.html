@@ -1,1 +1,9 @@
-hello world!
+{% extends "base.html" %}
+
+{% block member_info %}
+{% if session %}
+    welcome {{ session.username }}!</br>
+{% else %}
+    login first</br>
+{% endif %}
+{% endblock %}
