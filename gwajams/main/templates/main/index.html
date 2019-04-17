@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Design Template</h2>
+<form action='/' method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if is_loggedin %}
+    <input type="submit" value="upload" />
+    {% endif %}
+</form>
+{% endblock %}
