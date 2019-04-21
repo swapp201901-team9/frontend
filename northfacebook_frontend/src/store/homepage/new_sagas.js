@@ -161,7 +161,7 @@ function *watchLoginState() {
                 const id = path.split("/")[2];//그냥..
                 let profile_data = null;
                 
-                let sasangs = null;
+                
                 if (username === undefined || username === '') {
                     console.log("404 not found");
                     alert("없는 장소");
@@ -185,14 +185,6 @@ function *watchLoginState() {
                             Accept: 'application/json'
                             },
                             responseType: 'json'
-                         });
-                         sasangs = yield call(xhr.get, fixed_url+'users/'+username+'/sasang/',{
-                            headers:{
-                                'Content-Type':'application/json',
-                                'Authorization':'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
-                            },
-                            responseType:'json'
                          });
                          console.log('Get data without exception');
                     }catch(error){
