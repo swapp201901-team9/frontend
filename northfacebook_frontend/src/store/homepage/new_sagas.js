@@ -134,14 +134,7 @@ function *watchLoginState() {
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 localStorage.removeItem('parent');
                 try {
-                    data = yield call(xhr.get, fixed_url+'mainpage/', {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Basic '+ localStorage['auth'],
-                            Accept: 'application/json'
-                        },
-                        responseType: 'json'
-                    })
+                   
                     console.log('Get data without exception');
                 }
                 catch(error) {
