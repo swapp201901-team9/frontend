@@ -149,15 +149,9 @@ function *watchLoginState() {
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-                    articles: data.body,
-                    parent_article: null,
-                    nowchat_rooms: [],
-                    nonchat_rooms: [],
-                    texts: [],
-                    chatting_users: [],
-                    room_id: 0,
+                    
                     loading: true,
-                    sasangs:[],
+                    
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
@@ -206,17 +200,11 @@ function *watchLoginState() {
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        parent_article: null,
-                        articles: [],
-                        nowchat_rooms: [],
-                        nonchat_rooms: [],
-                        texts: [],
-                        chatting_users: [],
-                        room_id: 0,
+                        
                         profile_user: profile_data.body,
                         loading: true,
                         load: 0,
-                        sasangs:sasangs.body
+                        
                     }));
                 }
                 else {
@@ -255,13 +243,7 @@ function *watchLoginState() {
                     //TODO 이후 state에 새로운 element를 추가할 경우 이 부분에 try-catch를 추가하면 됩니다
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        articles: data.body,
-                        parent_article: parent_data !== null ? parent_data.body : null,
-                        nowchat_rooms: [],
-                        nonchat_rooms: [],
-                        texts: [],
-                        chatting_users: [],
-                        room_id: 0,
+                        
                         profile_user: profile_data !== null ? profile_data.body : null,
                         loading: true,
                         load: 0,
@@ -416,20 +398,8 @@ function *updatePW(profuser, newpw){
         localStorage.removeItem('auth');
         yield put(actions.changeUrl('/main/'));
     }catch(error){
-        if(error.statusCode === 405){
-            console.log("You're not this user");
-        }else if(error.statusCode === 400){
-            console.log("Bad password");
-            return;
-        }else if(error.statusCode === 0){
-            console.log("Backend is not accessible");
-            alert("잠시 나라에 문제가..");
-            return;
-        }else{
-            console.log("Unknown Error occured :"+error.statusCode);
-            alert("1조에게 편지~");
-            return;
-        }
+        alert("updatePW error");
+        return;
     }
 }
 // profile을 수정한걸 post요청보내는 함수
@@ -461,15 +431,10 @@ function *updateIntro(profuser, myname, mybelong, myintro, removeImg, changeImg,
 
         yield put(actions.changeUrl('/profile/'+profuser+'/'))
     } catch(error){
-        console.log(error);
-        if(error.statusCode === 400){
-            console.log("Wrong json input format");
-        }else if(error.statusCode === 403 ){
-            console.log("You cannot change other's profile");
-        }else{
-            console.log("Unknown error occurs");
+       
+            console.log("change profile error");
             return ;
-        }
+       
     }
 }
 function *escapeBook(profuser){
@@ -487,21 +452,10 @@ function *escapeBook(profuser){
         localStorage.removeItem('auth');
         yield put(actions.changeUrl('/main/'));
     }catch(error){
-         console.log("error: "+error.statusCode);
-         if(error.statusCode === 204){
-             console.log("delete account succeed!");
-             localStorage.removeItem('parent');
-             yield put(actions.changeUrl('/main/'));
-        }else if(error.statusCode === 403){
-             alert("당신의 려권이 아니오");
-        }else if(error.statusCode === 0){
-            alert("나라에 문제가...");
-        }else{
-             console.log("delete account succeed!");
-             localStorage.removeItem('parent');
-             yield put(actions.changeUrl('/main/'));
-           return ;
-        }
+       
+        alert("delete account error");
+        return ;
+        
     }
 }
 
