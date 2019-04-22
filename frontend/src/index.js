@@ -1,31 +1,26 @@
-import 'react-hot-loader/patch'
-import 'babel-polyfill'
-import React from 'react'
-import { render } from 'react-dom'
-import { Provider } from 'react-redux'
-import { createHistory } from 'history'
-import { Router, useRouterHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
-import configureStore from 'store/configure'
+import React from 'react';
+import { render } from 'react-dom';
+import { createStore, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 
-import routes from 'routes'
+import homepageApp from './reducers'
+import App from './components/App';
+import saga from './store/homepage/new_sagas.js'
+import './css/main_styles.css';
 
-const baseHistory = useRouterHistory(createHistory)({ basename: process.env.PUBLIC_PATH })
-const store = configureStore({}, baseHistory)
-const history = syncHistoryWithStore(baseHistory, store)
-const root = document.getElementById('app')
+const sagaMiddleware = createSagaMiddleware();
 
-const renderApp = () => (
-  <Provider store={store}>
-    <Router key={Math.random()} history={history} routes={routes} />
-  </Provider>
+const reducer = homepageApp;
+const store = createStore(
+    reducer,
+    applyMiddleware(sagaMiddleware)
 )
 
-render(renderApp(), root)
+sagaMiddleware.run(saga)
 
-if (module.hot) {
-  module.hot.accept('routes', () => {
-    require('routes')
-    render(renderApp(), root)
-  })
-}
+render(
+    <div id="mypage">
+    <App store={store} />
+    </div>,
+    document.getElementById('root')
+);
