@@ -11,8 +11,7 @@ class SignIn extends React.Component {
         };
         return (
          <div>
-           <div className="Login-Box"></div>
-           <div>
+          
             <form onSubmit={e => {
                 e.preventDefault()
                 onSubmit()
@@ -26,7 +25,7 @@ class SignIn extends React.Component {
                     <button type="submit" id='sign_in' className='sign_in'>들어가기</button>
                 </div>
             </form>
-           </div>
+
           </div>
         )
     }
