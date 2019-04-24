@@ -104,26 +104,7 @@ section > div{
 
 
 
-.Notif{
-  position: fixed;
-  left: 8em;
-  right: 3em;
-  top: 1em;
-}
-.TOMAIN{
-  cursor: pointer;
-  border: none;
-  float: left;
-  width: 200px;
-  height: 80px;
-  position: fixed;
-  top: 8px;
-  font-size: 25px;
-  background: url('login_logo.png');
-  background-repeat: no-repeat;
-  background-size: 8em 5em;
-  background-color: rgb(237,30,39);
-}
+
 .Notif_button{
   float: right;
   width: 6em;
@@ -169,7 +150,7 @@ button{
 
 button#post_button_field{
   margin-left: 70px;
-  font-family: 궁서;
+
 }
 
 .TimeLine{
@@ -199,11 +180,9 @@ button#post_button_field{
 
 /* Login Page css */
 .app{
-  background-image: url('login_logo.png');
   background-repeat: no-repeat;
   background-size: contain;
   margin: auto;
-  width: 50%;
   padding: auto;
 }
 .Login-Box{
@@ -293,15 +272,7 @@ input{
    font-size: 18px;
   font-family: 궁서;
 }
-/* body{
-  background-attachment: fixed;
-  background-image: url("background.jpg");
-  background-repeat: no-repeat;
-  -webkit-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  font-family: 궁서;
-} */
+
 img{
   width: 700px;
 }

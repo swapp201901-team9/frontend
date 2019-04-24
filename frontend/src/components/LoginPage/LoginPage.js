@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
-class Root extends Component {
+class LoginPage extends Component {
     render() {
         return (
            <body>
-            <div className="app">
+            <div>
                 <SignIn />
                 <SignUp />
             </div>
@@ -15,4 +15,4 @@ class Root extends Component {
   }
 }
 
-export default Root;
+export default LoginPage;
