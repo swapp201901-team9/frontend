@@ -8,8 +8,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from homepage.serializers import *
-from homepage.permissions import IsAuthenticatedOrPOSTOnly
+from .forms import DesignForm
+from .serializers import *
+from .permissions import IsAuthenticatedOrPOSTOnly, IsAuthenticatedOrGETOnly
 
 from base64 import b64decode as decode
 import re
@@ -123,3 +124,42 @@ def profile(request, username):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     return Response(status=status.HTTP_403_FORBIDDEN)
 
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
+@permission_classes((IsAuthenticatedOrGETOnly,))
+def main(request):
+    try:
+        design = Design.objects.get(id=1)
+    except Design.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    try:
+        groups = Group.objects.all()
+    except Group.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.user.id == None:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    if request.method == 'GET':
+        user_serializer = UserDesignSerializer(design)
+        group_serializer = GroupSerializer(groups, many=True)
+        context = {
+            'form': DesignForm(),
+            'design': user_serializer.data,
+            'groups': group_serializer.data
+        }
+        return render(request, 'main/index.html', context)
+    # elif request.method == 'PUT':
+    #     if user!=request.user:
+    #         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    #     serializer = UserSerializer(user,data=request.data)
+    #     if serializer.is_valid():
+    #         # if password is bad, return 400
+    #         pwd=request.data['password']
+    #         if(pwd==''):
+    #             return Response(status=status.HTTP_400_BAD_REQUEST)
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(status=status.HTTP_400_BAD_REQUEST)
+    # elif request.method == 'DELETE':
+    #     if user == request.user:
+    #         user.delete()
+    #         return Response(status=status.HTTP_204_NO_CONTENT)
+    #     return Response(status=status.HTTP_403_FORBIDDEN)

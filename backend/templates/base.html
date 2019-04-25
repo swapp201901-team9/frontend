@@ -1,0 +1,16 @@
+<h1>GWAGAMS</h1>
+
+{% block member_info %}
+{% if is_loggedin %}
+    welcome <a href="/member/mypage/">{{ username }}!</a></br>
+    <a href="/member/logout/">logout</a>
+{% else %}
+    <a href="/member/login/">login</a> first</br>
+    not a member? <a href="/member/join/">join</a>!</br>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+{% block navigator %}
+{% endblock %}

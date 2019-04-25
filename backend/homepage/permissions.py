@@ -6,3 +6,8 @@ class IsAuthenticatedOrPOSTOnly(permissions.BasePermission):
             return request.user.is_authenticated
         return request.method == 'POST'
 
+class IsAuthenticatedOrGETOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'GET':
+            return True
+        return request.user.is_authenticated
