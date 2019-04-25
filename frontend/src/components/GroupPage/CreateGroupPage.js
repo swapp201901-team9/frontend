@@ -2,10 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 class CreateGroupPage extends React.Component {
-	constructor(props) {
-		super(props)
-	}
-
 	render() {
 		return(
 			<div className="CreateGroup">
@@ -34,7 +30,15 @@ class CreateGroupPage extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	
+const mapStateToProps = (state) => ({
+	groupname: state.groupname,
+	grouptype: state.grouptype,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+
+})
+
+export default connect( mapStateToProps, mapDispatchToProps )(CreateGroupPage)
 
 
