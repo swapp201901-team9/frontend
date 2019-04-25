@@ -7,7 +7,7 @@ import TimeLinePage from './TimeLinePage/TimeLinePage.js';
 
 import ProfilePage from './ProfilePage/ProfilePage.js';
 import GroupListContainer from './GroupPage/GroupList.js';
-import CreateGroupPage from './GroupPage/CrateGroupPage.js';
+import CreateGroupPage from './GroupPage/CreateGroupPage.js';
 
 import PropTypes from 'prop-types';
 
