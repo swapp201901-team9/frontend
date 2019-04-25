@@ -91,3 +91,11 @@ export const toEscape = (profile_user) => {
         profuser: profile_user,
     }
 }
+
+//Group
+export const toGroupDetail = (groupid) => {
+	return {
+		type: 'TO_GROUP_DETAIL',
+		groupid: groupid
+	}
+}
