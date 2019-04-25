@@ -37,7 +37,15 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('user','myname','mybelong','myintro', 'myimage', 'domain')
 
-class DesignSerializer(serializers.ModelSerializer):
+class GroupSerializer(serializers.ModelSerializer):
+    domain = serializers.SerializerMethodField()
+    def get_domain(self, obj):
+        return 'groupdetail/'+str(obj.id)+'/'
+    class Meta:
+        model = Group
+        fields = ('group_type','group_name','domain')
+
+class UserDesignSerializer(serializers.ModelSerializer):
     '''
     def create(self, validated_data):
         profile_data = validated_data.pop('profile', None)
