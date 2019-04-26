@@ -11,17 +11,25 @@ class SignIn extends React.Component {
         };
         return (
          <div>
-          
+
             <form onSubmit={e => {
                 e.preventDefault()
                 onSubmit()
                 }}
                 >
                 <div className="Text-Field">
-                    이름
+                    <label>
+                    USERNAME
                     <input type="text" ref={ node => {this.username = node;} } id='username_field' className='field'></input>
-                    암호
+
+                    </label>
+                </div>
+                <div className="Text-Field">
+                    <label>
+                    PASSWORD
                     <input type="password" ref={ node => {this.password = node;} } id='password_field' className='field'></input>
+
+                    </label>
                     <button type="submit" id='sign_in' className='sign_in'>들어가기</button>
                 </div>
             </form>

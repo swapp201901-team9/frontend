@@ -177,21 +177,31 @@ button{
 .Tags{
   text-align: justify;
 }
-.label{
-  background-color: rgba(237,156,156,0.5);
-}
+
 
 /* Login Page css */
 
 
 .Text-Field{
-  font-size: 12px;
+  width: 74%;
+  font-size: 8px;
   color: black;
-  font-style: bold;
   margin: 0px 60px;
-  filter: alpha(opacity=70);
+  padding: 20px 0px 0px 0px;
 }
+
+.label{
+  display:inline-block;
+  width: 100%;
+  margin: 20px 0px;
+  padding: 20px;
+  background-color: rgba(237,156,156,0.5);
+  font-size: 8px;
+}
+
 .Button-Field{
+  display:inline-block;
+  width: 100%;
   font-size: 12px;
   color: black;
 }
@@ -205,12 +215,14 @@ button{
   font-size: 30px;
   background-color:rgb(237,30,39);
 }
+
 .box{
     position: static;
     text-align: center;
     font-size: 2em;
     font-weight: bold;
 }
+
 #to_main{
     border: none;
     width: 120px;
@@ -235,16 +247,19 @@ textarea{
   font-size: 20px;
   font-family: 궁서;
 }
+
 hr{
   color: rgb(237,30,39);
   font-family: 궁서;
 }
 
 input{
-  width: 340px;
+  display:block;
+  width: 94%;
   height: 34px;
   border-radius: 21px;
   border: solid 2px #e0e0e0;
+  padding: 0px 15px;
   font-size: 20px;
 
 }
