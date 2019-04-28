@@ -1,6 +1,7 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import {BrowserRouter, Route} from 'react-router-dom';
+import MainPage from './MainPage/MainPage.js';
 import LoginPage from './LoginPage/LoginPage.js';
 import SignUpPage from './SignUpPage/SignUpPage.js';
 import TimeLinePage from './TimeLinePage/TimeLinePage.js';
@@ -19,9 +20,13 @@ const App = ({store}) => {
         <Provider store={store}>
             <BrowserRouter>
                 <div>
-                    <Route exact path="/" component={LoginPage} />
+                    <Route exact path="/" component={MainPage} />
+                    <Route exact path="/log_in" component={LoginPage} />
                     <Route exact path="/sign_up" component={SignUpPage} />
                     <Route exact path="/main" component={TimeLinePage} />
+                    <Route path="/profile/:id" component={ProfilePage} />
+                  
+
 				    <Route exact path="/grouplist" component={GroupListContainer} />               
                     <Route exact path="/create_group" compoent={CreateGroupPage} />
 
