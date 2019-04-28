@@ -217,21 +217,9 @@ input{
 
 
 /* SignUp Page css */
-.SIGNUP{
-  width: 10em;
-  height: 1.5em;
-  font-weight: bold;
-  color: white;
-  font-size: 30px;
-  background-color:rgb(237,30,39);
-}
 
-.box{
-    position: static;
-    text-align: center;
-    font-size: 2em;
-    font-weight: bold;
-}
+
+
 
 #to_main{
     border: none;

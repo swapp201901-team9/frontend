@@ -31,7 +31,6 @@ class SignIn extends React.Component {
                       <input type="password" ref={ node => {this.password = node;} } id='password_field' className='field'></input>
                       </div>
                       <div className="Button-Field">
-                        <br/>
                         <button type="submit" id='sign_in' className = "button" >LOGIN</button>
                       </div>
             </form>
