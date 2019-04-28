@@ -11,29 +11,30 @@ class SignIn extends React.Component {
         };
         return (
          <div>
-            <img src = 
-            <form onSubmit={e => {
-                e.preventDefault()
-                onSubmit()
-                }}
-                >
-                <div className="Text-Field">
-                    <label>
-                    USERNAME
-                    <input type="text" ref={ node => {this.username = node;} } id='username_field' className='field'></input>
+         <form onSubmit={e => {
+             e.preventDefault()
+             onSubmit()
+           }}
+           >
+              <div className="module_title"> LOGIN </div>
 
-                    </label>
-                </div>
-                <div className="Text-Field">
-                    <label>
-                    PASSWORD
-                    <input type="password" ref={ node => {this.password = node;} } id='password_field' className='field'></input>
-
-                    </label>
-                    <button type="submit" id='sign_in' className='sign_in'>들어가기</button>
-                </div>
+                    <div className="Text-Field">
+                      <label>
+                      USERNAME
+                      </label>
+                      <input type="text" ref={ node => {this.username = node;} } id='username_field' className='field'></input>
+                    </div>
+                    <div className="Text-Field">
+                      <label>
+                      PASSWORD
+                      </label>
+                      <input type="password" ref={ node => {this.password = node;} } id='password_field' className='field'></input>
+                      </div>
+                      <div className="Button-Field">
+                        <br/>
+                        <button type="submit" id='sign_in' className = "button" >LOGIN</button>
+                      </div>
             </form>
-
           </div>
         )
     }
