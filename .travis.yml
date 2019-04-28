@@ -1,1 +1,16 @@
-language: node_js
+matrix:
+  include:
+    -language: python
+    python: 3.5.1
+
+    -language: node_js
+    script: 
+      - cd frontend
+      - npm install
+      - npm test -- --coverage
+      - cd ..
+
+
+  #image: node:6.9.4
+    
+   
