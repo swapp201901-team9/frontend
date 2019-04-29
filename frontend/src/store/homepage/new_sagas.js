@@ -27,6 +27,9 @@ export default function *saga() {
     const path = window.location.pathname;
     switch(window.location.pathname) {
         case '/':
+            yield spawn(mainPageSaga);
+            break;
+        case '/log_in/':
             yield spawn(loginPageSaga);
             break;
         case '/main/':
@@ -38,21 +41,21 @@ export default function *saga() {
         default:
             const url = path.split("/");
             switch(url[1]) {
-                
+
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
 
-                default:
-                    console.log("default state");
-                    alert("없는 장소");
-                    if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
-                        yield put(actions.changeUrl('/'));
-                    } else {
-                        localStorage.removeItem('parent');
-                        yield put(actions.changeUrl('/main/'));
-                    }
+                //default:
+                    // console.log("default state");
+                    // alert("없는 장소");
+                    // if(localStorage.getItem("auth") === null) {
+                    //     localStorage.removeItem('parent');
+                    //     yield put(actions.changeUrl('/'));
+                    // } else {
+                    //     localStorage.removeItem('parent');
+                    //     yield put(actions.changeUrl('/main/'));
+                    // }
             }
     }
 }
@@ -86,12 +89,12 @@ function *signUpPageSaga() {
 function *mainPageSaga() {
     console.log("Main Page");
     yield spawn(watchLoginState);
-    
+
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
-    
+
     yield spawn(watchToProfile);
-    
+
 }
 
 
@@ -103,7 +106,7 @@ function *profilePageSaga() {
     yield spawn(watchPWChange);
     yield spawn(watchIntroChange);
     yield spawn(watchEscape);
-   
+
 }
 
 
@@ -134,7 +137,7 @@ function *watchLoginState() {
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 localStorage.removeItem('parent');
                 try {
-                   
+
                     console.log('Get data without exception');
                 }
                 catch(error) {
@@ -142,9 +145,9 @@ function *watchLoginState() {
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-                    
+
                     loading: true,
-                    
+
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
@@ -153,8 +156,8 @@ function *watchLoginState() {
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];//그냥..
                 let profile_data = null;
-                
-                
+
+
                 if (username === undefined || username === '') {
                     console.log("404 not found");
                     alert("없는 장소");
@@ -185,11 +188,11 @@ function *watchLoginState() {
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        
+
                         profile_user: profile_data.body,
                         loading: true,
                         load: 0,
-                        
+
                     }));
                 }
                 else {
@@ -228,7 +231,7 @@ function *watchLoginState() {
                     //TODO 이후 state에 새로운 element를 추가할 경우 이 부분에 try-catch를 추가하면 됩니다
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        
+
                         profile_user: profile_data !== null ? profile_data.body : null,
                         loading: true,
                         load: 0,
@@ -416,10 +419,10 @@ function *updateIntro(profuser, myname, mybelong, myintro, removeImg, changeImg,
 
         yield put(actions.changeUrl('/profile/'+profuser+'/'))
     } catch(error){
-       
+
             console.log("change profile error");
             return ;
-       
+
     }
 }
 function *escapeBook(profuser){
@@ -437,11 +440,9 @@ function *escapeBook(profuser){
         localStorage.removeItem('auth');
         yield put(actions.changeUrl('/main/'));
     }catch(error){
-       
+
         alert("delete account error");
         return ;
-        
+
     }
 }
-
-

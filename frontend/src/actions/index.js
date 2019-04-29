@@ -1,3 +1,9 @@
+export const showNavBar = () => {
+  return{
+    type: 'NAV_BAR',
+  }
+}
+
 // When the user inputs username, password and clicks the 'Sign In' button, this action is invoked and Saga requests GET to 'auth' in backend page.
 export const signIn = (username, password) => {
     return {
@@ -59,6 +65,7 @@ export const gotoSignUpPage = () => {
 }
 
 
+
 export const toProfile = (profile_user) =>{
     return {
         type: 'TO_PROFILE',
@@ -90,4 +97,12 @@ export const toEscape = (profile_user) => {
         type: 'TO_ESCAPE',
         profuser: profile_user,
     }
+}
+
+//Group
+export const toGroupDetail = (groupid) => {
+	return {
+		type: 'TO_GROUP_DETAIL',
+		groupid: groupid
+	}
 }
