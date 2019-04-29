@@ -63,6 +63,6 @@ const mapDispatchToProps = (dispatch) => ({
 	onCreateGroup: (grouptype, groupname) => dispatch(createGroup(grouptype, groupname))
 })
 
-export default connect( null, mapDispatchToProps )(CreateGroup)
+export default connect(null, mapDispatchToProps)(CreateGroup)
 
 
