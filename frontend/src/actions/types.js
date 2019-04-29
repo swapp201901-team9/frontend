@@ -1,5 +1,5 @@
 /* GroupPage action types */
-const CREATE_GROUP = 'CREATE_GROUP'
-const SEARCH_GROUP = 'SEARCH_GROUP'
-const JOIN_GROUP = 'JOIN_GROUP'
-const TO_GROUP_DETAIL = 'TO_GROUP_DETAIL'
+export const CREATE_GROUP = 'CREATE_GROUP'
+export const SEARCH_GROUP = 'SEARCH_GROUP'
+export const JOIN_GROUP = 'JOIN_GROUP'
+export const TO_GROUP_DETAIL = 'TO_GROUP_DETAIL'
