@@ -7,8 +7,6 @@ import SignUpPage from './SignUpPage/SignUpPage.js';
 import TimeLinePage from './TimeLinePage/TimeLinePage.js';
 
 import ProfilePage from './ProfilePage/ProfilePage.js';
-import GroupListContainer from './GroupPage/GroupList.js';
-import CreateGroupPage from './GroupPage/CreateGroupPage.js';
 
 import PropTypes from 'prop-types';
 
@@ -26,10 +24,6 @@ const App = ({store}) => {
                     <Route exact path="/main" component={TimeLinePage} />
                     <Route path="/profile/:id" component={ProfilePage} />
                   
-
-				    <Route exact path="/grouplist" component={GroupListContainer} />               
-                    <Route exact path="/create_group" compoent={CreateGroupPage} />
-
 					<Route path="/profile/:id" component={ProfilePage} />
 
 

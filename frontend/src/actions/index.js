@@ -1,4 +1,4 @@
-import * from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL } from './types.js'
 
 export const showNavBar = () => {
   return{

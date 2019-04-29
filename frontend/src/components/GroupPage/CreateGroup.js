@@ -57,11 +57,6 @@ class CreateGroupPage extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	groupname: state.groupname,
-	grouptype: state.grouptype,
-})
-
 const mapDispatchToProps = (dispatch) => ({
 	onCreateGroup: (grouptype, groupname) => dispatch(greateGroup(grouptype, groupname))
 })

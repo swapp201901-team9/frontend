@@ -399,7 +399,7 @@ function *signIn(data) {
     }
 }
 
-// signUp: 백엔드 users에 POST를 날리는 함수
+// signUp: 백엔드 users POST를 날리는 함수
 function *signUp(data) {
     try {
         yield call(xhr.post, fixed_url + 'users/', {
@@ -503,7 +503,14 @@ function *escapeBook(profuser){
 }
 
 //SA TODO
-function *createGroup(){
+
+// createGroup: 백엔드 groups에 POST를 날리는 함수
+function *createGroup(data){
+/*
+TODO: not yet implemented
+	try {
+		yield call(xhr.post, fixed_url + 'groups/', {
+*/
 }
 
 function *searchGroup(){
@@ -515,3 +522,4 @@ function *joinGroup(){
 
 function *toGroupDetail(){
 }
+
