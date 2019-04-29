@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Design Feed</h2>
+<ul>
+{% for design in designList %}
+    <li><a href='#'>{{ design }}</a></li>    
+{% endfor %}
+</ul>
+{% endblock %}
+
+{% block navigator %}
+<h3>groups</h3>
+{{ groupList }}</br>
+{% endblock %}
