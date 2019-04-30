@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+<h2>Design Template</h2>
+<form action='/' method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if is_loggedin %}
+    <input type="submit" value="upload" />
+    {% endif %}
+</form>
+</div>
+<div>
+<h2>Design Preview</h2>
+{{ design }}</br>
+</div>
+{% endblock %}
+
+{% block navigator %}
+<h3>groups</h3>
+{{ groupList }}</br>
+{% endblock %}

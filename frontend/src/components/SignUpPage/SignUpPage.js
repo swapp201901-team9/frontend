@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {changeUrl, postSignUp} from '../../actions';
-import NavBar from '../MainPage/NavBar';
+import NavBar from '../NavBar/NavBar';
 
 class SignUpPage extends React.Component {
     render() {
@@ -18,7 +18,8 @@ class SignUpPage extends React.Component {
                 this.props.onClick(this.username.value, this.password.value)
         }
         return (
-          <body>
+
+          <div>
           < NavBar/>
           <section className="wrap clear">
            <div className = "main">
@@ -51,7 +52,6 @@ class SignUpPage extends React.Component {
                      </label>
                      <input type="password" ref={ node => {this.pwdverification = node;}} id="pwdverification_field" className="field" />
                    </div>
-                   <br/>
                   <div className="Button-Field">
                   <button type="submit" id="sign_up">SUBMIT</button>
                    </div>
@@ -60,7 +60,7 @@ class SignUpPage extends React.Component {
            </div>
            </div>
            </section>
-          </body>
+          </div>
 
         );
     }
