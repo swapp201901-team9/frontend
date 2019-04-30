@@ -11,9 +11,9 @@ class SignUp extends React.Component {
         return (
 
               <div className="Button-Field">
-                   <button id="sign_up" className="button button_white" onClick={onNewTab}>입BooK 하기</button>
+                   <button id="sign_up" className="button button_white" onClick={onNewTab}>JOIN</button>
               </div>
-            
+
                 )
     }
 }
