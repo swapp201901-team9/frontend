@@ -71,7 +71,13 @@ header {
   font-family: 'Noto Sans KR', sans-serif;
 }
 .logo{
+  width: 135px;
+  height: 40px;
+  margin-top: 18px;
+  background: url("./login_logo.png") no-repeat;
+  background-size:120px;
   float:left;
+  display:inline-block;
 }
 .navBar{
   text-align:right;
@@ -223,8 +229,8 @@ input{
 
 #to_main{
     border: none;
-    width: 120px;
-    height: 75px;
+    width: 135px;
+    height: 19px;
     position: absolute;
     top: 20px;
     left: 30px;

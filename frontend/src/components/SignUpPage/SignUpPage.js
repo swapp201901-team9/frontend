@@ -26,8 +26,9 @@ class SignUpPage extends React.Component {
              <div>
                 <img alt="" />
              </div>
-             <div className="box">
-                 <button id="to_main" className="to_main" onClick={this.props.onToLogin}/>
+             <div >
+             <div className="module_title"> JOIN </div>
+
                  <form onSubmit={e => {
                      e.preventDefault()
                      onCreateSubmit()
@@ -71,7 +72,7 @@ let mapDispatchToProps = (dispatch) => {
             console.log("ask for sign-up");
             dispatch(postSignUp(username, password))
         },
-        onToLogin: () => dispatch(changeUrl('/'))
+        onToMain: () => dispatch(changeUrl('/'))
     }
 }
 

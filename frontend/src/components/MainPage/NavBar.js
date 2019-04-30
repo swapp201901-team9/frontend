@@ -13,7 +13,7 @@ class NavBar extends React.Component {
         <div>
           <header className="clear">
            <div className="wrap">
-             <h1 className="logo">LOGO</h1>
+             <div className="logo"></div>
              <nav className="navBar">
                <ul>
                  <li><a href="#">LOG IN</a></li>
