@@ -10,7 +10,6 @@ class GroupPage extends React.Component {
 		return (
 			<div>
 				<CreateGroup />
-				<SearchingGroup />
 			</div>
 		)
 	}

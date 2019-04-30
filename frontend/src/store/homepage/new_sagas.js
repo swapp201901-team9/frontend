@@ -3,7 +3,6 @@ import * as actions from './../../actions'
 
 var xhr = require('xhr-promise-redux');
 
-//TODO 개인적으로 테스트할 때는 포트번호를 바꾸자. 풀리퀘를 날릴 때는 URL을 확인할 것
 const fixed_url = "http://localhost:8000/";
 const auth_check_url = fixed_url+'auth/';
 
