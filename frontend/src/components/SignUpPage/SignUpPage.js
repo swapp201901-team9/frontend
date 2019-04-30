@@ -72,7 +72,7 @@ let mapDispatchToProps = (dispatch) => {
             console.log("ask for sign-up");
             dispatch(postSignUp(username, password))
         },
-        onToMain: () => dispatch(changeUrl('/'))
+        onToLogin: () => dispatch(changeUrl('/'))
     }
 }
 

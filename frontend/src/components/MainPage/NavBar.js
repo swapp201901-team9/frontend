@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { showNavBar } from '../../actions';
-
+import {changeUrl, postSignUp} from '../../actions';
 class NavBar extends React.Component {
     render() {
         // const onSubmit = () => {
@@ -13,11 +13,11 @@ class NavBar extends React.Component {
         <div>
           <header className="clear">
            <div className="wrap">
-             <div className="logo"></div>
+             <div className="logo" onClick={() => this.props.onClick()}></div>
              <nav className="navBar">
                <ul>
-                 <li><a href="#">LOG IN</a></li>
-                 <li><a href="#">JOIN</a></li>
+                 <li><a>LOG IN</a></li>
+                 <li><a>JOIN</a></li>
                </ul>
              </nav>
            </div>
@@ -27,6 +27,13 @@ class NavBar extends React.Component {
     }
 }
 
+let mapDispatchToProps = (dispatch) => {
+    return {
+        onClick: () => dispatch(changeUrl('/'))
+    }
+}
+
+NavBar = connect(undefined, mapDispatchToProps)(NavBar);
 
 
 
