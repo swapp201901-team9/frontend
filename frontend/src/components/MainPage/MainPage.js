@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NavBar from './NavBar';
+import NavBar from '../NavBar/NavBar';
 
 class Root extends React.Component {
     render() {
