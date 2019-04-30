@@ -9,9 +9,11 @@ class SignUp extends React.Component {
             this.props.onClick();
         };
         return (
-                <div className="Button-Field">
-                     려권이 없소?? <button id="sign_up" onClick={onNewTab}>입BooK 하기</button>
-                </div>
+
+              <div className="Button-Field">
+                   <button id="sign_up" className="button button_white" onClick={onNewTab}>입BooK 하기</button>
+              </div>
+            
                 )
     }
 }

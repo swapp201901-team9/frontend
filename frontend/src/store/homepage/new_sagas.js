@@ -45,6 +45,7 @@ export default function *saga() {
                     yield spawn(profilePageSaga);
                     break;
 
+				//SA TODO: adding group url 
                 //default:
                     // console.log("default state");
                     // alert("없는 장소");
@@ -106,6 +107,19 @@ function *profilePageSaga() {
     yield spawn(watchIntroChange);
     yield spawn(watchEscape);
 
+}
+
+function *groupPageSaga() {
+	console.log("GroupPageSaga");
+	yield spawn(watchLoginState);
+	yield spawn(watchSignOut);
+	yield spawn(watchGoToMain);
+
+	//SA TODO: 더 추가될 가능성 있음
+	yield spawn(watchCreateGroup);
+	yield spawn(watchSearchGroup);
+	yield spawn(watchJoinGroup);
+	yield spawn(watchGoToGroupDetail);
 }
 
 
@@ -321,6 +335,47 @@ function *watchEscape(){
 }
 
 
+/* GroupPage에서 관찰하는 watch 함수들 */
+//watchCreateGroup: GroupPage에서 새로운 그룹 생성 버튼 클릭 관찰 및 리다이렉트(새로운 그룹 detail 페이지로)
+function *watchCreateGroup() {
+	while(true) {
+		const data = yield take('CREATE_GROUP');
+		yield call(createGroup, data);
+		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
+		yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
+	}
+}
+
+//watchSearchGroup: GroupPage에서 그룹 검색 버튼 클릭 관찰
+function *watchSearchGroup() {
+	while(true) {
+		const data = yield take('SEARCH_GROUP');
+		yield call(searchGroup, data);
+		//SA TODO: 검색 결과로 리다이렉트??
+	}
+}
+	
+//watchJoinGroup: GroupPage에서 그룹 가입 버튼 클릭 관찰
+function *watchJoinGroup() {
+	while(true) {
+		const data = yield take('JOIN_GROUP');
+		yield call(joinGroup, data);
+		//SA TODO: 가입 그룹 detail 페이지로 리다이렉트??
+	}
+}
+
+//watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관착 및 리다이렉트(클릭한 그룹 detail 페이지로)
+function *watchGoToGroupDetail() {
+	while(true) {
+		const data = yield take('TO_GROUP_DETAIL');
+		yield call(toGroupDetail, data);
+		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
+	}
+}
+
+
+
+
 ///// Page별 saga함수에서 쓸 saga함수 (그 외)
 // signIn: 백엔드에 get을 날리는 함수
 function *signIn(data) {
@@ -343,7 +398,7 @@ function *signIn(data) {
     }
 }
 
-// signUp: 백엔드 users에 POST를 날리는 함수
+// signUp: 백엔드 users POST를 날리는 함수
 function *signUp(data) {
     try {
         yield call(xhr.post, fixed_url + 'users/', {
@@ -445,3 +500,25 @@ function *escapeBook(profuser){
 
     }
 }
+
+//SA TODO
+
+// createGroup: 백엔드 groups에 POST를 날리는 함수
+function *createGroup(data){
+/*
+TODO: not yet implemented
+	try {
+		yield call(xhr.post, fixed_url + 'groups/', {
+*/
+}
+
+function *searchGroup(){
+}
+
+function *joinGroup(){
+
+}
+
+function *toGroupDetail(){
+}
+
