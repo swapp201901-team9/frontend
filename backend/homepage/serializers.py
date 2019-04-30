@@ -66,3 +66,8 @@ class UserDesignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Design
         fields = '__all__'
+
+class GroupDesignSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Design
+        fields = '__all__'

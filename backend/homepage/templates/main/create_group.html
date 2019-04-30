@@ -2,18 +2,12 @@
 
 {% block content %}
 <div>
-<h2>Design Template</h2>
+<h2>Create Group</h2>
 <form action='/' method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    {% if is_loggedin %}
-    <input type="submit" value="upload" />
-    {% endif %}
+    <input type="submit" value="create" />
 </form>
-</div>
-<div>
-<h2>Design Preview</h2>
-{{ design }}</br>
 </div>
 {% endblock %}
 
