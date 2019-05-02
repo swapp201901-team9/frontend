@@ -20,8 +20,19 @@ COLOR_CHOICES = (
     (WHITE, 'White'),
 )
 
+MAJOR = 'MJ'
+CLUB = 'CL'
+GROUP_TYPE = (
+    (MAJOR, 'Major'),
+    (CLUB, 'Club'),
+)
+
 class Group(models.Model):
-    group_type = models.CharField(max_length=50)
+    group_type = models.CharField(
+        max_length=2,
+        choices=GROUP_TYPE,
+        default=MAJOR,
+    )
     group_name = models.CharField(max_length=50)
 
     def __str__(self):

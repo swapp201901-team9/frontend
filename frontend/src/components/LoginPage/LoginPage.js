@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import NavBar from '../MainPage/NavBar';
+import NavBar from '../NavBar/NavBar';
 
 class LoginPage extends Component {
     render() {
