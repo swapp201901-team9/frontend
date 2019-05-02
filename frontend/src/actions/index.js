@@ -1,3 +1,5 @@
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL } from './types.js'
+
 export const showNavBar = () => {
   return{
     type: 'NAV_BAR',
@@ -99,10 +101,32 @@ export const toEscape = (profile_user) => {
     }
 }
 
-//Group
+//GroupPage Actions
+export const createGroup = (grouptype, groupname) => {
+	return {
+		type: CREATE_GROUP,
+		grouptype: grouptype,
+		groupname: groupname,
+	}
+}
+
+export const searchGroup = (groupname) => {
+	return {
+		type: SEARCH_GROUP,
+		groupname: groupname,
+	}
+}
+
+export const joinGroup = (groupid) => {
+	return {
+		type: JOIN_GROUP,
+		groupid: groupid,
+	}
+}
+
 export const toGroupDetail = (groupid) => {
 	return {
-		type: 'TO_GROUP_DETAIL',
-		groupid: groupid
+		type: TO_GROUP_DETAIL,
+		groupid: groupid,
 	}
 }

@@ -1,42 +1,67 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import {changeUrl, postSignUp} from '../../actions';
+import NavBar from '../NavBar/NavBar';
 
 class SignUpPage extends React.Component {
     render() {
         const onCreateSubmit = () => {
             if(this.username.value === "")
-                alert("아이디를 입력하시오!");
+                alert("아이디를 입력하세요.");
             else if(this.password.value === "")
-                alert("비밀번호를 입력하시오!");
+                alert("비밀번호를 입력하세요.");
             else if(this.pwdverification.value === "")
-                alert("비밀번호를 확인하시오!");
+                alert("비밀번호를 확인하세요.");
             else if(this.password.value !== this.pwdverification.value)
-                alert("비밀번호가 일치하지 않소!");
+                alert("비밀번호가 일치하지 않습니다.");
             else
                 this.props.onClick(this.username.value, this.password.value)
         }
         return (
-              <div>
-                <div>
-                   <img alt="" />
-                </div>
-                <div className="box">
-                    <button id="to_main" className="to_main" onClick={this.props.onToLogin}/>
-                    <form onSubmit={e => {
-                        e.preventDefault()
-                        onCreateSubmit()
-                    }}>
-                    아이디<input type="text" ref={ node => {this.username = node;}} id="username_field" className="field" />
-                    <br />
-                    비밀번호<input type="password" ref={ node => {this.password = node;}} id="password_field" className="field" />
-                    <br />
-                    비밀번호 확인<input type="password" ref={ node => {this.pwdverification = node;}} id="pwdverification_field" className="field" />
-                    <br />
-                    <button type="submit" id="sign_up">반갑소 동무!</button>
-                    </form>
-                </div>
-              </div>
+
+          <div>
+          < NavBar/>
+          <section className="wrap clear">
+           <div className = "main">
+           <div>
+             <div>
+                <img alt="" />
+             </div>
+             <div >
+             <div className="module_title"> JOIN </div>
+
+                 <form onSubmit={e => {
+                     e.preventDefault()
+                     onCreateSubmit()
+                 }}>
+                 <div className="Text-Field">
+                   <label>
+                   USERNAME
+                   </label>
+                   <input type="text" ref={ node => {this.username = node;}} id="username_field" className="field" />
+                 </div>
+                   <div className="Text-Field">
+                     <label>
+                     PASSWORD
+                     </label>
+                     <input type="password" ref={ node => {this.password = node;}} id="password_field" className="field" />
+                   </div>
+                   <div className="Text-Field">
+                     <label>
+                     PASSWORD CHECK
+                     </label>
+                     <input type="password" ref={ node => {this.pwdverification = node;}} id="pwdverification_field" className="field" />
+                   </div>
+                  <div className="Button-Field">
+                  <button type="submit" id="sign_up">SUBMIT</button>
+                   </div>
+                 </form>
+             </div>
+           </div>
+           </div>
+           </section>
+          </div>
+
         );
     }
 }
