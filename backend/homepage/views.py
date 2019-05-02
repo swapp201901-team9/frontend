@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .forms import DesignForm, GroupForm
 from .serializers import *
-from .permissions import IsAuthenticatedOrPOSTOnly, IsAuthenticatedOrGETOnly, IsAuthenticatedOrNothing
+from .permissions import *
 
 from base64 import b64decode as decode
 import re
@@ -127,6 +127,8 @@ def profile(request, username):
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @permission_classes((IsAuthenticatedOrGETOnly,))
 def main(request):
+    # if request.user.id == None: 
+    #     return Response(status=status.HTTP_403_FORBIDDEN)
     try:
         design = Design.objects.get(id=1)
     except Design.DoesNotExist:
@@ -135,8 +137,6 @@ def main(request):
         groups = Group.objects.all()
     except Group.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.user.id == None: 
-        return Response(status=status.HTTP_403_FORBIDDEN)
     if request.method == 'GET':
         user_serializer = UserDesignSerializer(design)
         group_serializer = GroupSerializer(groups, many=True)
