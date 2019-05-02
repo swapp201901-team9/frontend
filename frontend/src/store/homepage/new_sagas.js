@@ -35,6 +35,7 @@ export default function *saga() {
             yield spawn(mainPageSaga);
             break;
         case '/sign_up/':
+        console.log("####");
             yield spawn(signUpPageSaga);
             break;
         default:
@@ -45,17 +46,17 @@ export default function *saga() {
                     yield spawn(profilePageSaga);
                     break;
 
-				//SA TODO: adding group url
-                //default:
-                    // console.log("default state");
-                    // alert("없는 장소");
-                    // if(localStorage.getItem("auth") === null) {
-                    //     localStorage.removeItem('parent');
-                    //     yield put(actions.changeUrl('/'));
-                    // } else {
-                    //     localStorage.removeItem('parent');
-                    //     yield put(actions.changeUrl('/main/'));
-                    // }
+				
+                default:
+                    console.log("default state");
+                    alert("없는 장소");
+                    if(localStorage.getItem("auth") === null) {
+                        localStorage.removeItem('parent');
+                        yield put(actions.changeUrl('/'));
+                    } else {
+                        localStorage.removeItem('parent');
+                        yield put(actions.changeUrl('/main/'));
+                    }
             }
     }
 }
