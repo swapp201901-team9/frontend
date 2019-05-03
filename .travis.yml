@@ -1,28 +1,18 @@
-language: generic
+sudo: required
+dist: trusty
+language: node_js
 matrix:
   include:
-    -language: python
-    virtualenv:
-      system_site_packages: true
-    python: 3.5.1
-    before_install: 
-      - cd ./backend/
-    install: 
-      - pip install -r requirements.txt
-    script:
-      - python manage.py test
 
     -language: node_js
     node_js: 6.9.4
     before_install: 
       - cd ./frontend/
     install:
-      - npm install 
+      - sudo npm install 
     script: 
-      - npm test 
+      - sudo npm test 
 
-    sudo: required
-    dist: trusty
     -language: python3
     virtualenv:
       system_site_packages: true
