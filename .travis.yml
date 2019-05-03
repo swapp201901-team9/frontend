@@ -25,10 +25,12 @@ matrix:
     virtualenv:
       system_site_packages: true
     python: 3.5.1
-    before_install: 
+    before_script:
       - cd ./backend/
-    install: 
-      - pip install -r requirements.txt
+    #before_install: 
+    #  - cd ./backend/
+    #install: 
+    #  - pip install -r requirements.txt
     script:
       - python manage.py test
 
