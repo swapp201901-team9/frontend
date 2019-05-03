@@ -21,24 +21,29 @@ matrix:
     script: 
       - npm test 
 
-    dist: xenial
+    sudo: required
+    dist: trusty
     -language: python
     virtualenv:
       system_site_packages: true
     python: 
       - "3.5"
       - "3.5-dev"
-      - "3.6"
-      - "3.6-dev"
       - "pypy3.5"
     cache: pip
-    before_install: 
+    before_install:
+      - sudo apt-get update
+      - sudo apt-get -y install python3-pip python-dev
+      - sudo pip3 install -U setuptools
+      - sudo pip3 install -U virtualenvwrapper
+      - python3 -V
+      - pip3 -V 
       - cd ./backend/
     install: 
-      - pip install -r requirements.txt
-      - pip install .
+      - sudo pip3 install -r requirements.txt
+      - sudo pip3 install .
     script:
-      - python manage.py test
+      - sudo python3 manage.py test
 
 
 notifications:
