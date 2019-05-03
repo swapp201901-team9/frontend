@@ -5,18 +5,18 @@ matrix:
     before_install: 
       - cd ./backend/
     install: 
-      - sudo pip3 install -r requirements.txt
+      - pip3 install -r requirements.txt
     script:
-      - sudo python3 manage.py test
+      - python3 manage.py test
 
     -language: node_js
     node_js: 6.9.4
     before_install: 
       - cd ./frontend/
     install:
-      - sudo npm install 
+      - npm install 
     script: 
-      - sudo npm test 
+      - npm test 
 
 notifications:
   email: sally20921@snu.ac.kr
