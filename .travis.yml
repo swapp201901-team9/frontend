@@ -1,11 +1,10 @@
 sudo: required
 dist: trusty
 language: generic
-jobs:
+matrix:
   include:
-    - stage: test
-    name: "frontend"
-    language: node_js
+    
+    -language: node_js
     node_js: 6.9.4
     before_install: 
       - cd ../frontend/
@@ -14,9 +13,8 @@ jobs:
     script: 
       - sudo npm test 
 
-    - stage: test
-    name: "backend"
-    language: python3
+    
+    -language: python3
     virtualenv:
       system_site_packages: true
     python: 
