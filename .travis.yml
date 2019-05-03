@@ -21,18 +21,25 @@ matrix:
     script: 
       - npm test 
 
+    dist: xenial
     -language: python
     virtualenv:
       system_site_packages: true
-    python: 3.5.1
+    python: 
+      - "2.7"
+      - "3.5"
+      - "3.5-dev"
+      - "3.6"
+      - "3.6-dev"
+      - "pypy3.5"
     cache: pip
     before_install: 
       - cd ./backend/
     install: 
-      - pip install --upgrade pip
       - pip install -r requirements.txt
+      - pip install .
     script:
-      - pytest
+      - python manage.py test
 
 
 notifications:
