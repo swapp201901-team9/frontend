@@ -1,6 +1,7 @@
 matrix:
   include:
-    -language: python
+  
+    - language: python
     python: 3.5.1
     before_install: 
       - cd ./backend/
@@ -9,7 +10,7 @@ matrix:
     script:
       - python3 manage.py test
 
-    -language: node_js
+    - language: node_js
     node_js: 6.9.4
     before_install: 
       - cd ./frontend/
