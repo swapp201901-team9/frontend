@@ -1,14 +1,14 @@
 language: generic
 matrix:
   include:
-    -language: python
+    -language: python3
     python: 3.5.1
     before_install: 
       - cd ./backend/
     install: 
-      - pip install -r requirements.txt
+      - pip3 install -r requirements.txt
     script:
-      - python manage.py test
+      - python3 manage.py test
 
     -language: node_js
     node_js: 6.9.4
