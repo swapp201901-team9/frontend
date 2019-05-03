@@ -7,7 +7,7 @@ matrix:
     -language: node_js
     node_js: 6.9.4
     before_install: 
-      - cd ../frontend/
+      - cd ./frontend/
     install:
       - sudo npm install 
     script: 
