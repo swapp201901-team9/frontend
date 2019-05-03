@@ -6,8 +6,8 @@
 /backend/db.sqlite3
 /backend/homepage/migrations
 /backend/homepage/__pycache__
-/backend/backend/__pycache__
-/backend/env
+/backend/northfacebook_backend/__pycache__
+/backend/env/
 
 # testing
 /frontend/coverage
