@@ -1,7 +1,8 @@
+language: minimal
 matrix:
   include:
     -language: generic 
-    
+
     -language: python
     python: 3.5.1
     before_install: 
