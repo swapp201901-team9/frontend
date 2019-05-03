@@ -3,20 +3,20 @@ matrix:
     -language: python
     python: 3.5.1
     before_install: 
-      -cd backend/
+      - cd ./backend/
     install: 
-      -sudo pip3 install -r requirements.txt
+      - sudo pip3 install -r requirements.txt
     script:
-      -sudo python3 manage.py test
+      - sudo python3 manage.py test
 
     -language: node_js
     node_js: 6.9.4
     before_install: 
-      -cd frontend/
+      - cd ./frontend/
     install:
-      -sudo npm install 
+      - sudo npm install 
     script: 
-      -sudo npm test 
+      - sudo npm test 
 
 notifications:
   email: sally20921@snu.ac.kr
