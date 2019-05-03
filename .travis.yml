@@ -3,6 +3,7 @@ matrix:
   include:
     -language: python3
     python: 3.5.1
+    env: PYENV_VERSION=pypy3.5-5.8.0 PYENV_VERSION_STRING='PyPy 5.8.0-beta0'
     before_install: 
       - cd ./backend/
     install: 
