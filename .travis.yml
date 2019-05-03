@@ -1,12 +1,10 @@
 language: generic
 matrix:
   include:
-    -language: generic 
-
     -language: python
     python: 3.5.1
     before_install: 
-      - cd ./backend/
+      - cd ../backend/
     install: 
       - pip3 install -r requirements.txt
     script:
