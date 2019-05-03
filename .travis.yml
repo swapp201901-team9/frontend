@@ -27,10 +27,10 @@ matrix:
     python: 3.5.1
     before_install: 
       - cd ./backend/
-    #install: 
-    #  - pip install -r requirements.txt
+    install: 
+      - pip install pytest-django
     script:
-      - python manage.py test
+      - pytest
 
 
 notifications:
