@@ -23,17 +23,19 @@ matrix:
 
     sudo: required
     dist: trusty
-    -language: python
+    -language: python3
     virtualenv:
       system_site_packages: true
     python: 
       - "3.5"
       - "3.5-dev"
       - "pypy3.5"
-    cache: pip
+    cache: pip3
     before_install:
       - sudo apt-get update
+      - sudo apt-get install python3
       - sudo apt-get -y install python3-pip python-dev
+      - sudo python3 -m pip install --upgrade pip
       - sudo pip3 install -U setuptools
       - sudo pip3 install -U virtualenvwrapper
       - python3 -V
