@@ -16,7 +16,7 @@ jobs:
 
     - stage: test
     name: "backend"
-    -language: python3
+    language: python3
     virtualenv:
       system_site_packages: true
     python: 
