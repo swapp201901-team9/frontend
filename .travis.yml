@@ -21,16 +21,16 @@ matrix:
     script: 
       - npm test 
 
-    -language: python
-    virtualenv:
-      system_site_packages: true
-    python: 3.5.1
-    before_install: 
-      - cd ./backend/
-    install: 
-      - pip install pytest-django
-    script:
-      - pytest
+    #-language: python
+    #virtualenv:
+    #  system_site_packages: true
+    #python: 3.5.1
+    #before_install: 
+    #  - cd ./backend/
+    #install: 
+    #  - pip install pytest-django
+    #script:
+    #  - pytest
 
 
 notifications:
