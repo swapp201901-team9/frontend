@@ -1,15 +1,16 @@
 language: generic
 matrix:
   include:
-    -language: python3
+    -language: python
+    virtualenv:
+      system_site_packages: true
     python: 3.5.1
-    env: PYENV_VERSION=pypy3.5-5.8.0 PYENV_VERSION_STRING='PyPy 5.8.0-beta0'
     before_install: 
       - cd ./backend/
     install: 
-      - pip3 install -r requirements.txt
+      - pip install -r requirements.txt
     script:
-      - python3 manage.py test
+      - python manage.py test
 
     -language: node_js
     node_js: 6.9.4
