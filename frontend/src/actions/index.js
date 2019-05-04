@@ -27,12 +27,14 @@ export const authenticate = (auth) => {
 
 // When the user enters username, password and pwdverification and clicks the '회원가입', this action is invocked and Saga requests POST to 'User List' in backend page.
 export const postSignUp = (username, password) => {
+console.log("%%%%");
     return {
         type: 'POST_SIGN_UP',
         username,
         password
     }
 }
+
 //When the user clicks the 'Sign Out' button, this action is invoked
 export const signOut = () => {
     return {

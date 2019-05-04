@@ -1,4 +1,4 @@
-import { put, take, call, /*fork, */select, spawn } from 'redux-saga/effects'
+import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions'
 
 var xhr = require('xhr-promise-redux');
@@ -36,6 +36,7 @@ export default function *saga() {
             yield spawn(mainPageSaga);
             break;
         case '/sign_up/':
+        console.log("####");
             yield spawn(signUpPageSaga);
             break;
         //SA TODO: 확인용으로 추가한 것 나중에 개인 id를 포함하는 url로 변경
@@ -51,11 +52,6 @@ export default function *saga() {
                     yield spawn(profilePageSaga);
                     break;
 
-                case 'group':
-                    yield spawn(groupPageSaga);
-                    break;
-
-				//SA TODO: adding group url 
                 default:
                     console.log("default state");
                     alert("없는 장소");
@@ -297,8 +293,9 @@ function *watchSignOut() {
 // watchPostSignUp: 회원가입 페이지에서 가입 버튼 클릭 관찰
 function *watchPostSignUp() {
     while(true) {
-
+      console.log("here");
         const data = yield take('POST_SIGN_UP');
+        console.log(data);
         yield call(signUp, data);
     }
 }
@@ -351,10 +348,16 @@ function *watchCreateGroup() {
 	while(true) {
         console.log("watchCreateGroup");
 		const data = yield take('CREATE_GROUP');
+<<<<<<< HEAD
         yield call(createGroup, data);
         //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
         //backend에서 redierect 처리
 		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
+=======
+		yield call(createGroup, data);
+		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
+		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
+>>>>>>> upstream/master
 	}
 }
 
@@ -366,7 +369,7 @@ function *watchSearchGroup() {
 		//SA TODO: 검색 결과로 리다이렉트??
 	}
 }
-	
+
 //watchJoinGroup: GroupPage에서 그룹 가입 버튼 클릭 관찰
 function *watchJoinGroup() {
 	while(true) {
@@ -535,4 +538,3 @@ function *joinGroup(){
 
 function *toGroupDetail(){
 }
-
