@@ -391,7 +391,7 @@ function *watchGoToGroupDetail() {
 function *watchGoToAdminGroup() {
 	while(true) {
         const data = yield take(TO_ADMIN_GROUP);
-        console.log("watchGoToAdminGroup")
+        console.log("watchGoToAdminGroup");
 		yield call(toAdminGroup, data);
 		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
 	}

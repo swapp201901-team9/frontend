@@ -137,6 +137,7 @@ export const gotoGroupDetail = (groupid) => {
 
 export const gotoAdminGroup = (groupid) => {
     console.log("adminGroup action")
+    console.log(groupid)
     return {
         type: TO_ADMIN_GROUP,
         groupid: groupid,
