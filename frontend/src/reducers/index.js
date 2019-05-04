@@ -3,6 +3,9 @@ const homepageInitialState = {
     authorization: "",
     profile_user: null,
 
+    all_groups: [],
+    my_groups: [],
+
     my_requests: [],
     load : 0,
     loading: false,

@@ -24,6 +24,7 @@ const localStorage = window.localStorage;
 // saga: 미들웨어에서 돌아갈 함수
 export default function *saga() {
     const path = window.location.pathname;
+    console.log("pathname: ", window.location.pathname)
     switch(window.location.pathname) {
         case '/':
             yield spawn(mainPageSaga);
@@ -37,6 +38,11 @@ export default function *saga() {
         case '/sign_up/':
             yield spawn(signUpPageSaga);
             break;
+        //SA TODO: 확인용으로 추가한 것 나중에 개인 id를 포함하는 url로 변경
+        case '/group/':
+            console.log("group")
+            yield spawn(groupPageSaga);
+            break;
         default:
             const url = path.split("/");
             switch(url[1]) {
@@ -45,17 +51,21 @@ export default function *saga() {
                     yield spawn(profilePageSaga);
                     break;
 
+                case 'group':
+                    yield spawn(groupPageSaga);
+                    break;
+
 				//SA TODO: adding group url 
-                //default:
-                    // console.log("default state");
-                    // alert("없는 장소");
-                    // if(localStorage.getItem("auth") === null) {
-                    //     localStorage.removeItem('parent');
-                    //     yield put(actions.changeUrl('/'));
-                    // } else {
-                    //     localStorage.removeItem('parent');
-                    //     yield put(actions.changeUrl('/main/'));
-                    // }
+                default:
+                    console.log("default state");
+                    alert("없는 장소");
+                    if(localStorage.getItem("auth") === null) {
+                        localStorage.removeItem('parent');
+                        yield put(actions.changeUrl('/'));
+                    } else {
+                        localStorage.removeItem('parent');
+                        yield put(actions.changeUrl('/main/'));
+                    }
             }
     }
 }
@@ -339,10 +349,12 @@ function *watchEscape(){
 //watchCreateGroup: GroupPage에서 새로운 그룹 생성 버튼 클릭 관찰 및 리다이렉트(새로운 그룹 detail 페이지로)
 function *watchCreateGroup() {
 	while(true) {
+        console.log("watchCreateGroup");
 		const data = yield take('CREATE_GROUP');
-		yield call(createGroup, data);
-		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
-		yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
+        yield call(createGroup, data);
+        //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
+        //backend에서 redierect 처리
+		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
 	}
 }
 
@@ -505,6 +517,8 @@ function *escapeBook(profuser){
 
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
+    console.log("createGroup");
+    console.log(data.grouptype, " ", data.groupname);
 /*
 TODO: not yet implemented
 	try {

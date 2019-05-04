@@ -15,13 +15,5 @@ class GroupPage extends React.Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-
-}
-
-const mapDispatchToProps = (dispatch) => {
-
-}
-
-export default GroupPage = connect(mapStateToProps, mapDispatchToProps)(GroupPage);
+export default GroupPage;
 
