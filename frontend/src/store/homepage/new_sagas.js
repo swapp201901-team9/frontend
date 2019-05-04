@@ -1,5 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
-import * as actions from './../../actions'
+import * as actions from './../../actions/index'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -100,6 +101,8 @@ function *mainPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchToProfile);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
 
 }
 
@@ -125,7 +128,8 @@ function *groupPageSaga() {
 	yield spawn(watchCreateGroup);
 	yield spawn(watchSearchGroup);
 	yield spawn(watchJoinGroup);
-	yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
 }
 
 
@@ -343,15 +347,12 @@ function *watchEscape(){
 //watchCreateGroup: GroupPage에서 새로운 그룹 생성 버튼 클릭 관찰 및 리다이렉트(새로운 그룹 detail 페이지로)
 function *watchCreateGroup() {
 	while(true) {
+        const data = yield take(CREATE_GROUP);
         console.log("watchCreateGroup");
-		const data = yield take('CREATE_GROUP');
         yield call(createGroup, data);
         //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
         //backend에서 redierect 처리
 		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
-		yield call(createGroup, data);
-		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
-		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
 
 	}
 }
@@ -359,7 +360,8 @@ function *watchCreateGroup() {
 //watchSearchGroup: GroupPage에서 그룹 검색 버튼 클릭 관찰
 function *watchSearchGroup() {
 	while(true) {
-		const data = yield take('SEARCH_GROUP');
+        const data = yield take(SEARCH_GROUP);
+        console.log("watchSearchGroup")
 		yield call(searchGroup, data);
 		//SA TODO: 검색 결과로 리다이렉트??
 	}
@@ -368,18 +370,30 @@ function *watchSearchGroup() {
 //watchJoinGroup: GroupPage에서 그룹 가입 버튼 클릭 관찰
 function *watchJoinGroup() {
 	while(true) {
-		const data = yield take('JOIN_GROUP');
-		yield call(joinGroup, data);
+		const data = yield take(JOIN_GROUP);
+        console.log("watchJoinGroup")
+        yield call(joinGroup, data);
 		//SA TODO: 가입 그룹 detail 페이지로 리다이렉트??
 	}
 }
 
-//watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관착 및 리다이렉트(클릭한 그룹 detail 페이지로)
+//watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관찰 및 리다이렉트(클릭한 그룹 detail 페이지로)
 function *watchGoToGroupDetail() {
 	while(true) {
-		const data = yield take('TO_GROUP_DETAIL');
+        const data = yield take(TO_GROUP_DETAIL);
+        console.log("watchGoToGroupDetail")
 		yield call(toGroupDetail, data);
-		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
+		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
+	}
+}
+
+//watchGoToAdminGroup: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 admin 클릭 관찰 및 리다이렉트(클릭한 그룹 admin 페이지로)
+function *watchGoToAdminGroup() {
+	while(true) {
+        const data = yield take(TO_ADMIN_GROUP);
+        console.log("watchGoToAdminGroup")
+		yield call(toAdminGroup, data);
+		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
 	}
 }
 
@@ -516,7 +530,7 @@ function *escapeBook(profuser){
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
     console.log("createGroup");
-    console.log(data.grouptype, " ", data.groupname);
+    console.log(data.grouptype.value, " ", data.groupname.value);
 /*
 TODO: not yet implemented
 	try {
@@ -524,12 +538,18 @@ TODO: not yet implemented
 */
 }
 
-function *searchGroup(){
+function *searchGroup(data){
+    console.log("searchGroup")
 }
 
-function *joinGroup(groupid){
-
+function *joinGroup(data){
+    console.log("joinGroup")
 }
 
-function *toGroupDetail(){
+function *toGroupDetail(data){
+    console.log("toGroupDetail")
+}
+
+function *toAdminGroup(data){
+    console.log("toAdminGroup")
 }

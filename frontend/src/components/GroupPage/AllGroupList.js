@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AllGroup from './AllGroup';
-import { joinGroup } from '../../actions';
+import { toJoinGroup, gotoGroupDetail } from '../../actions/index.js';
 
 class AllGroupList extends React.Component {
     render() {
         return (
-            <div>
+            <ul>
                 {this.props.all_groups.map(group =>
                     <AllGroup 
                         key={group.id}
                         group={group}
-                        onClickJoinGroup={this.props.onJoinGroup(group.id)}
+                        onClickGroup={() => this.props.onToGroupDetail(group.id)}
+                        onClickJoinGroup={() => this.props.onJoinGroup(group.id)}
                     />
                 )}
-            </div>
-
+            </ul>
         )
     }
 }
@@ -25,7 +25,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onJoinGroup: (groupid) => joinGroup(groupid)
+    onJoinGroup: (groupid) => toJoinGroup(groupid),
+    onToGroupDetail: (groupid) => gotoGroupDetail(groupid)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllGroupList)

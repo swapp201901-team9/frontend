@@ -7,11 +7,17 @@ const homepageInitialState = {
     all_groups: [
         {
             id: 1,
-            grouptype: "club",
+            grouptype: "Club",
             groupname: "clubclub"
         }
     ],
-    my_groups: [],
+    my_groups: [
+        {
+            id: 2,
+            grouptype: "Department",
+            groupname: "depdep"
+        }
+    ],
 
     my_requests: [],
     load : 0,

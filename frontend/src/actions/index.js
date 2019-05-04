@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -104,7 +104,7 @@ export const toEscape = (profile_user) => {
 }
 
 //GroupPage Actions
-export const createGroup = (grouptype, groupname) => {
+export const toCreateGroup = (grouptype, groupname) => {
 	return {
 		type: CREATE_GROUP,
 		grouptype: grouptype,
@@ -112,23 +112,33 @@ export const createGroup = (grouptype, groupname) => {
 	}
 }
 
-export const searchGroup = (groupname) => {
+export const toSearchGroup = (groupname) => {
 	return {
 		type: SEARCH_GROUP,
 		groupname: groupname,
 	}
 }
 
-export const joinGroup = (groupid) => {
+export const toJoinGroup = (groupid) => {
+    console.log("joinGroup action")
+    console.log(groupid)
 	return {
 		type: JOIN_GROUP,
 		groupid: groupid,
-	}
+    }
 }
 
-export const toGroupDetail = (groupid) => {
+export const gotoGroupDetail = (groupid) => {
 	return {
 		type: TO_GROUP_DETAIL,
 		groupid: groupid,
 	}
+}
+
+export const gotoAdminGroup = (groupid) => {
+    console.log("adminGroup action")
+    return {
+        type: TO_ADMIN_GROUP,
+        groupid: groupid,
+    }
 }

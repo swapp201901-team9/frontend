@@ -1,11 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { toGroupDetail } from '../../actions';
 
-const AllGroup = ({ group, onClickJoinGroup }) => {
+const AllGroup = ({ group, onClickGroup, onClickJoinGroup }) => {
     return (
         <div>
-            {group.grouptype} {group.groupname}
+            <div onClick={onClickGroup}>
+                {group.id} {group.grouptype} {group.groupname}
+            </div>
             <button onClick={onClickJoinGroup}>
                 JOIN GROUP
             </button>
