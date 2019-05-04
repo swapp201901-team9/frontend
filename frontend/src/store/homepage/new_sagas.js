@@ -37,22 +37,17 @@ export default function *saga() {
             yield spawn(mainPageSaga);
             break;
         case '/sign_up/':
-        console.log("####");
             yield spawn(signUpPageSaga);
-            break;
-        //SA TODO: 확인용으로 추가한 것 나중에 개인 id를 포함하는 url로 변경
-        case '/group/':
-            console.log("group")
-            yield spawn(groupPageSaga);
             break;
         default:
             const url = path.split("/");
             switch(url[1]) {
-
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
-
+                case 'group':
+                    yield spawn(groupPageSaga);
+                    break;
                 default:
                     console.log("default state");
                     alert("없는 장소");
@@ -81,20 +76,20 @@ export default function *saga() {
 // 4. 페이지 이동은 yield put(actions.changeUrl('/target_path/'))를 이용하시면 됩니다.
 //////////////////////////////////////////////////
 function *loginPageSaga() {
-    console.log("Login Page");
+    console.log("Login Page Saga");
     yield spawn(watchLoginState);
     yield spawn(watchSignIn);
     yield spawn(watchSignUp);
 }
 
 function *signUpPageSaga() {
-    console.log("Sign Up Page")
+    console.log("Sign Up Page Saga")
     yield spawn(watchLoginState);
     yield spawn(watchPostSignUp);
 }
 
 function *mainPageSaga() {
-    console.log("Main Page");
+    console.log("Main Page Saga");
     yield spawn(watchLoginState);
 
     yield spawn(watchSignOut);
@@ -108,7 +103,7 @@ function *mainPageSaga() {
 
 
 function *profilePageSaga() {
-    console.log("[ProfilePageSaga]");
+    console.log("Profile Page Saga");
     yield spawn(watchLoginState);
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
@@ -119,7 +114,7 @@ function *profilePageSaga() {
 }
 
 function *groupPageSaga() {
-	console.log("GroupPageSaga");
+	console.log("Group Page Saga");
 	//yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
@@ -140,23 +135,28 @@ function *groupPageSaga() {
 // <<주의>> 새로운 state를 추가할 경우 try-catch문을 이용해 정보를 받아온 후 스테이트에 업데이트 해야 함
 function *watchLoginState() {
     if(window.location.pathname[window.location.pathname.length-1] !== '/') {
+        console.log("without /")
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
-    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/') {
+    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
+        // 로그인 된 상태로 첫 화면이나 회원가입, 로그인 페이지로 들어갈 경우: main 페이지로 리다이렉트
         if(localStorage.getItem("auth") !== null) {
             localStorage.removeItem('parent');
             yield put(actions.changeUrl('/main/'));
         }
     }
     else {
+        // 로그인이 되지 않은 경우: 무조건 첫 화면으로
         if(localStorage.getItem("auth") === null) {
             localStorage.removeItem('parent');
             yield put(actions.changeUrl('/'));
         }
+        // 로그인이 되어 있는 경우
         else {
             const path = window.location.pathname;
             let data, parent_data;
+        
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 localStorage.removeItem('parent');
                 try {
@@ -174,11 +174,11 @@ function *watchLoginState() {
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
             }
+
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];//그냥..
                 let profile_data = null;
-
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
@@ -192,8 +192,8 @@ function *watchLoginState() {
                     }
                     return;
                 }
+                //프로필 정보를 get하는 부분
                 else if(path.split("/")[1] === 'profile'){
-                    //프로필 정보를 get하는 부분
                     console.log("get profile details...");
                     try{
                         profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/profile/',{

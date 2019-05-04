@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
+import MyGroupList from '../GroupPage/MyGroupList';
 
 class Root extends React.Component {
     render() {
@@ -24,7 +25,7 @@ class Root extends React.Component {
           <div className="aside">
             <h2 className="h_black">MY GROUP</h2>
             <div className="content">
-            <p> contents </p>
+            <MyGroupList />
             </div>
           </div>
           </section>

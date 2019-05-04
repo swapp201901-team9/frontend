@@ -112,10 +112,10 @@ export const toCreateGroup = (grouptype, groupname) => {
 	}
 }
 
-export const toSearchGroup = (groupname) => {
+export const toSearchGroup = (searchword) => {
 	return {
 		type: SEARCH_GROUP,
-		groupname: groupname,
+		searchword: searchword,
 	}
 }
 

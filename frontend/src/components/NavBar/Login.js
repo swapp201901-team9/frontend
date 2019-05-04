@@ -17,7 +17,7 @@ class Login extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(changeUrl('/log_in'))
+        onClick: () => dispatch(changeUrl('/log_in/'))
     }
 }
 
