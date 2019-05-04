@@ -1,9 +1,16 @@
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 const homepageInitialState = {
     authorization: "",
     profile_user: null,
 
-    all_groups: [],
+    all_groups: [
+        {
+            id: 1,
+            grouptype: "club",
+            groupname: "clubclub"
+        }
+    ],
     my_groups: [],
 
     my_requests: [],
@@ -28,6 +35,9 @@ const homepage = (state = homepageInitialState, action) => {
                 
                 profile_user: action.state.profile_user,
                 
+                all_groups: action.state.all_groups,
+                my_groups : action.state.my_groups,
+
                 my_requests: action.state.my_requests,
                 load : action.state.load,
                 loading: action.state.loading,

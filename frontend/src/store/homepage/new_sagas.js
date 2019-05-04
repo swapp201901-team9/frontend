@@ -117,7 +117,7 @@ function *profilePageSaga() {
 
 function *groupPageSaga() {
 	console.log("GroupPageSaga");
-	yield spawn(watchLoginState);
+	//yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
 
@@ -158,8 +158,7 @@ function *watchLoginState() {
                 try {
 
                     console.log('Get data without exception');
-                }
-                catch(error) {
+                } catch(error) {
                     alert("main error");
                 }
                 yield put(actions.setState({
@@ -202,7 +201,7 @@ function *watchLoginState() {
                             responseType: 'json'
                          });
                          console.log('Get data without exception');
-                    }catch(error){
+                    } catch(error){
                         alert("profile error");
                     }
                     yield put(actions.setState({
@@ -226,8 +225,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
-                    }
-                    catch(error) {
+                    } catch(error) {
                         alert("get article in state error");
                         return;
                     }
@@ -242,8 +240,7 @@ function *watchLoginState() {
                             responseType: 'json'
                         });
                         console.log('Get data without exception');
-                    }
-                    catch(error) {
+                    } catch(error) {
                         alert("get parent article in state");
                         return;
                     }
@@ -348,16 +345,14 @@ function *watchCreateGroup() {
 	while(true) {
         console.log("watchCreateGroup");
 		const data = yield take('CREATE_GROUP');
-<<<<<<< HEAD
         yield call(createGroup, data);
         //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
         //backend에서 redierect 처리
 		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
-=======
 		yield call(createGroup, data);
 		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
 		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
->>>>>>> upstream/master
+
 	}
 }
 
@@ -532,7 +527,7 @@ TODO: not yet implemented
 function *searchGroup(){
 }
 
-function *joinGroup(){
+function *joinGroup(groupid){
 
 }
 

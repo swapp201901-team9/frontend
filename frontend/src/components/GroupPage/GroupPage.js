@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import CreateGroup from './CreateGroup'
+import AllGroupList from './AllGroupList';
 
 class GroupPage extends React.Component {
 
@@ -10,6 +11,7 @@ class GroupPage extends React.Component {
 		return (
 			<div>
 				<CreateGroup />
+				<AllGroupList />
 			</div>
 		)
 	}

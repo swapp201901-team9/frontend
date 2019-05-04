@@ -10,37 +10,49 @@ class CreateGroup extends React.Component {
 		'Department',
 		'Else'
 		]
+
+	onSubmit = () => {
+		//SA TODO groupname 겹치는 경우 경고
+		console.log("onSubmit")
+		if(this.grouptype !== undefined && this.groupname !== undefined) {
+			console.log("createGroup")
+			console.log(this.grouptype, " ", this.groupname)
+			this.props.onCreateGroup(this.grouptype, this.groupname)
+		}	
+	}
 	
 	render() {
-		const onSubmit = () => {
-			//SA TODO groupname 겹치는 경우 경고
-			if(this.grouptype !== undefined && this.groupname !== undefined) {
-				console.log("createGroup")
-				console.log(this.grouptype, " ", this.groupname)
-				this.props.onCreateGroup(this.grouptype, this.groupname)
-			}
-		}
-
 		return(
+			<div>
+			<form onSubmit={e => {
+				e.preventDefault()
+				this.onSubmit()
+			}}
+			/>
 			<div className="CreateGroup">
 				<label htmlFor="group type">Group Type</label>
 				<select 
-					value={this.grouptype}
+					name="grouptype"
+					//value={this.grouptype}
+					ref={ node => {this.grouptype=node; } }
 					className="type-select"
 				> 
 					{this.type_options.map(option => {
 						return <option value={option} key={option} >{option}</option>
 					})}
 				</select>
+				<br />
 				<label htmlFor="group name">Group Name</label>
 				<input 
 					type="text"
-					value={this.groupname}
+					name="groupname"
+					ref={ node => {this.groupname=node; }}
+					//value={this.groupname}
 					className="name-input"
 				/>
-				<button onClick={onSubmit()}>CREATE GROUP</button>
+				<button type="submit">CREATE GROUP</button>
 			</div>
-
+		</div>
 		)
 	}
 }
