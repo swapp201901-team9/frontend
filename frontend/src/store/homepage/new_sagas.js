@@ -115,7 +115,7 @@ function *profilePageSaga() {
 
 function *groupPageSaga() {
 	console.log("Group Page Saga");
-	yield spawn(watchLoginState);
+	//yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
 
@@ -587,17 +587,28 @@ function *escapeBook(profuser){
     }
 }
 
-//SA TODO
-
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
     console.log("createGroup");
     console.log(data.grouptype.value, " ", data.groupname.value);
-/*
-TODO: not yet implemented
+
+    //SA TODO groups/create_group/이 좀 더 낫지 않을까(=> backend url을 바꿔야함)
+    const path = 'create_group/'
 	try {
-		yield call(xhr.post, fixed_url + 'groups/', {
-*/
+		yield call(xhr.post, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+    } catch(error){
+        alert("*createGroup error")
+    }
+
+    //문법 확실치 X 새로 만든 groupdetail page로 이동
+    //yield put(actions.changeUrl('/group/'+groupid))
 }
 
 function *searchGroup(data){

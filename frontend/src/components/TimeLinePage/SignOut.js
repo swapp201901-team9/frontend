@@ -22,9 +22,6 @@ class SignOut extends React.Component {
                    <span id="user_data_field"><a id="to_my_profile" className="Link" onClick={ () => this.props.onToProfile(this.props.username) }><u>{this.props.username}</u></a> 동무 어서오시오!</span>
                    <button id="sign_out" className="Notif_button" onClick={this.props.onLogOut}>나오기</button>
                    
-                   <audio controls loop>
-                     <source id='janggunnim' src='http://wlxyzlw.iptime.org:8000/media/default/defaultBGM.mp3' type='audio/mpeg' />
-                   </audio>
                    </div>
                 </div>
 
