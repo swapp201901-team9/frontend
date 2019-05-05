@@ -1,9 +1,9 @@
 import React from 'react'
-import TimeLine from './TimeLine.js'
-import SignOut from './SignOut.js'
+import GroupDetail from './GroupDetail.js'
+import SignOut from '../TimeLinePage/SignOut.js'
 import { connect } from 'react-redux'
 
-class TimeLinePage extends React.Component {
+class GroupDetailPage extends React.Component {
 
   render() {
         if (!this.props.loading) {
@@ -16,7 +16,7 @@ class TimeLinePage extends React.Component {
         return (
                 <div >
                     <SignOut />
-                    <TimeLine />
+                    <GroupDetail />
                 </div>
                )
     }
@@ -28,6 +28,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-TimeLinePage = connect(mapStateToProps)(TimeLinePage);
-
-export default TimeLinePage;
+export default connect(mapStateToProps)(GroupDetailPage);

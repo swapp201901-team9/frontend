@@ -217,6 +217,26 @@ function *watchLoginState() {
 
                     }));
                 }
+                //group 정보를 get하는 부분
+                else if(path.split("/")[1] === 'group') {
+                    console.log("get group details...");
+                    try{
+                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/group/', {
+                            headers: {
+                                'Content-Type': 'appllication/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json',
+                        });
+                    } catch(error){
+                        alert("group error");
+                    }
+                    yield put(actions.setState({
+                        autorization: window.atob(localStorage['auth']),
+
+                    }));
+                }
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
                     try {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 import MyGroupList from '../GroupPage/MyGroupList';
 
-class Root extends React.Component {
+class MainPage extends React.Component {
     render() {
 
         return (
@@ -25,7 +25,7 @@ class Root extends React.Component {
           <div className="aside">
             <h2 className="h_black">MY GROUP</h2>
             <div className="content">
-            <MyGroupList />
+            <p>contents</p>
             </div>
           </div>
           </section>
@@ -36,4 +36,4 @@ class Root extends React.Component {
     }
 }
 
-export default Root;
+export default MainPage
