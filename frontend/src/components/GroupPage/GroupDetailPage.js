@@ -1,6 +1,6 @@
 import React from 'react'
 import GroupDetail from './GroupDetail.js'
-import SignOut from '../TimeLinePage/SignOut.js'
+import SignOut from '../MainPage/SignOut.js'
 import { connect } from 'react-redux'
 
 class GroupDetailPage extends React.Component {

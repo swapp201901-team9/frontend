@@ -2,7 +2,7 @@ import React from 'react';
 
 import NavBar from '../NavBar/NavBar';
 import MyGroupList from '../GroupPage/MyGroupList';
-import SignOut from '../TimeLinePage/SignOut';
+import SignOut from './SignOut';
 
 class L_MainPage extends React.Component {
     render() {

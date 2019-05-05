@@ -34,7 +34,7 @@ export default function *saga() {
             yield spawn(loginPageSaga);
             break;
         case '/main/':
-            yield spawn(mainPageSaga);
+            yield spawn(loggedInMainPageSaga);
             break;
         case '/sign_up/':
             yield spawn(signUpPageSaga);
@@ -72,7 +72,7 @@ export default function *saga() {
 // 2. 페이지의 url을 예쁘게(<<<<<중요>>>>>) 정의한다.
 //   (좋은 예: 메인 페이지의 url - '/main/', 나쁜 예: 메인 페이지의 url - '/sogaewonsil_real_geukhyum/')
 // 3. switch문의 케이스에 추가한다.
-//   (ex. 메인페이지 추가 - case '/main/': yield spawn(timeLinePageSaga); break;)
+//   (ex. 메인페이지 추가 - case '/main/': yield spawn(mainPageSaga); break;)
 // 4. 페이지 이동은 yield put(actions.changeUrl('/target_path/'))를 이용하시면 됩니다.
 //////////////////////////////////////////////////
 function *loginPageSaga() {
@@ -92,6 +92,13 @@ function *mainPageSaga() {
     console.log("Main Page Saga");
     yield spawn(watchLoginState);
 
+    yield spawn(watchGoToMain);
+}
+
+function *loggedInMainPageSaga() {
+    console.log("Logged In Main Page Saga");
+    yield spawn(watchLoginState);
+
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
 
@@ -100,7 +107,6 @@ function *mainPageSaga() {
     yield spawn(watchGoToAdminGroup);
 
 }
-
 
 function *profilePageSaga() {
     console.log("Profile Page Saga");
@@ -156,20 +162,18 @@ function *watchLoginState() {
         else {
             const path = window.location.pathname;
             let data, parent_data;
-        
+            
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 localStorage.removeItem('parent');
+                let my_groups_data;
                 try {
-
-                    console.log('Get data without exception');
+                   console.log("get main without exception")
                 } catch(error) {
                     alert("main error");
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-
                     loading: true,
-
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
