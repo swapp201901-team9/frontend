@@ -13,7 +13,7 @@ class CreateGroup extends React.Component {
 
 	onSubmit = () => {
 		//SA TODO groupname 겹치는 경우 경고
-		console.log("onSubmit")
+		console.log("create onSubmit")
 		if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
 			this.props.onCreateGroup(this.grouptype, this.groupname)
 		}	
@@ -22,6 +22,7 @@ class CreateGroup extends React.Component {
 	render() {
 		return(
 			<div>
+				<h1>Create Group</h1>
 				<form onSubmit={e => { 
 					e.preventDefault() 
 					this.onSubmit() 
@@ -30,7 +31,6 @@ class CreateGroup extends React.Component {
 						<label htmlFor="group type">Group Type</label>
 						<select 
 							name="grouptype"
-							//value={this.grouptype}
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
 						> 
@@ -43,7 +43,7 @@ class CreateGroup extends React.Component {
 						<input 
 							type="text"
 							name="groupname"
-							ref={ node => {this.groupname=node;}}
+							ref={ node => {this.groupname=node;} }
 							//value={this.groupname}
 							className="name-input"
 						/>

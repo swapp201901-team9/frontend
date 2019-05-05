@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
-import MyGroupList from '../GroupPage/MyGroupList';
 
 class MainPage extends React.Component {
     render() {

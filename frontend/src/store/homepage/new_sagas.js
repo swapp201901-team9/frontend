@@ -280,6 +280,7 @@ function *watchLoginState() {
                         profile_user: profile_data,
                         all_groups: all_groups_data.body,
                         my_groups: my_groups_data.body,
+                        filtered_groups: all_groups_data.body,
 
                     }));
                 }
@@ -617,6 +618,10 @@ function *createGroup(data){
 
 function *searchGroup(data){
     console.log("searchGroup")
+    yield put(actions.setState({
+        filtered_groups: data
+    }));
+
 }
 
 function *joinGroup(data){
