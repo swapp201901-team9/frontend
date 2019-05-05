@@ -17,7 +17,7 @@ class Join extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(changeUrl('/sign_up'))
+        onClick: () => dispatch(changeUrl('/sign_up/'))
     }
 }
 

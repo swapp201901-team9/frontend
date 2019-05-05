@@ -8,13 +8,22 @@ class SearchingGroup extends React.Component {
 	}
 
 	render() {
-		return (
+		return(
+			<div className="SearchingBar">
+				<input
+					type="text"
+					className="searching_input"
+					placeholder="Search"
+				/>
+				<button onClick={this.onSearchingSubmit}>Search</button>
+			</div>
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
-
+	all_groups: state.all_groups,
+	my_groups: state.my_groups,
 })
 
 const mapDispatchToProps = (dispatch) => ({
