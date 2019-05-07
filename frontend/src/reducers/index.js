@@ -4,23 +4,9 @@ const homepageInitialState = {
     authorization: "",
     profile_user: null,
 
-    all_groups: [
-        {
-            id: 1,
-            grouptype: "Club",
-            groupname: "clubclub"
-        }
-    ],
-    my_groups: [
-        {
-            id: 2,
-            grouptype: "Department",
-            groupname: "depdep"
-        }
-    ],
-    filtered_groups: [
-
-    ],
+    all_groups: [],
+    my_groups: [],
+    filtered_groups: [],
 
     my_requests: [],
     load : 0,
@@ -30,6 +16,12 @@ const homepageInitialState = {
 
 const homepage = (state = homepageInitialState, action) => {
     switch (action.type) {
+
+        case 'AUTHENTICATE': {
+            return Object.assign({}, state, {
+                authorization: window.atob(action.auth)
+            })
+        }
          
         case 'SIGN_OUT': {
             return homepageInitialState //go back to initial state when sign out
