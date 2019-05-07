@@ -1,5 +1,5 @@
-sudo: required
-dist: trusty
+#sudo: required
+#dist: trusty
 language: generic
 matrix:
   include:
@@ -9,9 +9,9 @@ matrix:
     before_install: 
       - cd ./frontend/
     install:
-      - sudo npm install 
+      - npm install 
     script: 
-      - sudo npm test 
+      - npm test 
 
     
     #-language: python3
