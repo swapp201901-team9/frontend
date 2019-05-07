@@ -6,15 +6,15 @@ import NavBar from '../NavBar/NavBar';
 class LoginPage extends Component {
     render() {
         return (
-           <div>
+           <body>
            < NavBar/>
            <section className="wrap clear">
-            <div className="main">
+            <div className = "main">
                 <SignIn />
                 <SignUp />
             </div>
             </section>
-           </div>
+           </body>
     );
   }
 }

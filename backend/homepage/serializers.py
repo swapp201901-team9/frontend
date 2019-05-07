@@ -28,14 +28,14 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    user= serializers.ReadOnlyField(source='user.username')
-    domain = serializers.SerializerMethodField()
-    def get_domain(self, obj):
-        return 'http://'+self.context['domain']+obj.myimage.url
-    class Meta:
-        model = Profile
-        fields = ('user','myname','mybelong','myintro', 'myimage', 'domain')
+# class ProfileSerializer(serializers.ModelSerializer):
+#     user= serializers.ReadOnlyField(source='user.username')
+#     domain = serializers.SerializerMethodField()
+#     def get_domain(self, obj):
+#         return 'http://'+self.context['domain']+obj.myimage.url
+#     class Meta:
+#         model = Profile
+#         fields = ('user','myname','mybelong','myintro', 'myimage', 'domain')
 
 class GroupSerializer(serializers.ModelSerializer):
     domain = serializers.SerializerMethodField()

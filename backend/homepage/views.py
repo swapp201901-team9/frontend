@@ -165,7 +165,7 @@ def main(request):
     #     return Response(status=status.HTTP_403_FORBIDDEN)
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((IsAuthenticatedOrNothing,))
+#@permission_classes((IsAuthenticatedOrNothing,))
 def group_detail(request, **kwargs):
     if request.method == 'GET':
         try:
@@ -206,5 +206,37 @@ def create_group(request):
             group.group_type = form.cleaned_data['group_type']
             group.group_name = form.cleaned_data['group_name']
             group.save()
-            return HttpResponseRedirect('/')
+            group_serializer = GroupSerializer(group)
+            return Response(group_serializer.data)
+            #return HttpResponseRedirect('/')
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticatedOrNothing,))
+def group_list(request, username):
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.user.id == None:
+        return Response(status=status.HTTP_403_FORBIDDEN)
+    if request.method == 'GET':
+        try:
+            groups = Group.objects.filter(users__username=username)
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        group_serializer = GroupSerializer(groups, many=True)
+        return Response(group_serializer.data)  
+
+@api_view(['GET'])
+def group_list_all(request):
+    if request.method == 'GET':
+        try:
+            groups = Group.objects.all()
+        except Group.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        group_serializer = GroupSerializer(groups, many=True)
+        context = {
+            'groupList': group_serializer.data,
+        }
+        return Response(group_serializer.data)
