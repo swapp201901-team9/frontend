@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -27,12 +27,14 @@ export const authenticate = (auth) => {
 
 // When the user enters username, password and pwdverification and clicks the '회원가입', this action is invocked and Saga requests POST to 'User List' in backend page.
 export const postSignUp = (username, password) => {
+console.log("%%%%");
     return {
         type: 'POST_SIGN_UP',
         username,
         password
     }
 }
+
 //When the user clicks the 'Sign Out' button, this action is invoked
 export const signOut = () => {
     return {
@@ -102,7 +104,7 @@ export const toEscape = (profile_user) => {
 }
 
 //GroupPage Actions
-export const createGroup = (grouptype, groupname) => {
+export const toCreateGroup = (grouptype, groupname) => {
 	return {
 		type: CREATE_GROUP,
 		grouptype: grouptype,
@@ -110,23 +112,34 @@ export const createGroup = (grouptype, groupname) => {
 	}
 }
 
-export const searchGroup = (groupname) => {
+export const toSearchGroup = (searchword) => {
 	return {
 		type: SEARCH_GROUP,
-		groupname: groupname,
+		searchword: searchword,
 	}
 }
 
-export const joinGroup = (groupid) => {
+export const toJoinGroup = (groupid) => {
+    console.log("joinGroup action")
+    console.log(groupid)
 	return {
 		type: JOIN_GROUP,
 		groupid: groupid,
-	}
+    }
 }
 
-export const toGroupDetail = (groupid) => {
+export const gotoGroupDetail = (groupid) => {
 	return {
 		type: TO_GROUP_DETAIL,
 		groupid: groupid,
 	}
+}
+
+export const gotoAdminGroup = (groupid) => {
+    console.log("adminGroup action")
+    console.log(groupid)
+    return {
+        type: TO_ADMIN_GROUP,
+        groupid: groupid,
+    }
 }

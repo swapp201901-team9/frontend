@@ -1,5 +1,5 @@
 import React from 'react';
-import SignOut from '../TimeLinePage/SignOut.js';
+import SignOut from '../MainPage/SignOut.js';
 import ButtonList from './ButtonList.js';
 import {connect} from 'react-redux';
 
