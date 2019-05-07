@@ -505,11 +505,23 @@ function *escapeBook(profuser){
 
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
-/*
-TODO: not yet implemented
-	try {
-		yield call(xhr.post, fixed_url + 'groups/', {
-*/
+    try {
+        let data = yield call(xhr.post, fixed_url + 'create_group/', {
+            headers: {
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType:'json',
+            body: JSON.stringify({"group_type": data.grouptype, "group_name": data.groupname})
+        });
+        console.log("successfully created group");
+        // localStorage.setItem("group", window.btoa(data.grouptype + ":" + data.groupname));
+        // url to be changed to group page afterwards
+        yield put(actions.changeUrl('/groupdetail/'+data.id+'/'));
+    }
+    catch(error) {
+        alert("error while creating group");
+    }
 }
 
 function *searchGroup(){
