@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {changeUrl} from '../../actions';
+import { showNavBar } from '../../actions';
+import {changeUrl, postSignUp} from '../../actions';
 import Login from './Login';
 import Join from './Join';
 

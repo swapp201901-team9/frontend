@@ -34,16 +34,17 @@ class Group(models.Model):
         default=MAJOR,
     )
     group_name = models.CharField(max_length=50)
+    users = models.ManyToManyField('auth.User')
 
     def __str__(self):
         return self.group_name
 
-class Profile(models.Model):
-    user = models.OneToOneField('auth.User', on_delete=models.CASCADE,primary_key=True)
-    groups = models.ManyToManyField('Group')
+# class Profile(models.Model):
+#     user = models.OneToOneField('auth.User', on_delete=models.CASCADE,primary_key=True)
+#     groups = models.ManyToManyField('Group')
 
-    def __str__(self):
-        return str(self.user)
+#     def __str__(self):
+#         return str(self.user)
 
 class Design(models.Model):
     owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)

@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -27,14 +27,12 @@ export const authenticate = (auth) => {
 
 // When the user enters username, password and pwdverification and clicks the '회원가입', this action is invocked and Saga requests POST to 'User List' in backend page.
 export const postSignUp = (username, password) => {
-console.log("%%%%");
     return {
         type: 'POST_SIGN_UP',
         username,
         password
     }
 }
-
 //When the user clicks the 'Sign Out' button, this action is invoked
 export const signOut = () => {
     return {
@@ -104,8 +102,12 @@ export const toEscape = (profile_user) => {
 }
 
 //GroupPage Actions
+<<<<<<< HEAD
 export const toCreateGroup = (grouptype, groupname) => {
     console.log("CREATE_GROUP action")
+=======
+export const createGroup = (grouptype, groupname) => {
+>>>>>>> 6d725871358dd7d6de8904157b9d3ce52da3d9ba
 	return {
 		type: CREATE_GROUP,
 		grouptype: grouptype,
@@ -113,6 +115,7 @@ export const toCreateGroup = (grouptype, groupname) => {
 	}
 }
 
+<<<<<<< HEAD
 export const toSearchGroup = (newList) => {
     console.log("SEARCHGROUP action")
 	return {
@@ -124,24 +127,25 @@ export const toSearchGroup = (newList) => {
 export const toJoinGroup = (groupid) => {
     console.log("JOINGROUP action")
     console.log(groupid)
+=======
+export const searchGroup = (groupname) => {
 	return {
-		type: JOIN_GROUP,
-		groupid: groupid,
-    }
+		type: SEARCH_GROUP,
+		groupname: groupname,
+	}
 }
 
-export const gotoGroupDetail = (groupid) => {
+export const joinGroup = (groupid) => {
+>>>>>>> 6d725871358dd7d6de8904157b9d3ce52da3d9ba
 	return {
-		type: TO_GROUP_DETAIL,
+		type: JOIN_GROUP,
 		groupid: groupid,
 	}
 }
 
-export const gotoAdminGroup = (groupid) => {
-    console.log("adminGroup action")
-    console.log(groupid)
-    return {
-        type: TO_ADMIN_GROUP,
-        groupid: groupid,
-    }
+export const toGroupDetail = (groupid) => {
+	return {
+		type: TO_GROUP_DETAIL,
+		groupid: groupid,
+	}
 }
