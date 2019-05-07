@@ -22,8 +22,11 @@ class SignUpPage extends React.Component {
           <div>
           < NavBar/>
           <section className="wrap clear">
-           <div className= "main">
+           <div className = "main">
            <div>
+             <div>
+                <img alt="" />
+             </div>
              <div >
              <div className="module_title"> JOIN </div>
 

@@ -1,6 +1,5 @@
-import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
-import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './../../actions/types'
+import { put, take, call, /*fork, */select, spawn } from 'redux-saga/effects'
+import * as actions from './../../actions'
 
 var xhr = require('xhr-promise-redux');
 
@@ -25,7 +24,6 @@ const localStorage = window.localStorage;
 // saga: 미들웨어에서 돌아갈 함수
 export default function *saga() {
     const path = window.location.pathname;
-    console.log("pathname: ", window.location.pathname)
     switch(window.location.pathname) {
         case '/':
             yield spawn(mainPageSaga);
@@ -34,7 +32,7 @@ export default function *saga() {
             yield spawn(loginPageSaga);
             break;
         case '/main/':
-            yield spawn(loggedInMainPageSaga);
+            yield spawn(mainPageSaga);
             break;
         case '/sign_up/':
             yield spawn(signUpPageSaga);
@@ -42,22 +40,22 @@ export default function *saga() {
         default:
             const url = path.split("/");
             switch(url[1]) {
+
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
-                case 'group':
-                    yield spawn(groupPageSaga);
-                    break;
-                default:
-                    console.log("default state");
-                    alert("없는 장소");
-                    if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
-                        yield put(actions.changeUrl('/'));
-                    } else {
-                        localStorage.removeItem('parent');
-                        yield put(actions.changeUrl('/main/'));
-                    }
+
+				//SA TODO: adding group url 
+                //default:
+                    // console.log("default state");
+                    // alert("없는 장소");
+                    // if(localStorage.getItem("auth") === null) {
+                    //     localStorage.removeItem('parent');
+                    //     yield put(actions.changeUrl('/'));
+                    // } else {
+                    //     localStorage.removeItem('parent');
+                    //     yield put(actions.changeUrl('/main/'));
+                    // }
             }
     }
 }
@@ -72,44 +70,36 @@ export default function *saga() {
 // 2. 페이지의 url을 예쁘게(<<<<<중요>>>>>) 정의한다.
 //   (좋은 예: 메인 페이지의 url - '/main/', 나쁜 예: 메인 페이지의 url - '/sogaewonsil_real_geukhyum/')
 // 3. switch문의 케이스에 추가한다.
-//   (ex. 메인페이지 추가 - case '/main/': yield spawn(mainPageSaga); break;)
+//   (ex. 메인페이지 추가 - case '/main/': yield spawn(timeLinePageSaga); break;)
 // 4. 페이지 이동은 yield put(actions.changeUrl('/target_path/'))를 이용하시면 됩니다.
 //////////////////////////////////////////////////
 function *loginPageSaga() {
-    console.log("Login Page Saga");
+    console.log("Login Page");
     yield spawn(watchLoginState);
     yield spawn(watchSignIn);
     yield spawn(watchSignUp);
 }
 
 function *signUpPageSaga() {
-    console.log("Sign Up Page Saga")
+    console.log("Sign Up Page")
     yield spawn(watchLoginState);
     yield spawn(watchPostSignUp);
 }
 
 function *mainPageSaga() {
-    console.log("Main Page Saga");
-    yield spawn(watchLoginState);
-
-    yield spawn(watchGoToMain);
-}
-
-function *loggedInMainPageSaga() {
-    console.log("Logged In Main Page Saga");
+    console.log("Main Page");
     yield spawn(watchLoginState);
 
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
 
     yield spawn(watchToProfile);
-    yield spawn(watchGoToGroupDetail);
-    yield spawn(watchGoToAdminGroup);
 
 }
 
+
 function *profilePageSaga() {
-    console.log("Profile Page Saga");
+    console.log("[ProfilePageSaga]");
     yield spawn(watchLoginState);
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
@@ -120,8 +110,8 @@ function *profilePageSaga() {
 }
 
 function *groupPageSaga() {
-	console.log("Group Page Saga");
-	//yield spawn(watchLoginState);
+	console.log("GroupPageSaga");
+	yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
 
@@ -129,8 +119,7 @@ function *groupPageSaga() {
 	yield spawn(watchCreateGroup);
 	yield spawn(watchSearchGroup);
 	yield spawn(watchJoinGroup);
-    yield spawn(watchGoToGroupDetail);
-    yield spawn(watchGoToAdminGroup);
+	yield spawn(watchGoToGroupDetail);
 }
 
 
@@ -141,48 +130,46 @@ function *groupPageSaga() {
 // <<주의>> 새로운 state를 추가할 경우 try-catch문을 이용해 정보를 받아온 후 스테이트에 업데이트 해야 함
 function *watchLoginState() {
     if(window.location.pathname[window.location.pathname.length-1] !== '/') {
-        console.log("without /")
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
-    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
-        // 로그인 된 상태로 첫 화면이나 회원가입, 로그인 페이지로 들어갈 경우: main 페이지로 리다이렉트
+    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/') {
         if(localStorage.getItem("auth") !== null) {
             localStorage.removeItem('parent');
             yield put(actions.changeUrl('/main/'));
         }
     }
     else {
-        // 로그인이 되지 않은 경우: 무조건 첫 화면으로
         if(localStorage.getItem("auth") === null) {
             localStorage.removeItem('parent');
             yield put(actions.changeUrl('/'));
         }
-        // 로그인이 되어 있는 경우
         else {
             const path = window.location.pathname;
             let data, parent_data;
-            
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 localStorage.removeItem('parent');
-                let my_groups_data;
                 try {
-                   console.log("get main without exception")
-                } catch(error) {
+
+                    console.log('Get data without exception');
+                }
+                catch(error) {
                     alert("main error");
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+
                     loading: true,
+
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
             }
-
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];//그냥..
                 let profile_data = null;
+
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
@@ -196,9 +183,8 @@ function *watchLoginState() {
                     }
                     return;
                 }
-
-                //프로필 정보를 get하는 부분
                 else if(path.split("/")[1] === 'profile'){
+                    //프로필 정보를 get하는 부분
                     console.log("get profile details...");
                     try{
                         profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/profile/',{
@@ -210,7 +196,7 @@ function *watchLoginState() {
                             responseType: 'json'
                          });
                          console.log('Get data without exception');
-                    } catch(error){
+                    }catch(error){
                         alert("profile error");
                     }
                     yield put(actions.setState({
@@ -219,68 +205,6 @@ function *watchLoginState() {
                         profile_user: profile_data.body,
                         loading: true,
                         load: 0,
-
-                    }));
-                }
-
-                /* group 정보를 get 하는 부분
-                 * 1) profile_data backend에서 get (url: 'users/'+username+'/')
-                 * 2) all_groups_data backend에서 get (url: 'groups/')
-                 * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
-                 */
-                else if(path.split("/")[1] === 'group') {
-                    console.log("get group details...");
-                    let all_groups_data, my_groups_data;
-
-                    //profile data
-                    try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/', {
-                            headers: {
-                                'Content-Type': 'appllication/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("group profile error");
-                    }
-
-                    //all_groups data
-                    try{
-                        //SA TODO backend url에 groups가 아직 없음!!!
-                        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'applecation/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("all groups data error")
-                    }
-                    
-                    //my_groups data
-                    try{
-                        my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("my groups data error")
-                    }
-
-                    yield put(actions.setState({
-                        autorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data,
-                        all_groups: all_groups_data.body,
-                        my_groups: my_groups_data.body,
-                        filtered_groups: all_groups_data.body,
 
                     }));
                 }
@@ -296,7 +220,8 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
-                    } catch(error) {
+                    }
+                    catch(error) {
                         alert("get article in state error");
                         return;
                     }
@@ -311,7 +236,8 @@ function *watchLoginState() {
                             responseType: 'json'
                         });
                         console.log('Get data without exception');
-                    } catch(error) {
+                    }
+                    catch(error) {
                         alert("get parent article in state");
                         return;
                     }
@@ -361,9 +287,8 @@ function *watchSignOut() {
 // watchPostSignUp: 회원가입 페이지에서 가입 버튼 클릭 관찰
 function *watchPostSignUp() {
     while(true) {
-      console.log("here");
+
         const data = yield take('POST_SIGN_UP');
-        console.log(data);
         yield call(signUp, data);
     }
 }
@@ -414,53 +339,37 @@ function *watchEscape(){
 //watchCreateGroup: GroupPage에서 새로운 그룹 생성 버튼 클릭 관찰 및 리다이렉트(새로운 그룹 detail 페이지로)
 function *watchCreateGroup() {
 	while(true) {
-        const data = yield take(CREATE_GROUP);
-        console.log("watchCreateGroup");
-        yield call(createGroup, data);
-        //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
-        //backend에서 redierect 처리
-		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
-
+		const data = yield take('CREATE_GROUP');
+		yield call(createGroup, data);
+		//SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
+		yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
 	}
 }
 
 //watchSearchGroup: GroupPage에서 그룹 검색 버튼 클릭 관찰
 function *watchSearchGroup() {
 	while(true) {
-        const data = yield take(SEARCH_GROUP);
-        console.log("watchSearchGroup")
+		const data = yield take('SEARCH_GROUP');
 		yield call(searchGroup, data);
 		//SA TODO: 검색 결과로 리다이렉트??
 	}
 }
-
+	
 //watchJoinGroup: GroupPage에서 그룹 가입 버튼 클릭 관찰
 function *watchJoinGroup() {
 	while(true) {
-		const data = yield take(JOIN_GROUP);
-        console.log("watchJoinGroup")
-        yield call(joinGroup, data);
+		const data = yield take('JOIN_GROUP');
+		yield call(joinGroup, data);
 		//SA TODO: 가입 그룹 detail 페이지로 리다이렉트??
 	}
 }
 
-//watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관찰 및 리다이렉트(클릭한 그룹 detail 페이지로)
+//watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관착 및 리다이렉트(클릭한 그룹 detail 페이지로)
 function *watchGoToGroupDetail() {
 	while(true) {
-        const data = yield take(TO_GROUP_DETAIL);
-        console.log("watchGoToGroupDetail")
+		const data = yield take('TO_GROUP_DETAIL');
 		yield call(toGroupDetail, data);
-		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
-	}
-}
-
-//watchGoToAdminGroup: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 admin 클릭 관찰 및 리다이렉트(클릭한 그룹 admin 페이지로)
-function *watchGoToAdminGroup() {
-	while(true) {
-        const data = yield take(TO_ADMIN_GROUP);
-        console.log("watchGoToAdminGroup");
-		yield call(toAdminGroup, data);
-		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
+		yield put(actions.changeUrl('/group/' + data.groupname + '/'));
 	}
 }
 
@@ -592,28 +501,10 @@ function *escapeBook(profuser){
     }
 }
 
+//SA TODO
+
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
-<<<<<<< HEAD
-    try {
-        let data = yield call(xhr.post, fixed_url + 'create_group/', {
-            headers: {
-                "Content-Type": 'application/json',
-                Accept: 'application/json'
-            },
-            contentType:'json',
-            body: JSON.stringify({"group_type": data.grouptype, "group_name": data.groupname})
-        });
-        console.log("successfully created group");
-        // localStorage.setItem("group", window.btoa(data.grouptype + ":" + data.groupname));
-        // url to be changed to group page afterwards
-        yield put(actions.changeUrl('/groupdetail/'+data.id+'/'));
-    }
-    catch(error) {
-        alert("error while creating group");
-    }
-}
-=======
     console.log("createGroup");
     console.log(data.grouptype.value, " ", data.groupname.value);
 
@@ -631,28 +522,18 @@ function *createGroup(data){
     } catch(error){
         alert("*createGroup error")
     }
->>>>>>> 7f4797324c490af27ff12949510fc4cf58e35bd8
 
     //문법 확실치 X 새로 만든 groupdetail page로 이동
     //yield put(actions.changeUrl('/group/'+groupid))
 }
 
-function *searchGroup(data){
-    console.log("searchGroup")
-    yield put(actions.setState({
-        filtered_groups: data
-    }));
+function *searchGroup(){
+}
+
+function *joinGroup(){
 
 }
 
-function *joinGroup(data){
-    console.log("joinGroup")
+function *toGroupDetail(){
 }
 
-function *toGroupDetail(data){
-    console.log("toGroupDetail")
-}
-
-function *toAdminGroup(data){
-    console.log("toAdminGroup")
-}
