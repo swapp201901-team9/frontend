@@ -6,6 +6,10 @@ import homepageApp from './index.js';
 const initState = {
     authorization: "",
     profile_user: null,
+    
+    all_groups: [],
+    my_groups: [],
+    filtered_groups: [],
 
     my_requests: [],
     load : 0,
@@ -23,6 +27,10 @@ describe('homepage reducer', () => {
             authorization: auth,
             profile_user: null,
 
+            all_groups: [],
+            my_groups: [],
+            filtered_groups: [],
+
             my_requests: [],
             load: 0,
             loading: false,
@@ -37,6 +45,10 @@ describe('homepage reducer', () => {
         const state = {
             authorization: auth,
             profile_user: null,
+            
+            all_groups: [],
+            my_groups: [],
+            filtered_groups: [],
 
             my_requests: [],
             load: 0,
