@@ -6,7 +6,9 @@ import { gotoGroupDetail, gotoAdminGroup } from '../../actions/index.js';
 class MyGroupList extends React.Component {
     render() {
         return (
-            <ul>
+            <div>
+                <h1>My Group List</h1>
+                <ul>
                 {this.props.my_groups.map(group =>
                     <MyGroup 
                         key={group.id}
@@ -15,7 +17,8 @@ class MyGroupList extends React.Component {
                         onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
                     />
                 )}
-            </ul>
+                </ul>
+            </div> 
         )
     }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 
 
 var re=0;
-class TimeLine extends React.Component {
+class GroupDetail extends React.Component {
     render() {
         const Scroll = () => {
                 this.props.onMoreClick()
@@ -15,11 +15,11 @@ class TimeLine extends React.Component {
           }
         };
       return(
-          <div className="TimeLine">
+          <div className="GroupDetail">
 		      
           </div>
       );
     }
 }
 
-export default TimeLine
+export default GroupDetail
