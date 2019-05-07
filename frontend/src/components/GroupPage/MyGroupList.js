@@ -1,47 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import MyGroup from './MyGroup';
+import { gotoGroupDetail, gotoAdminGroup } from '../../actions/index.js';
 
-const GroupItem = ({ groupname, grouptype, onClick }) => {
-	return (
-		<ul>
-			<div className="groupname">{groupname}</div>
-		</ul>
-	)
-}
-
-const GroupList = ({
-	groupList,
-}) => {
-	const groupItems = groupList.map(group => (
-		<GroupItem
-			key={group.id}
-			groupname={group.groupname}
-			grouptype={group.grouptype}
-			id={group.groupid}
-		/>
-	))
-	return (
-		<div className="GroupList">
-			<h2>My Groups</h2>
-			<ul>{groupItems}</ul>
-		</div>
-	)
-}
-
-class GroupListContainer extends React.Component {
-	render() {
-		const { list } = this.props
-		return (
-			<GroupList
-				groupList={list}
-			/>
-		)
-	}
+class MyGroupList extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>My Group List</h1>
+                <ul>
+                {this.props.my_groups.map(group =>
+                    <MyGroup 
+                        key={group.id}
+                        group={group}
+                        onClickGroup={() => this.props.onToGroupDetail(group.id)}
+                        onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
+                    />
+                )}
+                </ul>
+            </div> 
+        )
+    }
 }
 
 const mapStateToProps = (state) => ({
-	list: state.grouplist,
+    my_groups: state.my_groups
 })
 
-export default connect( mapStateToProps )( GroupListContainer )
+const mapDispatchToProps = (dispatch) => ({
+	onToGroupDetail: (groupid) => gotoGroupDetail(groupid),
+	onToAdminGroup: (groupid) => gotoAdminGroup(groupid)
+})
 
+export default connect(mapStateToProps, mapDispatchToProps)(MyGroupList)
