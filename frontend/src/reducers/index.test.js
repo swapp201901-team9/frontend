@@ -1,4 +1,4 @@
-// jest testing
+// jest testing 
 
 import * as actions from '../actions';
 import homepageApp from './index.js';
@@ -17,17 +17,17 @@ describe('homepage reducer', () => {
     it('should return the initial state', () => {
         expect(homepageApp(undefined, {})).toEqual(initState)
     })
-    it('should fill authorization', () => {
+    /*it('should fill authorization', () => {
         const auth = 'test:testpasswd'
         expect(homepageApp(undefined, actions.authenticate(window.btoa(auth)))).toEqual({
             authorization: auth,
             profile_user: null,
-
+            
             my_requests: [],
             load: 0,
             loading: false,
         })
-    })
+    })*/
     it('should return the signout state', () => {
         expect(homepageApp(undefined, actions.signOut())).toEqual(initState)
     })
@@ -37,15 +37,15 @@ describe('homepage reducer', () => {
         const state = {
             authorization: auth,
             profile_user: null,
-
+            
             my_requests: [],
             load: 0,
             loading: false,
-
+            
         }
 
         expect(homepageApp(undefined, actions.setState(state))).toEqual(state)
     })
-
+    
 
 })

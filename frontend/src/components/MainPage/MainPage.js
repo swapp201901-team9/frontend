@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import NavBar from '../NavBar/NavBar';
 
-class MainPage extends React.Component {
+class Root extends React.Component {
     render() {
 
         return (
@@ -23,7 +24,7 @@ class MainPage extends React.Component {
           <div className="aside">
             <h2 className="h_black">MY GROUP</h2>
             <div className="content">
-            <p>contents</p>
+            <p> contents </p>
             </div>
           </div>
           </section>
@@ -34,4 +35,4 @@ class MainPage extends React.Component {
     }
 }
 
-export default MainPage
+export default Root;
