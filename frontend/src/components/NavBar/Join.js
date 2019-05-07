@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {changeUrl} from '../../actions';
+import { showNavBar } from '../../actions';
+import {changeUrl, postSignUp} from '../../actions';
 
 class Join extends React.Component {
     render() {
@@ -17,7 +18,7 @@ class Join extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(changeUrl('/sign_up/'))
+        onClick: () => dispatch(changeUrl('/sign_up'))
     }
 }
 
