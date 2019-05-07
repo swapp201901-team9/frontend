@@ -7,13 +7,13 @@
 /backend/homepage/migrations
 /backend/homepage/__pycache__
 /backend/northfacebook_backend/__pycache__
-
+/backend/env/
 
 # testing
-/northfacebook_frontend/coverage
+/frontend/coverage
 
 # production
-/northfacebook_frontend/build
+/frontend/build
 
 # misc
 .DS_Store
