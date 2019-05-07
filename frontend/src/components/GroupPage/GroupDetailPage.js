@@ -16,7 +16,7 @@ class GroupDetailPage extends React.Component {
         return (
                 <div >
                     <SignOut />
-                    <GroupDetail />
+                    <p>Group Detail Page</p>
                 </div>
                )
     }

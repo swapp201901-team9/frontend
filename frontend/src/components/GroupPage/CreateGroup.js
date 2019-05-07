@@ -61,7 +61,10 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
-	onCreateGroup: (grouptype, groupname) => dispatch(toCreateGroup(grouptype, groupname))
+	onCreateGroup: (grouptype, groupname) => {
+		console.log("ask for create group")
+		dispatch(toCreateGroup(grouptype, groupname))
+	}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup)

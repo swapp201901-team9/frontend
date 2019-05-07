@@ -105,6 +105,7 @@ export const toEscape = (profile_user) => {
 
 //GroupPage Actions
 export const toCreateGroup = (grouptype, groupname) => {
+    console.log("CREATE_GROUP action")
 	return {
 		type: CREATE_GROUP,
 		grouptype: grouptype,
@@ -112,15 +113,16 @@ export const toCreateGroup = (grouptype, groupname) => {
 	}
 }
 
-export const toSearchGroup = (searchword) => {
+export const toSearchGroup = (newList) => {
+    console.log("SEARCHGROUP action")
 	return {
 		type: SEARCH_GROUP,
-		searchword: searchword,
+		filtered_groups: newList,
 	}
 }
 
 export const toJoinGroup = (groupid) => {
-    console.log("joinGroup action")
+    console.log("JOINGROUP action")
     console.log(groupid)
 	return {
 		type: JOIN_GROUP,

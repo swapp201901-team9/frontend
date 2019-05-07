@@ -45,8 +45,11 @@ export default function *saga() {
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
-                case 'group':
+                case 'groups':
                     yield spawn(groupPageSaga);
+                    break;
+                case 'group':
+                    yield spawn(groupDetailPageSaga);
                     break;
                 default:
                     console.log("default state");
@@ -131,6 +134,13 @@ function *groupPageSaga() {
 	yield spawn(watchJoinGroup);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
+}
+
+function *groupDetailPageSaga() {
+    console.log("Group Detail Page Saga");
+    //yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+	yield spawn(watchGoToMain);
 }
 
 
@@ -248,7 +258,11 @@ function *watchLoginState() {
 
                     //all_groups data
                     try{
-                        //SA TODO backend url에 groups가 아직 없음!!!
+                        /* BACKEND TODO
+                         * backend url에 groups가 아직 없음
+                         * 전체 group 정보를 저장할 groups가 필요
+                         * backend에서 all_groups state로 정보 불러올 예정
+                         */
                         all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -263,6 +277,14 @@ function *watchLoginState() {
                     
                     //my_groups data
                     try{
+                        /* BACKEND TODO
+                         * backend url에 users/username/groups/가 아직 없음
+                         * 개인 user의 group 정보를 저장할 users/username/groups가 필요
+                         * backend에서 my_groups state로 정보 불러올 예정
+                         * 근데 사실 여기는 확실치 않은게 users/username/groups/ 로 들어가서 정보를 불러와야 하는건지
+                         * groups/로 가서 거기 있는 그룹들 다 뒤지면서 해당 유저 연결된 걸 가져와야하는건지 모르겠네염..
+                         * foreign key로 연결된 것들 처리하는걸 까먹어가지구..
+                         */
                         my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -597,7 +619,12 @@ function *createGroup(data){
     console.log("createGroup");
     console.log(data.grouptype.value, " ", data.groupname.value);
 
-    //SA TODO groups/create_group/이 좀 더 낫지 않을까(=> backend url을 바꿔야함)
+    /* BACKEND TODO
+     * 이건 사실 그렇게 중요한 건 아닌데 create_group backend url이
+     * groups/create_group 이면 좀 더 좋으려나 싶어서여
+     * 그치만 전 backend는 거의 까먹어서.. 그냥 원하는대로 하시면 될거같아요
+     * 일단은 지금 구현해놓으신 url대로 해놨습니당!
+     */
     const path = 'create_group/'
 	try {
 		yield call(xhr.post, fixed_url + path, {
@@ -619,7 +646,7 @@ function *createGroup(data){
 function *searchGroup(data){
     console.log("searchGroup")
     yield put(actions.setState({
-        filtered_groups: data
+        filtered_groups: data.filtered_groups
     }));
 
 }
