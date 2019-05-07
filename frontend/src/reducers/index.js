@@ -16,6 +16,12 @@ const homepageInitialState = {
 
 const homepage = (state = homepageInitialState, action) => {
     switch (action.type) {
+
+        case 'AUTHENTICATE': {
+            return Object.assign({}, state, {
+                authorization: window.atob(action.auth)
+            })
+        }
          
         case 'SIGN_OUT': {
             return homepageInitialState //go back to initial state when sign out
