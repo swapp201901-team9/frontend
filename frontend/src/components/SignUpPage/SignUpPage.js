@@ -8,8 +8,6 @@ class SignUpPage extends React.Component {
         const onCreateSubmit = () => {
             if(this.username.value === "")
                 alert("아이디를 입력하세요.");
-            else if(this.myname.value === "")
-                alert("이름을 입력하세요.");
             else if(this.password.value === "")
                 alert("비밀번호를 입력하세요.");
             else if(this.pwdverification.value === "")
@@ -39,12 +37,7 @@ class SignUpPage extends React.Component {
                    </label>
                    <input type="text" ref={ node => {this.username = node;}} id="username_field" className="field" />
                  </div>
-                 <div className="Text-Field">
-                   <label>
-                   NAME
-                   </label>
-                   <input type="text" ref={ node => {this.myname = node;}} id="myname_field" className="field" />
-                 </div>
+
                    <div className="Text-Field">
                      <label>
                      PASSWORD
