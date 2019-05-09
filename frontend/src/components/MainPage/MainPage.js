@@ -3,7 +3,6 @@ import NavBar from '../NavBar/NavBar';
 import { connect } from 'react-redux';
 
 import MyGroupList from '../GroupPage/MyGroupList';
-import SignOut from './SignOut';
 
 
 class MainPage extends React.Component {
@@ -38,7 +37,6 @@ class MainPage extends React.Component {
                 <h2 className="h_black">MY GROUP</h2>
                 <div className="content">
                   <p>MyGroupList conetents</p>
-                  <SignOut />
                 </div>
               </div>
             </section>
