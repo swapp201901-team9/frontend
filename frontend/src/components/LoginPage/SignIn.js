@@ -16,11 +16,11 @@ class SignIn extends React.Component {
              onSubmit()
            }}
            >
-              <div className="module_title"> LOGIN </div>
+
 
                     <div className="Text-Field">
                       <label>
-                      USERNAME
+                      ID
                       </label>
                       <input type="text" ref={ node => {this.username = node;} } id='username_field' className='field'></input>
                     </div>
