@@ -13,7 +13,7 @@ class NavBar extends React.Component {
         //     if (this.username !== undefined && this.password !== undefined) {
         //         this.props.onClick(this.username.value, this.password.value)
         //     }
-        if(this.props.loggedIn === ""){
+        if(this.props.loggedIn !== null){
           return(
             <div>
               <header className="clear">
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => ({
     loggedIn: state.authorization,
 })
 
-NavBar = connect(undefined, mapDispatchToProps)(NavBar);
+NavBar = connect(mapStateToProps, mapDispatchToProps)(NavBar);
 
 
 
