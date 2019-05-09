@@ -10,7 +10,7 @@ class NavBar extends React.Component {
         //     if (this.username !== undefined && this.password !== undefined) {
         //         this.props.onClick(this.username.value, this.password.value)
         //     }
-
+        
         return (
         <div>
           <header className="clear">

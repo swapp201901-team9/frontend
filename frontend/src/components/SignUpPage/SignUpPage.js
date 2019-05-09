@@ -8,6 +8,8 @@ class SignUpPage extends React.Component {
         const onCreateSubmit = () => {
             if(this.username.value === "")
                 alert("아이디를 입력하세요.");
+            else if(this.myname.value === "")
+                alert("이름을 입력하세요.");
             else if(this.password.value === "")
                 alert("비밀번호를 입력하세요.");
             else if(this.pwdverification.value === "")
@@ -23,9 +25,9 @@ class SignUpPage extends React.Component {
           < NavBar/>
           <section className="wrap clear">
            <div className= "main">
-           <div>
+           <h2 className="h_white">JOIN</h2>
              <div >
-             <div className="module_title"> JOIN </div>
+
 
                  <form onSubmit={e => {
                      e.preventDefault()
@@ -33,9 +35,15 @@ class SignUpPage extends React.Component {
                  }}>
                  <div className="Text-Field">
                    <label>
-                   USERNAME
+                   ID
                    </label>
                    <input type="text" ref={ node => {this.username = node;}} id="username_field" className="field" />
+                 </div>
+                 <div className="Text-Field">
+                   <label>
+                   NAME
+                   </label>
+                   <input type="text" ref={ node => {this.myname = node;}} id="myname_field" className="field" />
                  </div>
                    <div className="Text-Field">
                      <label>
@@ -55,7 +63,7 @@ class SignUpPage extends React.Component {
                  </form>
              </div>
            </div>
-           </div>
+
            </section>
           </div>
 
@@ -72,6 +80,8 @@ let mapDispatchToProps = (dispatch) => {
         onToLogin: () => dispatch(changeUrl('/'))
     }
 }
+
+
 
 SignUpPage = connect(undefined, mapDispatchToProps)(SignUpPage);
 
