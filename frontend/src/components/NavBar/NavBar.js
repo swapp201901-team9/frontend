@@ -13,7 +13,7 @@ class NavBar extends React.Component {
         //     if (this.username !== undefined && this.password !== undefined) {
         //         this.props.onClick(this.username.value, this.password.value)
         //     }
-        if(this.props.loggedIn !== null){
+        if(this.props.loggedIn !== ""){
           return(
             <div>
               <header className="clear">
@@ -32,6 +32,7 @@ class NavBar extends React.Component {
 
           )
         }
+        else{
         return (
         <div>
           <header className="clear">
@@ -47,6 +48,7 @@ class NavBar extends React.Component {
          </header>
        </div>
         )
+      }
     }
 }
 
