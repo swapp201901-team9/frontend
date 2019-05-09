@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { toChangeIntro } from '../../actions/index.js';
+
 class ChangeIntroPage extends React.Component{
     constructor(props) {
         super(props);
