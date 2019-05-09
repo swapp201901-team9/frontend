@@ -606,7 +606,8 @@ function *createGroup(data){
                 "Content-Type": 'application/json',
                 Accept: 'application/json'
             },
-            contentType: 'json'
+            contentType: 'json',
+            body: JSON.stringify({"grouptype": data.grouptype.value, "groupname": data.groupname.value})
         });
     } catch(error){
         alert("*createGroup error")
