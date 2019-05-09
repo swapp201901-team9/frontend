@@ -3,7 +3,10 @@ import NavBar from '../NavBar/NavBar';
 
 class MainPage extends React.Component {
     render() {
-
+      //<form action = "mydesigner.php" method = "get">
+      //        <input type = "submit" value= "Run me now!"></input>
+      //      </form>
+      //<?php include 'mydesigner.php';?>
         return (
           <div className="app">
           < NavBar/>
@@ -18,6 +21,9 @@ class MainPage extends React.Component {
             <h2 className="h_white">SAMPLE VIEW</h2>
             <div className="content">
             <p> contents </p>
+            <form action="mydesigner.php">
+            <button/>
+            </form>
             </div>
           </div>
           <div className="aside">
