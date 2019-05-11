@@ -9,7 +9,7 @@ class SearchingGroup extends React.Component {
 		console.log("search onSubmit")
 		if(this.searchword !== undefined) {
 			this.newList = this.props.all_groups.filter(group => {
-				return group.groupname.includes(this.searchword)
+				return group.group_name.includes(this.searchword)
 			});
 		}
 		console.log("after: ", this.newList)
