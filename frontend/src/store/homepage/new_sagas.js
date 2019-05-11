@@ -252,7 +252,7 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'profile'){
                     console.log("get profile details...");
                     try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/profile/',{
+                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
@@ -603,6 +603,7 @@ function *createGroup(data){
         });
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
+        console.log(error)
         alert("*createGroup error")
     }
 }
@@ -617,6 +618,21 @@ function *searchGroup(data){
 
 function *joinGroup(data){
     console.log("joinGroup")
+    const path = 'join_group/'+data.groupid+'/'
+	try {
+		yield call(xhr.post, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*joinGroup error")
+    }
 }
 
 function *toGroupDetail(data){
