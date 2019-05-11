@@ -16,33 +16,27 @@ const AllGroup = ({ group, onClickGroup, onClickJoinGroup }) => {
     )
 }
 
-class AllGroupList extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>All Group List</h1>
-                <ul>
-                    {this.props.all_groups.map(group => 
-                        <AllGroup 
-                            key={group.group_name}
-                            group={group}
-                            onClickGroup={() => this.props.onToGroupDetail(group.id)}
-                            onClickJoinGroup={() => this.props.onJoinGroup(group.id)}
-                        />
-                    )}  
-                </ul>
-            </div>
-         )
-    } 
+const AllGroupList = ({ grouplist }) => {
+    return (
+        <div>
+            <h1>All Group List</h1>
+            <ul>
+                {grouplist.map(group =>
+                    <AllGroup
+                        key={group.id}
+                        group={group}
+                        onClickGroup={() => this.props.onToGroupDetail(group.id)}
+                        onClickJoinGroup={() => this.props.onJoinGroup(group.id)}
+                    />
+                )}
+            </ul>
+        </div>
+    )
 }
-
-const mapStateToProps = (state) => ({
-    all_groups: state.all_groups,
-})
 
 const mapDispatchToProps = (dispatch) => ({
     onJoinGroup: (groupid) => toJoinGroup(groupid),
     onToGroupDetail: (groupid) => gotoGroupDetail(groupid)
 })
 
-export default connect (mapStateToProps, mapDispatchToProps)(AllGroupList)
+export default connect (null, mapDispatchToProps)(AllGroupList)
