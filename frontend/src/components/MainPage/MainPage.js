@@ -2,7 +2,7 @@ import React from 'react';
 import NavBar from '../NavBar/NavBar';
 import { connect } from 'react-redux';
 import DesignPage from '../DesignPage/DesignPage';
-import ViewPage from '../ViewPage/ViewPage';
+import ViewPage from '../DesignPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 
