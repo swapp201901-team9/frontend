@@ -1,5 +1,6 @@
 import React from 'react';
 import TemplateListItem from './TemplateListItem';
+import StackGrid from "react-stack-grid";
 
 export default class TemplateList extends React.Component{
 
@@ -19,10 +20,10 @@ export default class TemplateList extends React.Component{
         );
 
         return(
-
-            <div className="row">
+            <StackGrid>
                {templates}   
-            </div>    
+               </StackGrid>
+
         );
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
-import './css/style.css';
+//import './css/style.css';
 //import './App.css';
 
 import FabricCanvas from './FabricCanvas'
@@ -37,6 +37,31 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
+				<section className="wrap clear col3">
+              <div className="aside">
+                <h2 className="h_white">SELECT STYLE</h2>
+                <div className="content">
+								<TemplateList 
+									data = {facelist}
+									property_type = "face"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+                </div>
+              </div>
+              <div className="main">
+                <h2 className="h_white">SAMPLE VIEW</h2>
+                <div className="content">
+                
+                </div>
+              </div>
+              <div className="aside">
+                <h2 className="h_black">MY GROUP</h2>
+                <div className="content">
+                  <p>MyGroupList contents</p>
+                </div>
+              </div>
+            </section>
 				
 		{/*<!--========================================
 			left design tool
