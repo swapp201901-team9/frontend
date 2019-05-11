@@ -23,6 +23,6 @@ export default class DesignPage extends React.Component {
     }
   
     render() {
-      return <SwatchesPicker onChange={ this.handleChange } />;
+      return (<SwatchesPicker onChange={ this.handleChange } />);
     }
   }
