@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {SwatchesPicker} from 'react-color';
 import PropTypes from 'prop-types';
 import {fabric} from 'fabric';
-
+import 'fabric-webpack'
 import CanvasObjects from './CanvasObject';
 import Arrow from './Arrow';
 
@@ -42,10 +42,14 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
-
-
-
       <CirclePicker onChange={ this.handleChange } />
+
+	  {/*<DesignCanvas>
+      <Rect width={100} height={100} fill="blue" />
+	  <Circle radius={20} top={200} />
+	   <Image url="https://http.cat/100" scale={0.2} top={100} />
+	  </DesignCanvas>*/}
+
 		{/*<!--========================================
 			left design tool
     =========================================-->*/}
@@ -68,7 +72,7 @@ export default class DesignPage extends React.Component {
 						</textarea>
 						<div class="wrapper clear_fix">
 					        <div class="font_area">
-					        	<p>Choose a ffffffffffont</p>
+					        	<p>Choose a font</p>
 				        		<select id="text_font">
 
 				        			{/*<!-- all fonts -->*/}
