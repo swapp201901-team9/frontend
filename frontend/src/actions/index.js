@@ -129,6 +129,8 @@ export const toJoinGroup = (groupid) => {
 }
 
 export const gotoGroupDetail = (groupid) => {
+    console.log("gotoGroupDetail action")
+    console.log(groupid)
 	return {
 		type: TO_GROUP_DETAIL,
 		groupid: groupid,
