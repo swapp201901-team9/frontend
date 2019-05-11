@@ -10,18 +10,26 @@ class Mypage extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onClick()}>MY PAGE</a>
+        <a href="#" onClick={() => this.props.onToProfile(this.props.username)}>MY PAGE</a>
         )
     }
 }
 
+let mapStateToProps = (state) => {
+  return{
+    username: state.authorization !== null? Object.assign(state.authorization).split(":")[0]:null,
+  }
+}
+
+
 let mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(changeUrl('/profile/'))
+        onToProfile: (username) => dispatch(changeUrl('/profile/'+username+"/"))
+
     }
 }
 
-Mypage = connect(undefined, mapDispatchToProps)(Mypage);
+Mypage = connect(mapStateToProps, mapDispatchToProps)(Mypage);
 
 
 

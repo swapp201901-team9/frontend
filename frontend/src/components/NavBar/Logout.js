@@ -17,8 +17,8 @@ class Logout extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        username: state.authorization !== null ? Object.assign(state.authorization).split(":")[0] : null,
-
+      username: state.authorization !== null ? Object.assign(state.authorization).split(":")[0] : null,
+    
     }
 }
 
