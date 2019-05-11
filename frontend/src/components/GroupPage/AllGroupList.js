@@ -7,7 +7,7 @@ const AllGroup = ({ group, onClickGroup, onClickJoinGroup }) => {
     return (
         <div>
             <div onClick={onClickGroup}>
-                {group.id} {group.grouptype} {group.groupname}
+                {group.id} {group.group_type} {group.group_name}
             </div>
             <button onClick={onClickJoinGroup}>
                 JOIN GROUP
@@ -17,12 +17,12 @@ const AllGroup = ({ group, onClickGroup, onClickJoinGroup }) => {
 }
 
 const AllGroupList = ({ grouplist }) => {
-   return (
-       <div>
-        <h1>All Group List</h1>
+    return (
+        <div>
+            <h1>All Group List</h1>
             <ul>
                 {grouplist.map(group =>
-                    <AllGroup 
+                    <AllGroup
                         key={group.id}
                         group={group}
                         onClickGroup={() => this.props.onToGroupDetail(group.id)}

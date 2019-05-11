@@ -17,7 +17,7 @@ class Group extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onClick: () => dispatch(changeUrl('/group/'))
+        onClick: () => dispatch(changeUrl('/groups/'))
     }
 }
 
