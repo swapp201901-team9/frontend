@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import AllGroupList from './AllGroupList';
-import { toSearchGroup } from '../../actions/index.js';
+import GroupList from './GroupList'
+import { toSearchGroup, toJoinGroup, gotoGroupDetail } from '../../actions/index.js';
 
 class SearchingGroup extends React.Component {
 	onSubmit = () => {
@@ -35,8 +35,10 @@ class SearchingGroup extends React.Component {
 						<button type="submit">Search</button>
 					</div>
 				</form>
-				<AllGroupList 
+				<GroupList 
 					grouplist={this.props.filtered_groups}
+					onClickGroup={this.props.onToGroupDetail}
+					onClickJoinGroup={this.props.onJoinGroup}
 				/>
 			</div>
 			
@@ -50,7 +52,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onSearchGroup: (newList) => toSearchGroup(newList)
+	onSearchGroup: (newList) => toSearchGroup(newList),
+	onJoinGroup: (groupid) => toJoinGroup(groupid),
+    onToGroupDetail: (groupid) => gotoGroupDetail(groupid),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(SearchingGroup)

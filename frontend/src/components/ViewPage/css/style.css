@@ -1,288 +1,28 @@
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-}
-.app{
-  margin: auto;
-  padding: auto;
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
-  color: #000000;
-  background-color: #f7f7f7;
-}
-li{
-	list-style: none;
-}
-a:hover, a:visited, a{
-	text-decoration: none;
-}
+/*
+===========================================================================
+ EXCLUSIVE ON themeforest.net
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Project Name       : T-Shirt Designer
+ Author             : Ismail Bin Dawud
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Copyright (c) 2017 -  Ismail Bin Dawud - https://codecanyon.net/user/nivodev
+===========================================================================
+ Content Table
+===========================================================================
+[1] General
+[2] preview and reset area
+[3] t-shirt design area
+[4] right help area
+[5] left design tool
+[6] front-back button section
+[7] product modal
+[8] preview image modal
+===========================================================================
+*/
 
-/* heading */
-h1,h2,h3,h4,h5,h6{
-  font-family: 'Bree Serif', serif;
-  text-align: center;
-  line-height:60px;
-}
-.h_white{
-  color:#000;
-  border-bottom:1px solid #d8d8d8;
-}
-.h_black{
-  background:#000;
-  color:#fff;
-  border-bottom:1px solid #d8d8d8;
-}
-
-/* layout */
-.wrap{
-  width:100%;
-  max-width: 1080px;
-  margin:0 auto
-}
-
-.col3 > div{
-  float:left;
-}
-
-.col3 > .aside{
-  width:24%;
-}
-
-.col3 > .main{
-  width:48%;
-  margin:20px 2%;
-}
-
-.main{
-  width:48%;
-  margin:20px auto;
-}
-
-header {
-  width: 100%;
-  background-color: #e26e65;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.logo{
-  width: 135px;
-  height: 40px;
-  margin-top: 18px;
-  background: url("./login_logo.png") no-repeat;
-  background-size:120px;
-  float:left;
-  display:inline-block;
-}
-.navBar{
-  text-align:right;
-}
-.navBar li {
-  display:inline-block;
-  list-style: none;
-  font-size: 14px;
-  color: #fff;
-}
-.navBar a {
-  box-sizing: border-box;
-  display:block;
-  padding:20px 40px;
-  color: #fff;
-
-}
-
-.clear:after{
-  content:'';
-  display: block;
-  height:0;
-  clear:both;
-}
-
-section > div{
-  margin:20px 0; /* margin: 20px 0 20px 0 */
-  padding-bottom : 50px;
-  background:#fff;
-  box-sizing: border-box;
-}
-
-.content{
-  padding:10px;
-}
-
-.Notif_button{
-  float: right;
-  width: 6em;
-  height: 2em;
-  top: 20px;
-  left: 30em;
-  font-size: 25px;
-  background-color: rgb(237,30,39);
-  color: black;
-}
-
-.Link{
-  cursor: pointer;
-}
-
-
-
-.Button-Field{
-  box-sizing: border-box;
-  font-size: 12px;
-  color: black;
-  padding: 10px 0px 10px 0px;
-  margin: 10px 60px 10px 60px;
-
-}
-
-button{
-  width: 100%;
-  height: 40px;
-  border-radius: 21px;
-  border: none;
-  box-shadow: 2px 3px 7px 0 rgba(243, 138, 138, 0.5);
-  background-color: #c13a3a;
-  color: #fff;
-}
-*:focus {
-    outline: none;
-}
-.button_white{
-  border-radius: 21px;
-  box-shadow: 2px 4px 7px 0 rgba(244, 137, 137, 0.5);
-  border: solid 2px #c13a3a;
-  background-color: #fff;
-  color: #c13a3a;
-}
-
-.module_title{
-  font-family: 'Bree Serif', serif;
-  font-size: 20px;
-  text-align: center;
-  line-height:100px;
-}
-
-.TimeLine{
-  text-align: center;
-  position: absolute;
-  top: 150px;
-  left: 23em;
-  right:20em;
-  padding-bottom: 50px;
-}
-
-.tagLabel{
-  font-size: 15px;
-}
-.divider{
-  width:1em;
-  height:auto;
-  display:inline-block;
-}
-
-.Tags{
-  text-align: justify;
-}
-
-
-/* Login Page css */
-
-
-.Text-Field{
-  line-height: 20px;
-  font-size: 10px;
-  color: black;
-  margin: 0px 60px;
-  padding: 10px 0px;
-
-}
-
-.label{
-  display:inline-block;
-  width: 100%;
-  margin: 20px 0px;
-  padding: 20px;
-  background-color: rgba(237,156,156,0.5);
-  font-size: 10px;
-}
-
-input{
-  box-sizing: border-box;
-  display:block;
-  width: 100%;
-  height: 40px;
-  border-radius: 21px;
-  border: solid 2px #e0e0e0;
-  margin: 0px;
-  padding: 0px 15px;
-  font-size: 16px;
-  background-color: #fff
-}
-
-input:focus{
-  border: solid 2px #C13A3A;
-  outline: none;
-  background-color: #fff
-}
-
-
-
-
-
-/* SignUp Page css */
-
-
-
-
-#to_main{
-    border: none;
-    width: 135px;
-    height: 19px;
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    background: url("./login_logo.png") no-repeat;
-    background-size: contain;
-}
-/* 프로필 사진 크기 조정 */
-.PROFILEIMG{
-    width: 50px;
-}
-
-#p_img{
-    width: 200px;
-}
-
-/* 일반적인 버튼 및 textarea등 태그에 대한 css */
-.bordered_textarea{
-  box-sizing: border-box;
-  color: #999999;
-  display:block;
-  width: 100%;
-  height: 40px;
-  border-radius: 21px;
-  border: solid 2px #e0e0e0;
-  margin: 0px;
-  padding: 6px 15px;
-  font-size: 16px;
-}
-
-hr{
-  color: rgb(237,30,39);
-  font-family: 궁서;
-}
-
-
-
-img{
-  width: 700px;
-}
-
+/* ====================
+[1] General
+==================== */
 
 *{
 	margin: 0;
@@ -330,7 +70,7 @@ img{
 .design_area{
 	margin: 0 auto;
 	position: relative;
-	width: 504px;
+	width: 504px; 
 	height: 504px;
 }
 
@@ -486,13 +226,13 @@ img{
 .help_area a,
 .help_area a:hover{
     color: #000;
-    text-decoration: none;
+    text-decoration: none; 
 }
 
 
 /* animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-    from {opacity: 0;}
+    from {opacity: 0;} 
     to {opacity: 1;}
 }
 
@@ -530,7 +270,7 @@ img{
     margin-bottom: 10px;
 }
 
-#text_area, .wrapper,
+#text_area, .wrapper, 
 .font_style, .font_size
 {
     margin-top: 25px;
@@ -554,10 +294,10 @@ img{
 }
 
 .color_area input{
-    width: 20px;
+    width: 27px;
     height: 30px;
     background: #fff;
-    padding: 2px;
+    padding: 4px;
     border-radius: 3px;
 }
 
