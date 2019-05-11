@@ -596,3 +596,14 @@ img{
         width: auto;
     }
 }
+
+/* Canvas */
+#main-canvas{
+    background: #ccc;
+    background: url('./img/tshirt1_front.jpg');
+    background-repeat: repeat;
+    border:1px solid #ececec;
+    margin: 10px auto;
+    display: block;
+  
+  }

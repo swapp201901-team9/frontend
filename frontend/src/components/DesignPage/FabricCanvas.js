@@ -1,6 +1,6 @@
 import React from 'react';
 import {fabric} from 'fabric';
-//import {Button} from 'react-bootstrap';
+//import './App.css';
 
 class FabricCanvas extends React.Component{
 
@@ -53,7 +53,7 @@ class FabricCanvas extends React.Component{
 
         let link = document.createElement("a");
         link.href = this.the_canvas.toDataURL({format: 'png'});
-          link.download = "avatar.png";
+          link.download = "design.png";
          link.click();
 
     }
@@ -67,7 +67,7 @@ class FabricCanvas extends React.Component{
                 </canvas>
 
                 <button onClick = {this.saveToCanvas}>
-                    Download Avatar
+                    Download Design 
                   </button>
             </div>
         );

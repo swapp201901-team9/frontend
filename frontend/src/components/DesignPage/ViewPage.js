@@ -29,29 +29,18 @@ export default class ViewPage extends React.Component {
     render() {
       return (
       <div>
-
-
 		{/*<!--========================================
-			preview and reset area
+			front-back button section
 	=========================================-->*/}
+	<button class="front_btn" type="button">Front</button>
+	<FabricCanvas 
+	activeProperty = {this.state.activeProperty}
+	/>	
+	
+	<button class="back_btn" type="button">Back</button>
 	<FabricCanvas 
 	activeProperty = {this.state.activeProperty}
 	/>
-
-
-
-
-		{/*<!--========================================
-			t-shirt design area
-    =========================================-->*/}
-		
-
-
-		{/*<!--========================================
-			front-back button section
-    =========================================-->*/}
-			<button class="front_btn" type="button">Front</button>
-			<button class="back_btn" type="button">Back</button>
 
 
 		{/*<!--========================================

@@ -37,6 +37,7 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
+				
 		{/*<!--========================================
 			left design tool
     =========================================-->*/}
@@ -161,11 +162,7 @@ export default class DesignPage extends React.Component {
 
 
 
-		{/*<!--========================================
-			JavaScript Files
-    =========================================-->*/}
-		{/*<script type="text/javascript" src="./js/fabric.min.js"></script>
-		<script type="text/javascript" src="./js/script.js"></script>*/}
+	
       </div>
  
       );
