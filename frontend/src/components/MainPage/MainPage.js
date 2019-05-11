@@ -1,17 +1,12 @@
 import React from 'react';
 import NavBar from '../NavBar/NavBar';
 import { connect } from 'react-redux';
-
+import DesignPage from '../DesignPage/DesignPage';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 
 class MainPage extends React.Component {
     render() {
-      //<form action = "mydesigner.php" method = "get">
-      //        <input type = "submit" value= "Run me now!"></input>
-      //      </form>
-      //<?php include 'mydesigner.php';?>
-
       //login 되어 있는 상태의 main page
       if(this.props.loggedIn !== "") {
         return (
@@ -27,16 +22,13 @@ class MainPage extends React.Component {
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
-                  <p> contents </p>
-                  <form action="mydesigner.php">
-                    <button/>
-                  </form>
+                  <DesignPage/>
                 </div>
               </div>
               <div className="aside">
                 <h2 className="h_black">MY GROUP</h2>
                 <div className="content">
-                  <p>MyGroupList conetents</p>
+                  <p>MyGroupList contents</p>
                 </div>
               </div>
             </section>
@@ -57,10 +49,7 @@ class MainPage extends React.Component {
           <div className="main">
             <h2 className="h_white">SAMPLE VIEW</h2>
             <div className="content">
-              <p> contents </p>
-              <form action="mydesigner.php">
-              <button/>
-              </form>
+              <DesignPage />
             </div>
           </div>
           <div className="aside">
