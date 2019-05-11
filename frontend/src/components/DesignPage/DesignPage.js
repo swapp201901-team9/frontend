@@ -1,26 +1,44 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {SwatchesPicker} from 'react-color';
-import PropTypes from 'prop-types';
 import {fabric} from 'fabric';
-import 'fabric-webpack'
-import CanvasObjects from './CanvasObject';
-import Arrow from './Arrow';
-
-import DesignCanvas from './DesignCanvas'
-import Rect from './Rect'
-import Circle from './Circle'
-import Image from './Image'
-
-//import {Canvas} from 'react-fabricjs';
-//import { connect } from 'react-redux';
 import {CirclePicker} from 'react-color';
-import { connect } from 'react-redux';
+import './css/style.css'
+
+
 
 
 
 export default class DesignPage extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			activeProperty : null
+		};
+	}
 
+	addToCanvas = (imgElement, property_type, z_Index) => {
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 400,
+			height: 400,
+			the_type: property_type,
+			zIndex: z_Index
+		});
+
+		this.setState({activeProperty: imgInstance});
+	}
+
+	componentDidMount(){
+
+        // Make a New Canvas
+        this.the_canvas = new fabric.StaticCanvas('main-canvas', {
+            preserveObjectStacking: true,
+            height:375,
+            width:375,
+        });
+    }
+	
+	
+	
+	
     handleChange(color, event) {
       // color = {
       //   hex: '#333',
@@ -44,11 +62,9 @@ export default class DesignPage extends React.Component {
       <div>
       <CirclePicker onChange={ this.handleChange } />
 
-	  {/*<DesignCanvas>
-      <Rect width={100} height={100} fill="blue" />
-	  <Circle radius={20} top={200} />
-	   <Image url="https://http.cat/100" scale={0.2} top={100} />
-	  </DesignCanvas>*/}
+	  <canvas id= 'main-canvas'>
+                </canvas>
+
 
 		{/*<!--========================================
 			left design tool
