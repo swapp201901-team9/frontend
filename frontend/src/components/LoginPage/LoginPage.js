@@ -7,7 +7,7 @@ class LoginPage extends Component {
     render() {
         return (
            <div>
-           < NavBar/>
+           <NavBar />
            <section className="wrap clear">
 
             <div className="main">
