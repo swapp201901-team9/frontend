@@ -188,45 +188,46 @@ function *watchLoginState() {
              */
             else if(path === '/groups/') {
                 console.log("get group details...");
-                    let all_groups_data, my_groups_data;
+                let all_groups_data, my_groups_data;
 
-                    //all_groups data
-                    try{
-                        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                        console.log("GET all groups data: ", all_groups_data.body)
-                    } catch(error){
-                        console.log(error)
-                        alert("all groups data error")
-                    }
-                    
-                    //my_groups data
-                    try{
-                        my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("my groups data error")
-                    }
+                //all_groups data
+                try{
+                    all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET all groups data: ", all_groups_data.body)
+                } catch(error){
+                    console.log(error)
+                    alert("all groups data error")
+                }
+                
+                //my_groups data
+                try{
+                    my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET my groups data: ", my_groups_data.body)
+                } catch(error){
+                    alert("my groups data error")
+                }
 
-                    yield put(actions.setState({
-                        autorization: window.atob(localStorage['auth']),
-                        all_groups: all_groups_data.body,
-                        my_groups: my_groups_data.body,
-                        filtered_groups: all_groups_data.body,
+                yield put(actions.setState({
+                    autorization: window.atob(localStorage['auth']),
+                    all_groups: all_groups_data.body,
+                    my_groups: my_groups_data.body,
+                    filtered_groups: all_groups_data.body,
 
-                    }));
+                }));
             }
 
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
