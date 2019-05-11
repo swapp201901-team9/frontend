@@ -111,23 +111,10 @@ section > div{
 }
 
 .content{
-  padding:10px;
+  padding:20px;
 }
 
-.Notif_button{
-  float: right;
-  width: 6em;
-  height: 2em;
-  top: 20px;
-  left: 30em;
-  font-size: 25px;
-  background-color: rgb(237,30,39);
-  color: black;
-}
 
-.Link{
-  cursor: pointer;
-}
 
 
 
@@ -294,33 +281,9 @@ img{
 }
 
 
-
-/* ====================
-[2] preview and reset area
-==================== */
-.canvas_edit_tool{
-	text-align: left;
-    background: #FAFAFA;
-    padding: 8px 20px;
-    width: 208px;
-    border: 1px solid #E0E0E0;
-    border-radius: 5px;
-    margin: 20px auto;
-}
-
-.canvas_edit_tool a,
-.canvas_edit_tool a:hover{
-    color: #616161;
-    margin-right: 40px;
-    text-decoration: none;
-}
-
-.canvas_edit_tool a:last-child{
-    margin-right: 0;
-}
-
-.canvas_edit_tool span{
-    margin-left: 3px;
+.reset_save a{
+  font-size: 12px;
+  color: #ffff00;
 }
 
 

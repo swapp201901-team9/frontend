@@ -1,28 +1,10 @@
 import React from 'react';
-import {SwatchesPicker} from 'react-color';
 import { connect } from 'react-redux';
-
-
+import { ResetButton } from './ResetButton.js';
+import { SaveButton } from './SaveButton.js';
+import { FrontBackTab } from './FrontBackTab.js';
 
 export default class ViewPage extends React.Component {
-
-    handleChange(color, event) {
-      // color = {
-      //   hex: '#333',
-      //   rgb: {
-      //     r: 51,
-      //     g: 51,
-      //     b: 51,
-      //     a: 1,
-      //   },
-      //   hsl: {
-      //     h: 0,
-      //     s: 0,
-      //     l: .20,
-      //     a: 1,
-      //   },
-      // }
-    }
 
     render() {
       return (
@@ -32,20 +14,20 @@ export default class ViewPage extends React.Component {
 		{/*<!--========================================
 			preview and reset area
     =========================================-->*/}
-		<div class="canvas_edit_tool">
-			<a href="#" class="preview_btn" data-toggle="modal" data-target="#previewModal"><i class="fa fa-eye" aria-hidden="true"></i><span>Preview</span></a>
-			<a href="#" class="reset_btn" ><i class="fa fa-refresh" aria-hidden="true"></i><span>Reset</span></a>
-		</div>
+
+
+
 
 		{/*<!--========================================
 			t-shirt design area
     =========================================-->*/}
 		<div class="design_area">
 			<div class="canvas_area_front">
-				<canvas id="front_canvas" width="192" height="302"></canvas>
+				<canvas id="front_canvas"></canvas>
+    
 	        </div>
 	        <div class="canvas_area_back">
-				<canvas id="back_canvas" width="192" height="302"></canvas>
+				<canvas id="back_canvas"></canvas>
 	        </div>
 		</div>
 
@@ -54,11 +36,8 @@ export default class ViewPage extends React.Component {
 		{/*<!--========================================
 			front-back button section
     =========================================-->*/}
-		<div class="change_side">
 			<button class="front_btn" type="button">Front</button>
 			<button class="back_btn" type="button">Back</button>
-		</div>
-
 
 
 		{/*<!--========================================
