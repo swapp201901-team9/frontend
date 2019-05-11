@@ -1,7 +1,6 @@
 import React from 'react';
 
 import CreateGroup from './CreateGroup'
-import AllGroupList from './AllGroupList';
 import MyGroupList from './MyGroupList';
 import SearchingGroup from './SearchingGroup';
 
