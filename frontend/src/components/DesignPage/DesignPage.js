@@ -1,15 +1,17 @@
 import React from 'react';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
-//import './css/style.css';
-//import './App.css';
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
-//import {Col, Tabs, Tab, Button } from 'react-bootstrap';
 
 
+//the templates are imported as images and passed as porps to the TemplateList components.
+//if the user chooses any of the properties, the state gets updated in the DesignPage component
+//it gets passed onto FabricCanvas as prop
+//FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
+//about saveToCanvas: use a method from fabric named TODataUrl()
 
 export default class DesignPage extends React.Component {
 	constructor(props){
