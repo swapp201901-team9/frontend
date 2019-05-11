@@ -14,6 +14,8 @@ import Image from './Image'
 
 //import {Canvas} from 'react-fabricjs';
 //import { connect } from 'react-redux';
+import {CirclePicker} from 'react-color';
+import { connect } from 'react-redux';
 
 
 
@@ -36,38 +38,14 @@ export default class DesignPage extends React.Component {
       //   },
       // }
     }
-  
+
     render() {
       return (
       <div>
-      <SwatchesPicker onChange={ this.handleChange } />
-      <DesignCanvas>
-      <Rect width={100} height={100} fill="blue" />
-      <Circle radius={20} top={200} />
-      <Image url="https://http.cat/100" scale={0.2} top={100} />
-    </DesignCanvas>
-      
-      
-		{/*<!--========================================
-			preview and reset area
-    =========================================-->*/}
-		<div class="canvas_edit_tool">
-			<a href="#" class="preview_btn" data-toggle="modal" data-target="#previewModal"><i class="fa fa-eye" aria-hidden="true"></i><span>Preview</span></a>
-			<a href="#" class="reset_btn" ><i class="fa fa-refresh" aria-hidden="true"></i><span>Reset</span></a>
-		</div>
-	
-		{/*<!--========================================
-			t-shirt design area
-    =========================================-->*/}
-		<div class="design_area">
-			<div class="canvas_area_front">
-				<canvas id="front_canvas" width="192" height="302"></canvas>
-	        </div>
-	        <div class="canvas_area_back">
-				<canvas id="back_canvas" width="192" height="302"></canvas>
-	        </div>
-		</div>
 
+
+
+      <CirclePicker onChange={ this.handleChange } />
 		{/*<!--========================================
 			left design tool
     =========================================-->*/}
@@ -90,7 +68,7 @@ export default class DesignPage extends React.Component {
 						</textarea>
 						<div class="wrapper clear_fix">
 					        <div class="font_area">
-					        	<p>Choose a font</p>
+					        	<p>Choose a ffffffffffont</p>
 				        		<select id="text_font">
 
 				        			{/*<!-- all fonts -->*/}
@@ -160,7 +138,7 @@ export default class DesignPage extends React.Component {
 					<p><i class="fa fa-arrow-up" aria-hidden="true"></i> <span>Export</span> - Click on this button, a popup window will appear with download buttons</p>
 
 					<p><i class="fa fa-trash-o" aria-hidden="true"></i> <span>Delete</span> - Click on the <i class="fa fa-trash-o" aria-hidden="true"></i> icon to delete an element</p>
-					
+
 				</div>
 			</div>
 			<a class="open_help_window" href="#">
@@ -176,7 +154,7 @@ export default class DesignPage extends React.Component {
 			<button class="front_btn" type="button">Front</button>
 			<button class="back_btn" type="button">Back</button>
 		</div>
-		
+
 		{/*<!--========================================
 			product modal
     =========================================-->*/}
@@ -222,38 +200,8 @@ export default class DesignPage extends React.Component {
 			</div>
 		</div>
 
-		{/*<!--========================================
-			preview image modal
-    =========================================-->*/}
-		<div class="modal fade" id="previewModal" role="dialog">
-			<div class="modal-dialog">
-				{/*<!-- Modal content-->*/}
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Preview</h4>
-					</div>
-					<div class="modal-body clear_fix">
-						<div id="front_preview">
-							<div class="canvas_wrapper">
-								<canvas id="previewcanvasfront" width="500" height="500"></canvas>
-							</div>
-							<a href="#" class="download" download="YourFileName.jpg"><i class="fa fa-download" aria-hidden="true"></i><span>Download front</span></a>
-						</div>
-			            <div id="back_preview">
-			            	<div class="canvas_wrapper">
-				            	<canvas id="previewcanvasback" width="500" height="500"></canvas>
-			            	</div>
-				            <a href="#" class="download_back" download="YourFileName.jpg"><i class="fa fa-download" aria-hidden="true"></i><span>Download back</span></a>
-			            </div>
-					</div>
-					<div class="modal-footer">
-					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	
+
+
 		{/*<!--========================================
 			JavaScript Files
     =========================================-->*/}
