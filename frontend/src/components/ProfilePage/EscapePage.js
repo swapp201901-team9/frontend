@@ -8,7 +8,7 @@ class EscapePage extends React.Component{
         }
         return(
             <div className="Button-Field">
-                <button className="button button_white" onClick={onChangeSubmit}>탈퇴하기</button>
+                <button className="button button_white" onClick={onChangeSubmit}>WITHDRAW</button>
             </div>
         );
     }

@@ -40,7 +40,7 @@ class ChangePWPage extends React.Component {
                       <input type="password" ref={ node =>{this.newpwre = node;} } id="new_pw_RE" className="field" />
                     </div>
                     <div className="Button-Field">
-                      <button type="submit" id="change_pw" onClick={onChangeSubmit}>바꾼다!</button>
+                      <button type="submit" id="change_pw" onClick={onChangeSubmit}>CHANGE PASSWORD</button>
                   </div>
                 </div>
                )
