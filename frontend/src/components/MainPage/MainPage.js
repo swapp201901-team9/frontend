@@ -22,7 +22,6 @@ class MainPage extends React.Component {
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
-                  <p> contents </p>
                   <DesignPage/>
                 </div>
               </div>
@@ -50,7 +49,6 @@ class MainPage extends React.Component {
           <div className="main">
             <h2 className="h_white">SAMPLE VIEW</h2>
             <div className="content">
-              <p> contents </p>
               <DesignPage />
             </div>
           </div>
