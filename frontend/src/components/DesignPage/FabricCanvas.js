@@ -1,6 +1,6 @@
 import React from 'react';
 import {fabric} from 'fabric';
-import {Button} from 'react-bootstrap';
+//import {Button} from 'react-bootstrap';
 
 class FabricCanvas extends React.Component{
 
@@ -66,9 +66,9 @@ class FabricCanvas extends React.Component{
                 <canvas id= 'main-canvas'>
                 </canvas>
 
-                <Button bsStyle="success" onClick = {this.saveToCanvas} bsSize="large" block>
+                <button onClick = {this.saveToCanvas}>
                     Download Avatar
-                  </Button>
+                  </button>
             </div>
         );
     }

@@ -4,9 +4,9 @@ import {CirclePicker} from 'react-color';
 import './css/style.css';
 //import './App.css';
 
-//import FabricCanvas from './FabricCanvas'
-//import TemplateList from './TemplateList'
-//import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
+import FabricCanvas from './FabricCanvas'
+import TemplateList from './TemplateList'
+import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
 //import {Col, Tabs, Tab, Button } from 'react-bootstrap';
 
 
@@ -39,6 +39,7 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
+			
             {/*<Col md={6}>
               <Tabs defaultActiveKey={1} justified id="main_tabs">
                 <Tab eventKey={1} title="Faces">
