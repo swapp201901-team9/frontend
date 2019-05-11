@@ -28,8 +28,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onToGroupDetail: (groupid) => gotoGroupDetail(groupid),
-	onToAdminGroup: (groupid) => gotoAdminGroup(groupid)
+	onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
+	onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyGroupList)
