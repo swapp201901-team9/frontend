@@ -45,7 +45,7 @@ export default function *saga() {
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
-                case 'group':
+                case 'groups':
                     yield spawn(groupPageSaga);
                     break;
                 default:
@@ -121,7 +121,7 @@ function *profilePageSaga() {
 
 function *groupPageSaga() {
 	console.log("Group Page Saga");
-	//yield spawn(watchLoginState);
+	yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
 
@@ -161,6 +161,8 @@ function *watchLoginState() {
         // 로그인이 되어 있는 경우
         else {
             const path = window.location.pathname;
+            let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+            console.log("username: ", username)
             let data, parent_data;
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
@@ -177,6 +179,54 @@ function *watchLoginState() {
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
+            }
+            
+            /* group 정보를 get 하는 부분
+             * 1) profile_data backend에서 get (url: 'users/'+username+'/')
+             * 2) all_groups_data backend에서 get (url: 'groups/')
+             * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
+             */
+            else if(path === '/groups/') {
+                console.log("get group details...");
+                    let all_groups_data, my_groups_data;
+
+                    //all_groups data
+                    try{
+                        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json',
+                        });
+                        console.log("GET all groups data: ", all_groups_data.body)
+                    } catch(error){
+                        console.log(error)
+                        alert("all groups data error")
+                    }
+                    
+                    //my_groups data
+                    try{
+                        my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json',
+                        });
+                    } catch(error){
+                        alert("my groups data error")
+                    }
+
+                    yield put(actions.setState({
+                        autorization: window.atob(localStorage['auth']),
+                        all_groups: all_groups_data.body,
+                        my_groups: my_groups_data.body,
+                        filtered_groups: all_groups_data.body,
+
+                    }));
             }
 
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
@@ -223,67 +273,12 @@ function *watchLoginState() {
                     }));
                 }
 
-                /* group 정보를 get 하는 부분
-                 * 1) profile_data backend에서 get (url: 'users/'+username+'/')
-                 * 2) all_groups_data backend에서 get (url: 'groups/')
-                 * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
-                 */
+                //group detail 정보를 get하는 부분
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
-                    let all_groups_data, my_groups_data;
-
-                    //profile data
-                    try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/', {
-                            headers: {
-                                'Content-Type': 'appllication/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("group profile error");
-                    }
-
-                    //all_groups data
-                    try{
-                        //SA TODO backend url에 groups가 아직 없음!!!
-                        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'applecation/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("all groups data error")
-                    }
-                    
-                    //my_groups data
-                    try{
-                        my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("my groups data error")
-                    }
-
-                    yield put(actions.setState({
-                        autorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data,
-                        all_groups: all_groups_data.body,
-                        my_groups: my_groups_data.body,
-                        filtered_groups: all_groups_data.body,
-
-                    }));
+                    console.log("group id: ", id);
                 }
+
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
                     try {
@@ -594,10 +589,6 @@ function *escapeBook(profuser){
 
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
-    console.log("createGroup");
-    console.log(data.grouptype.value, " ", data.groupname.value);
-
-    //SA TODO groups/create_group/이 좀 더 낫지 않을까(=> backend url을 바꿔야함)
     const path = 'create_group/'
 	try {
 		yield call(xhr.post, fixed_url + path, {
@@ -609,12 +600,10 @@ function *createGroup(data){
             contentType: 'json',
             body: JSON.stringify({"grouptype": data.grouptype.value, "groupname": data.groupname.value})
         });
+        yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         alert("*createGroup error")
     }
-
-    //문법 확실치 X 새로 만든 groupdetail page로 이동
-    //yield put(actions.changeUrl('/group/'+groupid))
 }
 
 function *searchGroup(data){

@@ -23,7 +23,7 @@ const App = ({store}) => {
                     <Route exact path="/log_in" component={LoginPage} />
                     <Route exact path="/sign_up" component={SignUpPage} />
                     <Route exact path="/main" component={MainPage} />
-                 	<Route exact path="/group" component={GroupPage} />
+                 	<Route exact path="/groups" component={GroupPage} />
 					<Route path="/profile/:id" component={ProfilePage} />
                     <Route path="group/:id" component={GroupDetailPage} />
 
