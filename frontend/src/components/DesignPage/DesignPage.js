@@ -2,7 +2,7 @@ import React from 'react';
 import {SwatchesPicker} from 'react-color';
 import { connect } from 'react-redux';
 
-class Component extends React.Component {
+export default class DesignPage extends React.Component {
 
     handleChange(color, event) {
       // color = {

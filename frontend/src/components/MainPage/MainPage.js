@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from '../NavBar/NavBar';
 import { connect } from 'react-redux';
+import DesignPage from '../DesignPage/DesignPage';
 
 import MyGroupList from '../GroupPage/MyGroupList';
 
@@ -28,9 +29,7 @@ class MainPage extends React.Component {
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
                   <p> contents </p>
-                  <form action="mydesigner.php">
-                    <button/>
-                  </form>
+                  <DesignPage/>
                 </div>
               </div>
               <div className="aside">
