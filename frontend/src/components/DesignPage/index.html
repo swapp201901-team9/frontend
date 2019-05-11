@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Edit The description of your site in the next meta -->
+		<meta name="description" content="t-shirt designer">
+        <meta name="keywords" content="t-shirt,t-shirt designer, product, designer, product designer">
+        <meta name="author" content="Ismail Bin Dawud">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- The above meta tags *must* come first in the head; any other head content must come *after* these tags -->
+			
+		<!-- Title -->
+		<title>Design tool</title>
+
+		<link rel="icon" type="image/ico" href="http://placehold.it/60/000000" /> 
+		<!-- Edit Icon Here replace (http://placehold.it/60/000000) with your link -->  <!-- for example href="assets/img/yourImageName.png" -->
+		
+		<!--========================================
+			CSS Stylesheets
+		=========================================-->
+
+
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<!-- Font Awesome -->
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<!-- Google Fonts -->
+        <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet" /> -->
+        <link href="https://fonts.googleapis.com/css?family=Aguafina+Script%7CAkronim%7CAlex+Brush%7CAnton%7CRaleway:300,400,500,700" rel="stylesheet">
+
+        <!-- BootStrap -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+		<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+
+		<!-- spectrum - The No Hassle Colorpicker -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+
+	</head>
+	<body>
+
+		<!--========================================
+			preview and reset area
+		=========================================-->
+		<div class="canvas_edit_tool">
+			<a href="#" class="preview_btn" data-toggle="modal" data-target="#previewModal"><i class="fa fa-eye" aria-hidden="true"></i><span>Preview</span></a>
+			<a href="#" class="reset_btn" ><i class="fa fa-refresh" aria-hidden="true"></i><span>Reset</span></a>
+		</div>
+		<!-- ========== End preview and reset area =================== -->
+
+		<!--========================================
+			t-shirt design area
+		=========================================-->
+		<div class="design_area">
+			<div class="canvas_area_front">
+				<canvas id="front_canvas" width="192" height="302"></canvas>
+	        </div>
+	        <div class="canvas_area_back">
+				<canvas id="back_canvas" width="192" height="302"></canvas>
+	        </div>
+		</div>
+		<!-- ========== End t-shirt design area =================== -->
+
+	
+		<!--========================================
+			left design tool
+		=========================================-->
+		<div class="design_tool">
+			<ul>
+				<li>
+				  	<a href="#home" data-toggle="modal" data-target="#productModal"><i class="fa fa-leaf" aria-hidden="true"></i><span>Choose product</span></a>
+				</li>
+				<li class="add_text">
+					<a class="open_window" href="#">
+						<i class="fa fa-text-width" aria-hidden="true"></i>
+						<span>Add text</span>
+					</a>
+					<div class="text_tool_window">
+						<div class="header clear_fix">
+							<p class="title"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit text</p>
+							<i id="close_window" class="fa fa-window-close" aria-hidden="true"></i>
+						</div>
+						<textarea id="text_area"> Hello
+						</textarea>
+						<br>
+						<div class="wrapper clear_fix">
+					        <div class="font_area">
+					        	<p>Choose a font</p>
+				        		<select id="text_font">
+
+				        			<!-- all fonts -->
+									<option>arial</option>
+									<option>tahoma</option>
+									<option>times new roman</option>
+									<option>anton</option>
+									<option>Akronim</option>
+									<option>Alex Brush</option>
+									<option>Aguafina Script</option>
+						        </select>
+					        </div>
+					        <div class="color_area">
+					        	<p>Text colour</p>
+					        	<!-- colour -->
+						        <input type="text" id="text_colour" />
+							</div>
+						</div>
+				        <div class="font_style">
+				        	<p>Text style</p>
+			        		<select id="text_style">
+
+			        			<!-- font style -->
+								<option>normal</option>
+								<option>italic</option>
+								<option>oblique</option>
+								<option>bold</option>
+					        </select>
+				        </div>
+				        <div class="font_size">
+				        	<!-- font size -->
+				        	<p>Font Size :</p> <input type="range"  min="0" max="100" value="30" id="text_size" /><br>
+				        </div>
+					</div>
+				</li>
+				<li>
+				  	<a href="#" data-toggle="modal" data-target="#imgUploadModal"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Add image</span></a>
+				</li>
+				<li>
+					<a href="#" class="export_btn" data-toggle="modal" data-target="#previewModal"><i class="fa fa-arrow-up" aria-hidden="true"></i><span>Export</span></a>
+				  	<!-- <a href="#" data-toggle="modal" data-target="#previewModal"><i class="fa fa-arrow-up" aria-hidden="true"></i><span>Export</span></a> -->
+				</li>
+			</ul>
+		</div>
+		<!-- ========== End left design tool =================== -->
+
+		<!--========================================
+			right help area
+		=========================================-->
+		<div class="help_area">
+
+			<!-- help popup window -->
+			<div class="help_window_wrapper">
+				<div class="help_window">
+					<div class="header clear_fix">
+						<p class="title"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</p>
+						<i id="close_help_window" class="fa fa-window-close" aria-hidden="true"></i>
+					</div>
+
+					<p><i class="fa fa-leaf" aria-hidden="true"></i> <span>Choose product</span> - Use this button to select your product.</p>
+
+					<p><i class="fa fa-text-width" aria-hidden="true"></i> <span>Add text</span> - Use this button to add a text.</p>
+
+					<p><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Edit text</span> - Click on the text and edit your text from the popup window</p>
+
+					<p><i class="fa fa-picture-o" aria-hidden="true"></i> <span>Add image</span> - Use this button to add an image.</p>
+
+					<p><i class="fa fa-arrow-up" aria-hidden="true"></i> <span>Export</span> - Click on this button, a popup window will appear with download buttons</p>
+
+					<p><i class="fa fa-trash-o" aria-hidden="true"></i> <span>Delete</span> - Click on the <i class="fa fa-trash-o" aria-hidden="true"></i> icon to delete an element</p>
+					
+				</div>
+			</div>
+			<a class="open_help_window" href="#">
+				<i class="fa fa-question-circle" aria-hidden="true"></i>
+				<p>Help</p>
+			</a>
+		</div>
+		<!-- ========== End right help area =================== -->
+
+
+		<!--========================================
+			front-back button section
+		=========================================-->
+		<div class="change_side">
+			<button class="front_btn" type="button">Front</button>
+			<button class="back_btn" type="button">Back</button>
+		</div>
+		<!-- ========== End front-back button section =================== -->
+
+		<!--========================================
+			product modal
+		=========================================-->
+		<div class="modal fade" id="productModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Products</h4>
+					</div>
+					<div class="modal-body product_area clear_fix">
+					</div>
+					<div class="modal-footer">
+					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ========== End product modal =================== -->
+
+
+		<!--========================================
+			Image Upload Modal
+		=========================================-->
+		<div class="modal fade" id="imgUploadModal" role="dialog">
+			<div class="modal-dialog modal-lg">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Upload image</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="imgfile">
+					</div>
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
+
+					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ========== End Image Upload Modal =================== -->
+
+
+		<!--========================================
+			preview image modal
+		=========================================-->
+		<div class="modal fade" id="previewModal" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Preview</h4>
+					</div>
+					<div class="modal-body clear_fix">
+						<div id="front_preview">
+							<div class="canvas_wrapper">
+								<canvas id="previewcanvasfront" width="500" height="500"></canvas>
+							</div>
+							<a href="#" class="download" download="YourFileName.jpg"><i class="fa fa-download" aria-hidden="true"></i><span>Download front</span></a>
+						</div>
+			            <div id="back_preview">
+			            	<div class="canvas_wrapper">
+				            	<canvas id="previewcanvasback" width="500" height="500"></canvas>
+			            	</div>
+				            <a href="#" class="download_back" download="YourFileName.jpg"><i class="fa fa-download" aria-hidden="true"></i><span>Download back</span></a>
+			            </div>
+					</div>
+					<div class="modal-footer">
+					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- ========== End preview image modal =================== -->
+
+		<!--========================================
+			JavaScript Files
+		=========================================-->
+		<script type="text/javascript" src="js/fabric.min.js"></script>
+		<script type="text/javascript" src="js/script.js"></script>
+		<!-- ========== End JavaScript =================== -->
+	</body>
+</html>
+
+<!-- https://www.vecteezy.com/free-vector/t-shirt -->
