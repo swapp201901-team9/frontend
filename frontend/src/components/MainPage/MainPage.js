@@ -29,7 +29,7 @@ class MainPage extends React.Component {
               <div className="aside">
                 <h2 className="h_black">MY GROUP</h2>
                 <div className="content">
-                  <MyGroupList />
+                  <p>MyGroupList contents</p>
                 </div>
               </div>
             </section>
