@@ -47,23 +47,31 @@ export default class DesignPage extends React.Component {
 									zIndex = {0}
 									addtocanvas = {this.addToCanvas}
 								/>
-                </div>
-              </div>
-              <div className="main">
-                <h2 className="h_white">SAMPLE VIEW</h2>
-                <div className="content">
-                
-                </div>
-              </div>
-              <div className="aside">
-                <h2 className="h_black">MY GROUP</h2>
-                <div className="content">
-                  <p>MyGroupList contents</p>
-                </div>
-              </div>
-            </section>
-				
-		{/*<!--========================================
+								<TemplateList 
+									data = {eyeslist}
+									property_type = "eyes"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {faciallist}
+									property_type = "beard"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {hairlist}
+									property_type = "hair"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {bglist}
+									property_type = "bg"
+									zIndex = {-9999}
+									addtocanvas = {this.addToCanvas}
+								/>
+								{/*<!--========================================
 			left design tool
     =========================================-->*/}
 		<div class="design_tool">
@@ -140,25 +148,7 @@ export default class DesignPage extends React.Component {
 			<button class="back_btn" type="button">Back</button>
 		</div>
 
-		{/*<!--========================================
-			product modal
-    =========================================-->*/}
-		<div class="modal fade" id="productModal" role="dialog">
-			<div class="modal-dialog modal-lg">
-				{/*<!-- Modal content-->*/}
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Products</h4>
-					</div>
-					<div class="modal-body product_area clear_fix">
-					</div>
-					<div class="modal-footer">
-					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 		{/*<!--========================================
 			Image Upload Modal
@@ -185,6 +175,23 @@ export default class DesignPage extends React.Component {
 			</div>
 		</div>
 
+                </div>
+              </div>
+              <div className="main">
+                <h2 className="h_white">SAMPLE VIEW</h2>
+                <div className="content">
+                
+                </div>
+              </div>
+              <div className="aside">
+                <h2 className="h_black">MY GROUP</h2>
+                <div className="content">
+                  <p>MyGroupList contents</p>
+                </div>
+              </div>
+            </section>
+				
+		
 
 
 	

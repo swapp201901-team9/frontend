@@ -20,7 +20,7 @@ export default class TemplateList extends React.Component{
         );
 
         return(
-            <StackGrid>
+            <StackGrid columnWidth={40}>
                {templates}   
                </StackGrid>
 
