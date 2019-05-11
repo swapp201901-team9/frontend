@@ -180,7 +180,19 @@ export default class DesignPage extends React.Component {
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
-                
+                {/*<!--========================================
+			front-back button section
+	=========================================-->*/}
+	<button class="front_btn" type="button">Front</button>
+	<FabricCanvas 
+	activeProperty = {this.state.activeProperty}
+	/>	
+	
+	<button class="back_btn" type="button">Back</button>
+	<FabricCanvas 
+	activeProperty = {this.state.activeProperty}
+	/>
+
                 </div>
               </div>
               <div className="aside">

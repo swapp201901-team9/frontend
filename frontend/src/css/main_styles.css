@@ -600,10 +600,12 @@ img{
 /* Canvas */
 #main-canvas{
     background: #ccc;
-    background: url('./img/tshirt1_front.jpg');
+    background: url('./images/bg-canvas.png');
     background-repeat: repeat;
     border:1px solid #ececec;
     margin: 10px auto;
     display: block;
+    height: 400px;
+    width: 400px;
   
   }
