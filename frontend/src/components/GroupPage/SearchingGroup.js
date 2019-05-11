@@ -52,9 +52,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onSearchGroup: (newList) => toSearchGroup(newList),
-	onJoinGroup: (groupid) => toJoinGroup(groupid),
-    onToGroupDetail: (groupid) => gotoGroupDetail(groupid),
+	onSearchGroup: (newList) => dispatch(toSearchGroup(newList)),
+	onJoinGroup: (groupid) => dispatch(toJoinGroup(groupid)),
+    onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(SearchingGroup)
