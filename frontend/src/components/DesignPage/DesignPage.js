@@ -39,7 +39,9 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
-			
+						<FabricCanvas 
+							activeProperty = {this.state.activeProperty}
+							/>
             {/*<Col md={6}>
               <Tabs defaultActiveKey={1} justified id="main_tabs">
                 <Tab eventKey={1} title="Faces">
