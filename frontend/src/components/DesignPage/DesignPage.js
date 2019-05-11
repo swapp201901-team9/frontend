@@ -1,6 +1,7 @@
 import React from 'react';
 import {SwatchesPicker} from 'react-color';
-import { connect } from 'react-redux';
+//import {Canvas} from 'react-fabricjs';
+//import { connect } from 'react-redux';
 
 
 
@@ -28,6 +29,7 @@ export default class DesignPage extends React.Component {
       return (
       <div>
       <SwatchesPicker onChange={ this.handleChange } />
+      
       
 		{/*<!--========================================
 			preview and reset area
@@ -241,6 +243,7 @@ export default class DesignPage extends React.Component {
 		<script type="text/javascript" src="js/fabric.min.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
       </div>
+ 
       );
     }
   }
