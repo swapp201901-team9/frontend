@@ -15,11 +15,22 @@ class GroupPage extends React.Component {
 		}
 
 		return (
-			<div>
+			<div className="GroupPage">
 				<NavBar />
-				<CreateGroup />
-				<SearchingGroup />
-				<MyGroupList />
+				<section className="wrap clear col3">
+					<div className="aside">
+						<h2 className="h_white">CREATE GROUP</h2>
+						<CreateGroup />
+					</div>
+					<div className="main">
+						<h2 className="h_white">SEARCHING GROUP</h2>
+						<SearchingGroup />
+					</div>
+					<div className="aside">
+						<h2 className="h_black">MY GROUP</h2>
+						<MyGroupList />
+					</div>
+				</section>
 			</div>
 		)
 	}
