@@ -55,7 +55,7 @@ class CreateGroup extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	all_groups: state.all_group,
+	all_groups: state.all_groups,
 })
 
 
