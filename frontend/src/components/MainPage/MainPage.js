@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import NavBar from '../NavBar/NavBar';
 import DesignPage from '../DesignPage/DesignPage';
-import ViewPage from '../DesignPage/ViewPage';
+//import ViewPage from '../DesignPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
 import { signOut } from '../../actions';
 
@@ -11,14 +11,14 @@ import { signOut } from '../../actions';
 class MainPage extends React.Component {
 
   render() {
-      if(!this.props.loading) {
+      /*if(!this.props.loading) {
         return(
           <div>
             <p>loading...</p>
           </div>
           
         )
-      }
+      }*/
     
       //login 되어 있는 상태의 main page
       if(this.props.loggedIn !== "") {
