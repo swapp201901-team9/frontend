@@ -9,7 +9,6 @@
     "jquery": "^3.4.1",
     "lodash": "^4.17.11",
     "react": "^15.5.4",
-    "react-bootstrap": "^1.0.0-beta.8",
     "react-color": "^2.17.3",
     "react-dom": "^15.5.4",
     "react-fabric": "^0.4.1",
@@ -17,17 +16,19 @@
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-stack-grid": "^0.7.1",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.8",
     "three": "^0.104.0",
     "xhr-promise-redux": "^1.2.1"
   },
   "devDependencies": {
+    "babel-jest": "^19.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "react-scripts": "^0.9.5",
-    "babel-jest": "^19.0.0",
     "jest": "^19.0.2",
+    "react-image-resizer": "^1.3.0",
+    "react-scripts": "^0.9.5",
     "react-test-renderer": "^15.5.4"
   },
   "scripts": {

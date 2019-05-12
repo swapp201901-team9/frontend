@@ -1,15 +1,17 @@
 import React from 'react';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
-import './css/style.css';
-//import './App.css';
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
-//import {Col, Tabs, Tab, Button } from 'react-bootstrap';
 
 
+//the templates are imported as images and passed as porps to the TemplateList components.
+//if the user chooses any of the properties, the state gets updated in the DesignPage component
+//it gets passed onto FabricCanvas as prop
+//FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
+//about saveToCanvas: use a method from fabric named TODataUrl()
 
 export default class DesignPage extends React.Component {
 	constructor(props){
@@ -30,8 +32,6 @@ export default class DesignPage extends React.Component {
 		this.setState({activeProperty: imgInstance});
 	}
 	
-	
-	
     handleChange(color, event) {
 
     }
@@ -39,74 +39,41 @@ export default class DesignPage extends React.Component {
     render() {
       return (
       <div>
-						<FabricCanvas 
-							activeProperty = {this.state.activeProperty}
-							/>
-            {/*<Col md={6}>
-              <Tabs defaultActiveKey={1} justified id="main_tabs">
-                <Tab eventKey={1} title="Faces">
-
-                  <TemplateList 
-                      data = {facelist}
-                      property_type = "face"
-                      zIndex = {0}
-                      addtocanvas ={this.addToCanvas}
-                  />
-
-                </Tab>
-                <Tab eventKey={2} title="Eyes">
-
-                  <TemplateList 
-                    data = {eyeslist}
-                    property_type= "eyes"
-                    zIndex = {2}
-                    addtocanvas ={this.addToCanvas}
-                  />
-
-                </Tab>
-                <Tab eventKey={3} title="Beard">
-
-                  <TemplateList 
-                    data = {faciallist}
-                    property_type= "beard"
-                    zIndex = {2}
-                    addtocanvas ={this.addToCanvas}
-                  />
-
-                </Tab>
-                <Tab eventKey={4} title="Hair">
-
-                  <TemplateList 
-                    data = {hairlist}
-                    property_type= "hair"
-                    zIndex = {2}
-                    addtocanvas ={this.addToCanvas}
-                  />
-
-                </Tab>
-                <Tab eventKey={5} title="Background">
-
-                  <TemplateList 
-                    data = {bglist}
-                    property_type= "bg"
-                    zIndex = {-9999}
-                    addtocanvas ={this.addToCanvas}
-                  />
-
-                </Tab>
-              </Tabs>
-            </Col>
-
-            <Col md={6}>
-
-              <FabricCanvas 
-                activeProperty = {this.state.activeProperty}
-              />
-
-			</Col>	*/}
-
-
-		{/*<!--========================================
+				<section className="wrap clear col3">
+              <div className="aside">
+                <h2 className="h_white">SELECT STYLE</h2>
+                <div className="content">
+								<TemplateList 
+									data = {facelist}
+									property_type = "face"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {eyeslist}
+									property_type = "eyes"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {faciallist}
+									property_type = "beard"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {hairlist}
+									property_type = "hair"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {bglist}
+									property_type = "bg"
+									zIndex = {-9999}
+									addtocanvas = {this.addToCanvas}
+								/>
+								{/*<!--========================================
 			left design tool
     =========================================-->*/}
 		<div class="design_tool">
@@ -176,39 +143,6 @@ export default class DesignPage extends React.Component {
 		</div>
 
 		{/*<!--========================================
-			right help area
-    =========================================-->*/}
-		<div class="help_area">
-
-			{/*<!-- help popup window -->*/}
-			<div class="help_window_wrapper">
-				<div class="help_window">
-					<div class="header clear_fix">
-						<p class="title"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</p>
-						<i id="close_help_window" class="fa fa-window-close" aria-hidden="true"></i>
-					</div>
-
-					<p><i class="fa fa-leaf" aria-hidden="true"></i> <span>Choose product</span> - Use this button to select your product.</p>
-
-					<p><i class="fa fa-text-width" aria-hidden="true"></i> <span>Add text</span> - Use this button to add a text.</p>
-
-					<p><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <span>Edit text</span> - Click on the text and edit your text from the popup window</p>
-
-					<p><i class="fa fa-picture-o" aria-hidden="true"></i> <span>Add image</span> - Use this button to add an image.</p>
-
-					<p><i class="fa fa-arrow-up" aria-hidden="true"></i> <span>Export</span> - Click on this button, a popup window will appear with download buttons</p>
-
-					<p><i class="fa fa-trash-o" aria-hidden="true"></i> <span>Delete</span> - Click on the <i class="fa fa-trash-o" aria-hidden="true"></i> icon to delete an element</p>
-
-				</div>
-			</div>
-			<a class="open_help_window" href="#">
-				<i class="fa fa-question-circle" aria-hidden="true"></i>
-				<p>Help</p>
-			</a>
-		</div>
-
-		{/*<!--========================================
 			front-back button section
     =========================================-->*/}
 		<div class="change_side">
@@ -216,25 +150,7 @@ export default class DesignPage extends React.Component {
 			<button class="back_btn" type="button">Back</button>
 		</div>
 
-		{/*<!--========================================
-			product modal
-    =========================================-->*/}
-		<div class="modal fade" id="productModal" role="dialog">
-			<div class="modal-dialog modal-lg">
-				{/*<!-- Modal content-->*/}
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Products</h4>
-					</div>
-					<div class="modal-body product_area clear_fix">
-					</div>
-					<div class="modal-footer">
-					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		
 
 		{/*<!--========================================
 			Image Upload Modal
@@ -261,13 +177,38 @@ export default class DesignPage extends React.Component {
 			</div>
 		</div>
 
+                </div>
+              </div>
+              <div className="main">
+                <h2 className="h_white">SAMPLE VIEW</h2>
+                <div className="content">
+                {/*<!--========================================
+			front-back button section
+	=========================================-->*/}
+	<button class="front_btn" type="button">Front</button>
+	<FabricCanvas 
+	activeProperty = {this.state.activeProperty}
+	/>	
+	
+	<button class="back_btn" type="button">Back</button>
+	<FabricCanvas 
+	activeProperty = {this.state.activeProperty}
+	/>
+
+                </div>
+              </div>
+              <div className="aside">
+                <h2 className="h_black">MY GROUP</h2>
+                <div className="content">
+                  <p>MyGroupList contents</p>
+                </div>
+              </div>
+            </section>
+				
+		
 
 
-		{/*<!--========================================
-			JavaScript Files
-    =========================================-->*/}
-		<script type="text/javascript" src="js/fabric.min.js"></script>
-		<script type="text/javascript" src="js/script.js"></script>
+	
       </div>
  
       );
