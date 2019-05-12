@@ -238,14 +238,12 @@ function *watchLoginState() {
                 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-                    profile_user: null,
                     all_groups: all_groups_data.body,
                     my_groups: my_groups_data.body,
                     filtered_groups: all_groups_data.body,
                     load: 0,
                     loading: true,
                 }));
-                console.log(yield select())
             }
 
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
@@ -294,6 +292,16 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
                     console.log("group id: ", id);
+                    try{
+
+                    } catch(error) {
+                        alert("group detail error");
+                    }
+                    yield put(actions.setState({
+                        authorization: window.atob(localStorage['auth']),
+                        loading: true,
+                        load: 0,
+                    }))
                 }
 
                 else {
@@ -625,11 +633,50 @@ function *createGroup(data){
 }
 
 function *searchGroup(data){
-    console.log("searchGroup")
+    console.log("searchGroup", data.newList)
+    let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+    let all_groups_data, my_groups_data;
+                
+    //all_groups data
+    try{
+        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("GET all groups data: ", all_groups_data.body)
+    } catch(error){
+        console.log(error)
+        alert("all groups data error")
+    }
+    
+    //my_groups data
+    try{
+        my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("GET my groups data: ", my_groups_data.body)
+    } catch(error){
+        alert("my groups data error")    
+    }
+    
     yield put(actions.setState({
-        filtered_groups: data
+        authorization: window.atob(localStorage['auth']),
+        all_groups: all_groups_data.body,
+        my_groups: my_groups_data.body,
+        filtered_groups: data.newList,
+        load: 0,
+        loading: true,
     }));
-
+    
 }
 
 function *joinGroup(data){
@@ -644,6 +691,7 @@ function *joinGroup(data){
             },
             contentType: 'json'
         });
+        alert("SUCCESS")
         yield put(actions.changeUrl('group/' + data.groupid + '/'));
     } catch(error){
         console.log(error)
@@ -653,6 +701,12 @@ function *joinGroup(data){
 
 function *toGroupDetail(data){
     console.log("toGroupDetail")
+    try {
+        yield put(actions.changeUrl('group/' + data.groupid + '/'));
+    } catch(error) {
+        console.log(error)
+        alert("*toGroupDetail error")
+    }
 }
 
 function *toAdminGroup(data){

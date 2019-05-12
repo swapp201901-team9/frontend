@@ -6,10 +6,10 @@ import { toSearchGroup, toJoinGroup, gotoGroupDetail } from '../../actions/index
 
 class SearchingGroup extends React.Component {
 	onSubmit = () => {
-		console.log("search onSubmit")
-		if(this.searchword !== undefined) {
+		console.log("search onSubmit", this.searchword.value)
+		if(this.searchword.value !== undefined) {
 			this.newList = this.props.all_groups.filter(group => {
-				return group.group_name.includes(this.searchword)
+				return group.group_name.includes(this.searchword.value)
 			});
 		}
 		console.log("after: ", this.newList)
