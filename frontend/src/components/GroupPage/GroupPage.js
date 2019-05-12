@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import CreateGroup from './CreateGroup'
+import NavBar from '../NavBar/NavBar';
+import CreateGroup from './CreateGroup';
 import MyGroupList from './MyGroupList';
 import SearchingGroup from './SearchingGroup';
 
@@ -15,6 +16,7 @@ class GroupPage extends React.Component {
 
 		return (
 			<div>
+				<NavBar />
 				<CreateGroup />
 				<SearchingGroup />
 				<MyGroupList />
