@@ -47,7 +47,7 @@ export default class DesignPage extends React.Component {
 								<TemplateList 
 									data = {facelist}
 									property_type = "face"
-									zIndex = {0}
+									zIndex= {0}
 									addtocanvas = {this.addToCanvas}
 								/>
 								<TemplateList 

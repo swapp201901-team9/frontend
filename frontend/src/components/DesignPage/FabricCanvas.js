@@ -1,17 +1,33 @@
 import React from 'react';
 import {fabric} from 'fabric';
+import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
+    
+    constructor(props) {
+        super(props);
+        this.state = {pictures : []};
+        this.onDrop = this.onDrop.bind(this);
+    }
 
+    onDrop(picture) {
+       
+        this.setState({
+            pictures: this.state.pictures.concat(picture),
+        });
+       
+      let imageUrl = './img/tshirt1_back.jpg';
+      var img = new Image();
+      img.src = imageUrl;
+      var Img = new fabric.Image(img);
+      this.the_canvas.add(Img);
+      this.the_canvas.renderAll();
+     
+    }
+   
     componentDidMount(){
 
-        // Make a New Canvas
-        /*this.the_canvas = new fabric.StaticCanvas('main-canvas', {
-            preserveObjectStacking: true,
-            height:375,
-            width:375,
-        });*/
         this.the_canvas = new fabric.StaticCanvas('main-canvas', {
             preserveObjectStacking: true,
             height:375,
@@ -62,47 +78,13 @@ class FabricCanvas extends React.Component{
          link.click();
 
     }
-    
-    uploadToCanavas = (e) => {
-        var canvas = new fabric.StaticCanvas('main-canvas', {
-            preserveObjectStacking: true,
-            height:375,
-            width:375,
-        });
-        var file = e.target.files[0];
-        var reader = new FileReader();
-        reader.onload = function(f) {
-            var data = f.target.result;
-            fabric.Image.fromURL(data, function (img) {
-                var oImg = img.set({left: 0, top: 0, angle: 0,width:50, height:50}).scale(0.1);
-                canvas.add(oImg).renderAll();
-                var a = canvas.setActiveObject(oImg);
-                var dataURL = canvas.toDataURL({format: 'png', quality: 0.8});
-              });
-            /*var img = new Image();
-            img.onload = function(){
-                var imgInstance = new fabric.Image(img);
-                imgInstance.set({
-                    angle: 0,
-                    padding: 10,
-                    cornersize:10,
-                    height:40,
-                    width:40,
-              });
-              canvas.centerObject(imgInstance);
-              this.the_canvas.centerObject(imgInstance);
-                this.the_canvas.add(imgInstance);
-                canvas.add(imgInstance);
-                canvas.renderAll();
-                this.the_canvas.renderAll();
-            }
-            img.src = event.target.result;*/
-        };
-        reader.readAsDataURL(file);
+    fileChangedHandler = (event) => {
+        const file = event.target.files[0];
+        this.setState({selectedFile: file});
     }
-
+   
     render(){
-
+       
         return (
             <div className= "main-canvas-container">
 
@@ -110,18 +92,14 @@ class FabricCanvas extends React.Component{
                 >
                 </canvas>
 
-                <button onClick = {this.saveToCanvas}>
-                    Download Design 
-                  </button>
-                  <input 
-                  id = "imageLoader"
-                  name = "imageLoader"
-                  type = "file"
-                  onChange = {this.uploadToCanvas}
+               
+                  <ImageUploader 
+                    withIcon = {true}
+                    buttonText = 'Choose images'
+                    onChange = {this.onDrop}
+                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
+                    withPreview = {true}
                   />
-                  <button>
-                    Upload logo
-                  </button>
             </div>
         );
     }
