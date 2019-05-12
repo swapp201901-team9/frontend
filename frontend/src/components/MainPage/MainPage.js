@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 import NavBar from '../NavBar/NavBar';
 import DesignPage from '../DesignPage/DesignPage';
-import ViewPage from '../ViewPage/ViewPage';
+import ViewPage from '../DesignPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
 import { signOut } from '../../actions';
 
 
 class MainPage extends React.Component {
+
   render() {
     if(!this.props.loading) {
       return(
@@ -19,16 +20,17 @@ class MainPage extends React.Component {
       )
     }
     
-    //login 되어 있는 상태의 main page
-    if(this.props.loggedIn !== "") {
-      return (
-        <div className="app">
-          < NavBar/>
-          <section className="wrap clear col3">
-            <div className="aside">
-              <h2 className="h_white">SELECT STYLE</h2>
-              <div className="content">
-                <DesignPage />
+      //login 되어 있는 상태의 main page
+      if(this.props.loggedIn !== "") {
+        return (
+          <div className="app">
+            < NavBar/>
+            {/*<section className="wrap clear col3">
+              <div className="aside">
+                <h2 className="h_white">SELECT STYLE</h2>
+                <div className="content">
+                  <DesignPage />
+                </div>
               </div>
             </div>
             <div className="main">
@@ -42,20 +44,20 @@ class MainPage extends React.Component {
               <div className="content">
                 <MyGroupList />
               </div>
-            </div>
-          </section>
-        </div>
-      )
-    }
-    else {
-      return (
-        <div className="app">
-        < NavBar/>
-        <section className="wrap clear col3">
-        <div className="aside">
-          <h2 className="h_white">SELECT STYLE</h2>
-          <div className="content">
-            <DesignPage />
+        </section>*/}
+        <DesignPage/>
+          </div>
+        )
+      }
+      else {
+        return (
+          <div className="app">
+          < NavBar/>
+          {/*<section className="wrap clear col3">
+          <div className="aside">
+            <h2 className="h_white">SELECT STYLE</h2>
+            <div className="content">
+              <DesignPage />
           </div>
         </div>
         <div className="main">
@@ -69,8 +71,8 @@ class MainPage extends React.Component {
           <div className="content">
             <p>로그인을 해주세요.</p>
           </div>
-        </div>
-        </section>
+        </section>*/}
+        <DesignPage/>
       </div>
       )
 
