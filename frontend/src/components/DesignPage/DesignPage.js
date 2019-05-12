@@ -4,6 +4,7 @@ import {CirclePicker} from 'react-color';
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
+import TemplateListItem from './TemplateListItem'
 import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
@@ -38,6 +39,22 @@ export default class DesignPage extends React.Component {
     handleChange(color, event) {
 
 	}
+	onDrop(picture) {
+       
+	  let imageUrl = './img/tshirt1_back.jpg';
+	  this.addToCanvas(imageUrl.target, "eye", 2);
+	  /*var img = new Image();
+      img.src = imageUrl;
+	  var imgI = new fabric.Image(imageUrl, {
+		width: 400,
+		height: 400,
+		the_type: "eyes",
+		zIndex: 2
+	});
+      this.setState({activeProperty: imgI});*/
+	  
+	 
+    }
 	
 
     render() {
@@ -138,8 +155,15 @@ export default class DesignPage extends React.Component {
 						type="file"/>
 					
 						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
+						<ImageUploader 
+                    	withIcon = {true}
+                    	buttonText = 'Choose images'
+                    	onChange = {this.onDrop}
+                    	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
+                    	withPreview = {true}
+                  		/>
 
-					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					    
 				
 
 			</div>
