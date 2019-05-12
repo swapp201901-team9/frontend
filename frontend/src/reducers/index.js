@@ -4,9 +4,14 @@ const homepageInitialState = {
     authorization: "",
     profile_user: null,
 
-    all_groups: [],
-    my_groups: [],
-    filtered_groups: [],
+    all_groups: [], //존재하는 모든 그룹 정보
+    my_groups: [], //내가 가입된 그룹 정보
+    filtered_groups: [], //검색 결과 필터링된 그룹 정보
+
+    group_users: [], //특정 그룹에 속한 모든 유저 리스트
+    group_designs: [], //특정 그룹에 속한 모든 디자인 리스트
+
+    working_design: null, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
 
     my_requests: [],
     load : 0,
@@ -33,12 +38,16 @@ const homepage = (state = homepageInitialState, action) => {
         case 'SET_STATE': {
             return Object.assign({}, state, {
                 authorization: action.state.authorization,
-                
                 profile_user: action.state.profile_user,
                 
                 all_groups: action.state.all_groups,
                 my_groups: action.state.my_groups,
                 filtered_groups: action.state.filtered_groups,
+
+                group_users: action.state.group_users,
+                group_designs: action.state.group_designs,
+
+                working_design: action.state.working_design,
 
                 my_requests: action.state.my_requests,
                 load : action.state.load,

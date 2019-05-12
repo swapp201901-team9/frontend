@@ -1,6 +1,5 @@
 import React from 'react'
 import GroupDetail from './GroupDetail.js'
-import SignOut from '../MainPage/SignOut.js'
 import { connect } from 'react-redux'
 
 class GroupDetailPage extends React.Component {
@@ -8,14 +7,11 @@ class GroupDetailPage extends React.Component {
   render() {
         if (!this.props.loading) {
             return (
-                    <div>
-                        <SignOut />
-                    </div>
-                    )
+                <p>loading...</p>
+            )
         }
         return (
                 <div >
-                    <SignOut />
                     <GroupDetail />
                 </div>
                )
