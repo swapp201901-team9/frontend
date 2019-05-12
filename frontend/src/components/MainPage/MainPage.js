@@ -5,13 +5,17 @@ import NavBar from '../NavBar/NavBar';
 import DesignPage from '../DesignPage/DesignPage';
 import ViewPage from '../ViewPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
+import { signOut } from '../../actions';
 
 
 class MainPage extends React.Component {
   render() {
     if(!this.props.loading) {
       return(
-        <p>loading...</p>
+        <div>
+          <p>loading...</p>
+        </div>
+        
       )
     }
     
