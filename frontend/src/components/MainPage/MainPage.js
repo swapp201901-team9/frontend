@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import NavBar from '../NavBar/NavBar';
 import DesignPage from '../DesignPage/DesignPage';
-import ViewPage from '../DesignPage/ViewPage';
+//import ViewPage from '../DesignPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 
