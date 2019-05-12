@@ -1,6 +1,7 @@
 import React from 'react';
-import NavBar from '../NavBar/NavBar';
 import { connect } from 'react-redux';
+
+import NavBar from '../NavBar/NavBar';
 import DesignPage from '../DesignPage/DesignPage';
 import ViewPage from '../ViewPage/ViewPage';
 import MyGroupList from '../GroupPage/MyGroupList';
@@ -35,7 +36,7 @@ class MainPage extends React.Component {
             <div className="aside">
               <h2 className="h_black">MY GROUP</h2>
               <div className="content">
-                <p>MyGroupList contents</p>
+                <MyGroupList />
               </div>
             </div>
           </section>

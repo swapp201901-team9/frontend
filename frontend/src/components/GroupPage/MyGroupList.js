@@ -7,7 +7,6 @@ class MyGroupList extends React.Component {
     render() {
         return (
             <div>
-                <h1>My Group List</h1>
                 <ul>
                 {this.props.my_groups.map(group =>
                     <MyGroup 

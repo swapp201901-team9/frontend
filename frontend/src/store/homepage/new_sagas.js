@@ -175,12 +175,21 @@ function *watchLoginState() {
                 // localStorage.removeItem('parent');
                 let my_groups_data;
                 try {
-                   console.log("get main without exception")
+                    my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
                     alert("main error");
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    my_groups: my_groups_data.body,
                     loading: true,
                     load : 0
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
@@ -227,10 +236,6 @@ function *watchLoginState() {
                     alert("my groups data error")    
                 }
                 
-                // console.log("hi")
-                // console.log("groups loc auth: ", window.atob(localStorage['auth']))
-                // console.log("before set state")
-                // console.log(yield select())
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     profile_user: null,
