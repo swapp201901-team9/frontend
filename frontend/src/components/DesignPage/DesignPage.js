@@ -10,6 +10,13 @@ import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
 
+const face = [
+
+	require('./images/templates/faces/1.png'),
+
+]
+
+
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -23,6 +30,8 @@ export default class DesignPage extends React.Component {
 		this.state = {
 			activeProperty : null
 		};
+		//this.addToCanvas = this.addToCanvas.bind(this);
+		this.onDrop = this.onDrop.bind(this);
 	}
 
 	addToCanvas = (imgElement, property_type, z_Index) => {
@@ -40,9 +49,23 @@ export default class DesignPage extends React.Component {
 
 	}
 	onDrop(picture) {
+	   var myImage = new TemplateListItem('./images/templates/eyes/1.png', 'eye',2);
+	   //myImage.src = './images/templates/eyes/1.png';
+	   document.body.appendChild(myImage);
+	   //this.addToCanvas(myImage, 'eye', 2);
        
-	  let imageUrl = './img/tshirt1_back.jpg';
-	  this.addToCanvas(imageUrl.target, "eye", 2);
+	  //let imageUrl = './images/templates/eyes/1.png';
+	  //var img = new Image(400,400);
+	  //var img = document.createElement('img');
+	  //img.src = imageUrl;
+	  var imgInstance = new fabric.Image(myImage, {
+		width: 400,
+		height: 400,
+		the_type: "eye",
+		zIndex: 2
+	});
+
+	this.setState({activeProperty: imgInstance});
 	  /*var img = new Image();
       img.src = imageUrl;
 	  var imgI = new fabric.Image(imageUrl, {
@@ -162,6 +185,13 @@ export default class DesignPage extends React.Component {
                     	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
                     	withPreview = {true}
                   		/>
+						
+						<TemplateList
+						data = {face}
+						property_type = "face"
+						zIndex= {0}
+						addtocanvas = {this.addToCanvas}
+						/>
 
 					    
 				
