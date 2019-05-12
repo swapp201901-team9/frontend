@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -140,6 +140,13 @@ function *groupPageSaga() {
 
 function *groupDetailPageSaga() {
     console.log("Group Detail Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchLikeDesign);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
 }
 
 function *groupAdminPageSaga() {
@@ -254,7 +261,6 @@ function *watchLoginState() {
             else { 
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];
-                let profile_data = null;
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
@@ -272,6 +278,7 @@ function *watchLoginState() {
                 //프로필 정보를 get하는 부분
                 else if(path.split("/")[1] === 'profile'){
                     console.log("get profile details...");
+                    let profile_data = null;
                     try{
                         profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
@@ -297,15 +304,54 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
                     console.log("group id: ", id);
-                    try{
+                    let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+                    let my_groups_data, group_designs_data = null;
 
-                    } catch(error) {
-                        alert("group detail error");
+                    //my_groups data
+                    try{
+                        my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json',
+                        });
+                        console.log("GET my groups data: ", my_groups_data.body)
+                    } catch(error){
+                        alert("my groups data error")    
                     }
+
+                    //group designs
+                    try{
+                        group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error) {
+                        if(error.statusCode === 403) {
+                            console.log("you are not permitted");
+                            alert("가입하지 않은 그룹입니다")
+                            yield put(actions.changeUrl('/groups/'))
+                        }   
+                        else {
+                            console.log(error)
+                            alert("group designs error");
+                        }
+
+                    }
+
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        my_groups: my_groups_data.body,
+                        group_designs: group_designs_data.body,
                         load: 0,
-                        loading: true,
+                        loading: true
                     }))
                 }
 
@@ -354,6 +400,7 @@ function *watchLoginState() {
 
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
+                    let profile_data = null;
                     try {
                         // localStorage.setItem('parent', id);
                         data = yield call(xhr.get, fixed_url+'article/'+id+'/total/', {
@@ -532,6 +579,13 @@ function *watchGoToAdminGroup() {
 	}
 }
 
+function *watchLikeDesign() {
+    while(true) {
+        const data = yield take(LIKE_DESIGN);
+        console.log("watchLikeDesign");
+        yield call(likeDesign, data);
+    }
+}
 
 
 
@@ -772,3 +826,23 @@ function *toAdminGroup(data){
         alert("*toGroupDetail error")
     }
 }
+
+function *likeDesign(data) {
+    console.log("likeDesign")
+    const path = 'groups/like/' + data.designid + '/';
+    try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*liikeDesign error")
+    }
+}
+

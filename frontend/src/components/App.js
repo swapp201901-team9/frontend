@@ -27,7 +27,6 @@ const App = ({store}) => {
 					<Route path="/profile/:id" component={ProfilePage} />
                     <Route path="/group/:id" component={GroupDetailPage} />
 
-
                 </div>
             </BrowserRouter>
         </Provider>

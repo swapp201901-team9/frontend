@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -143,5 +143,14 @@ export const gotoAdminGroup = (groupid) => {
     return {
         type: TO_ADMIN_GROUP,
         groupid: groupid,
+    }
+}
+
+export const toLikeDesign = (designid) => {
+    console.log("likeDesign action")
+    console.log(designid)
+    return {
+        type: LIKE_DESIGN,
+        designid: designid,
     }
 }
