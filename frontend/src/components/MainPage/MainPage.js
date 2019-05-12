@@ -11,14 +11,14 @@ import { signOut } from '../../actions';
 class MainPage extends React.Component {
 
   render() {
-    if(!this.props.loading) {
-      return(
-        <div>
-          <p>loading...</p>
-        </div>
-        
-      )
-    }
+      // if(!this.props.loading) {
+      //   return(
+      //     <div>
+      //       <p>loading...</p>
+      //     </div>
+          
+      //   )
+      // }
     
       //login 되어 있는 상태의 main page
       if(this.props.loggedIn !== "") {
