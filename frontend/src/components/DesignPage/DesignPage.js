@@ -34,7 +34,8 @@ export default class DesignPage extends React.Component {
 	
     handleChange(color, event) {
 
-    }
+	}
+	
 
     render() {
       return (
@@ -77,27 +78,11 @@ export default class DesignPage extends React.Component {
 			left design tool
     =========================================-->*/}
 		<div class="design_tool">
-			<ul>
-				<li>
-				  	<a href="#home" data-toggle="modal" data-target="#productModal"><i class="fa fa-leaf" aria-hidden="true"></i><span>Choose product</span></a>
-				</li>
-				<li class="add_text">
-					<a class="open_window" href="#">
-						<i class="fa fa-text-width" aria-hidden="true"></i>
-						<span>Add text</span>
-					</a>
-					<div class="text_tool_window">
-						<div class="header clear_fix">
-							<p class="title"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit text</p>
-							<i id="close_window" class="fa fa-window-close" aria-hidden="true"></i>
-						</div>
+			
 						<textarea id="text_area"> Hello
 						</textarea>
-						<div class="wrapper clear_fix">
-					        <div class="font_area">
-					        	<p>Choose a font</p>
-				        		<select id="text_font">
-
+					    <p>Choose a font</p>
+						<select id="text_font">
 				        			{/*<!-- all fonts -->*/}
 									<option>arial</option>
 									<option>tahoma</option>
@@ -107,15 +92,10 @@ export default class DesignPage extends React.Component {
 									<option>Alex Brush</option>
 									<option>Aguafina Script</option>
 						        </select>
-					        </div>
-					        <div class="color_area">
 					        	<p>Text colour</p>
 					        	{/*<!-- colour -->*/}
 										{/*<input type="text" id="text_colour" />*/}
 										<CirclePicker onChange={ this.handleChange } />
-							</div>
-						</div>
-				        <div class="font_style">
 				        	<p>Text style</p>
 			        		<select id="text_style">
 
@@ -125,22 +105,13 @@ export default class DesignPage extends React.Component {
 								<option>oblique</option>
 								<option>bold</option>
 					        </select>
-				        </div>
+				        
 				        <div class="font_size">
 				        	{/*<!-- font size -->*/}
 				        	<p>Font Size :</p> <input type="range"  min="0" max="100" value="30" id="text_size" />
 				        </div>
-					</div>
-				</li>
-				<li>
-				  	<a href="#" data-toggle="modal" data-target="#imgUploadModal"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Add image</span></a>
-				</li>
-				<li>
-					<a href="#" class="export_btn" data-toggle="modal" data-target="#previewModal"><i class="fa fa-arrow-up" aria-hidden="true"></i><span>Export</span></a>
-				  	{/*<!-- <a href="#" data-toggle="modal" data-target="#previewModal"><i class="fa fa-arrow-up" aria-hidden="true"></i><span>Export</span></a> -->*/}
-				</li>
-			</ul>
-		</div>
+						</div>
+				
 
 		{/*<!--========================================
 			front-back button section
@@ -155,30 +126,21 @@ export default class DesignPage extends React.Component {
 		{/*<!--========================================
 			Image Upload Modal
     =========================================-->*/}
-		<div class="modal fade" id="imgUploadModal" role="dialog">
-			<div class="modal-dialog modal-lg">
-
-				{/*<!-- Modal content-->*/}
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
+		
 						<h4 class="modal-title">Upload image</h4>
-					</div>
-					<div class="modal-body">
-						<input type="file" id="imgfile"/>
-					</div>
-					<div class="modal-footer">
-
+					
+						<input 
+						id = "imageLoader" 
+						name = "imageLoader"
+						type="file"/>
+					
 						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
 
 					    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
+				
 
-                </div>
-              </div>
+			</div>
+          </div>
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">

@@ -7,6 +7,11 @@ class FabricCanvas extends React.Component{
     componentDidMount(){
 
         // Make a New Canvas
+        /*this.the_canvas = new fabric.StaticCanvas('main-canvas', {
+            preserveObjectStacking: true,
+            height:375,
+            width:375,
+        });*/
         this.the_canvas = new fabric.StaticCanvas('main-canvas', {
             preserveObjectStacking: true,
             height:375,
@@ -57,17 +62,54 @@ class FabricCanvas extends React.Component{
          link.click();
 
     }
+    
+    uploadToCanavas = (e) => {
+        var file = e.target.files[0];
+        var reader = new FileReader();
+        var canvas = document.getElementById('main-canvas');
+        reader.onload = function(event) {
+            var img = new Image();
+            img.onload = function(){
+                var imgInstance = new fabric.Image(img);
+                imgInstance.set({
+                    angle: 0,
+                    padding: 10,
+                    cornersize:10,
+                    height:40,
+                    width:40,
+              });
+              canvas.centerObject(imgInstance);
+              this.the_canvas.centerObject(imgInstance);
+                this.the_canvas.add(imgInstance);
+                canvas.add(imgInstance);
+                canvas.renderAll();
+                this.the_canvas.renderAll();
+            }
+            img.src = event.target.result;
+        }
+        reader.readAsDataURL(e.target.files[0]);
+    }
 
     render(){
 
         return (
             <div className= "main-canvas-container">
 
-                <canvas id= 'main-canvas'>
+                <canvas id= 'main-canvas'
+                >
                 </canvas>
 
                 <button onClick = {this.saveToCanvas}>
                     Download Design 
+                  </button>
+                  <input 
+                  id = "imageLoader"
+                  name = "imageLoader"
+                  type = "file"
+                  onChange = {this.uploadToCanvas}
+                  />
+                  <button>
+                    Upload logo
                   </button>
             </div>
         );
