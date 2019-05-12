@@ -51,6 +51,9 @@ export default function *saga() {
                 case 'group':
                     yield spawn(groupDetailPageSaga);
                     break;
+                case 'admin':
+                    yield spawn(groupAdminPageSaga);
+                    break;
                 default:
                     console.log("default state");
                     alert("없는 장소");
@@ -139,6 +142,10 @@ function *groupDetailPageSaga() {
     console.log("Group Detail Page Saga");
 }
 
+function *groupAdminPageSaga() {
+    console.log("Group Admin Page Saga");
+}
+
 
 
 ///// Page별 saga함수에서 쓸 saga함수들 (watch 함수 편)
@@ -151,24 +158,21 @@ function *watchLoginState() {
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
+
     if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
-        // 로그인 된 상태로 첫 화면이나 회원가입, 로그인 페이지로 들어갈 경우: main 페이지로 리다이렉트
         if(localStorage.getItem("auth") !== null) {
-            // localStorage.removeItem('parent');
             yield put(actions.changeUrl('/main/'));
         }
     }
     else {
-        // 로그인이 되지 않은 경우: 무조건 첫 화면으로
         if(localStorage.getItem("auth") === null) {
-            // localStorage.removeItem('parent');
             yield put(actions.changeUrl('/'));
         }
-        // 로그인이 되어 있는 경우
         else {
             const path = window.location.pathname;
             let username = window.atob(localStorage.getItem("auth")).split(":")[0]
             console.log("username: ", username)
+            console.log(yield select())
             let data, parent_data;
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
@@ -185,13 +189,13 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
-                    alert("main error");
+                    alert("main mygroups error");
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     my_groups: my_groups_data.body,
-                    loading: true,
-                    load : 0
+                    load : 0,
+                    loading: true
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
             }
@@ -246,9 +250,10 @@ function *watchLoginState() {
                 }));
             }
 
-            else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
+            // username또는 id를 기준으로 backend에 겟을 날리는 경우
+            else { 
                 const username = path.split("/")[2];
-                const id = path.split("/")[2];//그냥..
+                const id = path.split("/")[2];
                 let profile_data = null;
 
                 if (username === undefined || username === '') {
@@ -275,16 +280,16 @@ function *watchLoginState() {
                             Accept: 'application/json'
                             },
                             responseType: 'json'
-                         });
-                         console.log('Get data without exception');
+                            });
+                            console.log('Get data without exception');
                     } catch(error){
                         alert("profile error");
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
                         profile_user: profile_data.body,
-                        loading: true,
                         load: 0,
+                        loading: true
                     }));
                 }
 
@@ -299,8 +304,51 @@ function *watchLoginState() {
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        loading: true,
                         load: 0,
+                        loading: true,
+                    }))
+                }
+
+                //group admin 정보를 get하는 부분
+                else if(path.split("/")[1] === 'admin') {
+                    console.log("get group admins...");
+                    console.log("group id: ", id);
+                    let group_users_data, group_designs_data = null;
+
+                    try{
+                        group_users_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group users error");
+                    }
+
+                    try{
+                        group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group designs error");
+                    }
+
+                    yield put(actions.setState({
+                        authorization: window.atob(localStorage['auth']),
+                        group_users: group_users_data.body,
+                        group_designs: group_designs_data.body,
+                        load: 0,
+                        loading: true
                     }))
                 }
 
@@ -340,8 +388,8 @@ function *watchLoginState() {
                         authorization: window.atob(localStorage['auth']),
 
                         profile_user: profile_data !== null ? profile_data.body : null,
-                        loading: true,
                         load: 0,
+                        loading: true
                         //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                     }));
                 }
@@ -603,9 +651,8 @@ function *escapeBook(profuser){
         });
         console.log("delete account succeed!");
         localStorage.removeItem('auth');
-        yield put(actions.changeUrl('/main/'));
+        yield put(actions.changeUrl('/'));
     }catch(error){
-
         alert("delete account error");
         return ;
 
@@ -627,8 +674,15 @@ function *createGroup(data){
         });
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
-        console.log(error)
-        alert("*createGroup error")
+        if(error.statusCode === 409) {
+            console.log("already existing name");
+            alert("이미 있는 이름입니다")
+            yield put(actions.changeUrl('/groups/'))
+        }        
+        else {
+            console.log(error)
+            alert("*createGroup error")
+        }
     }
 }
 
@@ -674,7 +728,7 @@ function *searchGroup(data){
         my_groups: my_groups_data.body,
         filtered_groups: data.newList,
         load: 0,
-        loading: true,
+        loading: true
     }));
     
 }
@@ -683,7 +737,7 @@ function *joinGroup(data){
     console.log("joinGroup")
     const path = 'join_group/'+data.groupid+'/'
 	try {
-		yield call(xhr.post, fixed_url + path, {
+		yield call(xhr.get, fixed_url + path, {
             headers: {
                 "Authorization": "Basic " + localStorage['auth'],
                 "Content-Type": 'application/json',
@@ -711,4 +765,10 @@ function *toGroupDetail(data){
 
 function *toAdminGroup(data){
     console.log("toAdminGroup")
+    try {
+        yield put(actions.changeUrl('admin/' + data.groupid + '/'));
+    } catch(error) {
+        console.log(error)
+        alert("*toGroupDetail error")
+    }
 }
