@@ -5,6 +5,7 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
+import MyGroupList from '../GroupPage/MyGroupList';
 
 
 //the templates are imported as images and passed as porps to the TemplateList components.
@@ -200,7 +201,7 @@ export default class DesignPage extends React.Component {
               <div className="aside">
                 <h2 className="h_black">MY GROUP</h2>
                 <div className="content">
-                  <p>MyGroupList contents</p>
+                  <MyGroupList />
                 </div>
               </div>
             </section>
