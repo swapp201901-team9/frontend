@@ -1,5 +1,7 @@
 import React from 'react';
-//import {Col} from 'react-bootstrap';
+//import {Col} from 'reactstrap';
+import StackGrid from 'react-stack-grid';
+import Image from 'react-image-resizer';
 
 export default class TemplateListItem extends React.Component{
     localAddToCanvas = (e) => {
@@ -11,8 +13,13 @@ export default class TemplateListItem extends React.Component{
 
         return(
                 <a href="#" className="thumbnail" onClick={this.localAddToCanvas}>
-                    <img alt ="" src={this.props.url} />
+                    <Image
+                    src={this.props.url} 
+                    width = {40}
+                    height = {40}/>
                 </a>
+    
+             
         );
     }
 }

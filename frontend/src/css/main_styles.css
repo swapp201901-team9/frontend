@@ -596,3 +596,16 @@ img{
         width: auto;
     }
 }
+
+/* Canvas */
+#main-canvas{
+    background: #ccc;
+    background: url('./images/bg-canvas.png');
+    background-repeat: repeat;
+    border:1px solid #ececec;
+    margin: 10px auto;
+    display: block;
+    height: 375px;
+    width: 375px;
+  
+  }
