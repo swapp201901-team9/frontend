@@ -7,6 +7,8 @@ import TemplateList from './TemplateList'
 import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
+import ImageUploader from 'react-images-upload';
+
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
