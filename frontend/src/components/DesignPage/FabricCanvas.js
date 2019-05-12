@@ -64,11 +64,22 @@ class FabricCanvas extends React.Component{
     }
     
     uploadToCanavas = (e) => {
+        var canvas = new fabric.StaticCanvas('main-canvas', {
+            preserveObjectStacking: true,
+            height:375,
+            width:375,
+        });
         var file = e.target.files[0];
         var reader = new FileReader();
-        var canvas = document.getElementById('main-canvas');
-        reader.onload = function(event) {
-            var img = new Image();
+        reader.onload = function(f) {
+            var data = f.target.result;
+            fabric.Image.fromURL(data, function (img) {
+                var oImg = img.set({left: 0, top: 0, angle: 0,width:50, height:50}).scale(0.1);
+                canvas.add(oImg).renderAll();
+                var a = canvas.setActiveObject(oImg);
+                var dataURL = canvas.toDataURL({format: 'png', quality: 0.8});
+              });
+            /*var img = new Image();
             img.onload = function(){
                 var imgInstance = new fabric.Image(img);
                 imgInstance.set({
@@ -85,9 +96,9 @@ class FabricCanvas extends React.Component{
                 canvas.renderAll();
                 this.the_canvas.renderAll();
             }
-            img.src = event.target.result;
-        }
-        reader.readAsDataURL(e.target.files[0]);
+            img.src = event.target.result;*/
+        };
+        reader.readAsDataURL(file);
     }
 
     render(){
