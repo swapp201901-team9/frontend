@@ -48,14 +48,17 @@ export default function *saga() {
                 case 'groups':
                     yield spawn(groupPageSaga);
                     break;
+                case 'group':
+                    yield spawn(groupDetailPageSaga);
+                    break;
                 default:
                     console.log("default state");
                     alert("없는 장소");
                     if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
                     } else {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/main/'));
                     }
             }
@@ -91,7 +94,6 @@ function *signUpPageSaga() {
 function *mainPageSaga() {
     console.log("Main Page Saga");
     yield spawn(watchLoginState);
-
     yield spawn(watchGoToMain);
 }
 
@@ -133,6 +135,10 @@ function *groupPageSaga() {
     yield spawn(watchGoToAdminGroup);
 }
 
+function *groupDetailPageSaga() {
+    console.log("Group Detail Page Saga");
+}
+
 
 
 ///// Page별 saga함수에서 쓸 saga함수들 (watch 함수 편)
@@ -148,14 +154,14 @@ function *watchLoginState() {
     if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
         // 로그인 된 상태로 첫 화면이나 회원가입, 로그인 페이지로 들어갈 경우: main 페이지로 리다이렉트
         if(localStorage.getItem("auth") !== null) {
-            localStorage.removeItem('parent');
+            // localStorage.removeItem('parent');
             yield put(actions.changeUrl('/main/'));
         }
     }
     else {
         // 로그인이 되지 않은 경우: 무조건 첫 화면으로
         if(localStorage.getItem("auth") === null) {
-            localStorage.removeItem('parent');
+            // localStorage.removeItem('parent');
             yield put(actions.changeUrl('/'));
         }
         // 로그인이 되어 있는 경우
@@ -166,7 +172,7 @@ function *watchLoginState() {
             let data, parent_data;
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
-                localStorage.removeItem('parent');
+                // localStorage.removeItem('parent');
                 let my_groups_data;
                 try {
                    console.log("get main without exception")
@@ -218,16 +224,23 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
-                    alert("my groups data error")
+                    alert("my groups data error")    
                 }
-
+                
+                // console.log("hi")
+                // console.log("groups loc auth: ", window.atob(localStorage['auth']))
+                // console.log("before set state")
+                // console.log(yield select())
                 yield put(actions.setState({
-                    autorization: window.atob(localStorage['auth']),
+                    authorization: window.atob(localStorage['auth']),
+                    profile_user: null,
                     all_groups: all_groups_data.body,
                     my_groups: my_groups_data.body,
                     filtered_groups: all_groups_data.body,
-
+                    load: 0,
+                    loading: true,
                 }));
+                console.log(yield select())
             }
 
             else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
@@ -239,10 +252,10 @@ function *watchLoginState() {
                     console.log("404 not found");
                     alert("없는 장소");
                     if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
                     } else {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/main/'));
                     }
                     return;
@@ -266,11 +279,9 @@ function *watchLoginState() {
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-
                         profile_user: profile_data.body,
                         loading: true,
                         load: 0,
-
                     }));
                 }
 
@@ -283,7 +294,7 @@ function *watchLoginState() {
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
                     try {
-                        localStorage.setItem('parent', id);
+                        // localStorage.setItem('parent', id);
                         data = yield call(xhr.get, fixed_url+'article/'+id+'/total/', {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -325,7 +336,7 @@ function *watchLoginState() {
         }
     }
     console.log(yield select());
-    console.log(localStorage['parent']);
+    // console.log(localStorage['parent']);
 }
 
 // watchSignIn: 로그인 버튼 클릭 관찰
@@ -349,7 +360,7 @@ function *watchSignOut() {
     while(true) {
         yield take('SIGN_OUT');
         localStorage.removeItem('auth');
-        localStorage.removeItem('parent');
+        // localStorage.removeItem('parent');
         yield put(actions.changeUrl('/'));
     }
 }
