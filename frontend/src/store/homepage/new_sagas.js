@@ -644,7 +644,7 @@ function *joinGroup(data){
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        yield put(actions.changeUrl('group/' + data.groupid + '/'));
     } catch(error){
         console.log(error)
         alert("*joinGroup error")
