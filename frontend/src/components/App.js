@@ -25,7 +25,7 @@ const App = ({store}) => {
                     <Route exact path="/main" component={MainPage} />
                  	<Route exact path="/groups" component={GroupPage} />
 					<Route path="/profile/:id" component={ProfilePage} />
-                    <Route path="group/:id" component={GroupDetailPage} />
+                    <Route path="/group/:id" component={GroupDetailPage} />
 
 
                 </div>

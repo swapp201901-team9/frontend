@@ -4,7 +4,7 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
     return (
         <div>
             <div onClick={onClickGroup}>
-                {group.id} {group.grouptype} {group.groupname}
+                {group.id} {group.group_type} {group.group_name}
             </div>
             <button onClick={onClickAdminGroup}>
                 ADMIN
