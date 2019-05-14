@@ -12,7 +12,7 @@ class FabricCanvas extends React.Component{
     }
 
     onDrop(picture) {
-        console.log(picture);
+        console.log("picture: ", picture);
        /* this.setState({
             pictures: this.state.pictures.concat(picture),
         });

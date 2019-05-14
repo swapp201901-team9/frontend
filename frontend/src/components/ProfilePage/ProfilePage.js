@@ -12,26 +12,26 @@ class ProfilePage extends React.Component {
         )
       }
       return (
-            <div>
-            <NavBar />
-                <section className="wrap clear">
+        <div>
+        <NavBar />
+            <section className="wrap clear">
 
-                    <div className="main">
-                    <h2 className="h_white">MY PAGE</h2>
-                      <div className="Text-Field">
-                        <label>
-                        ID
-                        </label>
-                        <div className="bordered_textarea">{this.props.profile_user}</div>
-                      </div>
-                    
-                        <ChangePWPage/>
-                        <EscapePage/>
-                        </div>
+                <div className="main">
+                <h2 className="h_white">MY PAGE</h2>
+                  <div className="Text-Field">
+                    <label>
+                    ID
+                    </label>
+                    <div className="bordered_textarea">{this.props.profile_user}</div>
+                  </div>
+                
+                    <ChangePWPage/>
+                    <EscapePage/>
+                    </div>
 
-                </section>
-            </div>
-            )
+            </section>
+        </div>
+        )
     }
 }
 

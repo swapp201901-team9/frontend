@@ -155,30 +155,33 @@ export const toLikeDesign = (designid) => {
     }
 }
 
-export const toChangeGroupInfo = (grouptype, groupname) => {
+export const toChangeGroupInfo = (groupid, grouptype, groupname) => {
     console.log("changeGroupInfo action")
     console.log(grouptype, groupname)
     return {
         type: CHANGE_GROUP_INFO,
+        groupid: groupid,
         grouptype: grouptype,
         groupname: groupname,
     }
 }
 
-export const toDeleteGroupUser = (userid) => {
+export const toDeleteGroupUser = (groupid, userid) => {
     console.log("deleteGroupUser action")
     console.log(userid)
     return {
         type: DELETE_GROUP_USER,
+        groupid: groupid, 
         userid: userid,
     }
 }
 
-export const toDeleteGroupDesign = (designid) => {
+export const toDeleteGroupDesign = (groupid, designid) => {
     console.log("deleteGroupDesign action")
     console.log(designid)
     return {
         type: DELETE_GRUOP_DESIGN,
+        groupid: groupid,
         designid: designid,
     }
 }

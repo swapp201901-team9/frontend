@@ -368,33 +368,33 @@ function *watchLoginState() {
                     console.log("group id: ", id);
                     let now_group_data, group_users_data, group_designs_data = null;
 
-                    // try{
-                    //     now_group_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
-                    //         headers: {
-                    //             'Content-Type': 'application/json',
-                    //             'Authorization': 'Basic '+localStorage['auth'],
-                    //         Accept: 'application/json'
-                    //         },
-                    //         responseType: 'json'
-                    //         });
-                    //         console.log('Get data without exception');
-                    // } catch(error){
-                    //     alert("group data error");
-                    // }
+                    try{
+                        now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group data error");
+                    }
                     
-                    // try{
-                    //     group_users_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
-                    //         headers: {
-                    //             'Content-Type': 'application/json',
-                    //             'Authorization': 'Basic '+localStorage['auth'],
-                    //         Accept: 'application/json'
-                    //         },
-                    //         responseType: 'json'
-                    //         });
-                    //         console.log('Get data without exception');
-                    // } catch(error){
-                    //     alert("group users error");
-                    // }
+                    try{
+                        group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group users error");
+                    }
 
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
@@ -412,8 +412,8 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        // now_group: now_group_data.body,
-                        // group_users: group_users_data.body,
+                        now_group: now_group_data.body,
+                        group_users: group_users_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
                         loading: true
@@ -894,13 +894,77 @@ function *likeDesign(data) {
 
 function *changeGroupInfo(data) {
     console.log("chageGroupInfo")
-}
+    const backPath = 'groups/'+data.groupid+'/admin/';
+    try{
+        let form = new FormData();
+        form.append('group_type', data.grouptype);
+        form.append('group_name', data.groupname);
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                // "Content-Type": 'application/json',
+                // Accept: 'application/json',
+            },
+            async: true,
+            crossDomain: true,
+            processData: false,
+            contentType: false,
+            mimeType: "multipart/form-data",
+            body: form
+            // responseType:'json',
+            // body: JSON.stringify({"group_type": data.grouptype, "group_name": data.groupname})
+        });
+        console.log("change groupinfo succeed ");
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        console.log(error)
+        alert("chage groupinfo error");
+        return;
+    }
+}           
 
 function *deleteGroupUser(data) {
-    console.log("deleteGroupUser")
+    console.log("deleteGroupUser groupid: ", data.groupid, " userid: ", data.userid)
+    const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    try{
+        yield call(xhr.send, fixed_url+backPath,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete user succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        alert("delete user error");
+        return ;
+
+    }
 }
 
 function *deleteGroupDesign(data) {
-    console.log("deleteGroupDesign")
+    console.log("deleteGroupDesign groupid: ", data.groupid, " userid: ", data.designid)
+    // const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    // try{
+    //     yield call(xhr.send, fixed_url+backPath,{
+    //         method : 'DELETE',
+    //         headers:{
+    //             'Authorization': 'Basic '+localStorage['auth'],
+    //             Accept: 'application/json'
+    //         },
+    //         responseType: 'json',
+    //     });
+    //     console.log("delete user succeed!");
+    //     alert("Delete Success!")
+    //     yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    // }catch(error){
+    //     alert("delete user error");
+    //     return ;
+
+    // }
 }
 

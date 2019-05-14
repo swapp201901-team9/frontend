@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import ChangeGroupInfo from './ChangeGroupInfo';
 import GroupUserList from './GroupUserList';
 import GroupDesignList from './GroupDesignList';
-import { toDeleteGroupUser, toDeleteGroupDesign } from '../../actions';
+import { toDeleteGroupUser, toDeleteGroupDesign, toChangeGroupInfo } from '../../actions';
 
 class GroupAdminPage extends React.Component {
 	render() {
@@ -18,12 +18,23 @@ class GroupAdminPage extends React.Component {
 		return (
 			<div className="GroupAdminPage">
 				<NavBar />
-				<ChangeGroupInfo />
-				{/* <GroupUserList 
+				<br/>
+				<h2>ChageGroupInfo</h2>
+				<ChangeGroupInfo 
+					group={this.props.now_group[0]}
+					onClickChangeSubmit={this.props.onChangeGroupInfo}
+				/>
+				<br/>
+				<h2>GroupUserList</h2>
+				<GroupUserList 
+					groupid={this.props.now_group[0].id}
 					userlist={this.props.group_users}
 					onClickDeleteUser={this.props.onDeleteUser}
-				/> */}
+				/>
+				<br/>
+				<h2>GroupDesignList</h2>
 				<GroupDesignList 
+					groupid={this.props.now_group[0].id}
 					designlist={this.props.group_designs}
 					onClickDeleteDesign={this.props.onDeleteDesign}
 				/>
@@ -40,8 +51,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onDeleteUser: (userid) => dispatch(toDeleteGroupUser(userid)),
-	onDeleteDesign: (designid) => dispatch(toDeleteGroupDesign(designid))
+	onChangeGroupInfo: (groupid, grouptype, groupname) => dispatch(toChangeGroupInfo(groupid, grouptype, groupname)),
+	onDeleteUser: (groupid, userid) => dispatch(toDeleteGroupUser(groupid, userid)),
+	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupAdminPage);
