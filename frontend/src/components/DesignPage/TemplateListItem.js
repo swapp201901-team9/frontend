@@ -17,7 +17,8 @@ export default class TemplateListItem extends React.Component{
                     src={this.props.url} 
                     width = {40}
                     height = {40}/>
-                </a>
+                 </a>
+                 
     
              
         );
