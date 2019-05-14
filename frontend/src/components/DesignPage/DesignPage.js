@@ -5,7 +5,8 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
-import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
+import {bglist, facelist, eyeslist, faciallist, hairlist, back_arm, back_banding,
+back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
@@ -117,6 +118,55 @@ export default class DesignPage extends React.Component {
 									zIndex = {-9999}
 									addtocanvas = {this.addToCanvas}
 								/>
+								<TemplateList 
+									data = {back_arm}
+									property_type = "back_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_banding}
+									property_type = "back_banding"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_body}
+									property_type = "back_body"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_stripe}
+									property_type = "back_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_arm}
+									property_type = "front_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_body}
+									property_type = "front_body"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_button}
+									property_type = "front_button"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_stripe}
+									property_type = "front_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+
 								{/*<!--========================================
 			left design tool
     =========================================-->*/}
