@@ -37,8 +37,8 @@ export default class DesignPage extends React.Component {
 
 	addToCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
-			width: 400,
-			height: 400,
+			width: 899,
+			height: 959,
 			the_type: property_type,
 			zIndex: z_Index
 		});
