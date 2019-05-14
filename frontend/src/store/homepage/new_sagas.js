@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -151,6 +151,13 @@ function *groupDetailPageSaga() {
 
 function *groupAdminPageSaga() {
     console.log("Group Admin Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchChangeGrouInfo);
+    yield spawn(watchDeleteGroupUser);
+    yield spawn(watchDeleteGroupDesign);
 }
 
 
@@ -359,21 +366,35 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'admin') {
                     console.log("get group admins...");
                     console.log("group id: ", id);
-                    let group_users_data, group_designs_data = null;
+                    let now_group_data, group_users_data, group_designs_data = null;
 
-                    try{
-                        group_users_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
-                            },
-                            responseType: 'json'
-                            });
-                            console.log('Get data without exception');
-                    } catch(error){
-                        alert("group users error");
-                    }
+                    // try{
+                    //     now_group_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                    //         headers: {
+                    //             'Content-Type': 'application/json',
+                    //             'Authorization': 'Basic '+localStorage['auth'],
+                    //         Accept: 'application/json'
+                    //         },
+                    //         responseType: 'json'
+                    //         });
+                    //         console.log('Get data without exception');
+                    // } catch(error){
+                    //     alert("group data error");
+                    // }
+                    
+                    // try{
+                    //     group_users_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                    //         headers: {
+                    //             'Content-Type': 'application/json',
+                    //             'Authorization': 'Basic '+localStorage['auth'],
+                    //         Accept: 'application/json'
+                    //         },
+                    //         responseType: 'json'
+                    //         });
+                    //         console.log('Get data without exception');
+                    // } catch(error){
+                    //     alert("group users error");
+                    // }
 
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
@@ -391,7 +412,8 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        group_users: group_users_data.body,
+                        // now_group: now_group_data.body,
+                        // group_users: group_users_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
                         loading: true
@@ -584,6 +606,30 @@ function *watchLikeDesign() {
         const data = yield take(LIKE_DESIGN);
         console.log("watchLikeDesign");
         yield call(likeDesign, data);
+    }
+}
+
+function *watchChangeGrouInfo() {
+    while(true) {
+        const data = yield take(CHANGE_GROUP_INFO);
+        console.log("watchChangeGroupInfo");
+        yield call(changeGroupInfo, data);
+    }
+}
+
+function *watchDeleteGroupUser() {
+    while(true) {
+        const data = yield take(DELETE_GROUP_USER);
+        console.log("watchDeleteGroupUser");
+        yield call(deleteGroupUser, data);
+    }
+}
+
+function *watchDeleteGroupDesign() {
+    while(true) {
+        const data = yield take(DELETE_GRUOP_DESIGN);
+        console.log("watchDeleteGroupDesign");
+        yield call(deleteGroupDesign, data);
     }
 }
 
@@ -844,5 +890,17 @@ function *likeDesign(data) {
         console.log(error)
         alert("*liikeDesign error")
     }
+}
+
+function *changeGroupInfo(data) {
+    console.log("chageGroupInfo")
+}
+
+function *deleteGroupUser(data) {
+    console.log("deleteGroupUser")
+}
+
+function *deleteGroupDesign(data) {
+    console.log("deleteGroupDesign")
 }
 
