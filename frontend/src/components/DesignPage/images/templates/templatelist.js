@@ -78,11 +78,49 @@ const faciallist = [
 
 ]
 
+const back_arm = [
+	require('./back_arm/2a2a2a.png'),
+]
 
+const back_banding = [
+	require('./back_banding/00b7ee.png'),
+]
+
+const back_body = [
+	require('./back_body/00v7ee.png'),
+]
+
+const back_stripe = [
+	require('./back_stripe/00b7ee.png'),
+]
+
+const front_arm = [
+	require('./front_arm/2a2a2a_arm.png'),
+]
+
+const front_body = [
+	require('./front_body/f29c9f_body.png'),
+]
+
+const front_button = [
+	require('./front_button/00b7ee_button.png'),
+]
+
+const front_stripe = [
+	require('./front_stripe/00b7ee_stripe.png'),
+]
 export {
 	hairlist, 
 	bglist, 
 	faciallist,
 	facelist,
-	eyeslist
+	eyeslist,
+	back_arm,
+	back_banding,
+	back_body,
+	back_stripe,
+	front_arm,
+	front_body,
+	front_button,
+	front_stripe
 };
