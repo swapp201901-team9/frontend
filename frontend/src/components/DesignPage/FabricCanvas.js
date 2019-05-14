@@ -20,6 +20,8 @@ class FabricCanvas extends React.Component{
       let imageUrl = './img/tshirt1_back.jpg';
       var img = new Image();
       img.src = imageUrl;
+    File -> 
+      javascript Image 형식 -> 
       var Img = new fabric.Image(img);
       this.the_canvas.add(Img);
       this.the_canvas.renderAll();*/
