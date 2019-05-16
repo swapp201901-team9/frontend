@@ -13,7 +13,7 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
     const onSubmit = () => {
         console.log("changing group information")
         if(grouptype !== undefined && grouptype.value !== 'Select an Option' && groupname !== undefined) {
-            onClickChangeSubmit(group.id, grouptype, groupname)
+            onClickChangeSubmit(group.id, grouptype.value, groupname.value)
         }
     }
 
