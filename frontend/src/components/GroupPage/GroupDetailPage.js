@@ -1,6 +1,10 @@
 import React from 'react'
-import GroupDetail from './GroupDetail.js'
 import { connect } from 'react-redux'
+
+import DesignTemp from './DesignTemp.js';
+import { toLikeDesign } from '../../actions/index.js';
+import NavBar from '../NavBar/NavBar.js';
+import MyGroupList from './MyGroupList.js';
 
 class GroupDetailPage extends React.Component {
 
@@ -11,17 +15,50 @@ class GroupDetailPage extends React.Component {
             )
         }
         return (
-                <div >
-                    <GroupDetail />
-                </div>
-               )
+            <div >
+                <NavBar />
+                <section className="wrap clear col3">
+        					<div className="aside">
+        						<h2 className="h_white">GROUP DETAIL</h2>
+        							<div className="content">
+
+        							</div>
+        					</div>
+        					<div className="main">
+        						<h2 className="h_white">DESIGN LIST</h2>
+        							<div className="content">
+                      <ul>
+                          {this.props.group_designs.map(design =>
+                              <DesignTemp
+                                  key={design.id}
+                                  design={design}
+                                  onClickLike={() => this.props.onLikeDesign(design.id)}
+                              />
+                          )}
+                      </ul>
+        							</div>
+        					</div>
+        					<div className="aside">
+        						<h2 className="h_black">MY GROUP</h2>
+        							<div className="content">
+        							<MyGroupList />
+        							</div>
+        					</div>
+        				</section>
+
+            </div>
+        )
     }
 }
 
-let mapStateToProps = (state) => {
-    return {
-        loading: state.loading,
-    }
-}
+const mapStateToProps = (state) => ({
+    my_groups: state.my_groups,
+    group_designs: state.group_designs,
+    loading: state.loading
+})
 
-export default connect(mapStateToProps)(GroupDetailPage);
+const mapDispatchToProps = (dispatch) => ({
+    onLikeDesign: (designid) => dispatch(toLikeDesign(designid))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailPage);
