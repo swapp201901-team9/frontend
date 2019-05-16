@@ -27,20 +27,20 @@ class SearchingGroup extends React.Component {
 						<input
 							type="text"
 							name="searchword"
-							ref={ node => {this.searchword=node;} }
 							className="searching_input"
+							ref={ node => {this.searchword=node;} }
 							placeholder="Search"
 						/>
-						<button type="submit">Search</button>
+						<button className="button button_small" type="submit">SEARCH</button>
 					</div>
 				</form>
-				<GroupList 
+				<GroupList
 					grouplist={this.props.filtered_groups}
 					onClickGroup={this.props.onToGroupDetail}
 					onClickJoinGroup={this.props.onJoinGroup}
 				/>
 			</div>
-			
+
 		)
 	}
 }
