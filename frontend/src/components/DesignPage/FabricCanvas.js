@@ -68,13 +68,29 @@ class FabricCanvas extends React.Component{
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
             //img.src = reader.result;
-            var imgInstance = new fabric.Image(preview, {
+            /*var imgInstance = new fabric.Image(preview, {
             width: 40,
             height: 40,
             the_type: "upload",
             zIndex: 2
+            });*/
+            console.log(preview.width);
+            var imgInstance = new fabric.Image(preview, {
+            width: preview.width,
+            height: preview.height,
+            the_type: "upload",
+            zIndex: 2
             });
+            console.log("imgInstance set");
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+            });
+            console.log("imgInstance scale");
             canvas.add(imgInstance);
+            console.log("imgInstance set");
 
             //var imgInstance = new fabric.Image(preview);
             /*this.the_canvas = new fabric.Canvas('main-canvas', {
@@ -139,10 +155,12 @@ class FabricCanvas extends React.Component{
                   <input type = "file"
                          id = "input" 
                          onChange = {this.onDrop} />
+                         {/*<img src = "" 
+                        id = "img" />*/}
                   <img src = "" 
-                        height = "40"
-                        width = "40"
-                        id = "img" />
+                        height = "50%"
+                        width = "auto"
+        id = "img" />
                   {/*<ImageUploader 
                     withIcon = {true}
                     buttonText = 'Choose images'
