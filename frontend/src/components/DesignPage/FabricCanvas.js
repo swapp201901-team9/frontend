@@ -13,8 +13,8 @@ class FabricCanvas extends React.Component{
 
    
     componentDidMount(){
-
         this.the_canvas = new fabric.Canvas('main-canvas', {
+
             preserveObjectStacking: true,
             height:959,
             width:899,
@@ -22,7 +22,7 @@ class FabricCanvas extends React.Component{
     }
 
     componentWillReceiveProps = (newprops) => {
-
+      
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
         if(newprops.activeProperty !== this.props.activeProperty){
@@ -31,6 +31,7 @@ class FabricCanvas extends React.Component{
     }
 
     updateCanvasforImage = (prev,next) => {
+        console.log("updateCanvasForImage")
 
         if(next){
 
@@ -50,6 +51,7 @@ class FabricCanvas extends React.Component{
                 this.the_canvas.renderAll();                
                 return;
             }
+            console.log("next: ", next)
 
             this.the_canvas.add(next);
             this.the_canvas.moveTo(next, next.zIndex);
@@ -115,6 +117,7 @@ class FabricCanvas extends React.Component{
     }
 
     saveToCanvas = () => {
+        console.log("saveToCanvas")
 
         let link = document.createElement("a");
         link.href = this.the_canvas.toDataURL({format: 'png'});
