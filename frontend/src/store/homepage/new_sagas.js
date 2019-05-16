@@ -203,6 +203,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log(error)
                     alert("main mygroups error");
                 }
                 yield put(actions.setState({
