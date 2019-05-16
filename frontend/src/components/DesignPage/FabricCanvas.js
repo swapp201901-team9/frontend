@@ -31,7 +31,6 @@ class FabricCanvas extends React.Component{
     }
 
     updateCanvasforImage = (prev,next) => {
-
         if(next){
 
             let to_remove;
@@ -52,6 +51,7 @@ class FabricCanvas extends React.Component{
             }
 
             this.the_canvas.add(next);
+            this.the_canvas.renderAll();
             this.the_canvas.moveTo(next, next.zIndex);
         }
     }
@@ -75,6 +75,7 @@ class FabricCanvas extends React.Component{
             zIndex: 2
             });*/
             console.log(preview.width);
+            console.log(preview.height);
             var imgInstance = new fabric.Image(preview, {
             width: preview.width,
             height: preview.height,
@@ -83,8 +84,8 @@ class FabricCanvas extends React.Component{
             });
             console.log("imgInstance set");
             imgInstance.set({
-                scaleY: 0.1,
-                scaleX: 0.1,
+                scaleY: 0.3,
+                scaleX: 0.3,
                 originX: "center",
                 originY: "center"
             });
@@ -155,12 +156,12 @@ class FabricCanvas extends React.Component{
                   <input type = "file"
                          id = "input" 
                          onChange = {this.onDrop} />
-                         {/*<img src = "" 
-                        id = "img" />*/}
-                  <img src = "" 
+                         <img src = "" 
+                        id = "img" />
+                  {/*<img src = "" 
                         height = "50%"
                         width = "auto"
-        id = "img" />
+                    id = "img" />*/}
                   {/*<ImageUploader 
                     withIcon = {true}
                     buttonText = 'Choose images'
