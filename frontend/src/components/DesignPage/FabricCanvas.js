@@ -12,6 +12,8 @@ class FabricCanvas extends React.Component{
     }
 
     onDrop(e) {
+        console.log("hey");
+
         e.preventDefault();
         var preview = document.getElementById('img');
         var file = document.getElementById('input').files[0];
@@ -19,6 +21,21 @@ class FabricCanvas extends React.Component{
         let reader = new FileReader();
         reader.addEventListener("load", function() {
             preview.src = reader.result;
+            
+            var imgInstance = new fabric.Image(preview, {
+                width: 40,
+                height: 40,
+                the_type: "upload",
+                zIndex: 2
+            });
+
+            //var imgInstance = new fabric.Image(preview);
+            this.the_canvas = new fabric.Canvas('main-canvas', {
+                preserveObjectStacking: true,
+                height:959,
+                width:899,
+            });
+            this.the_canvas.add(imgInstance);
         },false);
 
         /*reader.onloadend = () => {
@@ -34,7 +51,7 @@ class FabricCanvas extends React.Component{
 
             this.the_canvas.add(imgInstance);
         }*/
-        
+    
         if (file) {
             reader.readAsDataURL(file);
         }
@@ -110,7 +127,7 @@ class FabricCanvas extends React.Component{
 
                   <input type = "file"
                          id = "input" 
-                         onchange = {this.onDrop} />
+                         onChange = {this.onDrop} />
                   <img src = "" 
                         height = "40"
                         width = "40"
