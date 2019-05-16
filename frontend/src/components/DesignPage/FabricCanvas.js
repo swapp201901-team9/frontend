@@ -76,6 +76,7 @@ class FabricCanvas extends React.Component{
             });*/
             console.log(preview.width);
             console.log(preview.height);
+          
             var imgInstance = new fabric.Image(preview, {
             width: preview.width,
             height: preview.height,
@@ -84,14 +85,16 @@ class FabricCanvas extends React.Component{
             });
             console.log("imgInstance set");
             imgInstance.set({
-                scaleY: 0.3,
-                scaleX: 0.3,
+                scaleY: 0.1,
+                scaleX: 0.1,
                 originX: "center",
                 originY: "center"
             });
             console.log("imgInstance scale");
             canvas.add(imgInstance);
-            console.log("imgInstance set");
+            canvas.renderAll();
+            canvas.moveTo(imgInstance, imgInstance.zIndex);
+            console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
             /*this.the_canvas = new fabric.Canvas('main-canvas', {
