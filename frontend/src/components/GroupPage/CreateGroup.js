@@ -12,7 +12,6 @@ class CreateGroup extends React.Component {
 		]
 
 	onSubmit = () => {
-		//SA TODO groupname 겹치는 경우 경고
 		console.log("create onSubmit")
 		if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
 			this.props.onCreateGroup(this.grouptype, this.groupname)
@@ -22,7 +21,6 @@ class CreateGroup extends React.Component {
 	render() {
 		return(
 			<div>
-				<h1>Create Group</h1>
 				<form onSubmit={e => { 
 					e.preventDefault() 
 					this.onSubmit() 
@@ -56,7 +54,7 @@ class CreateGroup extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	all_groups: state.all_group,
+	all_groups: state.all_groups,
 })
 
 

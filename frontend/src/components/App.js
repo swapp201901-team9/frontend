@@ -5,12 +5,12 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import MainPage from './MainPage/MainPage.js';
 import LoginPage from './LoginPage/LoginPage.js';
 import SignUpPage from './SignUpPage/SignUpPage.js';
-import L_MainPage from './MainPage/L_MainPage.js';
 import GroupPage from './GroupPage/GroupPage.js';
 import ProfilePage from './ProfilePage/ProfilePage.js';
 import GroupDetailPage from './GroupPage/GroupDetailPage.js';
 
 import PropTypes from 'prop-types';
+import GroupAdminPage from './GroupPage/GroupAdminPage.js';
 
 
 // Used for controlling multiple pages in one frontend project
@@ -23,12 +23,11 @@ const App = ({store}) => {
                     <Route exact path="/" component={MainPage} />
                     <Route exact path="/log_in" component={LoginPage} />
                     <Route exact path="/sign_up" component={SignUpPage} />
-                    <Route exact path="/main" component={L_MainPage} />
-                 	<Route exact path="/group" component={GroupPage} />
+                    <Route exact path="/main" component={MainPage} />
+                 	<Route exact path="/groups" component={GroupPage} />
 					<Route path="/profile/:id" component={ProfilePage} />
-                    <Route path="group/:id" component={GroupDetailPage} />
-
-
+                    <Route path="/group/:id" component={GroupDetailPage} />
+                    <Route path="/admin/:id" component={GroupAdminPage} />
                 </div>
             </BrowserRouter>
         </Provider>

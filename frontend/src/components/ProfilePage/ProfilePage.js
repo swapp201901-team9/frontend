@@ -1,49 +1,46 @@
 import React from 'react';
-import SignOut from '../MainPage/SignOut.js';
-import ButtonList from './ButtonList.js';
 import {connect} from 'react-redux';
+import NavBar from '../NavBar/NavBar';
+import ChangePWPage from './ChangePWPage';
+import EscapePage from './EscapePage';
 
 class ProfilePage extends React.Component {
     render() {
-        if (!this.props.loading) {
-            return (
-                    <div>
-                        <SignOut />
+      if(!this.props.loading) {
+        return(
+          <p>loading..</p>
+        )
+      }
+      return (
+        <div>
+        <NavBar />
+            <section className="wrap clear">
+
+                <div className="main">
+                <h2 className="h_white">MY PAGE</h2>
+                  <div className="Text-Field">
+                    <label>
+                    ID
+                    </label>
+                    <div className="bordered_textarea">{this.props.profile_user}</div>
+                  </div>
+                
+                    <ChangePWPage/>
+                    <EscapePage/>
                     </div>
-                    )
-        }
-        return (
-                <div>
-                    <SignOut />
-                    <div className="TimeLine">
-                        <img id='p_img' src={this.props.profile_myimage} alt='' />
-                        <br />
-			<div className="Change">
-                        <span>{this.props.profile_user}의 프로필</span>
-                        <br />
-                        <h2 id="p_name">이름:{this.props.profile_myname}</h2>
-                        <h2 id="p_belong">소속:{this.props.profile_mybelong}</h2>
-                        <h2 id="p_intro">소개말:{this.props.profile_myintro}</h2>
-			</div>
-                    <div>
-                        <ButtonList/>
-                    </div>
-                    </div>
-                </div>
-               )
+
+            </section>
+        </div>
+        )
     }
 }
 
-let mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
     return {
         loading: state.loading,
-        profile_user : state.profile_user !== null ? Object.assign(state.profile_user.user) : null,
-        profile_myname: state.profile_user !== null? Object.assign(state.profile_user.myname): null, 
-        profile_mybelong: state.profile_user !== null? Object.assign(state.profile_user.mybelong):null, 
-        profile_myintro: state.profile_user !== null? Object.assign(state.profile_user.myintro): null,
-        profile_myimage: state.profile_user !== null? Object.assign(state.profile_user.domain): null, 
+        profile_user : Object.assign(state.authorization).split(":")[0]
+
     }
 }
 
 export default ProfilePage = connect(mapStateToProps)(ProfilePage);
-

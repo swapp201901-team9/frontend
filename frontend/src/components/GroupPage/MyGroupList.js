@@ -7,7 +7,6 @@ class MyGroupList extends React.Component {
     render() {
         return (
             <div>
-                <h1>My Group List</h1>
                 <ul>
                 {this.props.my_groups.map(group =>
                     <MyGroup 
@@ -28,8 +27,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onToGroupDetail: (groupid) => gotoGroupDetail(groupid),
-	onToAdminGroup: (groupid) => gotoAdminGroup(groupid)
+	onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
+	onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyGroupList)

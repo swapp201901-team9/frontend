@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -45,17 +45,23 @@ export default function *saga() {
                 case 'profile':
                     yield spawn(profilePageSaga);
                     break;
-                case 'group':
+                case 'groups':
                     yield spawn(groupPageSaga);
+                    break;
+                case 'group':
+                    yield spawn(groupDetailPageSaga);
+                    break;
+                case 'admin':
+                    yield spawn(groupAdminPageSaga);
                     break;
                 default:
                     console.log("default state");
                     alert("없는 장소");
                     if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
                     } else {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/main/'));
                     }
             }
@@ -91,7 +97,6 @@ function *signUpPageSaga() {
 function *mainPageSaga() {
     console.log("Main Page Saga");
     yield spawn(watchLoginState);
-
     yield spawn(watchGoToMain);
 }
 
@@ -121,7 +126,7 @@ function *profilePageSaga() {
 
 function *groupPageSaga() {
 	console.log("Group Page Saga");
-	//yield spawn(watchLoginState);
+	yield spawn(watchLoginState);
 	yield spawn(watchSignOut);
 	yield spawn(watchGoToMain);
 
@@ -131,6 +136,28 @@ function *groupPageSaga() {
 	yield spawn(watchJoinGroup);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
+}
+
+function *groupDetailPageSaga() {
+    console.log("Group Detail Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchLikeDesign);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
+}
+
+function *groupAdminPageSaga() {
+    console.log("Group Admin Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchChangeGrouInfo);
+    yield spawn(watchDeleteGroupUser);
+    yield spawn(watchDeleteGroupDesign);
 }
 
 
@@ -145,53 +172,111 @@ function *watchLoginState() {
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
+
     if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
-        // 로그인 된 상태로 첫 화면이나 회원가입, 로그인 페이지로 들어갈 경우: main 페이지로 리다이렉트
         if(localStorage.getItem("auth") !== null) {
-            localStorage.removeItem('parent');
             yield put(actions.changeUrl('/main/'));
         }
     }
     else {
-        // 로그인이 되지 않은 경우: 무조건 첫 화면으로
         if(localStorage.getItem("auth") === null) {
-            localStorage.removeItem('parent');
             yield put(actions.changeUrl('/'));
         }
-        // 로그인이 되어 있는 경우
         else {
             const path = window.location.pathname;
+            let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+            console.log("username: ", username)
+            console.log(yield select())
             let data, parent_data;
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
-                localStorage.removeItem('parent');
+                // localStorage.removeItem('parent');
                 let my_groups_data;
                 try {
-                   console.log("get main without exception")
+                    my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
-                    alert("main error");
+                    alert("main mygroups error");
                 }
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-                    loading: true,
-                    load : 0
+                    my_groups: my_groups_data.body,
+                    load : 0,
+                    loading: true
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
             }
+            
+            /* group 정보를 get 하는 부분
+             * 1) profile_data backend에서 get (url: 'users/'+username+'/')
+             * 2) all_groups_data backend에서 get (url: 'groups/')
+             * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
+             */
+            else if(path === '/groups/') {
+                console.log("get group details...");
+                let all_groups_data, my_groups_data;
 
-            else { // username또는 id를 기준으로 backend에 겟을 날리는 경우
+                //all_groups data
+                try{
+                    all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET all groups data: ", all_groups_data.body)
+                } catch(error){
+                    console.log(error)
+                    alert("all groups data error")
+                }
+                
+                //my_groups data
+                try{
+                    my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responseType: 'json',
+                    });
+                    console.log("GET my groups data: ", my_groups_data.body)
+                } catch(error){
+                    alert("my groups data error")    
+                }
+                
+                yield put(actions.setState({
+                    authorization: window.atob(localStorage['auth']),
+                    all_groups: all_groups_data.body,
+                    my_groups: my_groups_data.body,
+                    filtered_groups: all_groups_data.body,
+                    load: 0,
+                    loading: true,
+                }));
+            }
+
+            // username또는 id를 기준으로 backend에 겟을 날리는 경우
+            else { 
                 const username = path.split("/")[2];
-                const id = path.split("/")[2];//그냥..
-                let profile_data = null;
+                const id = path.split("/")[2];
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
                     alert("없는 장소");
                     if(localStorage.getItem("auth") === null) {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
                     } else {
-                        localStorage.removeItem('parent');
+                        // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/main/'));
                     }
                     return;
@@ -200,70 +285,38 @@ function *watchLoginState() {
                 //프로필 정보를 get하는 부분
                 else if(path.split("/")[1] === 'profile'){
                     console.log("get profile details...");
+                    let profile_data = null;
                     try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/profile/',{
+                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
                             Accept: 'application/json'
                             },
                             responseType: 'json'
-                         });
-                         console.log('Get data without exception');
+                            });
+                            console.log('Get data without exception');
                     } catch(error){
                         alert("profile error");
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-
                         profile_user: profile_data.body,
-                        loading: true,
                         load: 0,
-
+                        loading: true
                     }));
                 }
 
-                /* group 정보를 get 하는 부분
-                 * 1) profile_data backend에서 get (url: 'users/'+username+'/')
-                 * 2) all_groups_data backend에서 get (url: 'groups/')
-                 * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
-                 */
+                //group detail 정보를 get하는 부분
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
-                    let all_groups_data, my_groups_data;
+                    console.log("group id: ", id);
+                    let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+                    let my_groups_data, group_designs_data = null;
 
-                    //profile data
-                    try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/', {
-                            headers: {
-                                'Content-Type': 'appllication/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'application/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("group profile error");
-                    }
-
-                    //all_groups data
-                    try{
-                        //SA TODO backend url에 groups가 아직 없음!!!
-                        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+localStorage['auth'],
-                                Accept: 'applecation/json'
-                            },
-                            responseType: 'json',
-                        });
-                    } catch(error){
-                        alert("all groups data error")
-                    }
-                    
                     //my_groups data
                     try{
-                        my_groups_data = yield call(xhr.get, fixed_url+'users/'+username+'/groups/', {
+                        my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
@@ -271,23 +324,107 @@ function *watchLoginState() {
                             },
                             responseType: 'json',
                         });
+                        console.log("GET my groups data: ", my_groups_data.body)
                     } catch(error){
-                        alert("my groups data error")
+                        alert("my groups data error")    
+                    }
+
+                    //group designs
+                    try{
+                        group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error) {
+                        if(error.statusCode === 403) {
+                            console.log("you are not permitted");
+                            alert("가입하지 않은 그룹입니다")
+                            yield put(actions.changeUrl('/groups/'))
+                        }   
+                        else {
+                            console.log(error)
+                            alert("group designs error");
+                        }
+
                     }
 
                     yield put(actions.setState({
-                        autorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data,
-                        all_groups: all_groups_data.body,
+                        authorization: window.atob(localStorage['auth']),
                         my_groups: my_groups_data.body,
-                        filtered_groups: all_groups_data.body,
-
-                    }));
+                        group_designs: group_designs_data.body,
+                        load: 0,
+                        loading: true
+                    }))
                 }
+
+                //group admin 정보를 get하는 부분
+                else if(path.split("/")[1] === 'admin') {
+                    console.log("get group admins...");
+                    console.log("group id: ", id);
+                    let now_group_data, group_users_data, group_designs_data = null;
+
+                    try{
+                        now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group data error");
+                    }
+                    
+                    try{
+                        group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group users error");
+                    }
+
+                    try{
+                        group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group designs error");
+                    }
+
+                    yield put(actions.setState({
+                        authorization: window.atob(localStorage['auth']),
+                        now_group: now_group_data.body,
+                        group_users: group_users_data.body,
+                        group_designs: group_designs_data.body,
+                        load: 0,
+                        loading: true
+                    }))
+                }
+
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
+                    let profile_data = null;
                     try {
-                        localStorage.setItem('parent', id);
+                        // localStorage.setItem('parent', id);
                         data = yield call(xhr.get, fixed_url+'article/'+id+'/total/', {
                             headers: {
                                 'Content-Type': 'application/json',
@@ -320,8 +457,8 @@ function *watchLoginState() {
                         authorization: window.atob(localStorage['auth']),
 
                         profile_user: profile_data !== null ? profile_data.body : null,
-                        loading: true,
                         load: 0,
+                        loading: true
                         //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                     }));
                 }
@@ -329,7 +466,7 @@ function *watchLoginState() {
         }
     }
     console.log(yield select());
-    console.log(localStorage['parent']);
+    // console.log(localStorage['parent']);
 }
 
 // watchSignIn: 로그인 버튼 클릭 관찰
@@ -353,7 +490,7 @@ function *watchSignOut() {
     while(true) {
         yield take('SIGN_OUT');
         localStorage.removeItem('auth');
-        localStorage.removeItem('parent');
+        // localStorage.removeItem('parent');
         yield put(actions.changeUrl('/'));
     }
 }
@@ -464,6 +601,37 @@ function *watchGoToAdminGroup() {
 	}
 }
 
+function *watchLikeDesign() {
+    while(true) {
+        const data = yield take(LIKE_DESIGN);
+        console.log("watchLikeDesign");
+        yield call(likeDesign, data);
+    }
+}
+
+function *watchChangeGrouInfo() {
+    while(true) {
+        const data = yield take(CHANGE_GROUP_INFO);
+        console.log("watchChangeGroupInfo");
+        yield call(changeGroupInfo, data);
+    }
+}
+
+function *watchDeleteGroupUser() {
+    while(true) {
+        const data = yield take(DELETE_GROUP_USER);
+        console.log("watchDeleteGroupUser");
+        yield call(deleteGroupUser, data);
+    }
+}
+
+function *watchDeleteGroupDesign() {
+    while(true) {
+        const data = yield take(DELETE_GRUOP_DESIGN);
+        console.log("watchDeleteGroupDesign");
+        yield call(deleteGroupDesign, data);
+    }
+}
 
 
 
@@ -583,9 +751,8 @@ function *escapeBook(profuser){
         });
         console.log("delete account succeed!");
         localStorage.removeItem('auth');
-        yield put(actions.changeUrl('/main/'));
+        yield put(actions.changeUrl('/'));
     }catch(error){
-
         alert("delete account error");
         return ;
 
@@ -594,10 +761,6 @@ function *escapeBook(profuser){
 
 // createGroup: 백엔드 groups에 POST를 날리는 함수
 function *createGroup(data){
-    console.log("createGroup");
-    console.log(data.grouptype.value, " ", data.groupname.value);
-
-    //SA TODO groups/create_group/이 좀 더 낫지 않을까(=> backend url을 바꿔야함)
     const path = 'create_group/'
 	try {
 		yield call(xhr.post, fixed_url + path, {
@@ -609,30 +772,199 @@ function *createGroup(data){
             contentType: 'json',
             body: JSON.stringify({"grouptype": data.grouptype.value, "groupname": data.groupname.value})
         });
+        yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
-        alert("*createGroup error")
+        if(error.statusCode === 409) {
+            console.log("already existing name");
+            alert("이미 있는 이름입니다")
+            yield put(actions.changeUrl('/groups/'))
+        }        
+        else {
+            console.log(error)
+            alert("*createGroup error")
+        }
     }
-
-    //문법 확실치 X 새로 만든 groupdetail page로 이동
-    //yield put(actions.changeUrl('/group/'+groupid))
 }
 
 function *searchGroup(data){
-    console.log("searchGroup")
+    console.log("searchGroup", data.newList)
+    let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+    let all_groups_data, my_groups_data;
+                
+    //all_groups data
+    try{
+        all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("GET all groups data: ", all_groups_data.body)
+    } catch(error){
+        console.log(error)
+        alert("all groups data error")
+    }
+    
+    //my_groups data
+    try{
+        my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("GET my groups data: ", my_groups_data.body)
+    } catch(error){
+        alert("my groups data error")    
+    }
+    
     yield put(actions.setState({
-        filtered_groups: data
+        authorization: window.atob(localStorage['auth']),
+        all_groups: all_groups_data.body,
+        my_groups: my_groups_data.body,
+        filtered_groups: data.newList,
+        load: 0,
+        loading: true
     }));
-
+    
 }
 
 function *joinGroup(data){
     console.log("joinGroup")
+    const path = 'join_group/'+data.groupid+'/'
+	try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        alert("SUCCESS")
+        yield put(actions.changeUrl('group/' + data.groupid + '/'));
+    } catch(error){
+        console.log(error)
+        alert("*joinGroup error")
+    }
 }
 
 function *toGroupDetail(data){
     console.log("toGroupDetail")
+    try {
+        yield put(actions.changeUrl('group/' + data.groupid + '/'));
+    } catch(error) {
+        console.log(error)
+        alert("*toGroupDetail error")
+    }
 }
 
 function *toAdminGroup(data){
     console.log("toAdminGroup")
+    try {
+        yield put(actions.changeUrl('admin/' + data.groupid + '/'));
+    } catch(error) {
+        console.log(error)
+        alert("*toGroupDetail error")
+    }
 }
+
+function *likeDesign(data) {
+    console.log("likeDesign")
+    const path = 'groups/like/' + data.designid + '/';
+    try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*liikeDesign error")
+    }
+}
+
+function *changeGroupInfo(data) {
+    console.log("chageGroupInfo")
+    const backPath = 'groups/'+data.groupid+'/admin/';
+    try{
+        let form = new FormData();
+        form.append('group_type', data.grouptype);
+        form.append('group_name', data.groupname);
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                // "Content-Type": 'application/json',
+                // Accept: 'application/json',
+            },
+            async: true,
+            crossDomain: true,
+            processData: false,
+            contentType: false,
+            mimeType: "multipart/form-data",
+            body: form
+            // responseType:'json',
+            // body: JSON.stringify({"group_type": data.grouptype, "group_name": data.groupname})
+        });
+        console.log("change groupinfo succeed ");
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        console.log(error)
+        alert("chage groupinfo error");
+        return;
+    }
+}           
+
+function *deleteGroupUser(data) {
+    console.log("deleteGroupUser groupid: ", data.groupid, " userid: ", data.userid)
+    const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    try{
+        yield call(xhr.send, fixed_url+backPath,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete user succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        alert("delete user error");
+        return ;
+
+    }
+}
+
+function *deleteGroupDesign(data) {
+    console.log("deleteGroupDesign groupid: ", data.groupid, " userid: ", data.designid)
+    // const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    // try{
+    //     yield call(xhr.send, fixed_url+backPath,{
+    //         method : 'DELETE',
+    //         headers:{
+    //             'Authorization': 'Basic '+localStorage['auth'],
+    //             Accept: 'application/json'
+    //         },
+    //         responseType: 'json',
+    //     });
+    //     console.log("delete user succeed!");
+    //     alert("Delete Success!")
+    //     yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    // }catch(error){
+    //     alert("delete user error");
+    //     return ;
+
+    // }
+}
+

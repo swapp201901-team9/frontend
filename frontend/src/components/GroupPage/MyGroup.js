@@ -4,11 +4,13 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
     return (
         <div>
             <div onClick={onClickGroup}>
-                {group.id} {group.grouptype} {group.groupname}
+                {group.id} {group.group_type} {group.group_name}
             </div>
+            {group.admin && 
             <button onClick={onClickAdminGroup}>
                 ADMIN
-            </button>
+            </button>}
+            
         </div>
     )
 }

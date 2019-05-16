@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import AllGroupList from './AllGroupList';
-import { toSearchGroup } from '../../actions/index.js';
+import GroupList from './GroupList'
+import { toSearchGroup, toJoinGroup, gotoGroupDetail } from '../../actions/index.js';
 
 class SearchingGroup extends React.Component {
 	onSubmit = () => {
-		console.log("search onSubmit")
-		if(this.searchword !== undefined) {
+		console.log("search onSubmit", this.searchword.value)
+		if(this.searchword.value !== undefined) {
 			this.newList = this.props.all_groups.filter(group => {
-				return group.groupname.includes(this.searchword)
+				return group.group_name.includes(this.searchword.value)
 			});
 		}
 		console.log("after: ", this.newList)
@@ -19,7 +19,6 @@ class SearchingGroup extends React.Component {
 	render() {
 		return(
 			<div>
-				<h1>Search Group</h1>
 				<form onSubmit={e => {
 					e.preventDefault()
 					this.onSubmit()
@@ -35,8 +34,10 @@ class SearchingGroup extends React.Component {
 						<button type="submit">Search</button>
 					</div>
 				</form>
-				<AllGroupList 
+				<GroupList 
 					grouplist={this.props.filtered_groups}
+					onClickGroup={this.props.onToGroupDetail}
+					onClickJoinGroup={this.props.onJoinGroup}
 				/>
 			</div>
 			
@@ -50,7 +51,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onSearchGroup: (newList) => toSearchGroup(newList)
+	onSearchGroup: (newList) => dispatch(toSearchGroup(newList)),
+	onJoinGroup: (groupid) => dispatch(toJoinGroup(groupid)),
+    onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(SearchingGroup)

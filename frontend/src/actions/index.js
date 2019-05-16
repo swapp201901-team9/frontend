@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -112,10 +112,10 @@ export const toCreateGroup = (grouptype, groupname) => {
 	}
 }
 
-export const toSearchGroup = (searchword) => {
+export const toSearchGroup = (newList) => {
 	return {
 		type: SEARCH_GROUP,
-		searchword: searchword,
+		newList: newList,
 	}
 }
 
@@ -129,6 +129,8 @@ export const toJoinGroup = (groupid) => {
 }
 
 export const gotoGroupDetail = (groupid) => {
+    console.log("gotoGroupDetail action")
+    console.log(groupid)
 	return {
 		type: TO_GROUP_DETAIL,
 		groupid: groupid,
@@ -141,5 +143,45 @@ export const gotoAdminGroup = (groupid) => {
     return {
         type: TO_ADMIN_GROUP,
         groupid: groupid,
+    }
+}
+
+export const toLikeDesign = (designid) => {
+    console.log("likeDesign action")
+    console.log(designid)
+    return {
+        type: LIKE_DESIGN,
+        designid: designid,
+    }
+}
+
+export const toChangeGroupInfo = (groupid, grouptype, groupname) => {
+    console.log("changeGroupInfo action")
+    console.log(grouptype, groupname)
+    return {
+        type: CHANGE_GROUP_INFO,
+        groupid: groupid,
+        grouptype: grouptype,
+        groupname: groupname,
+    }
+}
+
+export const toDeleteGroupUser = (groupid, userid) => {
+    console.log("deleteGroupUser action")
+    console.log(userid)
+    return {
+        type: DELETE_GROUP_USER,
+        groupid: groupid, 
+        userid: userid,
+    }
+}
+
+export const toDeleteGroupDesign = (groupid, designid) => {
+    console.log("deleteGroupDesign action")
+    console.log(designid)
+    return {
+        type: DELETE_GRUOP_DESIGN,
+        groupid: groupid,
+        designid: designid,
     }
 }

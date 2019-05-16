@@ -23,9 +23,9 @@ class SignUpPage extends React.Component {
           < NavBar/>
           <section className="wrap clear">
            <div className= "main">
-           <div>
+           <h2 className="h_white">JOIN</h2>
              <div >
-             <div className="module_title"> JOIN </div>
+
 
                  <form onSubmit={e => {
                      e.preventDefault()
@@ -33,10 +33,11 @@ class SignUpPage extends React.Component {
                  }}>
                  <div className="Text-Field">
                    <label>
-                   USERNAME
+                   ID
                    </label>
                    <input type="text" ref={ node => {this.username = node;}} id="username_field" className="field" />
                  </div>
+
                    <div className="Text-Field">
                      <label>
                      PASSWORD
@@ -55,7 +56,7 @@ class SignUpPage extends React.Component {
                  </form>
              </div>
            </div>
-           </div>
+
            </section>
           </div>
 
@@ -72,6 +73,8 @@ let mapDispatchToProps = (dispatch) => {
         onToLogin: () => dispatch(changeUrl('/'))
     }
 }
+
+
 
 SignUpPage = connect(undefined, mapDispatchToProps)(SignUpPage);
 

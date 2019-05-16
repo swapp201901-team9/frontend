@@ -1,31 +1,45 @@
 import React from 'react'
-import GroupDetail from './GroupDetail.js'
-import SignOut from '../MainPage/SignOut.js'
 import { connect } from 'react-redux'
+
+import DesignTemp from './DesignTemp.js';
+import { toLikeDesign } from '../../actions/index.js';
+import NavBar from '../NavBar/NavBar.js';
+import MyGroupList from './MyGroupList.js';
 
 class GroupDetailPage extends React.Component {
 
   render() {
         if (!this.props.loading) {
             return (
-                    <div>
-                        <SignOut />
-                    </div>
-                    )
+                <p>loading...</p>
+            )
         }
         return (
-                <div >
-                    <SignOut />
-                    <GroupDetail />
-                </div>
-               )
+            <div >
+                <NavBar />
+                <ul>
+                    {this.props.group_designs.map(design =>
+                        <DesignTemp 
+                            key={design.id}
+                            design={design}
+                            onClickLike={() => this.props.onLikeDesign(design.id)}
+                        />
+                    )}
+                </ul>
+                <MyGroupList />
+            </div>
+        )
     }
 }
 
-let mapStateToProps = (state) => {
-    return {
-        loading: state.loading,
-    }
-}
+const mapStateToProps = (state) => ({
+    my_groups: state.my_groups,
+    group_designs: state.group_designs,
+    loading: state.loading
+})
 
-export default connect(mapStateToProps)(GroupDetailPage);
+const mapDispatchToProps = (dispatch) => ({
+    onLikeDesign: (designid) => dispatch(toLikeDesign(designid))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailPage);

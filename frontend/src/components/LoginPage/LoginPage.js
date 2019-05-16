@@ -7,9 +7,11 @@ class LoginPage extends Component {
     render() {
         return (
            <div>
-           < NavBar/>
+           <NavBar />
            <section className="wrap clear">
+
             <div className="main">
+            <h2 className="h_white">LOG IN</h2>
                 <SignIn />
                 <SignUp />
             </div>

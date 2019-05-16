@@ -11,6 +11,12 @@ const initState = {
     my_groups: [],
     filtered_groups: [],
 
+    group_users: [], 
+    group_designs: [], 
+
+    now_group: null,
+    now_design: null, 
+
     my_requests: [],
     load : 0,
     loading: false,
@@ -30,6 +36,12 @@ describe('homepage reducer', () => {
             all_groups: [],
             my_groups: [],
             filtered_groups: [],
+            
+            group_users: [], 
+            group_designs: [], 
+
+            now_group: null,
+            now_design: null, 
 
             my_requests: [],
             load: 0,
@@ -49,6 +61,12 @@ describe('homepage reducer', () => {
             all_groups: [],
             my_groups: [],
             filtered_groups: [],
+
+            group_users: [], 
+            group_designs: [], 
+
+            now_group: null,
+            now_design: null,  
 
             my_requests: [],
             load: 0,

@@ -17,20 +17,31 @@ class ChangePWPage extends React.Component {
             else if(this.props.profile_pw !== this.currpw.value)
                 alert("Old password is not correct!");
             else this.props.onClick(this.props.profile_user,this.currpw.value, this.newpw.value)
-        } 
+        }
         return (
                 <div>
-                    <div className="Change">
-                        <span>{this.props.profile_user}동무는 비밀번호를 바꾸는가?</span>
-                        <br />
-                        현재 비밀번호<input type="password" ref={ node=>{this.currpw = node;} } id="curr_pw" className="field" />
-                        <br />
-                        바꿀 비밀번호<input type="password" ref={ node=> {this.newpw = node;}} id="new_pw" className="field" />
-                        <br />
-                        비밀번호 확인<input type="password" ref={ node =>{this.newpwre = node;} } id="new_pw_RE" className="field" />
-                        <br />
-                        <button type="submit" id="change_pw" onClick={onChangeSubmit}>바꾼다!</button>
+
+                  <div className="Text-Field">
+                      <label>
+                      CURRENT PASSWORD
+                      </label>
+                      <input type="password" ref={ node=>{this.currpw = node;} } id="curr_pw" className="field" />
+                  </div>
+                    <div className="Text-Field">
+                      <label>
+                      NEW PASSWORD
+                      </label>
+                      <input type="password" ref={ node=> {this.newpw = node;}} id="new_pw" className="field" />
                     </div>
+                    <div className="Text-Field">
+                      <label>
+                      NEW PASSWORD CHECK
+                      </label>
+                      <input type="password" ref={ node =>{this.newpwre = node;} } id="new_pw_RE" className="field" />
+                    </div>
+                    <div className="Button-Field">
+                      <button type="submit" id="change_pw" onClick={onChangeSubmit}>CHANGE PASSWORD</button>
+                  </div>
                 </div>
                )
     }
@@ -54,4 +65,3 @@ let mapDispatchToProps = (dispatch) => {
 
 
 export default ChangePWPage = connect(mapStateToProps,mapDispatchToProps)(ChangePWPage);
-

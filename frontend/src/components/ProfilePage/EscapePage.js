@@ -7,9 +7,8 @@ class EscapePage extends React.Component{
             this.props.onClick(this.props.profile_user);
         }
         return(
-            <div className="Change">
-                <h3>정말로 탈BOOK 하시겠습니까?</h3>
-                <button type="submit" id="escape_book" onClick={onChangeSubmit}>탈BOOK!</button>
+            <div className="Button-Field">
+                <button className="button button_white" onClick={onChangeSubmit}>WITHDRAW</button>
             </div>
         );
     }
@@ -25,4 +24,3 @@ let mapDispatchToProps = (dispatch) =>{
     }
 }
 export default EscapePage = connect(mapStateToProps, mapDispatchToProps)(EscapePage)
-
