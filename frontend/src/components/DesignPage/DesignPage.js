@@ -5,10 +5,18 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
-import {bglist, facelist, eyeslist, faciallist, hairlist} from './images/templates/templatelist';
+import {bglist, facelist, eyeslist, faciallist, hairlist, back_arm, back_banding,
+back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
+
+const face = [
+
+	require('./images/templates/faces/1.png'),
+
+]
+
 
 
 //the templates are imported as images and passed as porps to the TemplateList components.
@@ -23,12 +31,14 @@ export default class DesignPage extends React.Component {
 		this.state = {
 			activeProperty : null
 		};
+		//this.addToCanvas = this.addToCanvas.bind(this);
+		this.onDrop = this.onDrop.bind(this);
 	}
 
 	addToCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
-			width: 400,
-			height: 400,
+			width: 899,
+			height: 959,
 			the_type: property_type,
 			zIndex: z_Index
 		});
@@ -40,9 +50,23 @@ export default class DesignPage extends React.Component {
 
 	}
 	onDrop(picture) {
+	   var myImage = new TemplateListItem('./images/templates/eyes/1.png', 'eye',2);
+	   //myImage.src = './images/templates/eyes/1.png';
+	   document.body.appendChild(myImage);
+	   //this.addToCanvas(myImage, 'eye', 2);
        
-	  let imageUrl = './img/tshirt1_back.jpg';
-	  this.addToCanvas(imageUrl.target, "eye", 2);
+	  //let imageUrl = './images/templates/eyes/1.png';
+	  //var img = new Image(400,400);
+	  //var img = document.createElement('img');
+	  //img.src = imageUrl;
+	  var imgInstance = new fabric.Image(myImage, {
+		width: 400,
+		height: 400,
+		the_type: "eye",
+		zIndex: 2
+	});
+
+	this.setState({activeProperty: imgInstance});
 	  /*var img = new Image();
       img.src = imageUrl;
 	  var imgI = new fabric.Image(imageUrl, {
@@ -94,6 +118,55 @@ export default class DesignPage extends React.Component {
 									zIndex = {-9999}
 									addtocanvas = {this.addToCanvas}
 								/>
+								<TemplateList 
+									data = {back_arm}
+									property_type = "back_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_banding}
+									property_type = "back_banding"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_body}
+									property_type = "back_body"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {back_stripe}
+									property_type = "back_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_arm}
+									property_type = "front_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_body}
+									property_type = "front_body"
+									zIndex = {0}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_button}
+									property_type = "front_button"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+								<TemplateList 
+									data = {front_stripe}
+									property_type = "front_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToCanvas}
+								/>
+
 								{/*<!--========================================
 			left design tool
     =========================================-->*/}
@@ -162,6 +235,13 @@ export default class DesignPage extends React.Component {
                     	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
                     	withPreview = {true}
                   		/>
+						
+						<TemplateList
+						data = {face}
+						property_type = "face"
+						zIndex= {0}
+						addtocanvas = {this.addToCanvas}
+						/>
 
 					    
 				

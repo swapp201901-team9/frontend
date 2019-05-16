@@ -5,34 +5,36 @@ import ImageUploader from 'react-images-upload';
 
 class FabricCanvas extends React.Component{
     
-    constructor(props) {
+    /*constructor(props) {
         super(props);
         this.state = {pictures : []};
         this.onDrop = this.onDrop.bind(this);
     }
 
     onDrop(picture) {
-        console.log("picture: ", picture);
-        this.the_canvas.add(picture)
-       /* this.setState({
+
+        console.log(picture);
+       this.setState({
             pictures: this.state.pictures.concat(picture),
         });
        
       let imageUrl = './img/tshirt1_back.jpg';
       var img = new Image();
       img.src = imageUrl;
+    File -> 
+      javascript Image 형식 -> 
       var Img = new fabric.Image(img);
       this.the_canvas.add(Img);
-      this.the_canvas.renderAll();*/
+      this.the_canvas.renderAll();
      
-    }
+    }*/
    
     componentDidMount(){
         console.log("componentDidMount")
         this.the_canvas = new fabric.StaticCanvas('main-canvas', {
             preserveObjectStacking: true,
-            height:375,
-            width:375,
+            height:959,
+            width:899,
         });
     }
 
