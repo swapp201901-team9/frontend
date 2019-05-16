@@ -11,53 +11,6 @@ class FabricCanvas extends React.Component{
         this.onDrop = this.onDrop.bind(this);
     }
 
-    onDrop(e) {
-        console.log("hey");
-
-        e.preventDefault();
-        var preview = document.getElementById('img');
-        var file = document.getElementById('input').files[0];
-
-        let reader = new FileReader();
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-            
-            var imgInstance = new fabric.Image(preview, {
-                width: 40,
-                height: 40,
-                the_type: "upload",
-                zIndex: 2
-            });
-
-            //var imgInstance = new fabric.Image(preview);
-            this.the_canvas = new fabric.Canvas('main-canvas', {
-                preserveObjectStacking: true,
-                height:959,
-                width:899,
-            });
-            this.the_canvas.add(imgInstance);
-        },false);
-
-        /*reader.onloadend = () => {
-            var img = new Image(40,40);
-	        img.src = reader.result;
-            
-            var imgInstance = new fabric.Image(img, {
-                width: 899,
-                height: 959,
-                the_type: "upload",
-                zIndex: 2
-            });    
-
-            this.the_canvas.add(imgInstance);
-        }*/
-    
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-
-     
-    }
    
     componentDidMount(){
 
@@ -101,6 +54,64 @@ class FabricCanvas extends React.Component{
             this.the_canvas.add(next);
             this.the_canvas.moveTo(next, next.zIndex);
         }
+    }
+
+    onDrop = (e) => {
+        console.log("hey");
+
+        e.preventDefault();
+        var preview = document.getElementById('img');
+        //var img = new Image(40, 40);
+        var file = document.getElementById('input').files[0];
+        var canvas = this.the_canvas;
+        let reader = new FileReader();
+        reader.addEventListener("load", function() {
+            preview.src = reader.result; 
+            //img.src = reader.result;
+            var imgInstance = new fabric.Image(preview, {
+            width: 40,
+            height: 40,
+            the_type: "upload",
+            zIndex: 2
+            });
+            canvas.add(imgInstance);
+
+            //var imgInstance = new fabric.Image(preview);
+            /*this.the_canvas = new fabric.Canvas('main-canvas', {
+                preserveObjectStacking: true,
+                height:959,
+                width:899,
+            });*/
+            
+        },false);
+    
+        /*reader.onloadend = () => {
+            var img = new Image(40,40);
+	        img.src = reader.result;
+            
+            var imgInstance = new fabric.Image(img, {
+                width: 899,
+                height: 959,
+                the_type: "upload",
+                zIndex: 2
+            });    
+
+            this.the_canvas.add(imgInstance);
+        }*/
+    
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+        //console.log(img.src);
+        /*var imgInstance = new fabric.Image(img, {
+            width: 40,
+            height: 40,
+            the_type: "upload",
+            zIndex: 2
+        });*/
+        //var imgInstance = new fabric.Image(img);
+        //this.the_canvas.add(imgInstance);
+        this.the_canvas = canvas;
     }
 
     saveToCanvas = () => {
