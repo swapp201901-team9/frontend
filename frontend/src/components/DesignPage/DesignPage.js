@@ -5,8 +5,7 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
-import {bglist, facelist, eyeslist, faciallist, hairlist, back_arm, back_banding,
-back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
+import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
@@ -74,10 +73,25 @@ export default class DesignPage extends React.Component {
 			activeBackProperty: imgInstance
 		});
 	}
-	
-    handleChange(color, event) {
 
+	handleChangeComplete = (color, event) => {
+		this.fontcolor = color.hex
 	}
+
+	addText() {
+		console.log("addText")
+		let text = new fabric.IText(document.getElementById("text_area").value, {
+			fontFamily: document.getElementById("text_font").value,
+			fill: this.fontcolor,
+			styles: document.getElementById("text_style").value,
+			fontSize: document.getElementById("text_size").value,
+			// objecttype: 'image',
+		})
+
+		console.log(text)
+		this.setState({activeProperty: text})
+	}
+	
 	onDrop(picture) {
 	   var myImage = new TemplateListItem('./images/templates/eyes/1.png', 'eye',2);
 	   //myImage.src = './images/templates/eyes/1.png';
@@ -89,25 +103,25 @@ export default class DesignPage extends React.Component {
 	  //var img = document.createElement('img');
 	  //img.src = imageUrl;
 	  var imgInstance = new fabric.Image(myImage, {
-		width: 400,
-		height: 400,
-		the_type: "eye",
-		zIndex: 2
-	});
+			width: 400,
+			height: 400,
+			the_type: "eye",
+			zIndex: 2
+		});
 
-	this.setState({activeProperty: imgInstance});
-	  /*var img = new Image();
-      img.src = imageUrl;
-	  var imgI = new fabric.Image(imageUrl, {
-		width: 400,
-		height: 400,
-		the_type: "eyes",
-		zIndex: 2
-	});
-      this.setState({activeProperty: imgI});*/
+		this.setState({activeProperty: imgInstance});
+			/*var img = new Image();
+				img.src = imageUrl;
+			var imgI = new fabric.Image(imageUrl, {
+			width: 400,
+			height: 400,
+			the_type: "eyes",
+			zIndex: 2
+		});
+				this.setState({activeProperty: imgI});*/
 	  
-	 
-    }
+	}
+	
 	
 
     render() {
@@ -171,46 +185,47 @@ export default class DesignPage extends React.Component {
     =========================================-->*/}
 		<div class="design_tool">
 			
-						<textarea id="text_area"> Hello
-						</textarea>
-					    <p>Choose a font</p>
-						<select id="text_font">
-				        			{/*<!-- all fonts -->*/}
-									<option>arial</option>
-									<option>tahoma</option>
-									<option>times new roman</option>
-									<option>anton</option>
-									<option>Akronim</option>
-									<option>Alex Brush</option>
-									<option>Aguafina Script</option>
-						        </select>
-					        	<p>Text colour</p>
-					        	{/*<!-- colour -->*/}
-										{/*<input type="text" id="text_colour" />*/}
-										<CirclePicker onChange={ this.handleChange } />
-				        	<p>Text style</p>
-			        		<select id="text_style">
+			<textarea id="text_area"> Hello </textarea>
+			
+			<p>Choose a font</p>
+			<select id="text_font">
+				{/*<!-- all fonts -->*/}
+				<option>arial</option>
+				<option>tahoma</option>
+				<option>times new roman</option>
+				<option>anton</option>
+				<option>Akronim</option>
+				<option>Alex Brush</option>
+				<option>Aguafina Script</option>
+			</select>
 
-			        			{/*<!-- font style -->*/}
-								<option>normal</option>
-								<option>italic</option>
-								<option>oblique</option>
-								<option>bold</option>
-					        </select>
-				        
-				        <div class="font_size">
-				        	{/*<!-- font size -->*/}
-				        	<p>Font Size :</p> <input type="range"  min="0" max="100" value="30" id="text_size" />
-				        </div>
-						</div>
+			<p>Text colour</p>
+				{/*<!-- colour -->*/}
+				{/*<input type="text" id="text_colour" />*/}
+				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
+						
+			<p>Text style</p>
+				<select id="text_style">
+					{/*<!-- font style -->*/}
+					<option>normal</option>
+					<option>italic</option>
+					<option>oblique</option>
+					<option>bold</option>
+				</select>
+				
+			<div class="font_size">
+				{/*<!-- font size -->*/}
+				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
+			</div>
+		</div>
 				
 
 		{/*<!--========================================
 			front-back button section
     =========================================-->*/}
 		<div class="change_side">
-			<button class="front_btn" type="button">Front</button>
-			<button class="back_btn" type="button">Back</button>
+			<button class="front_btn" type="button" onClick={() => this.addText()}>Front</button>
+			<button class="back_btn" type="button" onClick={() => this.addText()}>Back</button>
 		</div>
 
 		
