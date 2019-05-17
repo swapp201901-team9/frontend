@@ -28,7 +28,7 @@ class FabricCanvas extends React.Component{
     }
 
     componentWillReceiveProps = (newprops) => {
-
+      
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
         if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
@@ -68,6 +68,9 @@ class FabricCanvas extends React.Component{
 
     updateBackCanvasforImage = (prev,next) => {
 
+        console.log("updateCanvasForImage")
+
+
         if(next){
 
             let to_remove;
@@ -81,6 +84,7 @@ class FabricCanvas extends React.Component{
 
             this.the_back_canvas.remove(to_remove);
 
+
             // if(next.the_type === 'bg'){
             //     this.the_back_canvas.setBackgroundImage(next);
             //     this.the_back_canvas.renderAll();                
@@ -88,7 +92,10 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_back_canvas.add(next);
+            //this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
+
+
         }
     }
 
@@ -104,13 +111,33 @@ class FabricCanvas extends React.Component{
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
             //img.src = reader.result;
-            var imgInstance = new fabric.Image(preview, {
+            /*var imgInstance = new fabric.Image(preview, {
             width: 40,
             height: 40,
             the_type: "upload",
             zIndex: 2
+            });*/
+            console.log(preview.width);
+            console.log(preview.height);
+          
+            var imgInstance = new fabric.Image(preview, {
+            width: preview.width,
+            height: preview.height,
+            the_type: "upload",
+            zIndex: 2
             });
+            console.log("imgInstance set");
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+            });
+            console.log("imgInstance scale");
             canvas.add(imgInstance);
+            canvas.renderAll();
+            canvas.moveTo(imgInstance, imgInstance.zIndex);
+            console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
             /*this.the_canvas = new fabric.Canvas('main-canvas', {
@@ -151,6 +178,7 @@ class FabricCanvas extends React.Component{
     }
 
     saveToCanvas = () => {
+        console.log("saveToCanvas")
 
         let link = document.createElement("a");
         link.href = this.the_canvas.toDataURL({format: 'png'});
@@ -195,10 +223,12 @@ class FabricCanvas extends React.Component{
                   <input type = "file"
                          id = "input" 
                          onChange = {this.onDrop} />
-                  <img src = "" 
-                        height = "40"
-                        width = "40"
+                         <img src = "" 
                         id = "img" />
+                  {/*<img src = "" 
+                        height = "50%"
+                        width = "auto"
+                    id = "img" />*/}
                   {/*<ImageUploader 
                     withIcon = {true}
                     buttonText = 'Choose images'
