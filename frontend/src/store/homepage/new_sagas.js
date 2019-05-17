@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -140,10 +140,24 @@ function *groupPageSaga() {
 
 function *groupDetailPageSaga() {
     console.log("Group Detail Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchLikeDesign);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
 }
 
 function *groupAdminPageSaga() {
     console.log("Group Admin Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchChangeGrouInfo);
+    yield spawn(watchDeleteGroupUser);
+    yield spawn(watchDeleteGroupDesign);
 }
 
 
@@ -189,6 +203,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log(error)
                     alert("main mygroups error");
                 }
                 yield put(actions.setState({
@@ -254,7 +269,6 @@ function *watchLoginState() {
             else { 
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];
-                let profile_data = null;
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
@@ -272,6 +286,7 @@ function *watchLoginState() {
                 //프로필 정보를 get하는 부분
                 else if(path.split("/")[1] === 'profile'){
                     console.log("get profile details...");
+                    let profile_data = null;
                     try{
                         profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
@@ -297,15 +312,54 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
                     console.log("group id: ", id);
-                    try{
+                    let username = window.atob(localStorage.getItem("auth")).split(":")[0]
+                    let my_groups_data, group_designs_data = null;
 
-                    } catch(error) {
-                        alert("group detail error");
+                    //my_groups data
+                    try{
+                        my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json',
+                        });
+                        console.log("GET my groups data: ", my_groups_data.body)
+                    } catch(error){
+                        alert("my groups data error")    
                     }
+
+                    //group designs
+                    try{
+                        group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error) {
+                        if(error.statusCode === 403) {
+                            console.log("you are not permitted");
+                            alert("가입하지 않은 그룹입니다")
+                            yield put(actions.changeUrl('/groups/'))
+                        }   
+                        else {
+                            console.log(error)
+                            alert("group designs error");
+                        }
+
+                    }
+
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        my_groups: my_groups_data.body,
+                        group_designs: group_designs_data.body,
                         load: 0,
-                        loading: true,
+                        loading: true
                     }))
                 }
 
@@ -313,10 +367,24 @@ function *watchLoginState() {
                 else if(path.split("/")[1] === 'admin') {
                     console.log("get group admins...");
                     console.log("group id: ", id);
-                    let group_users_data, group_designs_data = null;
+                    let now_group_data, group_users_data, group_designs_data = null;
 
                     try{
-                        group_users_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                        now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group data error");
+                    }
+                    
+                    try{
+                        group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
@@ -345,6 +413,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        now_group: now_group_data.body,
                         group_users: group_users_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
@@ -354,6 +423,7 @@ function *watchLoginState() {
 
                 else {
                     // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
+                    let profile_data = null;
                     try {
                         // localStorage.setItem('parent', id);
                         data = yield call(xhr.get, fixed_url+'article/'+id+'/total/', {
@@ -532,6 +602,37 @@ function *watchGoToAdminGroup() {
 	}
 }
 
+function *watchLikeDesign() {
+    while(true) {
+        const data = yield take(LIKE_DESIGN);
+        console.log("watchLikeDesign");
+        yield call(likeDesign, data);
+    }
+}
+
+function *watchChangeGrouInfo() {
+    while(true) {
+        const data = yield take(CHANGE_GROUP_INFO);
+        console.log("watchChangeGroupInfo");
+        yield call(changeGroupInfo, data);
+    }
+}
+
+function *watchDeleteGroupUser() {
+    while(true) {
+        const data = yield take(DELETE_GROUP_USER);
+        console.log("watchDeleteGroupUser");
+        yield call(deleteGroupUser, data);
+    }
+}
+
+function *watchDeleteGroupDesign() {
+    while(true) {
+        const data = yield take(DELETE_GRUOP_DESIGN);
+        console.log("watchDeleteGroupDesign");
+        yield call(deleteGroupDesign, data);
+    }
+}
 
 
 
@@ -772,3 +873,99 @@ function *toAdminGroup(data){
         alert("*toGroupDetail error")
     }
 }
+
+function *likeDesign(data) {
+    console.log("likeDesign")
+    const path = 'groups/like/' + data.designid + '/';
+    try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*liikeDesign error")
+    }
+}
+
+function *changeGroupInfo(data) {
+    console.log("chageGroupInfo")
+    const backPath = 'groups/'+data.groupid+'/admin/';
+    let form = new FormData();
+    try{
+        console.log("data.grouptype: ", data.grouptype)
+        form.append('group_type', data.grouptype);
+        form.append('group_name', data.groupname);
+        console.log("form: ", form, data.grouptype, data.groupname)
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+            },
+            async: true,
+            crossDomain: true,
+            processData: false,
+            contentType: false,
+            mimeType: "multipart/form-data",
+            body: form
+          });
+        console.log("change groupinfo succeed ");
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        console.log(error)
+        console.log("form: ", form['group_type'])
+        alert("chage groupinfo error");
+        return;
+    }
+}           
+
+function *deleteGroupUser(data) {
+    console.log("deleteGroupUser groupid: ", data.groupid, " userid: ", data.userid)
+    const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    try{
+        yield call(xhr.send, fixed_url+backPath,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete user succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        alert("delete user error");
+        return ;
+
+    }
+}
+
+function *deleteGroupDesign(data) {
+    console.log("deleteGroupDesign groupid: ", data.groupid, " designid: ", data.designid)
+    const backPath = 'groups/delete/'+data.designid+'/';
+    try{
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete design succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        console.log(error)
+        alert("delete design error");
+        return ;
+
+    }
+}
+
