@@ -29,13 +29,14 @@ export default class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			activeProperty : null
+			activeFrontProperty : null,
+			activeBackProperty : null
 		};
 		//this.addToCanvas = this.addToCanvas.bind(this);
 		this.onDrop = this.onDrop.bind(this);
 	}
 
-	addToCanvas = (imgElement, property_type, z_Index) => {
+	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
 			height: 959,
@@ -43,7 +44,35 @@ export default class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-		this.setState({activeProperty: imgInstance});
+		this.setState({activeFrontProperty: imgInstance});
+	}
+
+	addToBackCanvas = (imgElement, property_type, z_Index) => {
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 899,
+			height: 959,
+			the_type: property_type,
+			zIndex: z_Index
+		});
+
+		this.setState({activeBackProperty: imgInstance});
+	}
+	
+    handleChange(color, event) {
+
+	}
+	addToBothCanvas = (imgElement, property_type, z_Index) => {
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 899,
+			height: 959,
+			the_type: property_type,
+			zIndex: z_Index
+		});
+
+		this.setState({
+			activeFrontProperty: imgInstance,
+			activeBackProperty: imgInstance
+		});
 	}
 	
     handleChange(color, event) {
@@ -89,82 +118,52 @@ export default class DesignPage extends React.Component {
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
 								<TemplateList 
-									data = {facelist}
-									property_type = "face"
-									zIndex= {0}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {eyeslist}
-									property_type = "eyes"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {faciallist}
-									property_type = "beard"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {hairlist}
-									property_type = "hair"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {bglist}
-									property_type = "bg"
-									zIndex = {-9999}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
 									data = {back_arm}
 									property_type = "back_arm"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_banding}
 									property_type = "back_banding"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_body}
 									property_type = "back_body"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_stripe}
 									property_type = "back_stripe"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {front_arm}
 									property_type = "front_arm"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_body}
 									property_type = "front_body"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_button}
 									property_type = "front_button"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_stripe}
 									property_type = "front_stripe"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 
 								{/*<!--========================================
@@ -240,7 +239,7 @@ export default class DesignPage extends React.Component {
 						data = {face}
 						property_type = "face"
 						zIndex= {0}
-						addtocanvas = {this.addToCanvas}
+						addtocanvas = {this.addToFrontCanvas}
 						/>
 
 					    
@@ -254,15 +253,10 @@ export default class DesignPage extends React.Component {
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}
-	<button class="front_btn" type="button">Front</button>
 	<FabricCanvas 
-	activeProperty = {this.state.activeProperty}
+	activeFrontProperty = {this.state.activeFrontProperty}
+	activeBackProperty = {this.state.activeBackProperty}
 	/>	
-	
-	<button class="back_btn" type="button">Back</button>
-	<FabricCanvas 
-	activeProperty = {this.state.activeProperty}
-	/>
 
                 </div>
               </div>
