@@ -57,9 +57,6 @@ export default class DesignPage extends React.Component {
 		this.setState({activeBackProperty: imgInstance});
 	}
 	
-    handleChange(color, event) {
-
-	}
 	addToBothCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
@@ -78,7 +75,7 @@ export default class DesignPage extends React.Component {
 		this.fontcolor = color.hex
 	}
 
-	addText() {
+	addText(isFront) {
 		console.log("addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
@@ -89,7 +86,13 @@ export default class DesignPage extends React.Component {
 		})
 
 		console.log(text)
-		this.setState({activeProperty: text})
+		if(isFront) {
+			this.setState({activeFrontProperty: text})
+		}
+		else {
+			this.setState({activeBackProperty: text})
+		}
+		
 	}
 	
 	onDrop(picture) {
@@ -224,8 +227,8 @@ export default class DesignPage extends React.Component {
 			front-back button section
     =========================================-->*/}
 		<div class="change_side">
-			<button class="front_btn" type="button" onClick={() => this.addText()}>Front</button>
-			<button class="back_btn" type="button" onClick={() => this.addText()}>Back</button>
+			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
+			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
 		</div>
 
 		
