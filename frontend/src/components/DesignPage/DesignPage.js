@@ -273,18 +273,7 @@ export default class DesignPage extends React.Component {
                   		<img src = "" 
                         id = "img_back" />
 					
-<<<<<<< HEAD
 						
-=======
-						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
-						<ImageUploader 
-                    	withIcon = {true}
-                    	buttonText = 'Choose images'
-                    	onChange = {this.onDrop}
-                    	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    	withPreview = {true}
-                  		/>
->>>>>>> upstream/master
 
 					    
 				
