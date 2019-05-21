@@ -9,7 +9,7 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
             </div>
             {group.admin &&
               <div className="Group-Button-Field">
-            <button onClick={onClickAdminGroup}>
+            <button className="button button_small" onClick={onClickAdminGroup}>
                 ADMIN
             </button></div>}
             </div>
