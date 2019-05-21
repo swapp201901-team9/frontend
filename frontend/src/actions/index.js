@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -183,5 +183,47 @@ export const toDeleteGroupDesign = (groupid, designid) => {
         type: DELETE_GRUOP_DESIGN,
         groupid: groupid,
         designid: designid,
+    }
+}
+
+
+
+export const toChangeBody = (color) => {
+    console.log("changeBody action", color)
+    return {
+        type: CHANGE_BODY,
+        color: color,
+    }
+}
+
+export const toChangeSleeve = (color) => {
+    console.log("changeSleeve action", color)
+    return {
+        type: CHANGE_SLEEVE,
+        color: color,
+    }
+}
+
+export const toChangeBanding = (color) => {
+    console.log("changeBanding action", color)
+    return {
+        type: CHANGE_BANDING,
+        color: color,
+    }
+}
+
+export const toChangeStripe = (color) => {
+    console.log("changeStripe action", color)
+    return {
+        type: CHANGE_STRIPE,
+        color: color,
+    }
+}
+
+export const toChangeButton = (color) => {
+    console.log("changeButton action", color)
+    return {
+        type: CHANGE_BUTTON,
+        color: color,
     }
 }
