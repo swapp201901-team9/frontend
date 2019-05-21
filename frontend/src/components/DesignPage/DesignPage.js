@@ -10,8 +10,8 @@ import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
 
-
-
+import { connect } from 'react-redux'
+import { toSaveDesign, toPostDesign } from '../../actions/index.js';
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -19,12 +19,18 @@ import ImageUploader from 'react-images-upload';
 //FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
 //about saveToCanvas: use a method from fabric named TODataUrl()
 
-export default class DesignPage extends React.Component {
+// export default class DesignPage extends React.Component {
+class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			design_body : null,
+			design_sleeve : null,
+			design_banding : null,
+			design_stripe : null,
+			design_button : null,
+			activeBackProperty : null,
 			activeFrontProperty : null,
-			activeBackProperty : null
 		};
 		this.onDrop = this.onDropFront.bind(this);
 		this.onDrop = this.onDropBack.bind(this);
@@ -70,6 +76,18 @@ export default class DesignPage extends React.Component {
 		this.fontcolor = color.hex
 	}
 
+	handleDesignChangeComplete = (color, event) => {
+		let design_element = document.getElementById("design_element").value;
+		switch(design_element) {
+			case 'body': this.setState({design_body: color.hex}); break;
+			case 'sleeve': this.setState({design_sleeve: color.hex}); break;
+			case 'banding': this.setState({design_banding: color.hex}); break;
+			case 'stripe': this.setState({design_stripe: color.hex}); break;
+			case 'button': this.setState({design_button: color.hex}); break;
+		}
+		console.log(this.state)
+	}
+	
 	addText(isFront) {
 		console.log("addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
@@ -105,7 +123,7 @@ export default class DesignPage extends React.Component {
           
             var imgInstance = new fabric.Image(preview, {
             width: 899,
-            height:959,
+            height:959,	
             the_type: "upload",
             zIndex: 3
             });
@@ -198,18 +216,31 @@ export default class DesignPage extends React.Component {
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 
-<TemplateList 
+								<TemplateList 
 									data = {front_banding}
 									property_type = "front_banding"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
+								<h1>Design Element</h1>
+									<center><select id="design_element">
+										{/*<!-- font style -->*/}
+										<option>body</option>
+										<option>sleeve</option>
+										<option>banding</option>
+										<option>stripe</option>
+										<option>button</option>
+									</select></center>
+								<h1>Colour</h1>
+								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>
 
 	{/*<!--========================================
 			left design tool
     =========================================-->*/}
+		<br></br>
 		<div class="design_tool">
 			
+		<h1>Text</h1>
 			<textarea id="text_area"> Hello </textarea>
 			
 			<p>Choose a font</p>
@@ -289,8 +320,9 @@ export default class DesignPage extends React.Component {
 	<FabricCanvas 
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
-	/>	
-
+	/>
+	<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
+	<button class="post_btn" type="button" onClick={() => this.props.onPost(this.state)}>POST</button>
                 </div>
               </div>
               <div className="aside">
@@ -298,7 +330,7 @@ export default class DesignPage extends React.Component {
                 <div className="content">
                   <MyGroupList />
                 </div>
-              </div>
+              </div>	
             </section>
 				
 		
@@ -309,4 +341,11 @@ export default class DesignPage extends React.Component {
  
       );
     }
-  }
+	}
+	
+	const mapDispatchToProps = (dispatch) => ({
+		onSave: (design_detail) => dispatch(toSaveDesign(design_detail)),
+		onPost: (design_detail) => dispatch(toPostDesign(design_detail)),
+	})
+
+export default connect (mapDispatchToProps)(DesignPage)
