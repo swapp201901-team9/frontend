@@ -20,15 +20,21 @@ class GroupPage extends React.Component {
 				<section className="wrap clear col3">
 					<div className="aside">
 						<h2 className="h_white">CREATE GROUP</h2>
-						<CreateGroup />
+							<div className="content">
+							<CreateGroup />
+							</div>
 					</div>
 					<div className="main">
 						<h2 className="h_white">SEARCHING GROUP</h2>
-						<SearchingGroup />
+							<div className="content">
+							<SearchingGroup />
+							</div>
 					</div>
 					<div className="aside">
 						<h2 className="h_black">MY GROUP</h2>
-						<MyGroupList />
+							<div className="content">
+							<MyGroupList />
+							</div>
 					</div>
 				</section>
 
@@ -54,4 +60,3 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps)(GroupPage);
-
