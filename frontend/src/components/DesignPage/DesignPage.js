@@ -224,7 +224,7 @@ export default class DesignPage extends React.Component {
 			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
 		</div>
 
-		
+
 
 		{/*<!--========================================
 			Image Upload Modal

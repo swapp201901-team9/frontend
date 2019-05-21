@@ -9,7 +9,9 @@ const homepageInitialState = {
     filtered_groups: [], //검색 결과 필터링된 그룹 정보
 
     group_users: [], //특정 그룹에 속한 모든 유저 리스트
-    group_designs: [], //특정 그룹에 속한 모든 디자인 리스트
+    group_designs: {
+        
+    }, //특정 그룹에 속한 모든 디자인 리스트
 
     now_group: null, //현재 작업 or 구경(?) 중인 그룹
     now_design: null, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
