@@ -25,6 +25,8 @@ class FabricCanvas extends React.Component{
             height:959,
             width:899,
         });
+        
+        this.the_canvas = this.the_front_canvas;
     }
 
     componentWillReceiveProps = (newprops) => {
