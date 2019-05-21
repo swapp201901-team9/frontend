@@ -174,12 +174,10 @@ function *watchLoginState() {
     }
 
     if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
-        console.log("/ or sign_up or log_in")
         if(localStorage.getItem("auth") !== null) {
             yield put(actions.changeUrl('/main/'));
         }
         else {
-            console.log("else")
             yield put(actions.setState({
                 authorization: "",
                 load: 0,
