@@ -200,13 +200,13 @@ class FabricCanvas extends React.Component{
                 >
                 </canvas>
 
-                  <input type = "file"
+                  {/* <input type = "file"
                          id = "input" 
                          onChange = {this.onDrop} />
                   <img src = "" 
                         height = "40"
                         width = "40"
-                        id = "img" />
+                        id = "img" /> */}
                   {/*<ImageUploader 
                     withIcon = {true}
                     buttonText = 'Choose images'
@@ -220,11 +220,11 @@ class FabricCanvas extends React.Component{
                 >
                 </canvas>
 
-                  <input type = "file"
+                  {/* <input type = "file"
                          id = "input" 
                          onChange = {this.onDrop} />
                          <img src = "" 
-                        id = "img" />
+                        id = "img" /> */}
                   {/*<img src = "" 
                         height = "50%"
                         width = "auto"
