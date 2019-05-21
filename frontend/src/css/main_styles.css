@@ -602,7 +602,7 @@ img{
 }
 
 /* Canvas */
-#main-canvas{
+#front-canvas{
     background: #ccc;
     background: url('./images/bg-canvas.png');
     background-repeat: repeat;
@@ -612,7 +612,20 @@ img{
     height: 375px;
     width: 375px;
 
+  
   }
+
+#back-canvas{
+  background: #ccc;
+  background: url('./images/bg-canvas.png');
+  background-repeat: repeat;
+  border:1px solid #ececec;
+  margin: 10px auto;
+  display: block;
+  height: 375px;
+  width: 375px;
+
+}
 
 
 
@@ -668,3 +681,4 @@ img{
   background-color: #AE59E8;
   color: #fff;
 }
+

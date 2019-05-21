@@ -203,6 +203,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log(error)
                     alert("main mygroups error");
                 }
                 yield put(actions.setState({
@@ -895,16 +896,16 @@ function *likeDesign(data) {
 function *changeGroupInfo(data) {
     console.log("chageGroupInfo")
     const backPath = 'groups/'+data.groupid+'/admin/';
+    let form = new FormData();
     try{
-        let form = new FormData();
+        console.log("data.grouptype: ", data.grouptype)
         form.append('group_type', data.grouptype);
         form.append('group_name', data.groupname);
+        console.log("form: ", form, data.grouptype, data.groupname)
         yield call(xhr.send, fixed_url+backPath, {
             method: 'PUT',
             headers: {
                 "Authorization": "Basic "+localStorage['auth'],
-                // "Content-Type": 'application/json',
-                // Accept: 'application/json',
             },
             async: true,
             crossDomain: true,
@@ -912,13 +913,12 @@ function *changeGroupInfo(data) {
             contentType: false,
             mimeType: "multipart/form-data",
             body: form
-            // responseType:'json',
-            // body: JSON.stringify({"group_type": data.grouptype, "group_name": data.groupname})
-        });
+          });
         console.log("change groupinfo succeed ");
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
+        console.log("form: ", form['group_type'])
         alert("chage groupinfo error");
         return;
     }
@@ -947,24 +947,25 @@ function *deleteGroupUser(data) {
 }
 
 function *deleteGroupDesign(data) {
-    console.log("deleteGroupDesign groupid: ", data.groupid, " userid: ", data.designid)
-    // const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
-    // try{
-    //     yield call(xhr.send, fixed_url+backPath,{
-    //         method : 'DELETE',
-    //         headers:{
-    //             'Authorization': 'Basic '+localStorage['auth'],
-    //             Accept: 'application/json'
-    //         },
-    //         responseType: 'json',
-    //     });
-    //     console.log("delete user succeed!");
-    //     alert("Delete Success!")
-    //     yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
-    // }catch(error){
-    //     alert("delete user error");
-    //     return ;
+    console.log("deleteGroupDesign groupid: ", data.groupid, " designid: ", data.designid)
+    const backPath = 'groups/delete/'+data.designid+'/';
+    try{
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete design succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+    }catch(error){
+        console.log(error)
+        alert("delete design error");
+        return ;
 
-    // }
+    }
 }
 

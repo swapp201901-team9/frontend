@@ -5,8 +5,7 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
-import {bglist, facelist, eyeslist, faciallist, hairlist, back_arm, back_banding,
-back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
+import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
@@ -29,13 +28,14 @@ export default class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			activeProperty : null
+			activeFrontProperty : null,
+			activeBackProperty : null
 		};
 		//this.addToCanvas = this.addToCanvas.bind(this);
 		this.onDrop = this.onDrop.bind(this);
 	}
 
-	addToCanvas = (imgElement, property_type, z_Index) => {
+	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
 			height: 959,
@@ -43,12 +43,55 @@ export default class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-		this.setState({activeProperty: imgInstance});
+		this.setState({activeFrontProperty: imgInstance});
+	}
+
+	addToBackCanvas = (imgElement, property_type, z_Index) => {
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 899,
+			height: 959,
+			the_type: property_type,
+			zIndex: z_Index
+		});
+
+		this.setState({activeBackProperty: imgInstance});
 	}
 	
     handleChange(color, event) {
 
 	}
+	addToBothCanvas = (imgElement, property_type, z_Index) => {
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 899,
+			height: 959,
+			the_type: property_type,
+			zIndex: z_Index
+		});
+
+		this.setState({
+			activeFrontProperty: imgInstance,
+			activeBackProperty: imgInstance
+		});
+	}
+
+	handleChangeComplete = (color, event) => {
+		this.fontcolor = color.hex
+	}
+
+	addText() {
+		console.log("addText")
+		let text = new fabric.IText(document.getElementById("text_area").value, {
+			fontFamily: document.getElementById("text_font").value,
+			fill: this.fontcolor,
+			styles: document.getElementById("text_style").value,
+			fontSize: document.getElementById("text_size").value,
+			// objecttype: 'image',
+		})
+
+		console.log(text)
+		this.setState({activeProperty: text})
+	}
+	
 	onDrop(picture) {
 	   var myImage = new TemplateListItem('./images/templates/eyes/1.png', 'eye',2);
 	   //myImage.src = './images/templates/eyes/1.png';
@@ -60,25 +103,25 @@ export default class DesignPage extends React.Component {
 	  //var img = document.createElement('img');
 	  //img.src = imageUrl;
 	  var imgInstance = new fabric.Image(myImage, {
-		width: 400,
-		height: 400,
-		the_type: "eye",
-		zIndex: 2
-	});
+			width: 400,
+			height: 400,
+			the_type: "eye",
+			zIndex: 2
+		});
 
-	this.setState({activeProperty: imgInstance});
-	  /*var img = new Image();
-      img.src = imageUrl;
-	  var imgI = new fabric.Image(imageUrl, {
-		width: 400,
-		height: 400,
-		the_type: "eyes",
-		zIndex: 2
-	});
-      this.setState({activeProperty: imgI});*/
+		this.setState({activeProperty: imgInstance});
+			/*var img = new Image();
+				img.src = imageUrl;
+			var imgI = new fabric.Image(imageUrl, {
+			width: 400,
+			height: 400,
+			the_type: "eyes",
+			zIndex: 2
+		});
+				this.setState({activeProperty: imgI});*/
 	  
-	 
-    }
+	}
+	
 	
 
     render() {
@@ -89,82 +132,52 @@ export default class DesignPage extends React.Component {
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
 								<TemplateList 
-									data = {facelist}
-									property_type = "face"
-									zIndex= {0}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {eyeslist}
-									property_type = "eyes"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {faciallist}
-									property_type = "beard"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {hairlist}
-									property_type = "hair"
-									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
-									data = {bglist}
-									property_type = "bg"
-									zIndex = {-9999}
-									addtocanvas = {this.addToCanvas}
-								/>
-								<TemplateList 
 									data = {back_arm}
 									property_type = "back_arm"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_banding}
 									property_type = "back_banding"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_body}
 									property_type = "back_body"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {back_stripe}
 									property_type = "back_stripe"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToBackCanvas}
 								/>
 								<TemplateList 
 									data = {front_arm}
 									property_type = "front_arm"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_body}
 									property_type = "front_body"
 									zIndex = {0}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_button}
 									property_type = "front_button"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<TemplateList 
 									data = {front_stripe}
 									property_type = "front_stripe"
 									zIndex = {2}
-									addtocanvas = {this.addToCanvas}
+									addtocanvas = {this.addToFrontCanvas}
 								/>
 
 								{/*<!--========================================
@@ -172,46 +185,47 @@ export default class DesignPage extends React.Component {
     =========================================-->*/}
 		<div class="design_tool">
 			
-						<textarea id="text_area"> Hello
-						</textarea>
-					    <p>Choose a font</p>
-						<select id="text_font">
-				        			{/*<!-- all fonts -->*/}
-									<option>arial</option>
-									<option>tahoma</option>
-									<option>times new roman</option>
-									<option>anton</option>
-									<option>Akronim</option>
-									<option>Alex Brush</option>
-									<option>Aguafina Script</option>
-						        </select>
-					        	<p>Text colour</p>
-					        	{/*<!-- colour -->*/}
-										{/*<input type="text" id="text_colour" />*/}
-										<CirclePicker onChange={ this.handleChange } />
-				        	<p>Text style</p>
-			        		<select id="text_style">
+			<textarea id="text_area"> Hello </textarea>
+			
+			<p>Choose a font</p>
+			<select id="text_font">
+				{/*<!-- all fonts -->*/}
+				<option>arial</option>
+				<option>tahoma</option>
+				<option>times new roman</option>
+				<option>anton</option>
+				<option>Akronim</option>
+				<option>Alex Brush</option>
+				<option>Aguafina Script</option>
+			</select>
 
-			        			{/*<!-- font style -->*/}
-								<option>normal</option>
-								<option>italic</option>
-								<option>oblique</option>
-								<option>bold</option>
-					        </select>
-				        
-				        <div class="font_size">
-				        	{/*<!-- font size -->*/}
-				        	<p>Font Size :</p> <input type="range"  min="0" max="100" value="30" id="text_size" />
-				        </div>
-						</div>
+			<p>Text colour</p>
+				{/*<!-- colour -->*/}
+				{/*<input type="text" id="text_colour" />*/}
+				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
+						
+			<p>Text style</p>
+				<select id="text_style">
+					{/*<!-- font style -->*/}
+					<option>normal</option>
+					<option>italic</option>
+					<option>oblique</option>
+					<option>bold</option>
+				</select>
+				
+			<div class="font_size">
+				{/*<!-- font size -->*/}
+				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
+			</div>
+		</div>
 				
 
 		{/*<!--========================================
 			front-back button section
     =========================================-->*/}
 		<div class="change_side">
-			<button class="front_btn" type="button">Front</button>
-			<button class="back_btn" type="button">Back</button>
+			<button class="front_btn" type="button" onClick={() => this.addText()}>Front</button>
+			<button class="back_btn" type="button" onClick={() => this.addText()}>Back</button>
 		</div>
 
 		
@@ -240,7 +254,7 @@ export default class DesignPage extends React.Component {
 						data = {face}
 						property_type = "face"
 						zIndex= {0}
-						addtocanvas = {this.addToCanvas}
+						addtocanvas = {this.addToFrontCanvas}
 						/>
 
 					    
@@ -254,15 +268,10 @@ export default class DesignPage extends React.Component {
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}
-	<button class="front_btn" type="button">Front</button>
 	<FabricCanvas 
-	activeProperty = {this.state.activeProperty}
+	activeFrontProperty = {this.state.activeFrontProperty}
+	activeBackProperty = {this.state.activeBackProperty}
 	/>	
-	
-	<button class="back_btn" type="button">Back</button>
-	<FabricCanvas 
-	activeProperty = {this.state.activeProperty}
-	/>
 
                 </div>
               </div>
