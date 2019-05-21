@@ -10,13 +10,6 @@ import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
 
-const face = [
-
-	require('./images/templates/faces/1.png'),
-
-]
-
-
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -82,6 +75,7 @@ export default class DesignPage extends React.Component {
 			fill: this.fontcolor,
 			styles: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
+			zIndex: 10
 			// objecttype: 'image',
 		})
 
@@ -252,13 +246,6 @@ export default class DesignPage extends React.Component {
                     	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
                     	withPreview = {true}
                   		/>
-						
-						<TemplateList
-						data = {face}
-						property_type = "face"
-						zIndex= {0}
-						addtocanvas = {this.addToFrontCanvas}
-						/>
 
 					    
 				
