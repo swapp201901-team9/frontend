@@ -5,24 +5,34 @@ import { gotoGroupDetail, gotoAdminGroup } from '../../actions/index.js';
 
 class MyGroupList extends React.Component {
     render() {
-        return (
-            <div>
-                <ul>
-                {this.props.my_groups.map(group =>
-                    <MyGroup 
-                        key={group.id}
-                        group={group}
-                        onClickGroup={() => this.props.onToGroupDetail(group.id)}
-                        onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
-                    />
-                )}
-                </ul>
-            </div> 
-        )
+        if(this.props.isLoggedIn !== "") {
+            return (
+                <div>
+                    <ul>
+                    {this.props.my_groups.map(group =>
+                        <MyGroup 
+                            key={group.id}
+                            group={group}
+                            onClickGroup={() => this.props.onToGroupDetail(group.id)}
+                            onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
+                        />
+                    )}
+                    </ul>
+                </div> 
+            )
+        }
+        else {
+            return (
+                <p>로그인을 해주세요</p>
+            )
+
+        }
+        
     }
 }
 
 const mapStateToProps = (state) => ({
+    isLoggedIn: state.authorization,
     my_groups: state.my_groups
 })
 
