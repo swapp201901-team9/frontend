@@ -15,13 +15,7 @@ const initState = {
     group_designs: [], 
 
     now_group: null,
-    now_design: {
-        body: "001c58",
-        sleeve: "f8f8f8",
-        banding: "001c58",
-        stripe: "ffffff",
-        button: "001c58",
-    },
+    now_design: null,
 
     my_requests: [],
     load : 0,
@@ -47,13 +41,7 @@ describe('homepage reducer', () => {
             group_designs: [], 
 
             now_group: null,
-            now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58",
-            },
+            now_design: null,
 
             my_requests: [],
             load: 0,
@@ -78,13 +66,7 @@ describe('homepage reducer', () => {
             group_designs: [], 
 
             now_group: null,
-            now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58",
-            },  
+            now_design: null,  
 
             my_requests: [],
             load: 0,

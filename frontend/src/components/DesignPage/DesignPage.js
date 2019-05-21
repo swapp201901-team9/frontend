@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
 
@@ -9,6 +10,7 @@ import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, f
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
+import { toChangeBody } from '../../actions';
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -16,7 +18,8 @@ import ImageUploader from 'react-images-upload';
 //FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
 //about saveToCanvas: use a method from fabric named TODataUrl()
 
-export default class DesignPage extends React.Component {
+class DesignPage extends React.Component {
+// export default class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -273,7 +276,7 @@ export default class DesignPage extends React.Component {
             </section>
 				
 		
-
+			{/* <button onClick={() => this.props.onClickBody("ffffff")}>TEST</button> */}
 
 	
       </div>
@@ -281,3 +284,13 @@ export default class DesignPage extends React.Component {
       );
     }
   }
+
+// const mapStateToProps = (state) => ({
+
+// })
+
+// const mapDispatchToProps = (dispatch) => ({
+// 	onClickBody: (color) => dispatch(toChangeBody(color))
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps)(DesignPage);

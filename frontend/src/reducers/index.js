@@ -9,13 +9,7 @@ const homepageInitialState = {
     filtered_groups: [], //검색 결과 필터링된 그룹 정보
 
     group_users: [], //특정 그룹에 속한 모든 유저 리스트
-    group_designs: {
-        body: "001c58",
-        sleeve: "f8f8f8",
-        banding: "001c58",
-        stripe: "ffffff",
-        button: "001c58",
-    }, //특정 그룹에 속한 모든 디자인 리스트
+    group_designs: [], //특정 그룹에 속한 모든 디자인 리스트
 
     now_group: null, //현재 작업 or 구경(?) 중인 그룹
     now_design: null, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
@@ -55,7 +49,7 @@ const homepage = (state = homepageInitialState, action) => {
                 group_designs: action.state.group_designs,
 
                 now_group: action.state.now_group,
-                now_design: Object.assign({}, state.now_design, action.state.now_design),
+                now_design: action.state.now_design,
                 
                 my_requests: action.state.my_requests,
                 load : action.state.load,
