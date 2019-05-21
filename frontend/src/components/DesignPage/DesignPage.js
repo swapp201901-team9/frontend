@@ -10,7 +10,6 @@ import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
 
-
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
 //it gets passed onto FabricCanvas as prop
@@ -73,7 +72,7 @@ export default class DesignPage extends React.Component {
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
 			fill: this.fontcolor,
-			styles: document.getElementById("text_style").value,
+			fontStyle: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
 			zIndex: 10
 			// objecttype: 'image',
