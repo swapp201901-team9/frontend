@@ -285,12 +285,12 @@ class DesignPage extends React.Component {
     }
   }
 
-// const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
 
-// })
+})
 
-// const mapDispatchToProps = (dispatch) => ({
-// 	onClickBody: (color) => dispatch(toChangeBody(color))
-// })
+const mapDispatchToProps = (dispatch) => ({
+	// onClickBody: (color) => dispatch(toChangeBody(color))
+})
 
-// export default connect(mapStateToProps, mapDispatchToProps)(DesignPage);
+export default connect(mapStateToProps, mapDispatchToProps)(DesignPage);

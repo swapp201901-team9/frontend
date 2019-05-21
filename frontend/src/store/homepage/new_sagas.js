@@ -231,7 +231,7 @@ function *watchLoginState() {
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     my_groups: my_groups_data.body,
-                    load : 0,
+                    load: 0,
                     loading: true
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
