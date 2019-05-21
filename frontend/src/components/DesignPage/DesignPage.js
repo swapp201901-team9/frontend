@@ -75,8 +75,9 @@ export default class DesignPage extends React.Component {
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
 			fill: this.fontcolor,
-			styles: document.getElementById("text_style").value,
+			fontStyle: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
+			zIndex: 10
 			// objecttype: 'image',
 		})
 
@@ -272,7 +273,18 @@ export default class DesignPage extends React.Component {
                   		<img src = "" 
                         id = "img_back" />
 					
+<<<<<<< HEAD
 						
+=======
+						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
+						<ImageUploader 
+                    	withIcon = {true}
+                    	buttonText = 'Choose images'
+                    	onChange = {this.onDrop}
+                    	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
+                    	withPreview = {true}
+                  		/>
+>>>>>>> upstream/master
 
 					    
 				

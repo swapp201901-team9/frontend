@@ -177,6 +177,13 @@ function *watchLoginState() {
         if(localStorage.getItem("auth") !== null) {
             yield put(actions.changeUrl('/main/'));
         }
+        else {
+            yield put(actions.setState({
+                authorization: "",
+                load: 0,
+                loading: true
+            }))
+        }
     }
     else {
         if(localStorage.getItem("auth") === null) {
