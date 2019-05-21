@@ -5,10 +5,13 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
-import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe} from './images/templates/templatelist';
+import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 import ImageUploader from 'react-images-upload';
+
+
+
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -23,8 +26,8 @@ export default class DesignPage extends React.Component {
 			activeFrontProperty : null,
 			activeBackProperty : null
 		};
-		//this.addToCanvas = this.addToCanvas.bind(this);
-		this.onDrop = this.onDrop.bind(this);
+		this.onDrop = this.onDropFront.bind(this);
+		this.onDrop = this.onDropBack.bind(this);
 	}
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
@@ -87,36 +90,55 @@ export default class DesignPage extends React.Component {
 		}
 		
 	}
-	
-	onDrop(picture) {
-	   var myImage = new TemplateListItem('./images/templates/eyes/1.png', 'eye',2);
-	   //myImage.src = './images/templates/eyes/1.png';
-	   document.body.appendChild(myImage);
-	   //this.addToCanvas(myImage, 'eye', 2);
-       
-	  //let imageUrl = './images/templates/eyes/1.png';
-	  //var img = new Image(400,400);
-	  //var img = document.createElement('img');
-	  //img.src = imageUrl;
-	  var imgInstance = new fabric.Image(myImage, {
-			width: 400,
-			height: 400,
-			the_type: "eye",
-			zIndex: 2
-		});
+	onDropFront = (e) => {
+        console.log("hey");
 
-		this.setState({activeProperty: imgInstance});
-			/*var img = new Image();
-				img.src = imageUrl;
-			var imgI = new fabric.Image(imageUrl, {
-			width: 400,
-			height: 400,
-			the_type: "eyes",
-			zIndex: 2
-		});
-				this.setState({activeProperty: imgI});*/
-	  
-	}
+        e.preventDefault();
+        var preview = document.getElementById('img_front');
+        var file = document.getElementById('input_front').files[0];
+		let reader = new FileReader();
+		let img_front;
+        reader.addEventListener("load", function() {
+            preview.src = reader.result; 
+            console.log(preview.width);
+            console.log(preview.height);
+          
+            var imgInstance = new fabric.Image(preview, {
+            width: 899,
+            height:959,
+            the_type: "upload",
+            zIndex: 3
+            });
+            console.log("imgInstance set");
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+            });
+			console.log("imgInstance scale");
+			
+			img_front = imgInstance;
+			console.log(img_front);
+			this.setState({activeFrontProperty: img_front});
+            
+        },false);
+    
+        
+        if (file) {
+			reader.readAsDataURL(file);
+			
+			
+		}
+		
+		//this.setState({activeFrontProperty: img_front});
+	
+       
+    }
+	onDropBack = (e) => {
+       
+    }
+
 	
 	
 
@@ -176,7 +198,14 @@ export default class DesignPage extends React.Component {
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 
-								{/*<!--========================================
+<TemplateList 
+									data = {front_banding}
+									property_type = "front_banding"
+									zIndex = {2}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+
+	{/*<!--========================================
 			left design tool
     =========================================-->*/}
 		<div class="design_tool">
@@ -230,21 +259,21 @@ export default class DesignPage extends React.Component {
 			Image Upload Modal
     =========================================-->*/}
 		
-						<h4 class="modal-title">Upload image</h4>
+						<h4 class="modal-title">Upload image Front</h4>
+						<input type = "file"
+                         id = "input_front" 
+                         onChange = {this.onDropFront} />
+                  		<img src = "" 
+                        id = "img_front" />
+
+						<h4 class="modal-title">Upload image Back</h4>
+						<input type = "file"
+                         id = "input_front" 
+                         onChange = {this.onDropBack} />
+                  		<img src = "" 
+                        id = "img_back" />
 					
-						<input 
-						id = "imageLoader" 
-						name = "imageLoader"
-						type="file"/>
-					
-						<button type="button" class="btn btn-default btn_add_image" name="button">Upload</button>
-						<ImageUploader 
-                    	withIcon = {true}
-                    	buttonText = 'Choose images'
-                    	onChange = {this.onDrop}
-                    	imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    	withPreview = {true}
-                  		/>
+						
 
 					    
 				

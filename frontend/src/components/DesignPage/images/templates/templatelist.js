@@ -212,6 +212,24 @@ const front_stripe = [
 	require('./front_stripe/fff45c_stripe.png'),
 	require('./front_stripe/fffff_stripe.png'),
 ]
+
+const front_banding = [
+	require('./front_banding/00b7ee_banding.png'),
+	require('./front_banding/001c58_banding.png'),
+	require('./front_banding/0075a9_banding.png'),
+	require('./front_banding/80c269_banding.png'),
+	require('./front_banding/097c25_banding.png'),
+	require('./front_banding/580b0b_banding.png'),
+	require('./front_banding/232323_banding.png'),
+	require('./front_banding/601986_banding.png'),
+	require('./front_banding/910000_banding.png'),
+	require('./front_banding/aa89bd_banding.png'),
+	require('./front_banding/cfcfcf_banding.png'),
+	require('./front_banding/f29c9f_banding.png'),
+	require('./front_banding/f39800_banding.png'),
+	require('./front_banding/fff45c_banding.png'),
+	require('./front_banding/626262_banding.png'),
+]
 export {
 	hairlist, 
 	bglist, 
@@ -225,5 +243,6 @@ export {
 	front_arm,
 	front_body,
 	front_button,
-	front_stripe
+	front_stripe,
+	front_banding,
 };
