@@ -67,7 +67,7 @@ h1,h2,h3,h4,h5,h6{
 
 header {
   width: 100%;
-  background-color: #e26e65;
+  background-image: linear-gradient(to right, #65e0ca, #b093ff 52%, #ff8787), linear-gradient(to bottom, #e26e65, #e26e65);
   font-family: 'Noto Sans KR', sans-serif;
 }
 .logo{
@@ -127,6 +127,8 @@ section > div{
 
 }
 
+
+
 button{
   width: 100%;
   height: 40px;
@@ -146,6 +148,8 @@ button{
   background-color: #fff;
   color: #c13a3a;
 }
+
+
 
 .module_title{
   font-family: 'Bree Serif', serif;
@@ -607,6 +611,7 @@ img{
     display: block;
     height: 375px;
     width: 375px;
+
   
   }
 
@@ -621,3 +626,59 @@ img{
   width: 375px;
 
 }
+
+
+
+/*grouppage*/
+
+.SearchingBar {
+  margin-bottom: 20px;
+}
+
+.searching_input{
+  box-sizing: border-box;
+  display:inline-block;
+  width: 60%;
+  height: 40px;
+  border-radius: 21px;
+  border: solid 2px #e0e0e0;
+  margin: 0px;
+  padding: 0px 15px;
+  font-size: 16px;
+  background-color: #fff
+}
+
+
+
+.Group-List-Field{
+  box-sizing: border-box;
+  color: black;
+  padding: 10px 0px;
+  border-bottom:1px solid #dfdfdf;
+
+}
+
+.Group-List-Field > ul {
+  padding: 0px;
+  margin: 20px 0px;
+}
+
+.Group-Button-Field{
+  box-sizing: border-box;
+  font-size: 12px;
+  color: black;
+  margin: 10px 0px 10px 0px;
+
+}
+.button_small{
+  width: 30%;
+  height: 24px;
+  display: inline-block;
+  float: right;
+  border: 1px solid  #AE59E8;
+  border-radius: 4px;
+  box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
+  background-color: #AE59E8;
+  color: #fff;
+}
+

@@ -16,17 +16,36 @@ class GroupDetailPage extends React.Component {
         }
         return (
             <div >
-                <NavBar />
-                <ul>
-                    {this.props.group_designs.map(design =>
-                        <DesignTemp 
-                            key={design.id}
-                            design={design}
-                            onClickLike={() => this.props.onLikeDesign(design.id)}
+              <NavBar />
+              <section className="wrap clear col3">
+      					<div className="aside">
+      						<h2 className="h_white">GROUP DETAIL</h2>
+      							<div className="content">
+
+      							</div>
+      					</div>
+      					<div className="main">
+      						<h2 className="h_white">DESIGN LIST</h2>
+      							<div className="content">
+                    <ul>
+                      {this.props.group_designs.map(design =>
+                        <DesignTemp
+                          key={design.id}
+                          design={design}
+                          onClickLike={() => this.props.onLikeDesign(design.id)}
                         />
-                    )}
-                </ul>
-                <MyGroupList />
+                      )}
+                    </ul>
+      							</div>
+      					</div>
+      					<div className="aside">
+      						<h2 className="h_black">MY GROUP</h2>
+      							<div className="content">
+      							<MyGroupList />
+      							</div>
+      					</div>
+      				</section>
+
             </div>
         )
     }

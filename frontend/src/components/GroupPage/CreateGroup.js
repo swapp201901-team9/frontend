@@ -15,39 +15,43 @@ class CreateGroup extends React.Component {
 		console.log("create onSubmit")
 		if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
 			this.props.onCreateGroup(this.grouptype, this.groupname)
-		}	
+		}
 	}
-	
+
 	render() {
 		return(
 			<div>
-				<form onSubmit={e => { 
-					e.preventDefault() 
-					this.onSubmit() 
+				<form onSubmit={e => {
+					e.preventDefault()
+					this.onSubmit()
 				}}>
+
+
 					<div className="CreateGroup">
-						<label htmlFor="group type">Group Type</label>
-						<select 
+						<label htmlFor="group type">Group Type </label>
+						<select
 							name="grouptype"
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
-						> 
+						>
 							{this.type_options.map(option => {
 								return <option value={option} key={option} >{option}</option>
 							})}
 						</select>
 						<br />
 						<label htmlFor="group name">Group Name</label>
-						<input 
+						<input
 							type="text"
 							name="groupname"
 							ref={ node => {this.groupname=node;} }
 							//value={this.groupname}
 							className="name-input"
 						/>
+						<div className="Group-Button-Field">
 						<button type="submit">CREATE GROUP</button>
+						</div>
 					</div>
-				</form>>
+				</form>
 			</div>
 		)
 	}
@@ -63,5 +67,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup)
-
-
