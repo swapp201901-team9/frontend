@@ -19,16 +19,23 @@ import ImageUploader from 'react-images-upload';
 //FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
 //about saveToCanvas: use a method from fabric named TODataUrl()
 
+
 export default class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
 			activeFrontProperty : null,
-			activeBackProperty : null
+			activeBackProperty : null,
 		};
 		this.onDrop = this.onDropFront.bind(this);
 		this.onDrop = this.onDropBack.bind(this);
 	}
+
+	componentDidMount(){
+
+		this.img_front = [];
+		this.img_back = [];
+    }
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -90,14 +97,24 @@ export default class DesignPage extends React.Component {
 		}
 		
 	}
+	/*shouldComponentUpdate(nextProps, nextState) {
+		if (nextState.image != this.state.image ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else {
+			return true;
+		}
+	}*/
 	onDropFront = (e) => {
         console.log("hey");
-
+		//this.setState(prevState => {return {image: prevState.image+1}});
         e.preventDefault();
         var preview = document.getElementById('img_front');
         var file = document.getElementById('input_front').files[0];
 		let reader = new FileReader();
-		let img_front;
+		let imgFront = this.img_front;
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
             console.log(preview.width);
@@ -118,9 +135,9 @@ export default class DesignPage extends React.Component {
             });
 			console.log("imgInstance scale");
 			
-			img_front = imgInstance;
-			console.log(img_front);
-			this.setState({activeFrontProperty: img_front});
+			imgFront.push(imgInstance);
+			console.log(imgFront);
+			
             
         },false);
     
