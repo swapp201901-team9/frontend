@@ -99,8 +99,8 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
-    // yield spawn(watchSaveDesign);
-    // yield spawn(watchPostDesign);
+    yield spawn(watchSaveDesign);
+    yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -119,8 +119,8 @@ function *loggedInMainPageSaga() {
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 
-    // yield spawn(watchSaveDesign);
-    // yield spawn(watchPostDesign);
+    yield spawn(watchSaveDesign);
+    yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -1053,59 +1053,59 @@ function *deleteGroupDesign(data) {
 function *saveDesign(data) {
     console.log("saveDesign design: ", data.design)
     const backPath = '';
-    // try{
-    //     yield call(xhr.send, fixed_url+backPath, {
-    //         method: 'PUT',
-    //         headers: {
-    //             "Authorization": "Basic "+localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json',
-    //         },
-    //         responseType:'json',
-    //         body: JSON.stringify({
-    //             "detail_body": data.design["body"], 
-    //             "detail_sleeve": data.design["sleeve"],
-    //             "detail_banding": data.design["banding"],
-    //             "detail_stripe": data.design["stripe"],
-    //             "detail_button": data.design["button"]
-    //         })
-    //     });
-    //     console.log("save design succeed ");
-    //     yield put(actions.changeUrl('/main/'));
-    // }catch(error){
-    //     console.log(error)
-    //     alert("save desitn error");
-    //     return;
-    // }
+    try{
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripe": data.design["stripe"],
+                "detail_button": data.design["button"]
+            })
+        });
+        console.log("save design succeed ");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error){
+        console.log(error)
+        alert("save desitn error");
+        return;
+    }
 }
 
 function *postDesign(data) {
-    console.log("saveDesign design: ", data.design)
+    console.log("postDesign design: ", data.design)
     const backPath = '';
-    // try{
-    //     yield call(xhr.post, fixed_url + backPath, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json',
-    //         body: JSON.stringify({
-    //             "group": data.groupid,
-    //             "detail_body": data.design["body"], 
-    //             "detail_sleeve": data.design["sleeve"],
-    //             "detail_banding": data.design["banding"],
-    //             "detail_stripe": data.design["stripe"],
-    //             "detail_button": data.design["button"]
-    //         })
-    //     });
-    //     console.log("save design succeed ");
-    //     yield put(actions.changeUrl('/main/'));
-    // }catch(error){
-    //     console.log(error)
-    //     alert("post desitn error");
-    //     return;
-    // }
+    try{
+        yield call(xhr.post, fixed_url + backPath, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json',
+            body: JSON.stringify({
+                "group": data.groupid,
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripe": data.design["stripe"],
+                "detail_button": data.design["button"]
+            })
+        });
+        console.log("save design succeed ");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error){
+        console.log(error)
+        alert("post desitn error");
+        return;
+    }
 }
 
 
