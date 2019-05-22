@@ -37,11 +37,11 @@ class DesignPage extends React.Component {
 
 	}
 
-	componentDidMount(){
+	/*componentDidMount(){
 
 		this.img_front = [];
 		this.img_back = [];
-    }
+    }*/
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -125,7 +125,7 @@ class DesignPage extends React.Component {
 			return true;
 		}
 	}*/
-	onDropFront = (e) => {
+	/*onDropFront = (e) => {
         console.log("hey");
 		//this.setState(prevState => {return {image: prevState.image+1}});
         e.preventDefault();
@@ -172,7 +172,7 @@ class DesignPage extends React.Component {
     }
 	onDropBack = (e) => {
        
-    }
+    }*/
 
 	post_group_options = this.props.my_groups.filter(group => {
 		console.log("post", group.group_type)
@@ -310,7 +310,7 @@ class DesignPage extends React.Component {
 			Image Upload Modal
     =========================================-->*/}
 		
-						<h4 class="modal-title">Upload image Front</h4>
+						{/*<h4 class="modal-title">Upload image Front</h4>
 						<input type = "file"
                          id = "input_front" 
                          onChange = {this.onDropFront} />
@@ -322,7 +322,7 @@ class DesignPage extends React.Component {
                          id = "input_front" 
                          onChange = {this.onDropBack} />
                   		<img src = "" 
-                        id = "img_back" />
+						id = "img_back" />*/}
 					
 						
 

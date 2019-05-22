@@ -126,7 +126,7 @@ class FabricCanvas extends React.Component{
             width: 899,
             height:959,
             the_type: "upload",
-            zIndex: 3
+            zIndex: 10
             });
             console.log("imgInstance set");
             imgInstance.set({
