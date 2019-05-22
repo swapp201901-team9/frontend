@@ -7,82 +7,42 @@ class FabricCanvas extends React.Component{
     
     constructor(props) {
         super(props);
-        // this.state = {pictures : []};
-        this.state = {
-            isFront: true
-        }
-
+        this.state = {pictures : []};
         this.onDrop = this.onDrop.bind(this);
-        this.changeSide = this.changeSide.bind(this);
     }
 
-    // componentDidMount(){
-    //     this.the_front_canvas = new fabric.Canvas('front-canvas', {
-    //         preserveObjectStacking: true,
-    //         height:959,
-    //         width:899,
-    //     });
+   
+    componentDidMount(){
 
-    //     this.the_back_canvas = new fabric.Canvas('back-canvas', {
-    //         preserveObjectStacking: true,
-    //         height:959,
-    //         width:899,
-    //     });
-        
-    //     // this.the_canvas = this.the_front_canvas;
-    // }
-
-    componentDidMount() {
-        this.mycanvas = new fabric.Canvas('my-canvas', {
+        this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
-            height:959, 
+            height:959,
             width:899,
-        })
+        });
+
+        this.the_back_canvas = new fabric.Canvas('back-canvas', {
+            preserveObjectStacking: true,
+            height:959,
+            width:899,
+        });
+        
+        this.the_canvas = this.the_front_canvas;
     }
-
-    // componentWillReceiveProps = (newprops) => {
-    //     console.log("componentWillRecieveProps = ", newprops)
-      
-    //     // If Updated Item is not the same as the old one
-    //     //         => Update the canvas with newer item
-    //     if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
-    //         this.updateFrontCanvasforImage(this.props.activeFrontProperty,newprops.activeFrontProperty);
-    //     }
-
-    //     if(newprops.activeBackProperty !== this.props.activeBackProperty){
-    //         this.updateBackCanvasforImage(this.props.activeBackProperty,newprops.activeBackProperty);
-    //     }
-    // }
 
     componentWillReceiveProps = (newprops) => {
-        console.log("componentWillRecieveProps = ", newprops)
-
-        if(newprops.activeProperty !== this.props.activeProperty) {
-            
-            this.updateCanvasforImage(newprops.activeProperty);
+      
+        // If Updated Item is not the same as the old one
+        //         => Update the canvas with newer item
+        if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
+            this.updateFrontCanvasforImage(this.props.activeFrontProperty,newprops.activeFrontProperty);
         }
-    }
 
-    updateCanvasforImage = (next) => {
-        console.log("updateCanvasforImage")
-        if(next) {
-            let to_remove;
-
-            this.mycanvas.forEachObject((object) => {
-                if(object.the_type === next.the_type) {
-                    to_remove = object;
-                }
-            })
-
-            this.mycanvas.remove(to_remove)
-
-            this.mycanvas.add(next)
-            this.mycanvas.moveTo(next, next.zIndex)
+        if(newprops.activeBackProperty !== this.props.activeBackProperty){
+            this.updateBackCanvasforImage(this.props.activeBackProperty,newprops.activeBackProperty);
         }
     }
 
     updateFrontCanvasforImage = (prev,next) => {
-        console.log("updateFrontCanvasforImage")
 
         if(next){
 
@@ -110,8 +70,11 @@ class FabricCanvas extends React.Component{
 
     updateBackCanvasforImage = (prev,next) => {
 
-        console.log("updateBackCanvasForImage")
+        console.log("updateCanvasForImage")
+
+
         if(next){
+
             let to_remove;
             // Find the same kind of element
             this.the_back_canvas.forEachObject( (object) => {
@@ -122,6 +85,8 @@ class FabricCanvas extends React.Component{
             } );
 
             this.the_back_canvas.remove(to_remove);
+
+
             // if(next.the_type === 'bg'){
             //     this.the_back_canvas.setBackgroundImage(next);
             //     this.the_back_canvas.renderAll();                
@@ -129,8 +94,10 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_back_canvas.add(next);
-            // this.the_back_canvas.renderAll();
+            //this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
+
+
         }
     }
 
@@ -193,7 +160,6 @@ class FabricCanvas extends React.Component{
                 the_type: "upload",
                 zIndex: 2
             });    
-
             this.the_canvas.add(imgInstance);
         }*/
     
@@ -212,14 +178,6 @@ class FabricCanvas extends React.Component{
         this.the_front_canvas = canvas;
     }
 
-    changeSide(front) {
-        console.log("changeSide: ", front)
-        this.setState({
-            isFront: front
-        })
-        console.log("after: ", this.isFront)
-    }
-
     saveToCanvas = () => {
         console.log("saveToCanvas")
 
@@ -229,41 +187,39 @@ class FabricCanvas extends React.Component{
          link.click();
 
     }
-
     fileChangedHandler = (event) => {
         const file = event.target.files[0];
         this.setState({selectedFile: file});
     }
    
     render(){
-        // console.log("front canvas: ", this.the_front_canvas)
-        // console.log("back canvas: ", this.the_back_canvas)
-        if(this.state.isFront) {
-            console.log("front")
-            return (
-                <div>
-                    <button class="front_btn" onClick={() => this.changeSide(true)}>Front</button>
-                    <button class="back_btn" onClick={() => this.changeSide(false)}>Back</button>
-    
-                    <canvas id='back-canvas' />
-                </div>
-            );
-        }
+       
+        return (
+            <div className= "main-canvas-container">
+                <button class="front_btn" type="button">Front</button>
+                <canvas id='front-canvas'
+                >
+                </canvas>
 
-        else {
-            console.log("back")
-            return (
-                <div>
-                    <button class="front_btn" onClick={() => this.changeSide(true)}>Front</button>
-                    <button class="back_btn" onClick={() => this.changeSide(false)}>Back</button>
-    
-                    <canvas id='front-canvas' />
-                </div>
-            );
-            
-        }
+                  <input type = "file"
+                         id = "input" 
+                         onChange = {this.onDrop} />
+                  <img src = "" 
+                        id = "img" />
+                  {/*<ImageUploader 
+                    withIcon = {true}
+                    buttonText = 'Choose images'
+                    onChange = {this.onDrop}
+                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
+                    withPreview = {true}
+                  />*/}
 
-        
+                <button class="back_btn" type="button">Back</button>
+                <canvas id='back-canvas'
+                >
+                </canvas>
+            </div>
+        );
     }
 }
 
