@@ -160,7 +160,6 @@ class FabricCanvas extends React.Component{
                 the_type: "upload",
                 zIndex: 2
             });    
-
             this.the_canvas.add(imgInstance);
         }*/
     
