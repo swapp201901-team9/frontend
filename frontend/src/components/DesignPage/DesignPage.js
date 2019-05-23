@@ -187,6 +187,44 @@ class DesignPage extends React.Component {
               <div className="aside">
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
+						<h3> front </h3>
+						<h4> sleeve </h4>
+						<TemplateList 
+									data = {front_arm}
+									property_type = "front_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+								<h4> body </h4>
+								<TemplateList 
+									data = {front_body}
+									property_type = "front_body"
+									zIndex = {0}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+								<h4> button </h4>
+								<TemplateList 
+									data = {front_button}
+									property_type = "front_button"
+									zIndex = {2}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+								<h4> stripe </h4>
+								<TemplateList 
+									data = {front_stripe}
+									property_type = "front_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+								<h4> banding </h4>
+								<TemplateList 
+									data = {front_banding}
+									property_type = "front_banding"
+									zIndex = {2}
+									addtocanvas = {this.addToFrontCanvas}
+								/>
+
+								<h3> back </h3> 
 								<TemplateList 
 									data = {back_arm}
 									property_type = "back_arm"
@@ -211,37 +249,7 @@ class DesignPage extends React.Component {
 									zIndex = {2}
 									addtocanvas = {this.addToBackCanvas}
 								/>
-								<TemplateList 
-									data = {front_arm}
-									property_type = "front_arm"
-									zIndex = {0}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<TemplateList 
-									data = {front_body}
-									property_type = "front_body"
-									zIndex = {0}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<TemplateList 
-									data = {front_button}
-									property_type = "front_button"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<TemplateList 
-									data = {front_stripe}
-									property_type = "front_stripe"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-
-								<TemplateList 
-									data = {front_banding}
-									property_type = "front_banding"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
+						
 								<h1>Design Element</h1>
 									<center><select id="design_element">
 										{/*<!-- font style -->*/}
