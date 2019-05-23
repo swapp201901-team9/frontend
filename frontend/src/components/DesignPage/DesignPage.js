@@ -4,11 +4,11 @@ import {CirclePicker} from 'react-color';
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
-import TemplateListItem from './TemplateListItem'
+//import TemplateListItem from './TemplateListItem'
 import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
-import ImageUploader from 'react-images-upload';
+//import ImageUploader from 'react-images-upload';
 
 import { connect } from 'react-redux'
 import { toSaveDesign, toPostDesign } from '../../actions/index.js';
@@ -32,11 +32,17 @@ class DesignPage extends React.Component {
 			activeBackProperty : null,
 			activeFrontProperty : null
 		};
-		this.onDrop = this.onDropFront.bind(this);
-		this.onDrop = this.onDropBack.bind(this);
+		//this.onDrop = this.onDropFront.bind(this);
+		//this.onDrop = this.onDropBack.bind(this);
 
 		
 	}
+
+	/*componentDidMount(){
+
+		this.img_front = [];
+		this.img_back = [];
+    }*/
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -110,14 +116,24 @@ class DesignPage extends React.Component {
 		}
 		
 	}
-	onDropFront = (e) => {
+	/*shouldComponentUpdate(nextProps, nextState) {
+		if (nextState.image != this.state.image ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else {
+			return true;
+		}
+	}*/
+	/*onDropFront = (e) => {
         console.log("hey");
-
+		//this.setState(prevState => {return {image: prevState.image+1}});
         e.preventDefault();
         var preview = document.getElementById('img_front');
         var file = document.getElementById('input_front').files[0];
 		let reader = new FileReader();
-		let img_front;
+		let imgFront = this.img_front;
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
             console.log(preview.width);
@@ -138,9 +154,9 @@ class DesignPage extends React.Component {
             });
 			console.log("imgInstance scale");
 			
-			img_front = imgInstance;
-			console.log(img_front);
-			this.setState({activeFrontProperty: img_front});
+			imgFront.push(imgInstance);
+			console.log(imgFront);
+			
             
         },false);
     
@@ -157,8 +173,7 @@ class DesignPage extends React.Component {
     }
 	onDropBack = (e) => {
        
-    }
-
+    }*/
 
     render() {
       return (
@@ -167,64 +182,75 @@ class DesignPage extends React.Component {
               <div className="aside">
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
-								<TemplateList 
-									data = {back_arm}
-									property_type = "back_arm"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<TemplateList 
-									data = {back_banding}
-									property_type = "back_banding"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<TemplateList 
-									data = {back_body}
-									property_type = "back_body"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<TemplateList 
-									data = {back_stripe}
-									property_type = "back_stripe"
-									zIndex = {2}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<TemplateList 
+						<h3> *front* </h3>
+						<h4> sleeve </h4>
+						<TemplateList 
 									data = {front_arm}
 									property_type = "front_arm"
 									zIndex = {0}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
+								<h4> body </h4>
 								<TemplateList 
 									data = {front_body}
 									property_type = "front_body"
 									zIndex = {0}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
+								<h4> button </h4>
 								<TemplateList 
 									data = {front_button}
 									property_type = "front_button"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
+								<h4> stripe </h4>
 								<TemplateList 
 									data = {front_stripe}
 									property_type = "front_stripe"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
-
+								<h4> banding </h4>
 								<TemplateList 
 									data = {front_banding}
 									property_type = "front_banding"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
-								<h1>Design Element</h1>
+
+								<h3> *back* </h3> 
+								<h4> sleeve </h4>
+								<TemplateList 
+									data = {back_arm}
+									property_type = "back_arm"
+									zIndex = {0}
+									addtocanvas = {this.addToBackCanvas}
+								/>
+								<h4> banding </h4>
+								<TemplateList 
+									data = {back_banding}
+									property_type = "back_banding"
+									zIndex = {0}
+									addtocanvas = {this.addToBackCanvas}
+								/>
+								<h4> body </h4>
+								<TemplateList 
+									data = {back_body}
+									property_type = "back_body"
+									zIndex = {0}
+									addtocanvas = {this.addToBackCanvas}
+								/>
+								<h4> stripe </h4>
+								<TemplateList 
+									data = {back_stripe}
+									property_type = "back_stripe"
+									zIndex = {2}
+									addtocanvas = {this.addToBackCanvas}
+								/>
+						
+								{/*<h1>Design Element</h1>
 									<center><select id="design_element">
-										{/*<!-- font style -->*/}
 										<option>body</option>
 										<option>sleeve</option>
 										<option>banding</option>
@@ -232,7 +258,7 @@ class DesignPage extends React.Component {
 										<option>button</option>
 									</select></center>
 								<h1>Colour</h1>
-								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>
+								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>*/}
 
 	{/*<!--========================================
 			left design tool
@@ -290,7 +316,7 @@ class DesignPage extends React.Component {
 			Image Upload Modal
     =========================================-->*/}
 		
-						<h4 class="modal-title">Upload image Front</h4>
+						{/*<h4 class="modal-title">Upload image Front</h4>
 						<input type = "file"
                          id = "input_front" 
                          onChange = {this.onDropFront} />
@@ -302,7 +328,7 @@ class DesignPage extends React.Component {
                          id = "input_front" 
                          onChange = {this.onDropBack} />
                   		<img src = "" 
-                        id = "img_back" />
+						id = "img_back" />*/}
 					
 						
 
