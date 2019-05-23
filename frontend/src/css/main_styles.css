@@ -67,7 +67,7 @@ h1,h2,h3,h4,h5,h6{
 
 header {
   width: 100%;
-  background-image: linear-gradient(to right, #65e0ca, #b093ff 52%, #ff8787), linear-gradient(to bottom, #e26e65, #e26e65);
+  background-image: linear-gradient(to right, #de5736, #6414d2), linear-gradient(to right, #bb2929, #a83685 34%, #513ab0 66%, #1964ac);
   font-family: 'Noto Sans KR', sans-serif;
 }
 .logo{
@@ -612,7 +612,7 @@ img{
     height: 375px;
     width: 375px;
 
-  
+
   }
 
 #back-canvas{
@@ -675,10 +675,9 @@ img{
   height: 24px;
   display: inline-block;
   float: right;
-  border: 1px solid  #AE59E8;
+  border: 1px solid  #FFC50A;
   border-radius: 4px;
   box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
-  background-color: #AE59E8;
+  background-color: #FFC50A;
   color: #fff;
 }
-

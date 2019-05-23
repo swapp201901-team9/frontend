@@ -5,7 +5,7 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
         <div>
           <div className = "Group-List-Field">
             <div onClick={onClickGroup}>
-                {group.id} {group.group_type} {group.group_name}
+                {group.group_type} {group.group_name}
             </div>
             {group.admin &&
               <div className="Group-Button-Field">

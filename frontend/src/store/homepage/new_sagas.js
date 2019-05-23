@@ -213,7 +213,7 @@ function *watchLoginState() {
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 // localStorage.removeItem('parent');
-                let my_groups_data;
+                let my_groups_data, my_design_id;
                 try {
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -228,6 +228,21 @@ function *watchLoginState() {
                     console.log(error)
                     alert("main mygroups error");
                 }
+
+                // try {
+                //     my_design_id = yield call(xhr.get, fixed_url+'/'. {
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             'Authorization': 'Basic '+localStorage['auth'],
+                //             Accept: 'application/json'
+                //         },
+                //         responseType: 'json'
+                //     })
+                // } catch(error) {
+                //     console.log(error)
+                //     alert("main my_design_id error")
+                // }
+
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     my_groups: my_groups_data.body,
@@ -755,6 +770,7 @@ function *signUp(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
+        console.log(error)
         alert("backend singup post error");
     }
 
@@ -854,7 +870,7 @@ function *createGroup(data){
             contentType: 'json',
             body: JSON.stringify({"grouptype": data.grouptype.value, "groupname": data.groupname.value})
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        yield put(actions.changeUrl('/groups/'));
     } catch(error){
         if(error.statusCode === 409) {
             console.log("already existing name");

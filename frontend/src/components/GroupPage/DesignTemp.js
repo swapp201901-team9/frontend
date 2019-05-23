@@ -4,15 +4,16 @@ const DesignTemp = ({ design, onClickLike }) => {
     return (
         <div>
             <div>
-                id: {design.id}
-                owner: {design.owner}
-                likes: {design.likes}
-                body: {design.detail_body}
+                id: {design.id}<br/>
+                owner: {design.owner}<br/>
+                likes: {design.likes}<br/>
+                body: {design.detail_body}<br/>
                 sleeve: {design.detail_sleeve}
             </div>
             <button onClick={onClickLike}>
                 LIKE
             </button>
+            <br/>
         </div>
     )
 }
