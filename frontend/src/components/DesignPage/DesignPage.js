@@ -30,8 +30,7 @@ class DesignPage extends React.Component {
 			design_stripe : null,
 			design_button : null,
 			activeBackProperty : null,
-			activeFrontProperty : null,
-			post_group_options: []
+			activeFrontProperty : null
 		};
 		this.onDrop = this.onDropFront.bind(this);
 		this.onDrop = this.onDropBack.bind(this);
