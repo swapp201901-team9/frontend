@@ -32,8 +32,8 @@ class DesignPage extends React.Component {
 			activeBackProperty : null,
 			activeFrontProperty : null,
 		};
-		this.onDrop = this.onDropFront.bind(this);
-		this.onDrop = this.onDropBack.bind(this);
+		//this.onDrop = this.onDropFront.bind(this);
+		//this.onDrop = this.onDropBack.bind(this);
 
 	}
 
@@ -174,10 +174,10 @@ class DesignPage extends React.Component {
        
     }*/
 
-	post_group_options = this.props.my_groups.filter(group => {
+	/*post_group_options = this.props.my_groups.filter(group => {
 		console.log("post", group.group_type)
 		return group.group_type !== "UR"
-	})
+	})*/
 	
 
     render() {
@@ -344,9 +344,9 @@ class DesignPage extends React.Component {
 	<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
 	
 	<select id="post_group">
-		{this.post_group_options.map(option => {
+		{/*{this.post_group_options.map(option => {
 			return <option value={option.id}> {option.group_type} {option.group_name} </option>
-		})}
+		})}*/}
 	</select>
 
 	<button class="post_btn" type="button" onClick={() => this.props.onPost(document.getElementById("post_group").value, this.state)}>POST</button>
