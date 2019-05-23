@@ -16,7 +16,7 @@ import { toSaveDesign, toPostDesign } from '../../actions/index.js';
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
 //it gets passed onto FabricCanvas as prop
-//FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas 
+//FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas
 //about saveToCanvas: use a method from fabric named TODataUrl()
 
 // export default class DesignPage extends React.Component {
@@ -35,7 +35,7 @@ class DesignPage extends React.Component {
 		//this.onDrop = this.onDropFront.bind(this);
 		//this.onDrop = this.onDropBack.bind(this);
 
-		
+
 	}
 
 	/*componentDidMount(){
@@ -64,7 +64,7 @@ class DesignPage extends React.Component {
 
 		this.setState({activeBackProperty: imgInstance});
 	}
-	
+
 	addToBothCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
@@ -94,7 +94,7 @@ class DesignPage extends React.Component {
 		}
 		console.log(this.state)
 	}
-	
+
 	addText(isFront) {
 		console.log("addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
@@ -113,7 +113,7 @@ class DesignPage extends React.Component {
 		else {
 			this.setState({activeBackProperty: text})
 		}
-		
+
 	}
 	/*shouldComponentUpdate(nextProps, nextState) {
 		if (nextState.image != this.state.image ) {
@@ -134,13 +134,13 @@ class DesignPage extends React.Component {
 		let reader = new FileReader();
 		let imgFront = this.img_front;
         reader.addEventListener("load", function() {
-            preview.src = reader.result; 
+            preview.src = reader.result;
             console.log(preview.width);
             console.log(preview.height);
-          
+
             var imgInstance = new fabric.Image(preview, {
             width: 899,
-            height:959,	
+            height:959,
             the_type: "upload",
             zIndex: 3
             });
@@ -152,26 +152,26 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
 			console.log("imgInstance scale");
-			
+
 			imgFront.push(imgInstance);
 			console.log(imgFront);
-			
-            
+
+
         },false);
-    
-        
+
+
         if (file) {
 			reader.readAsDataURL(file);
-			
-			
+
+
 		}
-		
+
 		//this.setState({activeFrontProperty: img_front});
-	
-       
+
+
     }
 	onDropBack = (e) => {
-       
+
     }*/
 
     render() {
@@ -183,71 +183,71 @@ class DesignPage extends React.Component {
                 <div className="content">
 						<h3> *front* </h3>
 						<h4> sleeve </h4>
-						<TemplateList 
+						<TemplateList
 									data = {front_arm}
 									property_type = "front_arm"
 									zIndex = {0}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<h4> body </h4>
-								<TemplateList 
+								<TemplateList
 									data = {front_body}
 									property_type = "front_body"
 									zIndex = {0}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<h4> button </h4>
-								<TemplateList 
+								<TemplateList
 									data = {front_button}
 									property_type = "front_button"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<h4> stripe </h4>
-								<TemplateList 
+								<TemplateList
 									data = {front_stripe}
 									property_type = "front_stripe"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 								<h4> banding </h4>
-								<TemplateList 
+								<TemplateList
 									data = {front_banding}
 									property_type = "front_banding"
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 
-								<h3> *back* </h3> 
+								<h3> *back* </h3>
 								<h4> sleeve </h4>
-								<TemplateList 
+								<TemplateList
 									data = {back_arm}
 									property_type = "back_arm"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
 								<h4> banding </h4>
-								<TemplateList 
+								<TemplateList
 									data = {back_banding}
 									property_type = "back_banding"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
 								<h4> body </h4>
-								<TemplateList 
+								<TemplateList
 									data = {back_body}
 									property_type = "back_body"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
 								<h4> stripe </h4>
-								<TemplateList 
+								<TemplateList
 									data = {back_stripe}
 									property_type = "back_stripe"
 									zIndex = {2}
 									addtocanvas = {this.addToBackCanvas}
 								/>
-						
+
 								{/*<h1>Design Element</h1>
 									<center><select id="design_element">
 										<option>body</option>
@@ -264,10 +264,10 @@ class DesignPage extends React.Component {
     =========================================-->*/}
 		<br></br>
 		<div class="design_tool">
-			
+
 		<h1>Text</h1>
 			<textarea id="text_area"> Hello </textarea>
-			
+
 			<p>Choose a font</p>
 			<select id="text_font">
 				{/*<!-- all fonts -->*/}
@@ -284,7 +284,7 @@ class DesignPage extends React.Component {
 				{/*<!-- colour -->*/}
 				{/*<input type="text" id="text_colour" />*/}
 				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
-						
+
 			<p>Text style</p>
 				<select id="text_style">
 					{/*<!-- font style -->*/}
@@ -293,13 +293,13 @@ class DesignPage extends React.Component {
 					<option>oblique</option>
 					<option>bold</option>
 				</select>
-				
+
 			<div class="font_size">
 				{/*<!-- font size -->*/}
 				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
 			</div>
 		</div>
-				
+
 
 		{/*<!--========================================
 			front-back button section
@@ -309,29 +309,29 @@ class DesignPage extends React.Component {
 			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
 		</div>
 
-		
+
 
 		{/*<!--========================================
 			Image Upload Modal
     =========================================-->*/}
-		
+
 						{/*<h4 class="modal-title">Upload image Front</h4>
 						<input type = "file"
-                         id = "input_front" 
+                         id = "input_front"
                          onChange = {this.onDropFront} />
-                  		<img src = "" 
+                  		<img src = ""
                         id = "img_front" />
 						<h4 class="modal-title">Upload image Back</h4>
 						<input type = "file"
-                         id = "input_front" 
+                         id = "input_front"
                          onChange = {this.onDropBack} />
-                  		<img src = "" 
+                  		<img src = ""
 						id = "img_back" />*/}
-					
-						
 
-					    
-				
+
+
+
+
 
 			</div>
           </div>
@@ -341,15 +341,15 @@ class DesignPage extends React.Component {
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}
-	<FabricCanvas 
+	<FabricCanvas
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
 	/>
 
-	{this.props.isLoggedIn ? 
+	{this.props.isLoggedIn ?
 		(<div>
 			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
-		
+
 			<select id="post_group">
 				{this.props.my_groups.filter(group => {
 					return group.group_type !== "UR"
@@ -370,24 +370,24 @@ class DesignPage extends React.Component {
                 <div className="content">
 									{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
                 </div>
-              </div>	
+              </div>
             </section>
-				
-		
 
 
-	
+
+
+
       </div>
- 
+
       );
     }
 	}
-	
+
 	const mapStateToProps = (state) => ({
 		isLoggedIn: state.authorization,
-		my_groups: state.my_groups	
+		my_groups: state.my_groups
 	})
-	
+
 	const mapDispatchToProps = (dispatch) => ({
 		onSave: (design_detail) => dispatch(toSaveDesign(design_detail)),
 		onPost: (groupid, design_detail) => dispatch(toPostDesign(groupid, design_detail)),
