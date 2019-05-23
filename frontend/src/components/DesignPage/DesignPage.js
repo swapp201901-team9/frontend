@@ -4,11 +4,11 @@ import {CirclePicker} from 'react-color';
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
-import TemplateListItem from './TemplateListItem'
+//import TemplateListItem from './TemplateListItem'
 import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
-import ImageUploader from 'react-images-upload';
+//import ImageUploader from 'react-images-upload';
 
 import { connect } from 'react-redux'
 import { toSaveDesign, toPostDesign } from '../../actions/index.js';
