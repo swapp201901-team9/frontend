@@ -187,7 +187,7 @@ class DesignPage extends React.Component {
               <div className="aside">
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
-						<h3> front </h3>
+						<h3> *front* </h3>
 						<h4> sleeve </h4>
 						<TemplateList 
 									data = {front_arm}
@@ -224,25 +224,29 @@ class DesignPage extends React.Component {
 									addtocanvas = {this.addToFrontCanvas}
 								/>
 
-								<h3> back </h3> 
+								<h3> *back* </h3> 
+								<h4> sleeve </h4>
 								<TemplateList 
 									data = {back_arm}
 									property_type = "back_arm"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
+								<h4> banding </h4>
 								<TemplateList 
 									data = {back_banding}
 									property_type = "back_banding"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
+								<h4> body </h4>
 								<TemplateList 
 									data = {back_body}
 									property_type = "back_body"
 									zIndex = {0}
 									addtocanvas = {this.addToBackCanvas}
 								/>
+								<h4> stripe </h4>
 								<TemplateList 
 									data = {back_stripe}
 									property_type = "back_stripe"
@@ -250,9 +254,8 @@ class DesignPage extends React.Component {
 									addtocanvas = {this.addToBackCanvas}
 								/>
 						
-								<h1>Design Element</h1>
+								{/*<h1>Design Element</h1>
 									<center><select id="design_element">
-										{/*<!-- font style -->*/}
 										<option>body</option>
 										<option>sleeve</option>
 										<option>banding</option>
@@ -260,7 +263,7 @@ class DesignPage extends React.Component {
 										<option>button</option>
 									</select></center>
 								<h1>Colour</h1>
-								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>
+								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>*/}
 
 	{/*<!--========================================
 			left design tool
