@@ -240,7 +240,7 @@ class DesignPage extends React.Component {
 									</select></center>
 								<h1>Colour</h1>
 								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color} />
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>
 
 	{/*<!--========================================
 			left design tool
