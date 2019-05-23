@@ -5,13 +5,17 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
         <div>
           <div className = "Group-List-Field">
             <div onClick={onClickGroup}>
+
                 {group.id} {group.group_type} {group.group_name}
+                {group.admin &&
+                  <div className="Group-Button-Field">
+                <button className="button button_small" onClick={onClickAdminGroup}>
+                    ADMIN
+                </button></div>}
+            
             </div>
-            {group.admin &&
-              <div className="Group-Button-Field">
-            <button className="button button_small" onClick={onClickAdminGroup}>
-                ADMIN
-            </button></div>}
+
+
             </div>
         </div>
     )

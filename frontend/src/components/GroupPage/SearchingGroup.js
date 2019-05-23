@@ -31,7 +31,7 @@ class SearchingGroup extends React.Component {
 							ref={ node => {this.searchword=node;} }
 							placeholder="Search"
 						/>
-						<button type="submit">SEARCH</button>
+						<button className="searching_button" type="submit">SEARCH</button>
 					</div>
 				</form>
 				<GroupList
