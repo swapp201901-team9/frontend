@@ -35,7 +35,7 @@ h1,h2,h3,h4,h5,h6{
   border-bottom:1px solid #d8d8d8;
 }
 .h_black{
-  background:#000;
+  background:#393939;
   color:#fff;
   border-bottom:1px solid #d8d8d8;
 }
@@ -638,7 +638,7 @@ img{
 .searching_input{
   box-sizing: border-box;
   display:inline-block;
-  width: 60%;
+  width: 67%;
   height: 40px;
   border-radius: 21px;
   border: solid 2px #e0e0e0;
@@ -646,6 +646,16 @@ img{
   padding: 0px 15px;
   font-size: 16px;
   background-color: #fff
+}
+
+.searching_button{
+  box-sizing: border-box;
+  display:inline-block;
+  width: 30%;
+  height: 40px;
+  padding: 0px 15px;
+  margin-left: 10px;
+
 }
 
 
@@ -673,11 +683,11 @@ img{
 .button_small{
   width: 30%;
   height: 24px;
-  display: inline-block;
+  display: block;
   float: right;
   border: 1px solid  #FFC50A;
   border-radius: 4px;
   box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
-  background-color: #FFC50A;
+  background-color: #FFB73B;
   color: #fff;
 }
