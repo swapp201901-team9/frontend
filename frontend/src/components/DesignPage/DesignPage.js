@@ -39,7 +39,6 @@ class DesignPage extends React.Component {
 	}
 
 	/*componentDidMount(){
-
 		this.img_front = [];
 		this.img_back = [];
     }*/
@@ -322,7 +321,6 @@ class DesignPage extends React.Component {
                          onChange = {this.onDropFront} />
                   		<img src = "" 
                         id = "img_front" />
-
 						<h4 class="modal-title">Upload image Back</h4>
 						<input type = "file"
                          id = "input_front" 
