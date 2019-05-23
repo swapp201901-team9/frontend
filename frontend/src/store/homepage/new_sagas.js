@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -98,6 +98,14 @@ function *mainPageSaga() {
     console.log("Main Page Saga");
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
+
+    yield spawn(watchSaveDesign);
+    yield spawn(watchPostDesign);
+    // yield spawn(watchChangeBody);
+    // yield spawn(watchChangeSleeve);
+    // yield spawn(watchChangeBanding);
+    // yield spawn(watchChangeStripe);
+    // yield spawn(watchChangeButton);
 }
 
 function *loggedInMainPageSaga() {
@@ -111,6 +119,13 @@ function *loggedInMainPageSaga() {
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 
+    yield spawn(watchSaveDesign);
+    yield spawn(watchPostDesign);
+    // yield spawn(watchChangeBody);
+    // yield spawn(watchChangeSleeve);
+    // yield spawn(watchChangeBanding);
+    // yield spawn(watchChangeStripe);
+    // yield spawn(watchChangeButton);
 }
 
 function *profilePageSaga() {
@@ -216,7 +231,7 @@ function *watchLoginState() {
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     my_groups: my_groups_data.body,
-                    load : 0,
+                    load: 0,
                     loading: true
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
@@ -473,7 +488,7 @@ function *watchLoginState() {
             }
         }
     }
-    console.log(yield select());
+    console.log("after watchLoginState : ", yield select());
     // console.log(localStorage['parent']);
 }
 
@@ -640,6 +655,65 @@ function *watchDeleteGroupDesign() {
         yield call(deleteGroupDesign, data);
     }
 }
+
+
+function *watchSaveDesign() {
+    while(true) {
+        const data = yield take(SAVE_DESIGN);
+        console.log("watchSaveDesign");
+        yield call(saveDesign, data);
+    }
+}
+
+function *watchPostDesign() {
+    while(true) {
+        const data = yield take(POST_DESIGN);
+        console.log("watchPostDesign");
+        yield call(postDesign, data);
+    }
+}
+
+
+// function *watchChangeBody() {
+//     while(true) {
+//         const data = yield take(CHANGE_BODY);
+//         console.log("watchChangeBody");
+//         yield call(changeBody, data);
+//     }
+// }
+
+// function *watchChangeSleeve() {
+//     while(true) {
+//         const data = yield take(CHANGE_SLEEVE);
+//         console.log("watchChangeSleeve");
+//         yield call(changeSleeve, data);
+//     }
+// }
+
+// function *watchChangeBanding() {
+//     while(true) {
+//         const data = yield take(CHANGE_BANDING);
+//         console.log("watchChangeBanding");
+//         yield call(changeBanding, data);
+//     }
+// }
+
+// function *watchChangeStripe() {
+//     while(true) {
+//         const data = yield take(CHANGE_STRIPE);
+//         console.log("watchChangeStripe");
+//         yield call(changeStripe, data);
+//     }
+// }
+
+// function *watchChangeButton() {
+//     while(true) {
+//         const data = yield take(CHANGE_BUTTON);
+//         console.log("watchChangeButton");
+//         yield call(changeButton, data);
+//     }
+// }
+
 
 
 
@@ -975,4 +1049,63 @@ function *deleteGroupDesign(data) {
 
     }
 }
+
+function *saveDesign(data) {
+    console.log("saveDesign design: ", data.design)
+    const backPath = '';
+    try{
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripe": data.design["stripe"],
+                "detail_button": data.design["button"]
+            })
+        });
+        console.log("save design succeed ");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error){
+        console.log(error)
+        alert("save desitn error");
+        return;
+    }
+}
+
+function *postDesign(data) {
+    console.log("postDesign design: ", data.design)
+    const backPath = '';
+    try{
+        yield call(xhr.post, fixed_url + backPath, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json',
+            body: JSON.stringify({
+                "group": data.groupid,
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripe": data.design["stripe"],
+                "detail_button": data.design["button"]
+            })
+        });
+        console.log("save design succeed ");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error){
+        console.log(error)
+        alert("post desitn error");
+        return;
+    }
+}
+
 

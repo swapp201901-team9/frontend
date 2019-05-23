@@ -25,6 +25,8 @@ class FabricCanvas extends React.Component{
             height:959,
             width:899,
         });
+        
+        this.the_canvas = this.the_front_canvas;
     }
 
     componentWillReceiveProps = (newprops) => {
@@ -106,7 +108,8 @@ class FabricCanvas extends React.Component{
         var preview = document.getElementById('img');
         //var img = new Image(40, 40);
         var file = document.getElementById('input').files[0];
-        var canvas = this.the_canvas;
+        var canvas = this.the_front_canvas;
+        var canvas2 = this.the_back_canvas;
         let reader = new FileReader();
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
@@ -121,10 +124,10 @@ class FabricCanvas extends React.Component{
             console.log(preview.height);
           
             var imgInstance = new fabric.Image(preview, {
-            width: preview.width,
-            height: preview.height,
+            width: 899,
+            height:959,
             the_type: "upload",
-            zIndex: 2
+            zIndex: 10
             });
             console.log("imgInstance set");
             imgInstance.set({
@@ -135,8 +138,11 @@ class FabricCanvas extends React.Component{
             });
             console.log("imgInstance scale");
             canvas.add(imgInstance);
+            canvas2.add(imgInstance);
             canvas.renderAll();
+            canvas2.renderAll();
             canvas.moveTo(imgInstance, imgInstance.zIndex);
+            canvas2.moveTo(imgInstance, imgInstance.zIndex);
             console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
@@ -158,7 +164,6 @@ class FabricCanvas extends React.Component{
                 the_type: "upload",
                 zIndex: 2
             });    
-
             this.the_canvas.add(imgInstance);
         }*/
     
@@ -174,7 +179,7 @@ class FabricCanvas extends React.Component{
         });*/
         //var imgInstance = new fabric.Image(img);
         //this.the_canvas.add(imgInstance);
-        this.the_canvas = canvas;
+        this.the_front_canvas = canvas;
     }
 
     saveToCanvas = () => {
@@ -204,8 +209,6 @@ class FabricCanvas extends React.Component{
                          id = "input" 
                          onChange = {this.onDrop} />
                   <img src = "" 
-                        height = "40"
-                        width = "40"
                         id = "img" />
                   {/*<ImageUploader 
                     withIcon = {true}
@@ -219,23 +222,6 @@ class FabricCanvas extends React.Component{
                 <canvas id='back-canvas'
                 >
                 </canvas>
-
-                  <input type = "file"
-                         id = "input" 
-                         onChange = {this.onDrop} />
-                         <img src = "" 
-                        id = "img" />
-                  {/*<img src = "" 
-                        height = "50%"
-                        width = "auto"
-                    id = "img" />*/}
-                  {/*<ImageUploader 
-                    withIcon = {true}
-                    buttonText = 'Choose images'
-                    onChange = {this.onDrop}
-                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    withPreview = {true}
-                  />*/}
             </div>
         );
     }
