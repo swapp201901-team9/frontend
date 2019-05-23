@@ -31,10 +31,12 @@ class DesignPage extends React.Component {
 			design_button : null,
 			activeBackProperty : null,
 			activeFrontProperty : null,
+			post_group_options: []
 		};
 		this.onDrop = this.onDropFront.bind(this);
 		this.onDrop = this.onDropBack.bind(this);
 
+		
 	}
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
@@ -158,11 +160,6 @@ class DesignPage extends React.Component {
        
     }
 
-	post_group_options = this.props.my_groups.filter(group => {
-		console.log("post", group.group_type)
-		return group.group_type !== "UR"
-	})
-	
 
     render() {
       return (
@@ -325,21 +322,30 @@ class DesignPage extends React.Component {
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
 	/>
-	<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
-	
-	<select id="post_group">
-		{this.post_group_options.map(option => {
-			return <option value={option.id}> {option.group_type} {option.group_name} </option>
-		})}
-	</select>
 
-	<button class="post_btn" type="button" onClick={() => this.props.onPost(document.getElementById("post_group").value, this.state)}>POST</button>
+	{this.props.isLoggedIn ? 
+		(<div>
+			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
+		
+			<select id="post_group">
+				{this.props.my_groups.filter(group => {
+					return group.group_type !== "UR"
+				}).map(option => {
+					return <option value={option.id}> {option.group_type} {option.group_name} </option>
+				})}
+			</select>
+			<button class="post_btn" type="button" onClick={() => this.props.onPost(document.getElementById("post_group").value, this.state)}>POST</button>
+		</div>)
+		: <div></div>
+	}
+
+
                 </div>
               </div>
               <div className="aside">
                 <h2 className="h_black">MY GROUP</h2>
                 <div className="content">
-                  <MyGroupList />
+									{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
                 </div>
               </div>	
             </section>
@@ -355,6 +361,7 @@ class DesignPage extends React.Component {
 	}
 	
 	const mapStateToProps = (state) => ({
+		isLoggedIn: state.authorization,
 		my_groups: state.my_groups	
 	})
 	
