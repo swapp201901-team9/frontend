@@ -18,27 +18,44 @@ class GroupAdminPage extends React.Component {
 		return (
 			<div className="GroupAdminPage">
 				<NavBar />
-				<br/>
-				<h2>ChageGroupInfo</h2>
-				<ChangeGroupInfo 
-					group={this.props.now_group[0]}
-					onClickChangeSubmit={this.props.onChangeGroupInfo}
-				/>
-				<br/>
-				<h2>GroupUserList</h2>
-				<GroupUserList 
-					groupid={this.props.now_group[0].id}
-					userlist={this.props.group_users}
-					onClickDeleteUser={this.props.onDeleteUser}
-				/>
-				<br/>
-				<h2>GroupDesignList</h2>
-				<GroupDesignList 
-					groupid={this.props.now_group[0].id}
-					designlist={this.props.group_designs}
-					onClickDeleteDesign={this.props.onDeleteDesign}
-				/>
-			</div>
+
+				<section className="wrap clear col3">
+					<div className="aside">
+						<h2 className="h_white">GROUP INFO</h2>
+							<div className="content">
+							<ChangeGroupInfo
+								group={this.props.now_group[0]}
+								onClickChangeSubmit={this.props.onChangeGroupInfo}
+							/>
+							</div>
+					</div>
+					<div className="main">
+						<h2 className="h_white">DESIGNS</h2>
+							<div className="content">
+							<GroupDesignList
+								groupid={this.props.now_group[0].id}
+								designlist={this.props.group_designs}
+								onClickDeleteDesign={this.props.onDeleteDesign}
+							/>
+
+							</div>
+					</div>
+					<div className="aside">
+						<h2 className="h_black">MEMBER LIST</h2>
+							<div className="content">
+							<GroupUserList
+								groupid={this.props.now_group[0].id}
+								userlist={this.props.group_users}
+								onClickDeleteUser={this.props.onDeleteUser}
+							/>
+							</div>
+					</div>
+				</section>
+				</div>
+
+
+
+		
 		)
 	}
 }
@@ -57,4 +74,3 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupAdminPage);
-
