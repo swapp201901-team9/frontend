@@ -264,7 +264,7 @@ function *watchLoginState() {
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
-                    now_design: now_design_data,
+                    now_design: now_design_data.body,
                     my_groups: my_groups_data.body,
                     load: 0,
                     loading: true
@@ -1204,7 +1204,7 @@ function *deleteGroup(data) {
 
 
 function *saveDesign(data) {
-    console.log("saveDesign design: ", data.design)
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design)
     const backPath = '';
     try{
         yield call(xhr.send, fixed_url+backPath, {
@@ -1216,18 +1216,19 @@ function *saveDesign(data) {
             },
             responseType:'json',
             body: JSON.stringify({
-                "detail_body": data.design["body"], 
-                "detail_sleeve": data.design["sleeve"],
-                "detail_banding": data.design["banding"],
-                "detail_stripe": data.design["stripe"],
-                "detail_button": data.design["button"]
+                "id": data.designid,
+                "detail_body": data.design["design_body"], 
+                "detail_sleeve": data.design["design_sleeve"],
+                // "detail_banding": data.design["banding"],
+                // "detail_stripe": data.design["stripe"],
+                // "detail_button": data.design["button"]
             })
         });
         console.log("save design succeed ");
         yield put(actions.changeUrl('/main/'));
     }catch(error){
         console.log(error)
-        alert("save desitn error");
+        alert("save design error");
         return;
     }
 }

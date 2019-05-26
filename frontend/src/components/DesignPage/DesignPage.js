@@ -342,7 +342,7 @@ class DesignPage extends React.Component {
 
 	{this.props.isLoggedIn ?
 		(<div>
-			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
+			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
 
 			<select id="post_group">
 				{this.props.my_groups.filter(group => {
@@ -351,7 +351,7 @@ class DesignPage extends React.Component {
 					return <option value={option.id}> {option.group_type} {option.group_name} </option>
 				})}
 			</select>
-			<button class="post_btn" type="button" onClick={() => this.props.onPost(document.getElementById("post_group").value, this.state)}>POST</button>
+			<button class="post_btn" type="button" onClick={() => this.props.onPost(this.props.now_design.id, document.getElementById("post_group").value, this.state)}>POST</button>
 		</div>)
 		: <div></div>
 	}
@@ -379,13 +379,14 @@ class DesignPage extends React.Component {
 
 	const mapStateToProps = (state) => ({
 		isLoggedIn: state.authorization,
+		now_design: state.now_design,
 		my_groups: state.my_groups,
 		//now_design: state.now_design
 	})
 
 	const mapDispatchToProps = (dispatch) => ({
-		onSave: (design_detail) => dispatch(toSaveDesign(design_detail)),
-		onPost: (groupid, design_detail) => dispatch(toPostDesign(groupid, design_detail)),
+		onSave: (designid, design_detail) => dispatch(toSaveDesign(designid, design_detail)),
+		onPost: (designid, groupid, design_detail) => dispatch(toPostDesign(designid, groupid, design_detail)),
 	})
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)

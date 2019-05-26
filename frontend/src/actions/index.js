@@ -214,18 +214,20 @@ export const toDeleteGroup = (groupid) => {
 
 
 
-export const toSaveDesign = (design) => {
-    console.log("saveDesign action", design)
+export const toSaveDesign = (designid, design) => {
+    console.log("saveDesign action", designid, design)
     return {
         type: SAVE_DESIGN,
+        designid: designid, 
         design: design,
     }
 }
 
-export const toPostDesign = (groupid, design) => {
-    console.log("postDesign action, groupid: ", groupid, " design: ", design)
+export const toPostDesign = (designid, groupid, design) => {
+    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design)
     return {
         type: POST_DESIGN,
+        designid: designid,
         gruopid: groupid,
         design: design,
     }
