@@ -266,7 +266,7 @@ class DesignPage extends React.Component {
 		<div class="design_tool">
 
 		<h1>Text</h1>
-			<textarea id="text_area"> Hello </textarea>
+			<textarea id="text_area" defaultValue="Hello"/>
 
 			<p>Choose a font</p>
 			<select id="text_font">
