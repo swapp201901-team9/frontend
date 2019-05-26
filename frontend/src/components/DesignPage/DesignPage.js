@@ -40,6 +40,38 @@ class DesignPage extends React.Component {
 
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		if (nextState.design_body != this.state.design_body ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else if (nextState.design_sleeve != this.state.design_sleeve ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else if (nextState.design_banding != this.state.design_banding ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else if (nextState.design_stripe != this.state.design_stripe ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else if (nextState.design_button != this.state.design_button ) {
+			console.log("true");
+			this.setState({activeFrontProperty: this.img_front[0]});
+			return true;
+		}
+		else {
+			return true;
+		}
+	}
+
+
 	/*componentDidMount(){
 		this.img_front = [];
 		this.img_back = [];
@@ -117,16 +149,8 @@ class DesignPage extends React.Component {
 		}
 
 	}
-	/*shouldComponentUpdate(nextProps, nextState) {
-		if (nextState.image != this.state.image ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
-		}
-		else {
-			return true;
-		}
-	}*/
+
+	
 	/*onDropFront = (e) => {
         console.log("hey");
 		//this.setState(prevState => {return {image: prevState.image+1}});
