@@ -50,7 +50,7 @@ p {
 /* Canvas */
 #main-canvas{
   background: #ccc;
-  background: url('./images/bg-canvas.png');
+  background: url('./images/bg_canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
   margin: 10px auto;

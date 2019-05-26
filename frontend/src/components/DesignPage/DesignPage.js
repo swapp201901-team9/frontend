@@ -5,7 +5,7 @@ import ThreeScene from './ThreeScene'
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
-//import TemplateListItem from './TemplateListItem'
+import TemplateListItem from './TemplateListItem'
 import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
@@ -38,52 +38,54 @@ class DesignPage extends React.Component {
 		// this.onDrop = this.onDropBack.bind(this);
 	}
 
-<<<<<<< HEAD
-	shouldComponentUpdate(nextProps, nextState) {
-		if (nextState.design_body != this.state.design_body ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
+	/*componentDidUpdate(prevProps, prevState) {
+		if (prevState.design_body != this.state.design_body ) {
+			console.log("design body");
+			var imgElement = document.getElementById('img_body');
+			var src = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
+			console.log("front body src is");
+			console.log(src);
+			imgElement.src = src;
+			var imgInstance = new fabric.Image(imgElement, {
+				width: 899,
+				height: 959,
+				the_type: "front_body",
+				zIndex: 0
+			});
+			this.setState({activeFrontProperty: imgInstance});
 		}
-		else if (nextState.design_sleeve != this.state.design_sleeve ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
+		else if (prevState.design_sleeve != this.state.design_sleeve ) {
+			
 		}
-		else if (nextState.design_banding != this.state.design_banding ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
+		else if (prevState.design_banding != this.state.design_banding ) {
+			
 		}
-		else if (nextState.design_stripe != this.state.design_stripe ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
+		else if (prevState.design_stripe != this.state.design_stripe ) {
+			
 		}
-		else if (nextState.design_button != this.state.design_button ) {
-			console.log("true");
-			this.setState({activeFrontProperty: this.img_front[0]});
-			return true;
+		else if (prevState.design_button != this.state.design_button ) {
+			
 		}
 		else {
-			return true;
+			
 		}
-	}
+	}*/
 
 
 	/*componentDidMount(){
 		this.img_front = [];
 		this.img_back = [];
     }*/
-=======
 	body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 	sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f", 
 	"#f8f8f8", "#4f4f53", "#2a2a2a"]
 	stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"]
-
->>>>>>> upstream/master
+	banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
+	button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -128,8 +130,35 @@ class DesignPage extends React.Component {
 	handleDesignChangeComplete = (color, event) => {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
-			case 'body': this.setState({design_body: color.hex}); break;
-			case 'sleeve': this.setState({design_sleeve: color.hex}); break;
+			case 'body': 
+				this.setState({design_body: color.hex}); 
+
+				var imgElement1 = document.getElementById('front_body');
+				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
+				console.log("front body src is");
+				console.log(src1);
+				imgElement1.src = require(src1);
+
+				var imgElement2 = document.getElementById('back_body');
+				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
+				console.log("back body src is");
+				console.log(src2);
+				imgElement2.src = require(src2);
+
+				this.addToFrontCanvas(imgElement1, "front_body", 0);
+				this.addToBackCanvas(imgElement2, "back_body", 0);
+				
+			
+			break;
+			case 
+			'sleeve': this.setState({design_sleeve: color.hex}); 
+				var imgElement = document.getElementById('img_sleeve');
+				var src = './images/templates/front_sleeve/'+this.state.design_sleeve.substring(1)+'_sleeve.png';
+				console.log("sleeve src is");
+				console.log(src);
+				imgElement.src = require(src);
+				this.addToBothCanvas(imgElement, "front_sleeve", 0);
+			break;
 			case 'banding': this.setState({design_banding: color.hex}); break;
 			case 'stripe': this.setState({design_stripe: color.hex}); break;
 			case 'button': this.setState({design_button: color.hex}); break;
@@ -209,13 +238,14 @@ class DesignPage extends React.Component {
     }*/
 
     render() {
+
       return (
       <div>
 				<section className="wrap clear col3">
               <div className="aside">
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
-						<h3> *front* </h3>
+						{/*<h3> *front* </h3>
 						<h4> sleeve </h4>
 						<TemplateList
 									data = {front_arm}
@@ -280,9 +310,10 @@ class DesignPage extends React.Component {
 									property_type = "back_stripe"
 									zIndex = {2}
 									addtocanvas = {this.addToBackCanvas}
-								/>
+						/>*/}
 						
-								{<h1>Design Element</h1>}
+								{/*<h1>Design Element</h1>*/}
+								
 									<center><select id="design_element">
 										<option>body</option>
 										<option>sleeve</option>
@@ -291,8 +322,34 @@ class DesignPage extends React.Component {
 										<option>button</option>
 									</select></center>
 								<h1>Colour</h1>
+								<p>body color</p>
 								<CirclePicker 
 									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>
+									<img src = '' id = "front_body" />
+									<img src = '' id = "back_body" />
+									{/*<img src = {require('./logo.jpg')} id = "img_body"/>*/}
+
+									<p>sleeve color</p>
+								<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>
+									<img src = "" id = "front_sleeve" />
+									<img src = '' id = "back_sleeve" />
+									<p>stripe color</p>
+								<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>
+									<img src = "" id = "front_stripe" />
+									<img src = '' id = "back_stripe" />
+									
+									<p>banding color</p>
+								<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>
+									<img src = "" id = "front_banding" />
+									<img src = '' id = "back_banding" />
+	
+									<p>button color</p>
+								<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>
+									<img src = "" id = "img_button" />
 
 
 		<br></br>
