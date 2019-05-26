@@ -1,6 +1,6 @@
 import React from 'react';
 //import {Col} from 'reactstrap';
-import StackGrid from 'react-stack-grid';
+//import StackGrid from 'react-stack-grid';
 import Image from 'react-image-resizer';
 
 export default class TemplateListItem extends React.Component{

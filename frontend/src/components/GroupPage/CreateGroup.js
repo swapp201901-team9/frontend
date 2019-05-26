@@ -39,6 +39,7 @@ class CreateGroup extends React.Component {
 							})}
 						</select>
 						<br />
+						<br />
 						<label htmlFor="group name">Group Name</label>
 						<input
 							type="text"
@@ -47,6 +48,7 @@ class CreateGroup extends React.Component {
 							//value={this.groupname}
 							className="name-input"
 						/>
+						<br/>
 						<div className="Group-Button-Field">
 						<button type="submit">CREATE GROUP</button>
 						</div>
