@@ -4,18 +4,20 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup }) => {
     return (
         <div>
           <div className = "Group-List-Field">
+          <ul>
             <div onClick={onClickGroup}>
 
-                {group.id} {group.group_type} {group.group_name}
+
+                {group.id}{group.group_type} {group.group_name}
+                  </div>
+
                 {group.admin &&
-                  <div className="Group-Button-Field">
-                <button className="button button_small" onClick={onClickAdminGroup}>
+
+                <button className="button button_admin" onClick={onClickAdminGroup}>
                     ADMIN
-                </button></div>}
-            
-            </div>
+                </button>}
 
-
+                  </ul>
             </div>
         </div>
     )
