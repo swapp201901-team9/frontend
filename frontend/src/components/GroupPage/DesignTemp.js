@@ -11,7 +11,9 @@ const DesignTemp = ({ design, onClickLike, onClickUnlike, onClickDelete }) => {
                 sleeve: {design.detail_sleeve}
                 {console.log(design)}
             </div>
-            <button onClick={onClickLike}>LIKE</button>
+            {design.liked 
+                ? (<button onClick={onClickUnlike}>UNLIKE</button>)
+                : (<button onClick={onClickLike}>LIKE</button>)}
             {design.auth && <button onClick={onClickDelete}>DELETE</button>}
             <br/>
         </div>

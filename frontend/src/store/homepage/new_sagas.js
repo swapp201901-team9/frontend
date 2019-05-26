@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -176,6 +176,7 @@ function *groupAdminPageSaga() {
     yield spawn(watchChangeGrouInfo);
     yield spawn(watchDeleteGroupUser);
     yield spawn(watchDeleteGroupDesign);
+    yield spawn(watchDeleteGroup);
 }
 
 
@@ -216,7 +217,22 @@ function *watchLoginState() {
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 // localStorage.removeItem('parent');
-                let my_groups_data, my_design_id;
+                let my_groups_data, now_design_data;
+                try{
+                    now_design_data = yield call(xhr.get, fixed_url+'', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responsetype: 'json',
+                    });
+                    console.log("GET now_design data: ", now_design_data.body)
+                } catch(error) {
+                    console.log(error)
+                    alert("main now_design error")
+                }
+
                 try {
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -248,6 +264,7 @@ function *watchLoginState() {
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    now_design: now_design_data,
                     my_groups: my_groups_data.body,
                     load: 0,
                     loading: true
@@ -365,7 +382,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                             });
-                            console.log('Get data without exception');
+                            console.log('Get now_group data without exception');
                     } catch(error){
                         alert("group data error");
                     }
@@ -395,7 +412,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                             });
-                            console.log('Get data without exception');
+                            console.log('Get group designs data without exception');
                     } catch(error) {
                         if(error.statusCode === 403) {
                             console.log("you are not permitted");
@@ -681,6 +698,9 @@ function *watchUnlikeDesign() {
     }
 }
 
+
+
+
 function *watchChangeGrouInfo() {
     while(true) {
         const data = yield take(CHANGE_GROUP_INFO);
@@ -705,6 +725,15 @@ function *watchDeleteGroupDesign() {
     }
 }
 
+function *watchDeleteGroup() {
+    while(true) {
+        const data = yield take(DELETE_GROUP);
+        console.log("watchDeleteGroup");
+        yield call(deleteGroup, data);
+    }
+}
+
+
 
 function *watchSaveDesign() {
     while(true) {
@@ -721,6 +750,9 @@ function *watchPostDesign() {
         yield call(postDesign, data);
     }
 }
+
+
+
 
 
 // function *watchChangeBody() {
@@ -1025,6 +1057,10 @@ function *toAdminGroup(data){
     }
 }
 
+
+
+
+
 function *likeDesign(data) {
     console.log("likeDesign")
     const path = 'groups/like/' + data.designid + '/';
@@ -1062,6 +1098,9 @@ function *unlikeDesign(data) {
         alert("*unliikeDesign error")
     }
 }
+
+
+
 
 function *changeGroupInfo(data) {
     console.log("chageGroupInfo")
@@ -1110,9 +1149,9 @@ function *deleteGroupUser(data) {
         alert("Delete Success!")
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
+        console.log(error)
         alert("delete user error");
         return ;
-
     }
 }
 
@@ -1138,6 +1177,31 @@ function *deleteGroupDesign(data) {
 
     }
 }
+
+function *deleteGroup(data) {
+    console.log("deleteGroup groupid: ", data.groupid)
+    const backPath = 'groups/'+data.groupid+'/admin/';
+    try{
+        yield call(xhr.send, fixed_url+backPath,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete group succeed!");
+        alert("Delete Success!")
+        yield put(actions.changeUrl('/groups/'));
+    }catch(error){
+        console.log(error)
+        alert("delete group error");
+        return ;
+    }
+}
+
+
+
 
 function *saveDesign(data) {
     console.log("saveDesign design: ", data.design)

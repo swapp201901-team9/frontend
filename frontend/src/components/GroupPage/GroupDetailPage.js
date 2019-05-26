@@ -33,10 +33,11 @@ class GroupDetailPage extends React.Component {
       					<div className="aside">
       						<h2 className="h_white">GROUP DETAIL</h2>
       							<div className="content">
-                      <p>Type: {this.props.now_group[0].group_type}</p>
-                      <p>Name: {this.props.now_group[0].group_name}</p>
-                      <p>Member: {this.props.now_group[0].users.length}명</p>
-                      <p>Group Design: {this.props.group_designs.length}개</p>
+                      <p>타입: {this.props.now_group[0].group_type}</p>
+                      <p>이름: {this.props.now_group[0].group_name}</p>
+                      <p>멤버: {this.props.now_group[0].users.length}명</p>
+                      <p>디자인: {this.props.group_designs.length}개</p>
+                      {/* <p>관리자: {this.props.now_group[0].master[0]}</p> */}
                       {console.log(this.props.now_group[0])}
       							</div>
       					</div>
