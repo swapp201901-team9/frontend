@@ -35,7 +35,7 @@ h1,h2,h3,h4,h5,h6{
   border-bottom:1px solid #d8d8d8;
 }
 .h_black{
-  background:#000;
+  background:#393939;
   color:#fff;
   border-bottom:1px solid #d8d8d8;
 }
@@ -67,7 +67,7 @@ h1,h2,h3,h4,h5,h6{
 
 header {
   width: 100%;
-  background-image: linear-gradient(to right, #65e0ca, #b093ff 52%, #ff8787), linear-gradient(to bottom, #e26e65, #e26e65);
+  background-image: linear-gradient(to right, #de5736, #6414d2), linear-gradient(to right, #bb2929, #a83685 34%, #513ab0 66%, #1964ac);
   font-family: 'Noto Sans KR', sans-serif;
 }
 .logo{
@@ -151,12 +151,6 @@ button{
 
 
 
-.module_title{
-  font-family: 'Bree Serif', serif;
-  font-size: 20px;
-  text-align: center;
-  line-height:100px;
-}
 
 .TimeLine{
   text-align: center;
@@ -167,18 +161,6 @@ button{
   padding-bottom: 50px;
 }
 
-.tagLabel{
-  font-size: 15px;
-}
-.divider{
-  width:1em;
-  height:auto;
-  display:inline-block;
-}
-
-.Tags{
-  text-align: justify;
-}
 
 
 /* Login Page css */
@@ -612,7 +594,7 @@ img{
     height: 375px;
     width: 375px;
 
-  
+
   }
 
 #back-canvas{
@@ -638,7 +620,7 @@ img{
 .searching_input{
   box-sizing: border-box;
   display:inline-block;
-  width: 60%;
+  width: 67%;
   height: 40px;
   border-radius: 21px;
   border: solid 2px #e0e0e0;
@@ -648,14 +630,21 @@ img{
   background-color: #fff
 }
 
+.searching_button{
+  box-sizing: border-box;
+  display:inline-block;
+  width: 30%;
+  height: 40px;
+  padding: 0px 15px;
+  margin-left: 10px;
+
+}
+
 
 
 .Group-List-Field{
   box-sizing: border-box;
   color: black;
-  padding: 10px 0px;
-  border-bottom:1px solid #dfdfdf;
-
 }
 
 .Group-List-Field > ul {
@@ -675,10 +664,21 @@ img{
   height: 24px;
   display: inline-block;
   float: right;
-  border: 1px solid  #AE59E8;
+  border: 1px solid  #FFC50A;
   border-radius: 4px;
   box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
-  background-color: #AE59E8;
+  background-color: #FFB73B;
   color: #fff;
 }
 
+.button_admin{
+  width: 100%;
+  height: 20px;
+  display: inline-block;
+  float: right;
+  border: 1px solid  #dcdcdc;
+  border-radius: 4px;
+  box-shadow: 1px 2px 3px 0 rgba(160, 160, 160, 0.1);
+  background-color: #fff;
+  color: #ababab;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {fabric} from 'fabric';
-import ImageUploader from 'react-images-upload';
+//import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
@@ -109,6 +109,7 @@ class FabricCanvas extends React.Component{
         //var img = new Image(40, 40);
         var file = document.getElementById('input').files[0];
         var canvas = this.the_front_canvas;
+        var canvas2 = this.the_back_canvas;
         let reader = new FileReader();
         reader.addEventListener("load", function() {
             preview.src = reader.result; 
@@ -126,7 +127,7 @@ class FabricCanvas extends React.Component{
             width: 899,
             height:959,
             the_type: "upload",
-            zIndex: 3
+            zIndex: 10
             });
             console.log("imgInstance set");
             imgInstance.set({
@@ -137,8 +138,11 @@ class FabricCanvas extends React.Component{
             });
             console.log("imgInstance scale");
             canvas.add(imgInstance);
+            canvas2.add(imgInstance);
             canvas.renderAll();
+            canvas2.renderAll();
             canvas.moveTo(imgInstance, imgInstance.zIndex);
+            canvas2.moveTo(imgInstance, imgInstance.zIndex);
             console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
@@ -160,7 +164,6 @@ class FabricCanvas extends React.Component{
                 the_type: "upload",
                 zIndex: 2
             });    
-
             this.the_canvas.add(imgInstance);
         }*/
     

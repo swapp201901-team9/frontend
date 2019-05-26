@@ -27,33 +27,33 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
                     <label>
                     GROUP TYPE
                     </label>
-                    <select 
+                    <select
                         name="grouptype"
                         ref={ node => {grouptype=node;} }
                         className="type-select"
-                    > 
+                    >
                         {type_options.map(option => {
                             return <option value={option} key={option} >{option}</option>
                         })}
                     </select>
                 </div>
-                <div className="Text-Field">
+
                     <label>
                     GROUP NAME
                     </label>
-                    <input 
-                        type="text" 
-                        ref={ node => {groupname=node;}} 
+                    <input
+                        type="text"
+                        ref={ node => {groupname=node;}}
                         placeholder={group.group_name}
                     />
-                </div>
-                <div className="Button-Field">
+
+
                 <button type="submit">CHANGE GROUP INFO</button>
-                </div>
+              
             </form>
         </div>
     )
-    
+
 }
 
 export default ChangeGroupInfo;

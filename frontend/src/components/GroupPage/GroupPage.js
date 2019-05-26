@@ -37,7 +37,10 @@ class GroupPage extends React.Component {
 							</div>
 					</div>
 				</section>
+
 			</div>
+
+			
 		)
 	}
 }
