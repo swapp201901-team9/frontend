@@ -1,11 +1,17 @@
 import React from 'react';
 
-const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {
+const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {    
     return (
         <div>
             {designlist.map(design => 
                 <ul key={design.id}> 
-                    <p>{design.id} {design.owner} {design.likes} {design.detail_body} {design.detail_sleeve}</p>
+                    <div>
+                        id: {design.id}<br/>
+                        owner: {design.owner}<br/>
+                        likes: {design.likes}<br/>
+                        body: {design.detail_body}<br/>
+                        sleeve: {design.detail_sleeve}
+                    </div>
                     <button onClick={() => onClickDeleteDesign(groupid, design.id)}>DELETE</button>
                 </ul> 
             )}

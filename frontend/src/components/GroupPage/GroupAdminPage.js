@@ -8,12 +8,38 @@ import GroupDesignList from './GroupDesignList';
 import { toDeleteGroupUser, toDeleteGroupDesign, toChangeGroupInfo } from '../../actions';
 
 class GroupAdminPage extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
+		this.deleteUserCheck = this.deleteUserCheck.bind(this)
+	}
+
+	deleteDesignCheck(groupid, designid) {
+		if(confirm("정말 삭제하시겠습니까?") == true) 
+			return this.props.onDeleteDesign(groupid, designid)
+		else 
+			return false;
+	}
+
+	deleteUserCheck(groupid, userid) {
+		if(confirm("정말 삭제하시겠습니까?") == true)
+			return this.props.onDeleteUser(groupid, userid)
+		else 
+			return false;
+	}
+
 	render() {
 		if(!this.props.loading) {
 			return (
 				<p>loading...</p>
 			)
 		}
+
+		let admin_userlist = this.props.group_users.filter(user => {
+			console.log("username: ", user.username)
+			return (user.username !== this.props.user.split(":")[0])
+		})
 
 		return (
 			<div className="GroupAdminPage">
@@ -22,45 +48,42 @@ class GroupAdminPage extends React.Component {
 				<section className="wrap clear col3">
 					<div className="aside">
 						<h2 className="h_white">GROUP INFO</h2>
-							<div className="content">
-							<ChangeGroupInfo
-								group={this.props.now_group[0]}
-								onClickChangeSubmit={this.props.onChangeGroupInfo}
-							/>
-							</div>
+						<div className="content">
+						<ChangeGroupInfo
+							group={this.props.now_group[0]}
+							onClickChangeSubmit={this.props.onChangeGroupInfo}
+						/>
+						</div>
 					</div>
 					<div className="main">
 						<h2 className="h_white">DESIGNS</h2>
-							<div className="content">
-							<GroupDesignList
-								groupid={this.props.now_group[0].id}
-								designlist={this.props.group_designs}
-								onClickDeleteDesign={this.props.onDeleteDesign}
-							/>
+						<div className="content">
+						<GroupDesignList
+							groupid={this.props.now_group[0].id}
+							designlist={this.props.group_designs}
+							onClickDeleteDesign={this.deleteDesignCheck}
+						/>
 
-							</div>
+						</div>
 					</div>
 					<div className="aside">
 						<h2 className="h_black">MEMBER LIST</h2>
-							<div className="content">
-							<GroupUserList
-								groupid={this.props.now_group[0].id}
-								userlist={this.props.group_users}
-								onClickDeleteUser={this.props.onDeleteUser}
-							/>
-							</div>
+						<div className="content">
+						<GroupUserList
+							groupid={this.props.now_group[0].id}
+							userlist={admin_userlist}
+							onClickDeleteUser={this.deleteUserCheck}
+						/>
+						</div>
 					</div>
 				</section>
 				</div>
-
-
-
-		
 		)
 	}
 }
 
 const mapStateToProps = (state) => ({
+	user: state.authorization,
 	now_group: state.now_group,
     group_users: state.group_users,
     group_designs: state.group_designs,
