@@ -34,12 +34,11 @@ class DesignPage extends React.Component {
 			activeBackProperty : null,
 			activeFrontProperty : null
 		};
-		//this.onDrop = this.onDropFront.bind(this);
-		//this.onDrop = this.onDropBack.bind(this);
-
-
+		// this.onDrop = this.onDropFront.bind(this);
+		// this.onDrop = this.onDropBack.bind(this);
 	}
 
+<<<<<<< HEAD
 	shouldComponentUpdate(nextProps, nextState) {
 		if (nextState.design_body != this.state.design_body ) {
 			console.log("true");
@@ -76,6 +75,15 @@ class DesignPage extends React.Component {
 		this.img_front = [];
 		this.img_back = [];
     }*/
+=======
+	body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
+	sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f", 
+	"#f8f8f8", "#4f4f53", "#2a2a2a"]
+	stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"]
+
+>>>>>>> upstream/master
 
 	addToFrontCanvas = (imgElement, property_type, z_Index) => {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -273,8 +281,8 @@ class DesignPage extends React.Component {
 									zIndex = {2}
 									addtocanvas = {this.addToBackCanvas}
 								/>
-
-								{/*<h1>Design Element</h1>
+						
+								{<h1>Design Element</h1>}
 									<center><select id="design_element">
 										<option>body</option>
 										<option>sleeve</option>
@@ -283,11 +291,10 @@ class DesignPage extends React.Component {
 										<option>button</option>
 									</select></center>
 								<h1>Colour</h1>
-								<CirclePicker id="design_colour" onChangeComplete={this.handleDesignChangeComplete}/>*/}
+								<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>
 
-	{/*<!--========================================
-			left design tool
-    =========================================-->*/}
+
 		<br></br>
 		<div class="design_tool">
 
@@ -351,14 +358,8 @@ class DesignPage extends React.Component {
 						<input type = "file"
                          id = "input_front"
                          onChange = {this.onDropBack} />
-                  		<img src = ""
-						id = "img_back" />*/}
-
-
-
-
-
-
+                  		<img src = "" 
+	id = "img_back" />*/}
 			</div>
           </div>
               <div className="main">
@@ -412,7 +413,8 @@ class DesignPage extends React.Component {
 
 	const mapStateToProps = (state) => ({
 		isLoggedIn: state.authorization,
-		my_groups: state.my_groups
+		my_groups: state.my_groups,
+		//now_design: state.now_design
 	})
 
 	const mapDispatchToProps = (dispatch) => ({

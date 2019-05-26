@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -128,6 +128,14 @@ export const toJoinGroup = (groupid) => {
     }
 }
 
+export const toWithdrawGroup = (groupid) => {
+    console.log("withdrawGroup action ", groupid)
+    return {
+        type: WITHDRAW_GROUP,
+        groupid: groupid,
+    }
+}
+
 export const gotoGroupDetail = (groupid) => {
     console.log("gotoGroupDetail action")
     console.log(groupid)
@@ -151,6 +159,14 @@ export const toLikeDesign = (designid) => {
     console.log(designid)
     return {
         type: LIKE_DESIGN,
+        designid: designid,
+    }
+}
+
+export const toUnlikeDesign = (designid) => {
+    console.log("unllikeDesign action: ", designid)
+    return {
+        type: UNLIKE_DESIGN,
         designid: designid,
     }
 }

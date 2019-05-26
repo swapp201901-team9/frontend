@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DesignTemp from './DesignTemp.js';
-import { toLikeDesign } from '../../actions/index.js';
+import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign } from '../../actions/index.js';
 import NavBar from '../NavBar/NavBar.js';
 import MyGroupList from './MyGroupList.js';
 
@@ -33,6 +33,8 @@ class GroupDetailPage extends React.Component {
                           key={design.id}
                           design={design}
                           onClickLike={() => this.props.onLikeDesign(design.id)}
+                          onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
+                          onClickDelete={() => this.props.onDeleteDesign(design.id)}
                         />
                       )}
                     </ul>
@@ -58,7 +60,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onLikeDesign: (designid) => dispatch(toLikeDesign(designid))
+    onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
+    onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),
+    onDeleteDesign: (designid) => dispatch(toDeleteGroupDesign(designid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailPage);
