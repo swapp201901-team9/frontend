@@ -8,6 +8,27 @@ import GroupDesignList from './GroupDesignList';
 import { toDeleteGroupUser, toDeleteGroupDesign, toChangeGroupInfo } from '../../actions';
 
 class GroupAdminPage extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
+		this.deleteUserCheck = this.deleteUserCheck.bind(this)
+	}
+
+	deleteDesignCheck(groupid, designid) {
+		if(confirm("정말 삭제하시겠습니까?") == true) 
+			return this.props.onDeleteDesign(groupid, designid)
+		else 
+			return false;
+	}
+
+	deleteUserCheck(groupid, userid) {
+		if(confirm("정말 삭제하시겠습니까?") == true)
+			return this.props.onDeleteUser(groupid, userid)
+		else 
+			return false;
+	}
+
 	render() {
 		if(!this.props.loading) {
 			return (
@@ -40,7 +61,7 @@ class GroupAdminPage extends React.Component {
 						<GroupDesignList
 							groupid={this.props.now_group[0].id}
 							designlist={this.props.group_designs}
-							onClickDeleteDesign={this.props.onDeleteDesign}
+							onClickDeleteDesign={this.deleteDesignCheck}
 						/>
 
 						</div>
@@ -51,7 +72,7 @@ class GroupAdminPage extends React.Component {
 						<GroupUserList
 							groupid={this.props.now_group[0].id}
 							userlist={admin_userlist}
-							onClickDeleteUser={this.props.onDeleteUser}
+							onClickDeleteUser={this.deleteUserCheck}
 						/>
 						</div>
 					</div>

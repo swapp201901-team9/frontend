@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -161,6 +161,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchLikeDesign);
+    yield spawn(watchUnlikeDesign);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 }
@@ -655,6 +656,14 @@ function *watchLikeDesign() {
     }
 }
 
+function *watchUnlikeDesign() {
+    while(true) {
+        const data = yield take(UNLIKE_DESIGN);
+        console.log("watchUnlikeDesign");
+        yield call(unlikeDesign, data);
+    }
+}
+
 function *watchChangeGrouInfo() {
     while(true) {
         const data = yield take(CHANGE_GROUP_INFO);
@@ -1015,6 +1024,25 @@ function *likeDesign(data) {
     } catch(error){
         console.log(error)
         alert("*liikeDesign error")
+    }
+}
+
+function *unlikeDesign(data) {
+    console.log("unlikeDesign")
+    const path = 'groups/unlike/' + data.designid + '/';
+    try {
+        yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*unliikeDesign error")
     }
 }
 

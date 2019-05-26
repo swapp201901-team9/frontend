@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {
+const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {    
     return (
         <div>
             {designlist.map(design => 
