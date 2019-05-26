@@ -37,7 +37,7 @@ class GroupDetailPage extends React.Component {
                       <p>이름: {this.props.now_group.group_name}</p>
                       <p>멤버: {this.props.now_group.users.length}명</p>
                       <p>디자인: {this.props.group_designs.length}개</p>
-                      {/* <p>관리자: {this.props.now_group.master}</p> */}
+                      <p>관리자: {this.props.now_group.master}</p>
                       {console.log(this.props.now_group)}
       							</div>
       					</div>

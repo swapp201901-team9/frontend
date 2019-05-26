@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -173,6 +173,7 @@ function *groupAdminPageSaga() {
 
     yield spawn(watchChangeGrouInfo);
     yield spawn(watchDeleteGroupUser);
+    yield spawn(watchGiveAdmin);
     yield spawn(watchDeleteGroupDesign);
     yield spawn(watchDeleteGroup);
 }
@@ -702,6 +703,14 @@ function *watchDeleteGroupUser() {
     }
 }
 
+function *watchGiveAdmin() {
+    while(true) {
+        const data = yield take(GIVE_ADMIN);
+        console.log("watchGiveAdmin");
+        yield call(giveAdmin, data);
+    }
+}
+
 function *watchDeleteGroupDesign() {
     while(true) {
         const data = yield take(DELETE_GRUOP_DESIGN);
@@ -1137,6 +1146,29 @@ function *deleteGroupUser(data) {
         console.log(error)
         alert("delete user error");
         return ;
+    }
+}
+
+function *giveAdmin(data) {
+    console.log("giveAdmin groupid: ", data.groupid, " userid: ", data.userid)
+    const backPath = 'groups/'+data.groupid+'/members/'+data.userid+'/';
+    try {
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            // body: JSON.stringify({"username": profuser, "password": newpw})
+        });
+        console.log("give admin to userid: ", data.userid);
+        yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        console.log(error)
+        alert("giveAdmin error");
+        return;
     }
 }
 
