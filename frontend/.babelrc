@@ -1,6 +1,13 @@
 {
   "presets": [
+      "env",
       "react",
       "es2015"
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "dynamic-import-node",
+    "transform-class-properties"
   ]
 }
+
