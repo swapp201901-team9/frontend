@@ -1,15 +1,43 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {fabric} from 'fabric';
+import { connect } from 'react-redux';
 //import DesignPage from './DesignPage';
 //import FabricCanvas from './FabricCanvas';
 import TemplateList from './TemplateList';
 import TemplateListItem from './TemplateListItem';
-//import {create} from 'react-test-renderer';
-import {mount, shallow} from 'enzyme';
+import ResetButton from './ResetButton'
+//import SaveButton from './SaveButton'
+import {create} from 'react-test-renderer';
+import {configure, mount, shallow} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-15';
 
-//Enzyme.configure({ adapter: new Adapter() });
+configure({ adapter: new Adapter() });
+
+describe('ResetButton', () => {
+    it ('renders reset button', () => {
+        const div = document.createElement('div');
+        ReactDOM.render(<ResetButton/>, div);
+        ReactDOM.unmountComponentAtNode(div);
+
+        let tree = create(<ResetButton/>);
+        expect(tree.toJSON()).toMatchSnapshot();
+
+        const wrapper = shallow(<ResetButton/>);
+        expect(wrapper.length).toBe(1);
+    })
+})
+
+describe('SaveButton', () => {
+    it ('renders reset button', () => {
+        //const div = document.createElement('div');
+        //ReactDOM.render(<SaveButton/>, div);
+        //ReactDOM.unmountComponentAtNode(div);
+
+        //let tree = create(<SaveButton/>);
+        //expect(tree.toJSON()).toMatchSnapshot();
+    })
+})
 
 describe('My first snapshot test', ()=> {
     test('testing design page', () => {
@@ -58,6 +86,8 @@ describe('TemplateList', ()=> {
 
         //mount(<DesignPage/>);
         //shallow(<DesignPage />);
+
+    
     })
 })
 
@@ -72,6 +102,9 @@ describe('TemplateListItem', ()=> {
 
         //mount(<DesignPage/>);
         //shallow(<DesignPage />);
+
+        const wrapper = shallow(<TemplateListItem/>);
+        expect(wrapper.length).toBe(1);
     })
 })
 
