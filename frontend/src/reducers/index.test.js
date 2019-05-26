@@ -1,7 +1,23 @@
 // jest testing
-
+import React from 'react';
+import {create} from 'react-test-renderer';
+import {mount} from 'enzyme';
+import DesignPage from '../components/DesignPage/DesignPage'
 import * as actions from '../actions';
 import homepageApp from './index.js';
+
+describe('DesignPage', ()=> {
+    it('renders without crashing', ()=>{
+        //const component = create(<DesignPage/>);
+        //const instance = component.getInstance();
+        //await instance.componentDidMount();
+
+        //const div = document.createElement('div');
+        //ReactDOM.render(<Clock/>, div);
+
+        mount(<DesignPage/>);
+    })
+})
 
 const initState = {
     authorization: "",
