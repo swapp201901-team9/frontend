@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResetButton renders reset button 1`] = `
+<div
+  className="reset_save"
+>
+  <a
+    href="#"
+  >
+    Reset
+  </a>
+</div>
+`;

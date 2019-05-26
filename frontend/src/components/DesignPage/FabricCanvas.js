@@ -1,6 +1,6 @@
 import React from 'react';
 import {fabric} from 'fabric';
-import ImageUploader from 'react-images-upload';
+//import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
