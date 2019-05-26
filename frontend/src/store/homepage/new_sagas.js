@@ -164,6 +164,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchUnlikeDesign);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
+    yield spawn(watchDeleteGroupDesign);
 }
 
 function *groupAdminPageSaga() {
@@ -352,7 +353,22 @@ function *watchLoginState() {
                     console.log("get group details...");
                     console.log("group id: ", id);
                     let username = window.atob(localStorage.getItem("auth")).split(":")[0]
-                    let my_groups_data, group_designs_data = null;
+                    let now_group_data, my_groups_data, group_designs_data = null;
+
+                    //now_group data
+                    try{
+                        now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        alert("group data error");
+                    }
 
                     //my_groups data
                     try{
@@ -395,6 +411,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        now_group: now_group_data.body,
                         my_groups: my_groups_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
