@@ -11,9 +11,12 @@ import homepageApp from './index.js';
 
 describe('FabricCanvas', ()=> {
     it ('renders without crashing', ()=> {
-        const component = create(<FabricCanvas/>);
-        const instance = component.getInstance();
-        await instance.componentDidMount();
+        //const component = create(<FabricCanvas/>);
+        //const instance = component.getInstance();
+        //await instance.componentDidMount();
+
+         const div = document.createElement('div');
+         ReactDOM.render(<FabricCanvas/>, div);
     })
 })
 describe('DesignPage', ()=> {
