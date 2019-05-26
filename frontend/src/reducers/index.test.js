@@ -13,7 +13,7 @@ import homepageApp from './index.js';
 
 //configure({adapter: new Adapter()});
 
-describe('FabricCanvas', ()=> {
+/*describe('FabricCanvas', ()=> {
     it ('renders without crashing', ()=> {
         //const component = create(<FabricCanvas/>);
         //const instance = component.getInstance();
@@ -26,7 +26,8 @@ describe('FabricCanvas', ()=> {
          const wrapper = shallow(<FabricCanvas/>);
          expect(wrapper.length).toBe(1);
     })
-})
+})*/
+
 /*describe('DesignPage', ()=> {
     it('renders without crashing', ()=>{
         //const component = create(<DesignPage/>);
