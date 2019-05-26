@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {create} from 'react-test-renderer';
 import {mount, shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+//import Adapter from 'enzyme-adapter-react-16';
 //import DesignPage from '../components/DesignPage/DesignPage'
 import FabricCanvas from '../components/DesignPage/FabricCanvas'
 //import TemplateList from '../components/DesignPage/TemplateList';
@@ -11,7 +11,7 @@ import FabricCanvas from '../components/DesignPage/FabricCanvas'
 import * as actions from '../actions';
 import homepageApp from './index.js';
 
-configure({adapter: new Adapter()});
+//configure({adapter: new Adapter()});
 
 describe('FabricCanvas', ()=> {
     it ('renders without crashing', ()=> {
@@ -19,9 +19,12 @@ describe('FabricCanvas', ()=> {
         //const instance = component.getInstance();
         //await instance.componentDidMount();
 
-         const div = document.createElement('div');
-         ReactDOM.render(<FabricCanvas/>, div);
-         ReactDOM.unmountComponentAtNode(div);
+         //const div = document.createElement('div');
+         //ReactDOM.render(<FabricCanvas/>, div);
+         //ReactDOM.unmountComponentAtNode(div);
+
+         const wrapper = shallow(<FabricCanvas/>);
+         expect(wrapper.length).toBe(1);
     })
 })
 /*describe('DesignPage', ()=> {
