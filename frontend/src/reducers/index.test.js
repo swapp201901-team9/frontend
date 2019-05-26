@@ -3,9 +3,19 @@ import React from 'react';
 import {create} from 'react-test-renderer';
 import {mount, shallow} from 'enzyme';
 import DesignPage from '../components/DesignPage/DesignPage'
+import FabricCanvas from '../components/DesignPage/FabricCanvas'
+import TemplateList from '../components/DesignPage/TemplateList';
+import TemplateListItem from '../components/DesignPage/TemplateListItem';
 import * as actions from '../actions';
 import homepageApp from './index.js';
 
+describe('FabricCanvas', ()=> {
+    it ('renders without crashing', ()=> {
+        const component = create(<FabricCanvas/>);
+        const instance = component.getInstance();
+        await instance.componentDidMount();
+    })
+})
 describe('DesignPage', ()=> {
     it('renders without crashing', ()=>{
         //const component = create(<DesignPage/>);
@@ -16,7 +26,7 @@ describe('DesignPage', ()=> {
         //ReactDOM.render(<Clock/>, div);
 
         //mount(<DesignPage/>);
-        shallow(<DesignPage />);
+        //shallow(<DesignPage />);
     })
 })
 
