@@ -8,7 +8,7 @@ import TemplateList from './TemplateList'
 import TemplateListItem from './TemplateListItem'
 import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
-
+//conditional rendering 찾아보자 세리야
 //import ImageUploader from 'react-images-upload';
 
 import { connect } from 'react-redux'
@@ -150,18 +150,76 @@ class DesignPage extends React.Component {
 				
 			
 			break;
-			case 
-			'sleeve': this.setState({design_sleeve: color.hex}); 
-				var imgElement = document.getElementById('img_sleeve');
-				var src = './images/templates/front_sleeve/'+this.state.design_sleeve.substring(1)+'_sleeve.png';
-				console.log("sleeve src is");
-				console.log(src);
-				imgElement.src = require(src);
-				this.addToBothCanvas(imgElement, "front_sleeve", 0);
+			case 'sleeve': 
+			this.setState({design_sleeve: color.hex}); 
+
+			var imgElement1 = document.getElementById('front_sleeve');
+			var src1 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
+			console.log("front sleeve src is");
+			console.log(src1);
+			imgElement1.src = require(src1);
+
+			var imgElement2 = document.getElementById('back_sleeve');
+			var src2 = './images/templates/back_arm/'+this.state.design_sleeve.substring(1)+'.png';
+			console.log("back sleeve src is");
+			console.log(src2);
+			imgElement2.src = require(src2);
+
+			this.addToFrontCanvas(imgElement1, "front_sleeve", 0);
+			this.addToBackCanvas(imgElement2, "back_sleeve", 0);
 			break;
-			case 'banding': this.setState({design_banding: color.hex}); break;
-			case 'stripe': this.setState({design_stripe: color.hex}); break;
-			case 'button': this.setState({design_button: color.hex}); break;
+
+			case 'banding': 
+			this.setState({design_banding: color.hex}); 
+
+			var imgElement1 = document.getElementById('front_banding');
+			var src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
+			console.log("front banding src is");
+			console.log(src1);
+			imgElement1.src = require(src1);
+
+			var imgElement2 = document.getElementById('back_banding');
+			var src2 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
+			console.log("back banding src is");
+			console.log(src2);
+			imgElement2.src = require(src2);
+
+			this.addToFrontCanvas(imgElement1, "front_banding", 0);
+			this.addToBackCanvas(imgElement2, "back_banding", 0);
+			
+			break;
+			case 'stripe': 
+			this.setState({design_stripe: color.hex}); 
+
+			var imgElement1 = document.getElementById('front_stripe');
+			var src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
+			console.log("front stripe src is");
+			console.log(src1);
+			imgElement1.src = require(src1);
+
+			var imgElement2 = document.getElementById('back_stripe');
+			var src2 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
+			console.log("back stripe src is");
+			console.log(src2);
+			imgElement2.src = require(src2);
+
+			this.addToFrontCanvas(imgElement1, "front_stripe", 2);
+			this.addToBackCanvas(imgElement2, "back_stripe", 2);
+
+			break;
+			case 'button': this.setState({design_button: color.hex}); 
+			var imgElement1 = document.getElementById('img_button');
+			var src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
+			console.log("front button src is");
+			console.log(src1);
+			imgElement1.src = require(src1);
+
+			
+
+			this.addToFrontCanvas(imgElement1, "front_button", 0);
+			
+			
+			break;
 		}
 		console.log(this.state)
 	}
@@ -334,21 +392,15 @@ class DesignPage extends React.Component {
 									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>
 									<img src = "" id = "front_sleeve" />
 									<img src = '' id = "back_sleeve" />
-									<p>stripe color</p>
-								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>
+									
 									<img src = "" id = "front_stripe" />
 									<img src = '' id = "back_stripe" />
 									
-									<p>banding color</p>
-								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>
+									
 									<img src = "" id = "front_banding" />
 									<img src = '' id = "back_banding" />
 	
-									<p>button color</p>
-								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>
+									
 									<img src = "" id = "img_button" />
 
 
