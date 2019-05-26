@@ -32,7 +32,8 @@ class DesignPage extends React.Component {
 			design_stripe : null,
 			design_button : null,
 			activeBackProperty : null,
-			activeFrontProperty : null
+			activeFrontProperty : null,
+			clickedWhat: null
 		};
 		// this.onDrop = this.onDropFront.bind(this);
 		// this.onDrop = this.onDropBack.bind(this);
@@ -131,8 +132,8 @@ class DesignPage extends React.Component {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 			case 'body': 
-				this.setState({design_body: color.hex}); 
-
+				this.setState({design_body: color.hex, clickedWhat: "body"}); 
+				this.forceUpdate();
 				var imgElement1 = document.getElementById('front_body');
 				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
 				console.log("front body src is");
@@ -151,8 +152,8 @@ class DesignPage extends React.Component {
 			
 			break;
 			case 'sleeve': 
-			this.setState({design_sleeve: color.hex}); 
-
+			this.setState({design_sleeve: color.hex, clickedWhat: "sleeve"}); 
+			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_sleeve');
 			var src1 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
 			console.log("front sleeve src is");
@@ -170,8 +171,8 @@ class DesignPage extends React.Component {
 			break;
 
 			case 'banding': 
-			this.setState({design_banding: color.hex}); 
-
+			this.setState({design_banding: color.hex, clickedWhat: "banding"}); 
+			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_banding');
 			var src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
 			console.log("front banding src is");
@@ -188,9 +189,10 @@ class DesignPage extends React.Component {
 			this.addToBackCanvas(imgElement2, "back_banding", 0);
 			
 			break;
-			case 'stripe': 
-			this.setState({design_stripe: color.hex}); 
 
+			case 'stripe': 
+			this.setState({design_stripe: color.hex, clickedWhat: "stripe"}); 
+			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_stripe');
 			var src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
 			console.log("front stripe src is");
@@ -207,16 +209,17 @@ class DesignPage extends React.Component {
 			this.addToBackCanvas(imgElement2, "back_stripe", 2);
 
 			break;
-			case 'button': this.setState({design_button: color.hex}); 
+
+			case 'button': 
+			this.setState({design_button: color.hex, clickedWhat: "button"}); 
+			this.forceUpdate();
 			var imgElement1 = document.getElementById('img_button');
 			var src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
 			console.log("front button src is");
 			console.log(src1);
 			imgElement1.src = require(src1);
 
-			
-
-			this.addToFrontCanvas(imgElement1, "front_button", 0);
+			this.addToFrontCanvas(imgElement1, "front_button", 2);
 			
 			
 			break;
@@ -296,7 +299,32 @@ class DesignPage extends React.Component {
     }*/
 
     render() {
-
+	  const clickedWhat = this.state.clickedWhat;
+	  let colorPicker;
+	  if (clickedWhat == "body") {
+		  colorPicker = <CirclePicker 
+		  id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+	  }
+	  else if (clickedWhat == "sleeve") {
+		colorPicker = <CirclePicker 
+		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+	  }
+	  else if (clickedWhat == "banding") {
+		colorPicker = <CirclePicker 
+		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+	  }
+	  else if (clickedWhat == "stripe") {
+		colorPicker = <CirclePicker 
+		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+	  }
+	  else if (clickedWhat == "button") {
+		colorPicker = <CirclePicker 
+		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+	  }
+	  else {
+		colorPicker = <CirclePicker 
+		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+	  }
       return (
       <div>
 				<section className="wrap clear col3">
@@ -380,16 +408,16 @@ class DesignPage extends React.Component {
 										<option>button</option>
 									</select></center>
 								<h1>Colour</h1>
-								<p>body color</p>
-								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>
-									<img src = '' id = "front_body" />
-									<img src = '' id = "back_body" />
+								{colorPicker}
+								{/*<CirclePicker 
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>*/}
+								<img src = '' id = "front_body" />
+								<img src = '' id = "back_body" />
 									{/*<img src = {require('./logo.jpg')} id = "img_body"/>*/}
 
-									<p>sleeve color</p>
+									{/*<p>sleeve color</p>
 								<CirclePicker 
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>
+									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>*/}
 									<img src = "" id = "front_sleeve" />
 									<img src = '' id = "back_sleeve" />
 									
