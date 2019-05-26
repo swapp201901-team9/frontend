@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MyGroup from './MyGroup';
-import { gotoGroupDetail, gotoAdminGroup } from '../../actions/index.js';
+import { gotoGroupDetail, gotoAdminGroup, toWithdrawGroup } from '../../actions/index.js';
 
 class MyGroupList extends React.Component {
     render() {
@@ -15,6 +15,7 @@ class MyGroupList extends React.Component {
                             group={group}
                             onClickGroup={() => this.props.onToGroupDetail(group.id)}
                             onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
+                            onClickWithdrawGroup={() => this.props.onWithdrawGroup(group.id)}
                         />
                     )}
                     </ul>
@@ -38,7 +39,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
-	onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid))
+    onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid)),
+    onWithdrawGroup: (groupid) => dispatch(toWithdrawGroup(groupid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyGroupList)

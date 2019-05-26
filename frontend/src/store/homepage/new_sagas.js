@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -148,7 +148,8 @@ function *groupPageSaga() {
 	//SA TODO: 더 추가될 가능성 있음
 	yield spawn(watchCreateGroup);
 	yield spawn(watchSearchGroup);
-	yield spawn(watchJoinGroup);
+    yield spawn(watchJoinGroup);
+    yield spawn(watchWithdrawGroup);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 }
@@ -160,6 +161,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchLikeDesign);
+    yield spawn(watchUnlikeDesign);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 }
@@ -213,7 +215,7 @@ function *watchLoginState() {
             
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 // localStorage.removeItem('parent');
-                let my_groups_data;
+                let my_groups_data, my_design_id;
                 try {
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -228,6 +230,21 @@ function *watchLoginState() {
                     console.log(error)
                     alert("main mygroups error");
                 }
+
+                // try {
+                //     my_design_id = yield call(xhr.get, fixed_url+'/'. {
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             'Authorization': 'Basic '+localStorage['auth'],
+                //             Accept: 'application/json'
+                //         },
+                //         responseType: 'json'
+                //     })
+                // } catch(error) {
+                //     console.log(error)
+                //     alert("main my_design_id error")
+                // }
+
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     my_groups: my_groups_data.body,
@@ -284,7 +301,7 @@ function *watchLoginState() {
                     filtered_groups: all_groups_data.body,
                     load: 0,
                     loading: true,
-                }));
+                }))
             }
 
             // username또는 id를 기준으로 backend에 겟을 날리는 경우
@@ -600,8 +617,15 @@ function *watchJoinGroup() {
 		const data = yield take(JOIN_GROUP);
         console.log("watchJoinGroup")
         yield call(joinGroup, data);
-		//SA TODO: 가입 그룹 detail 페이지로 리다이렉트??
 	}
+}
+
+function *watchWithdrawGroup() {
+    while(true) {
+        const data = yield take(WITHDRAW_GROUP);
+        console.log("watchWithdrawGroup")
+        yield call(withdrawGroup, data);
+    }
 }
 
 //watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관찰 및 리다이렉트(클릭한 그룹 detail 페이지로)
@@ -629,6 +653,14 @@ function *watchLikeDesign() {
         const data = yield take(LIKE_DESIGN);
         console.log("watchLikeDesign");
         yield call(likeDesign, data);
+    }
+}
+
+function *watchUnlikeDesign() {
+    while(true) {
+        const data = yield take(UNLIKE_DESIGN);
+        console.log("watchUnlikeDesign");
+        yield call(unlikeDesign, data);
     }
 }
 
@@ -755,6 +787,7 @@ function *signUp(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
+        console.log(error)
         alert("backend singup post error");
     }
 
@@ -854,7 +887,7 @@ function *createGroup(data){
             contentType: 'json',
             body: JSON.stringify({"grouptype": data.grouptype.value, "groupname": data.groupname.value})
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        yield put(actions.changeUrl('/groups/'));
     } catch(error){
         if(error.statusCode === 409) {
             console.log("already existing name");
@@ -935,6 +968,26 @@ function *joinGroup(data){
     }
 }
 
+function *withdrawGroup(data){
+    console.log("withdrawGroup")
+    const path = 'join_group/'
+    try {
+        yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        alert("SUCCESS")
+        yield put(actions.changeUrl('groups/'));
+    } catch(error) {
+        console.log(error)
+        alert("*withdrawGroup error")
+    }
+}
+
 function *toGroupDetail(data){
     console.log("toGroupDetail")
     try {
@@ -971,6 +1024,25 @@ function *likeDesign(data) {
     } catch(error){
         console.log(error)
         alert("*liikeDesign error")
+    }
+}
+
+function *unlikeDesign(data) {
+    console.log("unlikeDesign")
+    const path = 'groups/unlike/' + data.designid + '/';
+    try {
+        yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*unliikeDesign error")
     }
 }
 
