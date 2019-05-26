@@ -1,6 +1,7 @@
 import React from 'react';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
+import ThreeScene from './ThreeScene'
 
 import FabricCanvas from './FabricCanvas'
 import TemplateList from './TemplateList'
@@ -12,6 +13,7 @@ import MyGroupList from '../GroupPage/MyGroupList';
 
 import { connect } from 'react-redux'
 import { toSaveDesign, toPostDesign } from '../../actions/index.js';
+//import ThreeScene from './ThreeScene';
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -341,6 +343,7 @@ class DesignPage extends React.Component {
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}
+	<ThreeScene/>
 	<FabricCanvas
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
