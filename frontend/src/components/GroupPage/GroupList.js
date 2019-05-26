@@ -1,7 +1,6 @@
 import React from 'react';
-import {connect} from 'react-redux';
 
-const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup }) => {
+const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup, onClickWithdrawGroup }) => {
   
   return (
     <div>
@@ -9,7 +8,10 @@ const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup }) => {
         {grouplist.map(group =>
           <ul key={group.id}>
             <p onClick={() => onClickGroup(group.id)}>{group.group_type} {group.group_name}</p>
-            <button className="button button_small" onClick={() => onClickJoinGroup(group.id)}>JOIN GROUP</button>
+            {group.member
+              ? ( <button className="button button_small" onClick={() => onClickWithdrawGroup(group.id)}>WITHDRAW</button> )
+              : ( <button className="button button_small" onClick={() => onClickJoinGroup(group.id)}>JOIN</button>) 
+            }
           </ul>
         )}
       </div>
@@ -17,8 +19,4 @@ const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  my_groups: state.my_groups
-})
-
-export default connect(mapStateToProps)(GroupList)
+export default GroupList

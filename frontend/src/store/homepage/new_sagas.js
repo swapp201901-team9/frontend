@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -148,7 +148,8 @@ function *groupPageSaga() {
 	//SA TODO: 더 추가될 가능성 있음
 	yield spawn(watchCreateGroup);
 	yield spawn(watchSearchGroup);
-	yield spawn(watchJoinGroup);
+    yield spawn(watchJoinGroup);
+    yield spawn(watchWithdrawGroup);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 }
@@ -299,7 +300,7 @@ function *watchLoginState() {
                     filtered_groups: all_groups_data.body,
                     load: 0,
                     loading: true,
-                }));
+                }))
             }
 
             // username또는 id를 기준으로 backend에 겟을 날리는 경우
@@ -615,8 +616,15 @@ function *watchJoinGroup() {
 		const data = yield take(JOIN_GROUP);
         console.log("watchJoinGroup")
         yield call(joinGroup, data);
-		//SA TODO: 가입 그룹 detail 페이지로 리다이렉트??
 	}
+}
+
+function *watchWithdrawGroup() {
+    while(true) {
+        const data = yield take(WITHDRAW_GROUP);
+        console.log("watchWithdrawGroup")
+        yield call(withdrawGroup, data);
+    }
 }
 
 //watchGoToGroupDetail: GroupPage 혹은 MainPage에서 MyGroupList의 그룹 클릭 관찰 및 리다이렉트(클릭한 그룹 detail 페이지로)
@@ -948,6 +956,26 @@ function *joinGroup(data){
     } catch(error){
         console.log(error)
         alert("*joinGroup error")
+    }
+}
+
+function *withdrawGroup(data){
+    console.log("withdrawGroup")
+    const path = 'join_group/'
+    try {
+        yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        alert("SUCCESS")
+        yield put(actions.changeUrl('groups/'));
+    } catch(error) {
+        console.log(error)
+        alert("*withdrawGroup error")
     }
 }
 
