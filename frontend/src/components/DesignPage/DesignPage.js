@@ -344,14 +344,7 @@ class DesignPage extends React.Component {
 		(<div>
 			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
 
-			<select id="post_group">
-				{this.props.my_groups.filter(group => {
-					return group.group_type !== "UR"
-				}).map(option => {
-					return <option value={option.id}> {option.group_type} {option.group_name} </option>
-				})}
-			</select>
-			<button class="post_btn" type="button" onClick={() => this.props.onPost(this.props.now_design.id, document.getElementById("post_group").value, this.state)}>POST</button>
+			
 		</div>)
 		: <div></div>
 	}

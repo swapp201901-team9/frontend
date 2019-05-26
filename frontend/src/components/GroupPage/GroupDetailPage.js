@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DesignTemp from './DesignTemp.js';
-import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign } from '../../actions/index.js';
+import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign, toPostDesign } from '../../actions/index.js';
 import NavBar from '../NavBar/NavBar.js';
 import MyGroupList from './MyGroupList.js';
 
@@ -33,12 +33,12 @@ class GroupDetailPage extends React.Component {
       					<div className="aside">
       						<h2 className="h_white">GROUP DETAIL</h2>
       							<div className="content">
-                      <p>타입: {this.props.now_group[0].group_type}</p>
-                      <p>이름: {this.props.now_group[0].group_name}</p>
-                      <p>멤버: {this.props.now_group[0].users.length}명</p>
+                      <p>타입: {this.props.now_group.group_type}</p>
+                      <p>이름: {this.props.now_group.group_name}</p>
+                      <p>멤버: {this.props.now_group.users.length}명</p>
                       <p>디자인: {this.props.group_designs.length}개</p>
-                      {/* <p>관리자: {this.props.now_group[0].master[0]}</p> */}
-                      {console.log(this.props.now_group[0])}
+                      {/* <p>관리자: {this.props.now_group.master}</p> */}
+                      {console.log(this.props.now_group)}
       							</div>
       					</div>
       					<div className="main">
@@ -49,9 +49,12 @@ class GroupDetailPage extends React.Component {
                         <DesignTemp
                           key={design.id}
                           design={design}
+                          group={this.props.now_group}
+                          my_groups={this.props.my_groups}
+                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, design)}
                           onClickLike={() => this.props.onLikeDesign(design.id)}
                           onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
-                          onClickDelete={() => this.deleteDesignCheck(this.props.now_group[0].id, design.id)}
+                          onClickDelete={() => this.deleteDesignCheck(this.props.now_group.id, design.id)}
                         />
                       )}
                     </ul>
@@ -78,9 +81,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
-    onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),
-    onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid))
+  onPostDesign: (designid, groupid, design) => dispatch(toPostDesign(designid, groupid, design)),
+  onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
+  onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),
+  onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupDetailPage);

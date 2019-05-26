@@ -228,7 +228,7 @@ export const toPostDesign = (designid, groupid, design) => {
     return {
         type: POST_DESIGN,
         designid: designid,
-        gruopid: groupid,
+        groupid: groupid,
         design: design,
     }
 }

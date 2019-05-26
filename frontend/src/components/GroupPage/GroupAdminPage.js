@@ -57,18 +57,18 @@ class GroupAdminPage extends React.Component {
 						<h2 className="h_white">GROUP INFO</h2>
 						<div className="content">
 							<ChangeGroupInfo
-								group={this.props.now_group[0]}
+								group={this.props.now_group}
 								onClickChangeSubmit={this.props.onChangeGroupInfo}
 							/>
 						<br />
-							<button onClick={() => this.deleteGroupCheck(this.props.now_group[0].id)}>DELETE GROUP</button>
+							<button onClick={() => this.deleteGroupCheck(this.props.now_group.id)}>DELETE GROUP</button>
 						</div>
 					</div>
 					<div className="main">
 						<h2 className="h_white">DESIGNS</h2>
 						<div className="content">
 						<GroupDesignList
-							groupid={this.props.now_group[0].id}
+							groupid={this.props.now_group.id}
 							designlist={this.props.group_designs}
 							onClickDeleteDesign={this.deleteDesignCheck}
 						/>
@@ -79,7 +79,7 @@ class GroupAdminPage extends React.Component {
 						<h2 className="h_black">MEMBER LIST</h2>
 						<div className="content">
 						<GroupUserList
-							groupid={this.props.now_group[0].id}
+							groupid={this.props.now_group.id}
 							userlist={admin_userlist}
 							onClickDeleteUser={this.deleteUserCheck}
 						/>

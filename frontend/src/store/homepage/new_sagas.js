@@ -99,8 +99,6 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
-    yield spawn(watchSaveDesign);
-    yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -136,7 +134,6 @@ function *profilePageSaga() {
     yield spawn(watchPWChange);
     yield spawn(watchIntroChange);
     yield spawn(watchEscape);
-
 }
 
 function *groupPageSaga() {
@@ -160,6 +157,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
 
+    yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
     yield spawn(watchUnlikeDesign);
     yield spawn(watchGoToGroupDetail);
@@ -218,6 +216,7 @@ function *watchLoginState() {
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 // localStorage.removeItem('parent');
                 let my_groups_data, now_design_data;
+
                 try{
                     now_design_data = yield call(xhr.get, fixed_url+'', {
                         headers: {
@@ -247,20 +246,6 @@ function *watchLoginState() {
                     console.log(error)
                     alert("main mygroups error");
                 }
-
-                // try {
-                //     my_design_id = yield call(xhr.get, fixed_url+'/'. {
-                //         headers: {
-                //             'Content-Type': 'application/json',
-                //             'Authorization': 'Basic '+localStorage['auth'],
-                //             Accept: 'application/json'
-                //         },
-                //         responseType: 'json'
-                //     })
-                // } catch(error) {
-                //     console.log(error)
-                //     alert("main my_design_id error")
-                // }
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
@@ -382,7 +367,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                             });
-                            console.log('Get now_group data without exception');
+                            console.log('GET now group data: ', now_group_data.body[0]);
                     } catch(error){
                         alert("group data error");
                     }
@@ -428,7 +413,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        now_group: now_group_data.body,
+                        now_group: now_group_data.body[0],
                         my_groups: my_groups_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
@@ -486,7 +471,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        now_group: now_group_data.body,
+                        now_group: now_group_data.body[0],
                         group_users: group_users_data.body,
                         group_designs: group_designs_data.body,
                         load: 0,
@@ -1019,7 +1004,7 @@ function *joinGroup(data){
 
 function *withdrawGroup(data){
     console.log("withdrawGroup")
-    const path = 'join_group/'
+    const path = 'groups/'+data.groupid+'/drop/'
     try {
         yield call(xhr.get, fixed_url + path, {
             headers: {
@@ -1029,7 +1014,7 @@ function *withdrawGroup(data){
             },
             contentType: 'json'
         });
-        alert("SUCCESS")
+        alert("WITHDRAW SUCCESS")
         yield put(actions.changeUrl('groups/'));
     } catch(error) {
         console.log(error)
@@ -1219,9 +1204,9 @@ function *saveDesign(data) {
                 "id": data.designid,
                 "detail_body": data.design["design_body"], 
                 "detail_sleeve": data.design["design_sleeve"],
-                // "detail_banding": data.design["banding"],
-                // "detail_stripe": data.design["stripe"],
-                // "detail_button": data.design["button"]
+                "detail_banding": data.design["design_banding"],
+                "detail_stripes": data.design["design_stripe"],
+                "detail_buttons": data.design["design_button"]
             })
         });
         console.log("save design succeed ");
@@ -1234,31 +1219,24 @@ function *saveDesign(data) {
 }
 
 function *postDesign(data) {
-    console.log("postDesign design: ", data.design)
-    const backPath = '';
+    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design)
+    const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
     try{
-        yield call(xhr.post, fixed_url + backPath, {
-            headers: {
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
                 "Authorization": "Basic " + localStorage['auth'],
                 "Content-Type": 'application/json',
                 Accept: 'application/json'
             },
-            contentType: 'json',
-            body: JSON.stringify({
-                "group": data.groupid,
-                "detail_body": data.design["body"], 
-                "detail_sleeve": data.design["sleeve"],
-                "detail_banding": data.design["banding"],
-                "detail_stripe": data.design["stripe"],
-                "detail_button": data.design["button"]
-            })
+            responseType: 'json',
         });
-        console.log("save design succeed ");
-        yield put(actions.changeUrl('/main/'));
+        console.log("post design succeed!");
+        alert("POST Success!")
+        yield put(actions.changeUrl('group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
-        alert("post desitn error");
-        return;
+        alert("post design error");
+        return ;
     }
 }
 
