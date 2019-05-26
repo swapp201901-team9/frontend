@@ -212,6 +212,14 @@ export const toDeleteGroup = (groupid) => {
     }
 }
 
+export const toGiveAdmin = (userid) => {
+    console.log("giveAdmin action: ", userid)
+    return {
+        type: GIVE_ADMIN,
+        userid: userid,
+    }
+}
+
 
 
 export const toSaveDesign = (designid, design) => {
