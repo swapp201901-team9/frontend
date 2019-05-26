@@ -14,6 +14,7 @@ export const DELETE_GRUOP_DESIGN = 'DELETE_GROUP_DESIGN'
 export const DELETE_GROUP = 'DELETE_GROUP'
 export const GIVE_ADMIN = 'GIVE_ADMIN'
 
+export const NEW_DESIGN = 'NEW_DESIGN'
 export const SAVE_DESIGN = 'SAVE_DESIGN'
 export const POST_DESIGN = 'POST_DESIGN'
 // export const CHANGE_BODY = 'CHANGE_BODY'

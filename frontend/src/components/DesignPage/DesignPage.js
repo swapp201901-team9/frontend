@@ -11,7 +11,7 @@ import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
 import { connect } from 'react-redux'
-import { toSaveDesign, toPostDesign } from '../../actions/index.js';
+import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js';
 
 //the templates are imported as images and passed as porps to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -342,9 +342,8 @@ class DesignPage extends React.Component {
 
 	{this.props.isLoggedIn ?
 		(<div>
-			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
-
-			
+			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>	
 		</div>)
 		: <div></div>
 	}
@@ -378,6 +377,7 @@ class DesignPage extends React.Component {
 	})
 
 	const mapDispatchToProps = (dispatch) => ({
+		onNew: () => dispatch(toNewDesign()),
 		onSave: (designid, design_detail) => dispatch(toSaveDesign(designid, design_detail)),
 		onPost: (designid, groupid, design_detail) => dispatch(toPostDesign(designid, groupid, design_detail)),
 	})

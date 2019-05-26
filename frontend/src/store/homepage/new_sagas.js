@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -117,6 +117,7 @@ function *loggedInMainPageSaga() {
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
 
+    yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
     yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
@@ -729,6 +730,14 @@ function *watchDeleteGroup() {
 
 
 
+function *watchNewDesign() {
+    while(true) {
+        const data = yield take(NEW_DESIGN);
+        console.log("watchNewDesign");
+        yield call(newDesign, data);
+    }
+}
+
 function *watchSaveDesign() {
     while(true) {
         const data = yield take(SAVE_DESIGN);
@@ -1219,6 +1228,26 @@ function *deleteGroup(data) {
 
 
 
+function *newDesign(data) {
+    console.log("newDesign")
+    const backPath = '';
+    try {
+        yield call(xhr.send, fixed_url+backPath,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("new design succeed!");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error) {
+        console.log(error);
+        alert("new design error");
+        return;
+    }
+}
 
 function *saveDesign(data) {
     console.log("saveDesign designid: ", data.designid, " design: ", data.design)

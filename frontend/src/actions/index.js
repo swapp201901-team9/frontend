@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -222,6 +222,14 @@ export const toGiveAdmin = (groupid, userid) => {
 }
 
 
+
+
+export const toNewDesign = () => {
+    console.log("newDesign action")
+    return {
+        type: NEW_DESIGN
+    }
+}
 
 export const toSaveDesign = (designid, design) => {
     console.log("saveDesign action", designid, design)
