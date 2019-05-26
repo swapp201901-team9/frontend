@@ -1,5 +1,6 @@
 // jest testing
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {create} from 'react-test-renderer';
 import {mount, shallow} from 'enzyme';
 import DesignPage from '../components/DesignPage/DesignPage'
@@ -17,9 +18,10 @@ describe('FabricCanvas', ()=> {
 
          const div = document.createElement('div');
          ReactDOM.render(<FabricCanvas/>, div);
+         ReactDOM.unmountComponentAtNode(div);
     })
 })
-describe('DesignPage', ()=> {
+/*describe('DesignPage', ()=> {
     it('renders without crashing', ()=>{
         //const component = create(<DesignPage/>);
         //const instance = component.getInstance();
@@ -31,7 +33,7 @@ describe('DesignPage', ()=> {
         //mount(<DesignPage/>);
         //shallow(<DesignPage />);
     })
-})
+})*/
 
 const initState = {
     authorization: "",
