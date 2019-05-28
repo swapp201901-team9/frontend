@@ -154,7 +154,7 @@ class DesignPage extends React.Component {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 			case 'body': 
-				this.setState({design_body: color.hex, clickedWhat: "body"}); 
+				this.setState({design_body: color.hex}); 
 				this.forceUpdate();
 				var imgElement1 = document.getElementById('front_body');
 				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
@@ -174,7 +174,7 @@ class DesignPage extends React.Component {
 			
 			break;
 			case 'sleeve': 
-			this.setState({design_sleeve: color.hex, clickedWhat: "sleeve"}); 
+			this.setState({design_sleeve: color.hex}); 
 			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_sleeve');
 			var src1 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
@@ -193,7 +193,7 @@ class DesignPage extends React.Component {
 			break;
 
 			case 'banding': 
-			this.setState({design_banding: color.hex, clickedWhat: "banding"}); 
+			this.setState({design_banding: color.hex}); 
 			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_banding');
 			var src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
@@ -213,7 +213,7 @@ class DesignPage extends React.Component {
 			break;
 
 			case 'stripe': 
-			this.setState({design_stripe: color.hex, clickedWhat: "stripe"}); 
+			this.setState({design_stripe: color.hex}); 
 			this.forceUpdate();
 			var imgElement1 = document.getElementById('front_stripe');
 			var src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
@@ -233,7 +233,7 @@ class DesignPage extends React.Component {
 			break;
 
 			case 'button': 
-			this.setState({design_button: color.hex, clickedWhat: "button"}); 
+			this.setState({design_button: color.hex}); 
 			this.forceUpdate();
 			var imgElement1 = document.getElementById('img_button');
 			var src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
