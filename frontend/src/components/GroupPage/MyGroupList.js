@@ -1,9 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MyGroup from './MyGroup';
-import { gotoGroupDetail, gotoAdminGroup } from '../../actions/index.js';
+import { gotoGroupDetail, gotoAdminGroup, toWithdrawGroup } from '../../actions/index.js';
 
 class MyGroupList extends React.Component {
+    constructor(props) {
+		super(props)
+
+		this.withdrawGroupCheck = this.withdrawGroupCheck.bind(this)
+	}
+
+	withdrawGroupCheck(groupid) {
+		if(confirm("정말 탈퇴하시겠습니까?") == true) 
+			return this.props.onWithdrawGroup(groupid)
+		else 
+			return false;
+    }
+    
     render() {
         if(this.props.isLoggedIn !== "") {
             return (
@@ -15,6 +28,7 @@ class MyGroupList extends React.Component {
                             group={group}
                             onClickGroup={() => this.props.onToGroupDetail(group.id)}
                             onClickAdminGroup={() => this.props.onToAdminGroup(group.id)}
+                            onClickWithdrawGroup={() => this.withdrawGroupCheck(group.id)}
                         />
                     )}
                     </ul>
@@ -38,7 +52,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onToGroupDetail: (groupid) => dispatch(gotoGroupDetail(groupid)),
-	onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid))
+    onToAdminGroup: (groupid) => dispatch(gotoAdminGroup(groupid)),
+    onWithdrawGroup: (groupid) => dispatch(toWithdrawGroup(groupid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyGroupList)
