@@ -414,11 +414,11 @@ class DesignPage extends React.Component {
 								
 									<center><select id="design_element" 
 									onChange={(e)=>this.handleChange(e)}>
-										<option>body</option>
-										<option>sleeve</option>
-										<option>banding</option>
-										<option>stripe</option>
-										<option>button</option>
+										<option value = "body">body</option>
+										<option value = "sleeve">sleeve</option>
+										<option value = "banding">banding</option>
+										<option value = "stripe">stripe</option>
+										<option value = "button">button</option>
 									</select></center>
 								<h1>Colour</h1>
 								{colorPicker}
@@ -469,7 +469,7 @@ class DesignPage extends React.Component {
 				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
 
 			<p>Text style</p>
-				<select id="text_style">
+				<select id="text_style" onChange={(e)=>this.handleChange(e)}>
 					{/*<!-- font style -->*/}
 					<option>normal</option>
 					<option>italic</option>
