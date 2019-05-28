@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -171,6 +171,8 @@ export const toUnlikeDesign = (designid) => {
     }
 }
 
+
+
 export const toChangeGroupInfo = (groupid, grouptype, groupname) => {
     console.log("changeGroupInfo action")
     console.log(grouptype, groupname)
@@ -202,21 +204,48 @@ export const toDeleteGroupDesign = (groupid, designid) => {
     }
 }
 
+export const toDeleteGroup = (groupid) => {
+    console.log("deleteGroup action: ", groupid)
+    return {
+        type: DELETE_GROUP,
+        groupid: groupid,
+    }
+}
+
+export const toGiveAdmin = (groupid, userid) => {
+    console.log("giveAdmin action groupid: ", groupid, " userid: ", userid)
+    return {
+        type: GIVE_ADMIN,
+        groupid: groupid,
+        userid: userid,
+    }
+}
 
 
-export const toSaveDesign = (design) => {
-    console.log("saveDesign action", design)
+
+
+export const toNewDesign = () => {
+    console.log("newDesign action")
+    return {
+        type: NEW_DESIGN
+    }
+}
+
+export const toSaveDesign = (designid, design) => {
+    console.log("saveDesign action", designid, design)
     return {
         type: SAVE_DESIGN,
+        designid: designid, 
         design: design,
     }
 }
 
-export const toPostDesign = (groupid, design) => {
-    console.log("postDesign action, groupid: ", groupid, " design: ", design)
+export const toPostDesign = (designid, groupid, design) => {
+    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design)
     return {
         type: POST_DESIGN,
-        gruopid: groupid,
+        designid: designid,
+        groupid: groupid,
         design: design,
     }
 }

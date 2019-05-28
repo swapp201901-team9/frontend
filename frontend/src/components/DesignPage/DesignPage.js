@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
 import ThreeScene from './ThreeScene'
@@ -11,8 +12,8 @@ import MyGroupList from '../GroupPage/MyGroupList';
 //conditional rendering 찾아보자 세리야
 //import ImageUploader from 'react-images-upload';
 
-import { connect } from 'react-redux'
-import { toSaveDesign, toPostDesign } from '../../actions/index.js';
+import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js';
+
 //import ThreeScene from './ThreeScene';
 
 //the templates are imported as images and passed as porps to the TemplateList components.
@@ -436,7 +437,7 @@ class DesignPage extends React.Component {
 		<div class="design_tool">
 
 		<h1>Text</h1>
-			<textarea id="text_area"> Hello </textarea>
+			<textarea id="text_area" defaultValue="Hello"/>
 
 			<p>Choose a font</p>
 			<select id="text_font">
@@ -513,16 +514,8 @@ class DesignPage extends React.Component {
 
 	{this.props.isLoggedIn ?
 		(<div>
-			<button class="save_btn" type="button" onClick={() => this.props.onSave(this.state)}>SAVE</button>
-
-			<select id="post_group">
-				{this.props.my_groups.filter(group => {
-					return group.group_type !== "UR"
-				}).map(option => {
-					return <option value={option.id}> {option.group_type} {option.group_name} </option>
-				})}
-			</select>
-			<button class="post_btn" type="button" onClick={() => this.props.onPost(document.getElementById("post_group").value, this.state)}>POST</button>
+			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>	
 		</div>)
 		: <div></div>
 	}
@@ -550,13 +543,15 @@ class DesignPage extends React.Component {
 
 	const mapStateToProps = (state) => ({
 		isLoggedIn: state.authorization,
+		now_design: state.now_design,
 		my_groups: state.my_groups,
 		//now_design: state.now_design
 	})
 
 	const mapDispatchToProps = (dispatch) => ({
-		onSave: (design_detail) => dispatch(toSaveDesign(design_detail)),
-		onPost: (groupid, design_detail) => dispatch(toPostDesign(groupid, design_detail)),
+		onNew: () => dispatch(toNewDesign()),
+		onSave: (designid, design_detail) => dispatch(toSaveDesign(designid, design_detail)),
+		onPost: (designid, groupid, design_detail) => dispatch(toPostDesign(designid, groupid, design_detail)),
 	})
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)
