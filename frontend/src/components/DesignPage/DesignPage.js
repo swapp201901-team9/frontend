@@ -42,8 +42,8 @@ class DesignPage extends React.Component {
 		this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		this.addToBothCanvas = this.addToBothCanvas.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.handleChangeComplete = this.handleChangeComplete(this);
-		this.handleDesignChangeComplete = this.handleDesignChangeComplete(this);
+		this.handleChangeComplete = this.handleChangeComplete.bind(this);
+		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 	}
 	
 	componentDidMount(){
@@ -570,7 +570,6 @@ class DesignPage extends React.Component {
 		isLoggedIn: state.authorization,
 		now_design: state.now_design,
 		my_groups: state.my_groups,
-		//now_design: state.now_design
 	})
 
 	const mapDispatchToProps = (dispatch) => ({

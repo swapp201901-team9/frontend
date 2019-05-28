@@ -4,20 +4,12 @@ import { connect } from 'react-redux'
 import { toCreateGroup } from '../../actions/index.js'
 
 class CreateGroup extends React.Component {
-	constructor(props){
-		super(props);
-		this.onSubmit = this.onSubmit.bind(this);
-	}
-
-	componentDidMount(){
-
-        this.type_options = [
-			'Select an Option',
-			'Club',
-			'Department',
-			'Else'
-			]
-	}
+	type_options = [
+		'Select an Option',
+		'Club',
+		'Department',
+		'Else'
+		]
 
 	onSubmit = (e) => {
 		console.log("create onSubmit")
