@@ -296,7 +296,10 @@ class DesignPage extends React.Component {
     }
 	onDropBack = (e) => {
 
-    }*/
+	}*/
+	handleChange(event){
+		
+	}
 
     render() {
 	  const clickedWhat = this.state.clickedWhat;
@@ -400,7 +403,8 @@ class DesignPage extends React.Component {
 						
 								{/*<h1>Design Element</h1>*/}
 								
-									<center><select id="design_element">
+									<center><select id="design_element" 
+									onChange={(e)=>this.handleChange(e)}>
 										<option>body</option>
 										<option>sleeve</option>
 										<option>banding</option>
