@@ -1,15 +1,15 @@
 // jest testing
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {create} from 'react-test-renderer';
-import {mount, shallow} from 'enzyme';
+//import React from 'react';
+//import ReactDOM from 'react-dom';
+//import {create} from 'react-test-renderer';
+//import {mount, shallow} from 'enzyme';
 //import Adapter from 'enzyme-adapter-react-16';
 //import DesignPage from '../components/DesignPage/DesignPage'
 //import FabricCanvas from '../components/DesignPage/FabricCanvas'
 //import TemplateList from '../components/DesignPage/TemplateList';
 //import TemplateListItem from '../components/DesignPage/TemplateListItem';
-import * as actions from '../actions';
-import homepageApp from './index.js';
+//import * as actions from '../actions';
+//import homepageApp from './index.js';
 
 //configure({adapter: new Adapter()});
 
@@ -42,7 +42,7 @@ import homepageApp from './index.js';
     })
 })*/
 
-const initState = {
+/*const initState = {
     authorization: "",
     profile_user: null,
 
@@ -138,4 +138,4 @@ describe('homepage reducer', () => {
     })
 
 
-})
+})*/
