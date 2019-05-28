@@ -42,8 +42,8 @@ class DesignPage extends React.Component {
 		this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		this.addToBothCanvas = this.addToBothCanvas.bind(this);
 		this.handleChange = this.handleChange.bind(this);
-		this.handleChangeComplete = this.handleChangeComplete(this);
-		this.handleDesignChangeComplete = this.handleDesignChangeComplete(this);
+		this.handleChangeComplete = this.handleChangeComplete.bind(this);
+		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 	}
 	
 	componentDidMount(){
@@ -283,7 +283,6 @@ class DesignPage extends React.Component {
             preview.src = reader.result;
             console.log(preview.width);
             console.log(preview.height);
-
             var imgInstance = new fabric.Image(preview, {
             width: 899,
             height:959,
@@ -298,26 +297,15 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
 			console.log("imgInstance scale");
-
 			imgFront.push(imgInstance);
 			console.log(imgFront);
-
-
         },false);
-
-
         if (file) {
 			reader.readAsDataURL(file);
-
-
 		}
-
 		//this.setState({activeFrontProperty: img_front});
-
-
     }
 	onDropBack = (e) => {
-
 	}*/
 	handleChange(event){
 		
@@ -392,7 +380,6 @@ class DesignPage extends React.Component {
 									zIndex = {2}
 									addtocanvas = {this.addToFrontCanvas}
 								/>
-
 								<h3> *back* </h3>
 								<h4> sleeve </h4>
 								<TemplateList
