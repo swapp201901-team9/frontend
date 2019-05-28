@@ -99,7 +99,7 @@ class DesignPage extends React.Component {
 		this.img_front = [];
 		this.img_back = [];
     }*/
-	body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	/*body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 	sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f", 
 	"#f8f8f8", "#4f4f53", "#2a2a2a"]
@@ -108,7 +108,7 @@ class DesignPage extends React.Component {
 	banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 	button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]*/
 
 	addToFrontCanvas(imgElement, property_type, z_Index) {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -270,45 +270,23 @@ class DesignPage extends React.Component {
 
 	}
 
-	
-	/*onDropFront = (e) => {
-        console.log("hey");
-		//this.setState(prevState => {return {image: prevState.image+1}});
-        e.preventDefault();
-        var preview = document.getElementById('img_front');
-        var file = document.getElementById('input_front').files[0];
-		let reader = new FileReader();
-		let imgFront = this.img_front;
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-            console.log(preview.width);
-            console.log(preview.height);
-            var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
-            the_type: "upload",
-            zIndex: 3
-            });
-            console.log("imgInstance set");
-            imgInstance.set({
-                scaleY: 0.1,
-                scaleX: 0.1,
-                originX: "center",
-                originY: "center"
-            });
-			console.log("imgInstance scale");
-			imgFront.push(imgInstance);
-			console.log(imgFront);
-        },false);
-        if (file) {
-			reader.readAsDataURL(file);
+	handleChange(e){
+		let value = e.target.value;
+		if (value == "body") {
+			this.setState({clickedWhat: "body"});
 		}
-		//this.setState({activeFrontProperty: img_front});
-    }
-	onDropBack = (e) => {
-	}*/
-	handleChange(event){
-		
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "sleeve"});
+		}
+		else if (value == "banding") {
+			this.setState({clickedWhat: "banding"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "stripe"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "button"});
+		}
 	}
 
     render() {
