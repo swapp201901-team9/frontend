@@ -1,4 +1,3 @@
-/* GroupPage action types */
 export const CREATE_GROUP = 'CREATE_GROUP'
 export const SEARCH_GROUP = 'SEARCH_GROUP'
 export const JOIN_GROUP = 'JOIN_GROUP'
@@ -12,7 +11,10 @@ export const UNLIKE_DESIGN = 'UNLIKE_DESIGN'
 export const CHANGE_GROUP_INFO = 'CHANGE_GROUP_INFO'
 export const DELETE_GROUP_USER = 'DELETE_GROUP_USER'
 export const DELETE_GRUOP_DESIGN = 'DELETE_GROUP_DESIGN'
+export const DELETE_GROUP = 'DELETE_GROUP'
+export const GIVE_ADMIN = 'GIVE_ADMIN'
 
+export const NEW_DESIGN = 'NEW_DESIGN'
 export const SAVE_DESIGN = 'SAVE_DESIGN'
 export const POST_DESIGN = 'POST_DESIGN'
 // export const CHANGE_BODY = 'CHANGE_BODY'
