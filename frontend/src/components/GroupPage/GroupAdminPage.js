@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import ChangeGroupInfo from './ChangeGroupInfo';
 import GroupUserList from './GroupUserList';
 import GroupDesignList from './GroupDesignList';
-import { toDeleteGroupUser, toDeleteGroupDesign, toChangeGroupInfo } from '../../actions';
+import { toDeleteGroupUser, toDeleteGroupDesign, toChangeGroupInfo, toDeleteGroup, toGiveAdmin } from '../../actions';
 
 class GroupAdminPage extends React.Component {
 	constructor(props) {
@@ -13,6 +13,8 @@ class GroupAdminPage extends React.Component {
 
 		this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
 		this.deleteUserCheck = this.deleteUserCheck.bind(this)
+		this.giveAdminCheck = this.giveAdminCheck.bind(this)
+		this.deleteGroupCheck = this.deleteGroupCheck.bind(this)
 	}
 
 	deleteDesignCheck(groupid, designid) {
@@ -25,6 +27,20 @@ class GroupAdminPage extends React.Component {
 	deleteUserCheck(groupid, userid) {
 		if(confirm("정말 삭제하시겠습니까?") == true)
 			return this.props.onDeleteUser(groupid, userid)
+		else 
+			return false;
+	}
+
+	giveAdminCheck(groupid, userid) {
+		if(confirm("정말 관리자 권한을 부여하시겠습니까?") == true)
+			return this.props.onGiveAdmin(groupid, userid)
+		else 
+			return false;
+	}
+
+	deleteGroupCheck(groupid) {
+		if(confirm("정말 삭제하시겠습니까?") == true)
+			return this.props.onDeleteGroup(groupid)
 		else 
 			return false;
 	}
@@ -49,17 +65,19 @@ class GroupAdminPage extends React.Component {
 					<div className="aside">
 						<h2 className="h_white">GROUP INFO</h2>
 						<div className="content">
-						<ChangeGroupInfo
-							group={this.props.now_group[0]}
-							onClickChangeSubmit={this.props.onChangeGroupInfo}
-						/>
+							<ChangeGroupInfo
+								group={this.props.now_group}
+								onClickChangeSubmit={this.props.onChangeGroupInfo}
+							/>
+						<br />
+							<button onClick={() => this.deleteGroupCheck(this.props.now_group.id)}>DELETE GROUP</button>
 						</div>
 					</div>
 					<div className="main">
 						<h2 className="h_white">DESIGNS</h2>
 						<div className="content">
 						<GroupDesignList
-							groupid={this.props.now_group[0].id}
+							groupid={this.props.now_group.id}
 							designlist={this.props.group_designs}
 							onClickDeleteDesign={this.deleteDesignCheck}
 						/>
@@ -70,9 +88,10 @@ class GroupAdminPage extends React.Component {
 						<h2 className="h_black">MEMBER LIST</h2>
 						<div className="content">
 						<GroupUserList
-							groupid={this.props.now_group[0].id}
+							groupid={this.props.now_group.id}
 							userlist={admin_userlist}
 							onClickDeleteUser={this.deleteUserCheck}
+							onClickGiveAdmin={this.giveAdminCheck}
 						/>
 						</div>
 					</div>
@@ -92,8 +111,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onChangeGroupInfo: (groupid, grouptype, groupname) => dispatch(toChangeGroupInfo(groupid, grouptype, groupname)),
+	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid)),
 	onDeleteUser: (groupid, userid) => dispatch(toDeleteGroupUser(groupid, userid)),
-	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid))
+	onGiveAdmin: (groupid, userid) => dispatch(toGiveAdmin(groupid, userid)),
+	onDeleteGroup: (groupid) => dispatch(toDeleteGroup(groupid))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupAdminPage);
