@@ -8,8 +8,8 @@
 //import FabricCanvas from '../components/DesignPage/FabricCanvas'
 //import TemplateList from '../components/DesignPage/TemplateList';
 //import TemplateListItem from '../components/DesignPage/TemplateListItem';
-//import * as actions from '../actions';
-//import homepageApp from './index.js';
+import * as actions from '../actions';
+import homepageApp from './index.js';
 
 //configure({adapter: new Adapter()});
 
@@ -42,7 +42,7 @@
     })
 })*/
 
-/*const initState = {
+const initState = {
     authorization: "",
     profile_user: null,
 
@@ -138,4 +138,4 @@ describe('homepage reducer', () => {
     })
 
 
-})*/
+})
