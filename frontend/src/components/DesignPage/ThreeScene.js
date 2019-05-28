@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import * as THREE from 'three';
 
 class ThreeScene extends Component{
@@ -30,10 +30,10 @@ class ThreeScene extends Component{
     this.controls.panSpeed = 0.8;
 
     //ADD CUBE
-    /*const geometry = new THREE.BoxGeometry(1, 1, 1)
-    const material = new THREE.MeshBasicMaterial({ color: '#433F81'     })
-    this.cube = new THREE.Mesh(geometry, material)
-    this.scene.add(this.cube)*/
+    //const geometry = new THREE.BoxGeometry(1, 1, 1)
+    //const material = new THREE.MeshBasicMaterial({ color: '#433F81'     })
+    //this.cube = new THREE.Mesh(geometry, material)
+    //this.scene.add(this.cube)
     const geometry = new THREE.BoxGeometry(1, 1, 1)
     //const texture = new THREE.TextureLoader().load('./images/templates/back_body/00bee.png')
     //const material = new THREE.MeshBasicMaterial({map : texture})
@@ -78,4 +78,4 @@ render(){
     )
   }
 }
-export default ThreeScene
+export default ThreeScene*/

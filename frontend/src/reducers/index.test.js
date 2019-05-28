@@ -1,8 +1,8 @@
 // jest testing
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {create} from 'react-test-renderer';
-import {mount, shallow} from 'enzyme';
+//import React from 'react';
+//import ReactDOM from 'react-dom';
+//import {create} from 'react-test-renderer';
+//import {mount, shallow} from 'enzyme';
 //import Adapter from 'enzyme-adapter-react-16';
 //import DesignPage from '../components/DesignPage/DesignPage'
 //import FabricCanvas from '../components/DesignPage/FabricCanvas'
@@ -184,4 +184,4 @@ describe('homepage reducer', () => {
     })
 
 
-})
+})*/
