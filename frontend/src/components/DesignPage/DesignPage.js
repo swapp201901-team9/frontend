@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux'
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
-import ThreeScene from './ThreeScene'
+//import ThreeScene from './ThreeScene';
 
-import FabricCanvas from './FabricCanvas'
-import TemplateList from './TemplateList'
-import TemplateListItem from './TemplateListItem'
-import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
+import FabricCanvas from './FabricCanvas';
+//import TemplateList from './TemplateList'
+//import TemplateListItem from './TemplateListItem'
+//import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
-//conditional rendering 찾아보자 세리야
+
 //import ImageUploader from 'react-images-upload';
 
 import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js';
@@ -38,7 +38,28 @@ class DesignPage extends React.Component {
 		};
 		// this.onDrop = this.onDropFront.bind(this);
 		// this.onDrop = this.onDropBack.bind(this);
+		this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
+		this.addToBackCanvas = this.addToBackCanvas.bind(this);
+		this.addToBothCanvas = this.addToBothCanvas.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleChangeComplete = this.handleChangeComplete(this);
+		this.handleDesignChangeComplete = this.handleDesignChangeComplete(this);
 	}
+	
+	componentDidMount(){
+		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f", 
+	"#f8f8f8", "#4f4f53", "#2a2a2a"];
+		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
+	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+        
+
+    }
 
 	/*componentDidUpdate(prevProps, prevState) {
 		if (prevState.design_body != this.state.design_body ) {
@@ -89,7 +110,7 @@ class DesignPage extends React.Component {
 	button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 
-	addToFrontCanvas = (imgElement, property_type, z_Index) => {
+	addToFrontCanvas(imgElement, property_type, z_Index) {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
 			height: 959,
@@ -100,7 +121,7 @@ class DesignPage extends React.Component {
 		this.setState({activeFrontProperty: imgInstance});
 	}
 
-	addToBackCanvas = (imgElement, property_type, z_Index) => {
+	addToBackCanvas(imgElement, property_type, z_Index) {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
 			height: 959,
@@ -111,7 +132,7 @@ class DesignPage extends React.Component {
 		this.setState({activeBackProperty: imgInstance});
 	}
 
-	addToBothCanvas = (imgElement, property_type, z_Index) => {
+	addToBothCanvas(imgElement, property_type, z_Index)  {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 899,
 			height: 959,
@@ -125,11 +146,11 @@ class DesignPage extends React.Component {
 		});
 	}
 
-	handleChangeComplete = (color, event) => {
-		this.fontcolor = color.hex
+	handleChangeComplete(color, event) {
+		this.fontcolor = color.hex;
 	}
 
-	handleDesignChangeComplete = (color, event) => {
+	handleDesignChangeComplete(color, event) {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 			case 'body': 
@@ -510,7 +531,7 @@ class DesignPage extends React.Component {
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}
-	<ThreeScene/>
+	{/*<ThreeScene/>*/}
 	<FabricCanvas
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
