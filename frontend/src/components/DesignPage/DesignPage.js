@@ -124,11 +124,13 @@ class DesignPage extends React.Component {
 				
 				
 
-				var imgElement2 = document.getElementById('back_body');
+				//var imgElement2 = document.getElementById('back_body');
+				var imgElement2 = document.createElement("img");
 				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
 				console.log("back body src is");
 				console.log(src2);
-				imgElement2.src = require(src2);
+				imgElement2.setAttribute("src", require(src2));
+				//imgElement2.src = require(src2);
 
 				this.addToFrontCanvas(imgElement1, "front_body", 0);
 				this.addToBackCanvas(imgElement2, "back_body", 0);
@@ -315,10 +317,10 @@ class DesignPage extends React.Component {
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
 		//this.forceUpdate();
 	  }
-	  /*else {
+	  else {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-	  }*/
+	  }
       return (
       <div>
 				<section className="wrap clear col3">
