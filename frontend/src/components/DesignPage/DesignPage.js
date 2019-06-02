@@ -110,12 +110,19 @@ class DesignPage extends React.Component {
 		switch(design_element) {
 			case 'body': 
 				this.setState({design_body: color.hex}); 
-				this.forceUpdate();
-				var imgElement1 = document.getElementById('front_body');
+				//this.forceUpdate();
+				//var imgElement1 = document.getElementById('front_body');
+				var imgElement1 = document.createElement("img");
+				
+				
 				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
 				console.log("front body src is");
+				
+				imgElement1.setAttribute("src", require(src1));
 				console.log(src1);
-				imgElement1.src = require(src1);
+				//imgElement1.src = require(src1);
+				
+				
 
 				var imgElement2 = document.getElementById('back_body');
 				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
@@ -329,7 +336,7 @@ class DesignPage extends React.Component {
 								<h1>Colour</h1>
 								{colorPicker}
 								
-								<img src = '' id = "front_body" />
+								<img src = '' id = "front_body"/>
 								<img src = '' id = "back_body" />
 									
 									<img src = "" id = "front_sleeve" />

@@ -200,21 +200,17 @@ class FabricCanvas extends React.Component{
         return (
             <div className= "main-canvas-container">
                 <button class="front_btn" type="button">Front</button>
-                <canvas id='front-canvas'
-                >
-                </canvas>
+                <canvas id='front-canvas'> </canvas>
 
-                  <input type = "file"
+                  {/*<input type = "file"
                          id = "input"
                          onChange = {this.onDrop} />
                   <img src = ""
-                        id = "img" />
+        id = "img" />*/}
 
 
                 <button class="back_btn" type="button">Back</button>
-                <canvas id='back-canvas'
-                >
-                </canvas>
+                <canvas id='back-canvas'> </canvas>
             </div>
         );
     }
