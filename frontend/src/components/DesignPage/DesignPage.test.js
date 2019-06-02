@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 //import { connect } from 'react-redux';
 //import DesignPage from './DesignPage';
 //import FabricCanvas from './FabricCanvas';
-import TemplateList from './TemplateList';
-import TemplateListItem from './TemplateListItem';
+//import TemplateList from './TemplateList';
+//import TemplateListItem from './TemplateListItem';
 import ResetButton from './ResetButton'
 //import SaveButton from './SaveButton'
 //import {create} from 'react-test-renderer';

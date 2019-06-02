@@ -287,6 +287,7 @@ class DesignPage extends React.Component {
 		else if (value == "sleeve"){
 			this.setState({clickedWhat: "button"});
 		}
+		this.forceUpdate();
 	}
 
     render() {
@@ -295,27 +296,32 @@ class DesignPage extends React.Component {
 	  if (clickedWhat == "body") {
 		  colorPicker = <CirclePicker
 		  id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+		  //this.forceUpdate();
 	  }
 	  else if (clickedWhat == "sleeve") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "banding") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "stripe") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "button") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+		//this.forceUpdate();
 	  }
-	  else {
+	  /*else {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-	  }
+	  }*/
       return (
       <div>
 				<section className="wrap clear col3">
