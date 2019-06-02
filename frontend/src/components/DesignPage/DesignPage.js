@@ -209,6 +209,10 @@ class DesignPage extends React.Component {
 
 
 			break;
+
+			default:
+			
+			break;
 		}
 		console.log(this.state)
 	}
