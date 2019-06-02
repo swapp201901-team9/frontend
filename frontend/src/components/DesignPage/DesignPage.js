@@ -36,8 +36,8 @@ class DesignPage extends React.Component {
 			activeFrontProperty : null,
 			clickedWhat: null
 		};
-		// this.onDrop = this.onDropFront.bind(this);
-		// this.onDrop = this.onDropBack.bind(this);
+		this.onDrop = this.onDrop.bind(this);
+		
 		this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
 		this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		this.addToBothCanvas = this.addToBothCanvas.bind(this);
@@ -62,53 +62,8 @@ class DesignPage extends React.Component {
     }
 
 	/*componentDidUpdate(prevProps, prevState) {
-		if (prevState.design_body != this.state.design_body ) {
-			console.log("design body");
-			var imgElement = document.getElementById('img_body');
-			var src = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
-			console.log("front body src is");
-			console.log(src);
-			imgElement.src = src;
-			var imgInstance = new fabric.Image(imgElement, {
-				width: 899,
-				height: 959,
-				the_type: "front_body",
-				zIndex: 0
-			});
-			this.setState({activeFrontProperty: imgInstance});
-		}
-		else if (prevState.design_sleeve != this.state.design_sleeve ) {
-
-		}
-		else if (prevState.design_banding != this.state.design_banding ) {
-
-		}
-		else if (prevState.design_stripe != this.state.design_stripe ) {
-
-		}
-		else if (prevState.design_button != this.state.design_button ) {
-
-		}
-		else {
-
-		}
 	}*/
 
-
-	/*componentDidMount(){
-		this.img_front = [];
-		this.img_back = [];
-    }*/
-	/*body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
-	sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
-	"#f8f8f8", "#4f4f53", "#2a2a2a"]
-	stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"]
-	banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
-	button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800", 
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]*/
 
 	addToFrontCanvas(imgElement, property_type, z_Index) {
 		var imgInstance = new fabric.Image(imgElement, {
@@ -155,18 +110,27 @@ class DesignPage extends React.Component {
 		switch(design_element) {
 			case 'body': 
 				this.setState({design_body: color.hex}); 
-				this.forceUpdate();
-				var imgElement1 = document.getElementById('front_body');
+				//this.forceUpdate();
+				//var imgElement1 = document.getElementById('front_body');
+				var imgElement1 = document.createElement("img");
+				
+				
 				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
 				console.log("front body src is");
+				
+				imgElement1.setAttribute("src", require(src1));
 				console.log(src1);
-				imgElement1.src = require(src1);
+				//imgElement1.src = require(src1);
+				
+				
 
-				var imgElement2 = document.getElementById('back_body');
+				//var imgElement2 = document.getElementById('back_body');
+				var imgElement2 = document.createElement("img");
 				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
 				console.log("back body src is");
 				console.log(src2);
-				imgElement2.src = require(src2);
+				imgElement2.setAttribute("src", require(src2));
+				//imgElement2.src = require(src2);
 
 				this.addToFrontCanvas(imgElement1, "front_body", 0);
 				this.addToBackCanvas(imgElement2, "back_body", 0);
@@ -245,6 +209,10 @@ class DesignPage extends React.Component {
 
 
 			break;
+
+			default:
+			
+			break;
 		}
 		console.log(this.state)
 	}
@@ -287,7 +255,43 @@ class DesignPage extends React.Component {
 		else if (value == "sleeve"){
 			this.setState({clickedWhat: "button"});
 		}
+		this.forceUpdate();
 	}
+
+	onDrop = (e) => {
+        console.log("hey");
+
+        e.preventDefault();
+        var preview = document.getElementById('img');
+        var file = document.getElementById('input').files[0];
+        var canvas = this.the_front_canvas;
+        let reader = new FileReader();
+        reader.addEventListener("load", function() {
+            preview.src = reader.result;
+            var imgInstance = new fabric.Image(preview, {
+            width: 899,
+            height:959,
+            the_type: "upload",
+            zIndex: 10
+            });
+            console.log("imgInstance set");
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+            });
+            console.log("imgInstance scale");
+            
+        },false);
+
+       
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+       
+        this.the_front_canvas = canvas;
+    }
 
     render() {
 	  const clickedWhat = this.state.clickedWhat;
@@ -295,22 +299,27 @@ class DesignPage extends React.Component {
 	  if (clickedWhat == "body") {
 		  colorPicker = <CirclePicker
 		  id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+		  //this.forceUpdate();
 	  }
 	  else if (clickedWhat == "sleeve") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "banding") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "stripe") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+		//this.forceUpdate();
 	  }
 	  else if (clickedWhat == "button") {
 		colorPicker = <CirclePicker
 		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+		//this.forceUpdate();
 	  }
 	  else {
 		colorPicker = <CirclePicker
@@ -322,74 +331,6 @@ class DesignPage extends React.Component {
               <div className="aside">
                 <h2 className="h_white">SELECT STYLE</h2>
                 <div className="content">
-						{/*<h3> *front* </h3>
-						<h4> sleeve </h4>
-						<TemplateList
-									data = {front_arm}
-									property_type = "front_arm"
-									zIndex = {0}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<h4> body </h4>
-								<TemplateList
-									data = {front_body}
-									property_type = "front_body"
-									zIndex = {0}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<h4> button </h4>
-								<TemplateList
-									data = {front_button}
-									property_type = "front_button"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<h4> stripe </h4>
-								<TemplateList
-									data = {front_stripe}
-									property_type = "front_stripe"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<h4> banding </h4>
-								<TemplateList
-									data = {front_banding}
-									property_type = "front_banding"
-									zIndex = {2}
-									addtocanvas = {this.addToFrontCanvas}
-								/>
-								<h3> *back* </h3>
-								<h4> sleeve </h4>
-								<TemplateList
-									data = {back_arm}
-									property_type = "back_arm"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<h4> banding </h4>
-								<TemplateList
-									data = {back_banding}
-									property_type = "back_banding"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<h4> body </h4>
-								<TemplateList
-									data = {back_body}
-									property_type = "back_body"
-									zIndex = {0}
-									addtocanvas = {this.addToBackCanvas}
-								/>
-								<h4> stripe </h4>
-								<TemplateList
-									data = {back_stripe}
-									property_type = "back_stripe"
-									zIndex = {2}
-									addtocanvas = {this.addToBackCanvas}
-						/>*/}
-
-								{/*<h1>Design Element</h1>*/}
-
 									<center><select id="design_element"
 									onChange={(e)=>this.handleChange(e)}>
 										<option value = "body">body</option>
@@ -400,15 +341,10 @@ class DesignPage extends React.Component {
 									</select></center>
 								<h1>Colour</h1>
 								{colorPicker}
-								{/*<CirclePicker
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>*/}
-								<img src = '' id = "front_body" />
+								
+								<img src = '' id = "front_body"/>
 								<img src = '' id = "back_body" />
-									{/*<img src = {require('./logo.jpg')} id = "img_body"/>*/}
-
-									{/*<p>sleeve color</p>
-								<CirclePicker
-									id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>*/}
+									
 									<img src = "" id = "front_sleeve" />
 									<img src = '' id = "back_sleeve" />
 
@@ -464,7 +400,7 @@ class DesignPage extends React.Component {
 
 		{/*<!--========================================
 			front-back button section
-    =========================================-->*/}
+	=========================================-->*/}
 		<div class="change_side">
 			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
 			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
@@ -474,25 +410,19 @@ class DesignPage extends React.Component {
 
 		{/*<!--========================================
 			Image Upload Modal
-    =========================================-->*/}
-
-						{/*<h4 class="modal-title">Upload image Front</h4>
-						<input type = "file"
-                         id = "input_front"
-                         onChange = {this.onDropFront} />
-                  		<img src = ""
-                        id = "img_front" />
-						<h4 class="modal-title">Upload image Back</h4>
-						<input type = "file"
-                         id = "input_front"
-                         onChange = {this.onDropBack} />
-                  		<img src = ""
-	id = "img_back" />*/}
+	=========================================-->*/}
+	<h1>Logo</h1>
+    <input type = "file"
+                         id = "input"
+                         onChange = {this.onDrop} />
+                  <img src = ""
+                        id = "img" />
 			</div>
           </div>
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
+
                 {/*<!--========================================
 			front-back button section
 	=========================================-->*/}

@@ -1,18 +1,18 @@
-/*import React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {fabric} from 'fabric';
-import { connect } from 'react-redux';
+//import {fabric} from 'fabric';
+//import { connect } from 'react-redux';
 //import DesignPage from './DesignPage';
 //import FabricCanvas from './FabricCanvas';
-import TemplateList from './TemplateList';
-import TemplateListItem from './TemplateListItem';
+//import TemplateList from './TemplateList';
+//import TemplateListItem from './TemplateListItem';
 import ResetButton from './ResetButton'
 //import SaveButton from './SaveButton'
-import {create} from 'react-test-renderer';
-import {configure, mount, shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-15';
+//import {create} from 'react-test-renderer';
+//import {configure, mount, shallow} from 'enzyme';
+//import Adapter from 'enzyme-adapter-react-15';
 
-configure({ adapter: new Adapter() });
+//configure({ adapter: new Adapter() });
 
 describe('ResetButton', () => {
     it ('renders reset button', () => {
@@ -20,11 +20,11 @@ describe('ResetButton', () => {
         ReactDOM.render(<ResetButton/>, div);
         ReactDOM.unmountComponentAtNode(div);
 
-        let tree = create(<ResetButton/>);
-        expect(tree.toJSON()).toMatchSnapshot();
+        //let tree = create(<ResetButton/>);
+        //expect(tree.toJSON()).toMatchSnapshot();
 
-        const wrapper = shallow(<ResetButton/>);
-        expect(wrapper.length).toBe(1);
+        //const wrapper = shallow(<ResetButton/>);
+        //expect(wrapper.length).toBe(1);
     })
 })
 
@@ -103,9 +103,9 @@ describe('TemplateListItem', ()=> {
         //mount(<DesignPage/>);
         //shallow(<DesignPage />);
 
-        const wrapper = shallow(<TemplateListItem/>);
-        expect(wrapper.length).toBe(1);
+        //const wrapper = shallow(<TemplateListItem/>);
+        //expect(wrapper.length).toBe(1);
     })
-})*/
+})
 
 
