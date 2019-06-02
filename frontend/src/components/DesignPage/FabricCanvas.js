@@ -1,6 +1,5 @@
 import React from 'react';
 import {fabric} from 'fabric';
-//import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
@@ -210,13 +209,7 @@ class FabricCanvas extends React.Component{
                          onChange = {this.onDrop} />
                   <img src = ""
                         id = "img" />
-                  {/*<ImageUploader
-                    withIcon = {true}
-                    buttonText = 'Choose images'
-                    onChange = {this.onDrop}
-                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    withPreview = {true}
-                  />*/}
+
 
                 <button class="back_btn" type="button">Back</button>
                 <canvas id='back-canvas'
