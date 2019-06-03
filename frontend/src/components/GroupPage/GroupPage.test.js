@@ -1,46 +1,68 @@
-import GroupPage from '../components/GroupPage/GroupPage';
-import GroupAdminPage from '../components/GroupPage/GroupAdminPage';
+// import React from 'react';
+// import {shallow, configure} from 'enzyme';
+// import {create} from 'react-test-renderer';
+// import Adapter from 'enzyme-adapter-react-15';
 
-describe('GroupPage', () => {
-    let component = null
+// import GroupPage from "./GroupPage";
+// import GroupAdminPage from "./GroupAdminPage";
+// import CreateGroup from "./CreateGroup";
 
-    it('renders correctly', () => {
-        component = renderer.create(<GroupPage />)
-    })
+// configure({ adapter: new Adapter() });
 
-    it('matches snapshot', () => {
-        const tree = component.toJSON()
-        expect(tree).toMatchSnapshot()
-    })
+// describe('GroupPage', () => {
+//     let component = null
 
-    describe('CreateGroup', () => {
-        // group 생성이 잘 되는지 확인
-        it('creates group correctly', () => {
+//     it('renders correctly', () => {
+//         component = create(<GroupPage />)
+//     })
 
-        })
-    })
+//     it('should render a CREATE GROUP h2', () => {
+//         const wrapper = shallow(
+//             <h2 className="h_white">CREATE GROUP</h2>
+//         )
+//         expect(wrapper).toMatchSnapshot()
+//     })
 
-    describe('SearchingGroup', () => {
-        // 검색이 잘 되는지 확인
-        it('searches correctly', () => {
+//     // it('should render CREATE GROUP component', () => {
+//     //     const wrapper = shallow(
+//     //         <CreateGroup />
+//     //     )
+//     //     expect(wrapper).toMatchSnapshot()
+//     // })
 
-        })
-    })
+//     // it('matches snapshot', () => {
+//     //     const tree = component.toJSON()
+//     //     expect(tree).toMatchSnapshot()
+//     // })
 
-    describe('MyGroupList')
-})
+//     // describe('CreateGroup', () => {
+//     //     // group 생성이 잘 되는지 확인
+//     //     it('creates group correctly', () => {
+
+//     //     })
+//     // })
+
+//     // describe('SearchingGroup', () => {
+//     //     // 검색이 잘 되는지 확인
+//     //     it('searches correctly', () => {
+
+//     //     })
+//     // })
+
+//     // describe('MyGroupList')
+// })
 
 
-describe('GroupAdminPage', () => {
-    let component = null
+// // describe('GroupAdminPage', () => {
+// //     let component = null
 
-    it('renders correctly', () => {
-        component = renderer.create(<GroupAdminPage />)
-    })
-    describe('ChangeGroupInfo')
-    describe('GroupUser')
-    describe('GroupDesign')
-})
+// //     it('renders correctly', () => {
+// //         component = renderer.create(<GroupAdminPage />)
+// //     })
+// //     describe('ChangeGroupInfo')
+// //     describe('GroupUser')
+// //     describe('GroupDesign')
+// // })
 
-describe('GroupDetailPage', () => {
-})
+// // describe('GroupDetailPage', () => {
+// // })
