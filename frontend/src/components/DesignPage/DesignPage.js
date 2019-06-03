@@ -26,16 +26,18 @@ import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js'
 class DesignPage extends React.Component {
 	constructor(props){
 		super(props);
+
 		this.state = {
-			design_body : null,
-			design_sleeve : null,
-			design_banding : null,
-			design_stripe : null,
-			design_button : null,
+			design_body : this.props.now_design.body,
+			design_sleeve : this.props.now_design.sleeve,
+			design_banding : this.props.now_design.banding,
+			design_stripe : this.props.now_design.stripe,
+			design_button : this.props.now_design.button,
 			activeBackProperty : null,
 			activeFrontProperty : null,
 			clickedWhat: null
 		};
+
 		this.onDrop = this.onDrop.bind(this);
 		
 		this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
@@ -48,18 +50,16 @@ class DesignPage extends React.Component {
 
 	componentDidMount(){
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
-	"#f8f8f8", "#4f4f53", "#2a2a2a"];
+		"#f8f8f8", "#4f4f53", "#2a2a2a"];
 		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-
-
-    }
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+  }
 
 	/*componentDidUpdate(prevProps, prevState) {
 	}*/
@@ -441,20 +441,15 @@ class DesignPage extends React.Component {
 	}
 
 
-                </div>
-              </div>
-              <div className="aside">
-                <h2 className="h_black">MY GROUP</h2>
-                <div className="content">
-									{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
-                </div>
-              </div>
-            </section>
-
-
-
-
-
+			</div>
+		</div>
+		<div className="aside">
+			<h2 className="h_black">MY GROUP</h2>
+			<div className="content">
+				{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+			</div>
+		</div>
+	</section>
       </div>
 
       );
