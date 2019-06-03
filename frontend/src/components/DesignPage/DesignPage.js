@@ -46,9 +46,7 @@ class DesignPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
-	}
 
-	componentDidMount(){
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
@@ -59,7 +57,20 @@ class DesignPage extends React.Component {
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-  }
+	}
+
+	// componentDidMount(){
+	// 	this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+	// 	this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
+	// 	"#f8f8f8", "#4f4f53", "#2a2a2a"];
+	// 	this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+	// 	this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+	// 	this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+  // }
 
 	/*componentDidUpdate(prevProps, prevState) {
 	}*/
@@ -294,69 +305,72 @@ class DesignPage extends React.Component {
     }
 
     render() {
-	  const clickedWhat = this.state.clickedWhat;
-	  let colorPicker;
-	  if (clickedWhat == "body") {
-		  colorPicker = <CirclePicker
-		  id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-		  //this.forceUpdate();
-	  }
-	  else if (clickedWhat == "sleeve") {
-		colorPicker = <CirclePicker
-		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
-		//this.forceUpdate();
-	  }
-	  else if (clickedWhat == "banding") {
-		colorPicker = <CirclePicker
-		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
-		//this.forceUpdate();
-	  }
-	  else if (clickedWhat == "stripe") {
-		colorPicker = <CirclePicker
-		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
-		//this.forceUpdate();
-	  }
-	  else if (clickedWhat == "button") {
-		colorPicker = <CirclePicker
-		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
-		//this.forceUpdate();
-	  }
-	  else {
-		colorPicker = <CirclePicker
-		id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-	  }
+			const clickedWhat = this.state.clickedWhat;
+			let colorPicker;
+			if (clickedWhat == "body") {
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				//this.forceUpdate();
+			}
+			else if (clickedWhat == "sleeve") {
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+				//this.forceUpdate();
+			}
+			else if (clickedWhat == "banding") {
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+				//this.forceUpdate();
+			}
+			else if (clickedWhat == "stripe") {
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+				//this.forceUpdate();
+			}
+			else if (clickedWhat == "button") {
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+				//this.forceUpdate();
+			}
+			else {
+				console.log("else")
+				colorPicker = <CirclePicker
+				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+			}
+
       return (
       <div>
 				<section className="wrap clear col3">
-              <div className="aside">
-                <h2 className="h_white">SELECT STYLE</h2>
-                <div className="content">
-									<center><select id="design_element"
-									onChange={(e)=>this.handleChange(e)}>
-										<option value = "body">body</option>
-										<option value = "sleeve">sleeve</option>
-										<option value = "banding">banding</option>
-										<option value = "stripe">stripe</option>
-										<option value = "button">button</option>
-									</select></center>
-								<h1>Colour</h1>
-								{colorPicker}
+					<div className="aside">
+						<h2 className="h_white">SELECT STYLE</h2>
+							<div className="content">
+								<center><select id="design_element"
+								onChange={(e)=>this.handleChange(e)}>
+									<option value = "body">body</option>
+									<option value = "sleeve">sleeve</option>
+									<option value = "banding">banding</option>
+									<option value = "stripe">stripe</option>
+									<option value = "button">button</option>
+								</select></center>
+						
+							<h1>Colour</h1>
+							{colorPicker}
 								
-								<img src = '' id = "front_body"/>
-								<img src = '' id = "back_body" />
-									
-									<img src = "" id = "front_sleeve" />
-									<img src = '' id = "back_sleeve" />
+						<img src = '' id = "front_body"/>
+						<img src = '' id = "back_body" />
+							
+						<img src = "" id = "front_sleeve" />
+						<img src = '' id = "back_sleeve" />
 
-									<img src = "" id = "front_stripe" />
-									<img src = '' id = "back_stripe" />
-
-
-									<img src = "" id = "front_banding" />
-									<img src = '' id = "back_banding" />
+						<img src = "" id = "front_stripe" />
+						<img src = '' id = "back_stripe" />
 
 
-									<img src = "" id = "img_button" />
+						<img src = "" id = "front_banding" />
+						<img src = '' id = "back_banding" />
+
+
+						<img src = "" id = "img_button" />
 
 
 		<br></br>
