@@ -28,11 +28,11 @@ class DesignPage extends React.Component {
 		super(props);
 
 		this.state = {
-			design_body : this.props.now_design.body,
-			design_sleeve : this.props.now_design.sleeve,
-			design_banding : this.props.now_design.banding,
-			design_stripe : this.props.now_design.stripe,
-			design_button : this.props.now_design.button,
+			design_body : this.props.now_design.detail_body,
+			design_sleeve : this.props.now_design.detail_sleeve,
+			design_banding : this.props.now_design.detail_banding,
+			design_stripe : this.props.now_design.detail_stripes,
+			design_button : this.props.now_design.detail_buttons,
 			activeBackProperty : null,
 			activeFrontProperty : null,
 			clickedWhat: null
