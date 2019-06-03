@@ -4,25 +4,29 @@ import { connect } from 'react-redux'
 import { toCreateGroup } from '../../actions/index.js'
 
 class CreateGroup extends React.Component {
-	type_options = [
-		'Select an Option',
-		'Club',
-		'Department',
-		'Else'
-		]
-
-	onSubmit = (e) => {
-		console.log("create onSubmit")
-		e.preventDefault()
-		if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
-			this.props.onCreateGroup(this.grouptype, this.groupname)
-		}
+	constructor(props) {
+		super(props)
 	}
 
 	render() {
+		const type_options= [
+			'Select an Option',
+			'Club',
+			'Department',
+			'Else'
+			]
+
+		let onSubmit = (e) => {
+			console.log("create onSubmit")
+			e.preventDefault()
+			if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
+				this.props.onCreateGroup(this.grouptype, this.groupname)
+			}
+		}
+
 		return(
 			<div>
-				<form onSubmit={this.onSubmit}>
+				<form onSubmit={onSubmit}>
 					<div className="CreateGroup">
 						<label htmlFor="group type">Group Type </label>
 						<select
@@ -30,7 +34,7 @@ class CreateGroup extends React.Component {
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
 						>
-							{this.type_options.map(option => {
+							{type_options.map(option => {
 								return <option value={option} key={option} >{option}</option>
 							})}
 						</select>
