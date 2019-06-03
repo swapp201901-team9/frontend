@@ -11,7 +11,6 @@
 import * as actions from '../actions';
 import homepageApp from './index.js';
 
-
 //configure({adapter: new Adapter()});
 
 /*describe('FabricCanvas', ()=> {
@@ -42,7 +41,6 @@ import homepageApp from './index.js';
         //shallow(<DesignPage />);
     })
 })*/
-
 
 const initState = {
     authorization: "",

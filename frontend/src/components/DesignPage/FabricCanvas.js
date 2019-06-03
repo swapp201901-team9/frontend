@@ -1,36 +1,35 @@
 import React from 'react';
 import {fabric} from 'fabric';
-//import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
-    
+
     constructor(props) {
         super(props);
         this.state = {pictures : []};
         this.onDrop = this.onDrop.bind(this);
     }
 
-   
+
     componentDidMount(){
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
-            height:959,
-            width:899,
+            height:403,
+            width:430,
         });
 
         this.the_back_canvas = new fabric.Canvas('back-canvas', {
             preserveObjectStacking: true,
-            height:959,
-            width:899,
+            height:403,
+            width:430,
         });
-        
+
         this.the_canvas = this.the_front_canvas;
     }
 
     componentWillReceiveProps = (newprops) => {
-      
+
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
         if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
@@ -59,7 +58,7 @@ class FabricCanvas extends React.Component{
 
             // if(next.the_type === 'bg'){
             //     this.the_front_canvas.setBackgroundImage(next);
-            //     this.the_front_canvas.renderAll();                
+            //     this.the_front_canvas.renderAll();
             //     return;
             // }
 
@@ -89,7 +88,7 @@ class FabricCanvas extends React.Component{
 
             // if(next.the_type === 'bg'){
             //     this.the_back_canvas.setBackgroundImage(next);
-            //     this.the_back_canvas.renderAll();                
+            //     this.the_back_canvas.renderAll();
             //     return;
             // }
 
@@ -112,7 +111,7 @@ class FabricCanvas extends React.Component{
         var canvas2 = this.the_back_canvas;
         let reader = new FileReader();
         reader.addEventListener("load", function() {
-            preview.src = reader.result; 
+            preview.src = reader.result;
             //img.src = reader.result;
             /*var imgInstance = new fabric.Image(preview, {
             width: 40,
@@ -122,7 +121,7 @@ class FabricCanvas extends React.Component{
             });*/
             console.log(preview.width);
             console.log(preview.height);
-          
+
             var imgInstance = new fabric.Image(preview, {
             width: 899,
             height:959,
@@ -151,22 +150,22 @@ class FabricCanvas extends React.Component{
                 height:959,
                 width:899,
             });*/
-            
+
         },false);
-    
+
         /*reader.onloadend = () => {
             var img = new Image(40,40);
 	        img.src = reader.result;
-            
+
             var imgInstance = new fabric.Image(img, {
                 width: 899,
                 height: 959,
                 the_type: "upload",
                 zIndex: 2
-            });    
+            });
             this.the_canvas.add(imgInstance);
         }*/
-    
+
         if (file) {
             reader.readAsDataURL(file);
         }
@@ -195,33 +194,23 @@ class FabricCanvas extends React.Component{
         const file = event.target.files[0];
         this.setState({selectedFile: file});
     }
-   
+
     render(){
-       
+
         return (
             <div className= "main-canvas-container">
                 <button class="front_btn" type="button">Front</button>
-                <canvas id='front-canvas'
-                >
-                </canvas>
+                <canvas id='front-canvas'> </canvas>
 
-                  <input type = "file"
-                         id = "input" 
+                  {/*<input type = "file"
+                         id = "input"
                          onChange = {this.onDrop} />
-                  <img src = "" 
-                        id = "img" />
-                  {/*<ImageUploader 
-                    withIcon = {true}
-                    buttonText = 'Choose images'
-                    onChange = {this.onDrop}
-                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    withPreview = {true}
-                  />*/}
+                  <img src = ""
+        id = "img" />*/}
+
 
                 <button class="back_btn" type="button">Back</button>
-                <canvas id='back-canvas'
-                >
-                </canvas>
+                <canvas id='back-canvas'> </canvas>
             </div>
         );
     }
