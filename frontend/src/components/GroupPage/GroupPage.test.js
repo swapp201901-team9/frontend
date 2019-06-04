@@ -3,13 +3,16 @@
 // import {create} from 'react-test-renderer';
 // import Adapter from 'enzyme-adapter-react-15';
 
-// import GroupPage from "./GroupPage";
+import GroupPage from "./GroupPage";
 // import GroupAdminPage from "./GroupAdminPage";
 // import CreateGroup from "./CreateGroup";
 
 //configure({ adapter: new Adapter() });
 
 describe('GroupPage', () => {
+    ReactDOM.render(<GroupPage/>, div);
+    ReactDOM.unmountComponentAtNode(div);
+
     // let component = null
 
     // it('renders correctly', () => {
