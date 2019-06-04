@@ -2,7 +2,8 @@
 // import {shallow, configure} from 'enzyme';
 // import {create} from 'react-test-renderer';
 // import Adapter from 'enzyme-adapter-react-15';
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 import GroupPage from "./GroupPage";
 // import GroupAdminPage from "./GroupAdminPage";
 // import CreateGroup from "./CreateGroup";
