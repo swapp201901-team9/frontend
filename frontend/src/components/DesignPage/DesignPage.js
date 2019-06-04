@@ -36,10 +36,6 @@ class DesignPage extends React.Component {
 				stripe : this.props.now_design.detail_stripes,
 				button : this.props.now_design.detail_buttons
 			},
-			
-			// activeBackProperty : null,
-			// activeFrontProperty : null,
-			// clickedWhat: null
 		};
 
 		this.onDrop = this.onDrop.bind(this);
@@ -50,6 +46,7 @@ class DesignPage extends React.Component {
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
+		this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
 	
 	}
 
@@ -66,49 +63,6 @@ class DesignPage extends React.Component {
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 	}
-
-	/*componentDidUpdate(prevProps, prevState) {
-	}*/
-
-
-	// addToFrontCanvas(imgElement, property_type, z_Index) {
-	// 	console.log("DesignPage - addToFrontCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({activeFrontProperty: imgInstance});
-	// }
-
-	// addToBackCanvas(imgElement, property_type, z_Index) {
-	// 	console.log("DesignPage - addToBackCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({activeBackProperty: imgInstance});
-	// }
-
-	// addToBothCanvas(imgElement, property_type, z_Index)  {
-	// 	console.log("DesignPage - addToBothCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({
-	// 		activeFrontProperty: imgInstance,
-	// 		activeBackProperty: imgInstance
-	// 	});
-	// }
 
 	handleFontChangeComplete(color, event) {
 		console.log("DesignPage - handleFontChangeComplete")
@@ -138,7 +92,6 @@ class DesignPage extends React.Component {
 				stripe: this.state.design.stripe,
 				button: this.state.design.button
 			}}); 
-			// this.addToBackCanvas(imgElement2, "back_sleeve", 0);
 			break;
 
 		case 'banding': 
@@ -149,7 +102,6 @@ class DesignPage extends React.Component {
 				stripe: this.state.design.stripe,
 				button: this.state.design.button
 			}});
-			// this.addToBackCanvas(imgElement2, "back_banding", 0);
 			break;
 
 		case 'stripe': 
@@ -160,7 +112,6 @@ class DesignPage extends React.Component {
 				stripe: color.hex,
 				button: this.state.design.button 
 			}}); 
-			// this.addToBackCanvas(imgElement2, "back_stripe", 2);
 
 			break;
 
@@ -172,7 +123,6 @@ class DesignPage extends React.Component {
 				stripe: this.state.design.stripe,
 				button: color.hex
 			}}); 
-			// this.addToFrontCanvas(imgElement1, "front_button", 2);
 			break;
 
 		default:
@@ -385,7 +335,7 @@ class DesignPage extends React.Component {
 	{this.props.isLoggedIn ?
 		(<div>
 			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
+			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design)}>SAVE</button>
 		</div>)
 		: <div></div>
 	}
