@@ -43,12 +43,12 @@ class FabricCanvas extends React.Component{
 
         this.designElementToImage(this.props.design.body, "front_body", 0)
         this.designElementToImage(this.props.design.body, "back_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.sleeve, "front_sleeve", 0)
+        this.designElementToImage(this.props.design.sleeve, "back_sleeve", 0)
+        this.designElementToImage(this.props.design.stripe, "front_stripe", 0)
+        this.designElementToImage(this.props.design.stripe, "front_stipe", 0)
+        this.designElementToImage(this.props.design.banding, "front_body", 0)
+        this.designElementToImage(this.props.design.banding, "front_body", 0)
 
     }
 
@@ -56,7 +56,7 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
         
         var imgElement = document.createElement("img");
-        var src = './images/templates/'+type+'/'+color.substring(1)+'_body.png';
+        var src = './images/templates/'+type+'/'+color.substring(1)+'.png';
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));	
         

@@ -7,7 +7,7 @@ import {CirclePicker} from 'react-color';
 import FabricCanvas from './FabricCanvas';
 //import TemplateList from './TemplateList'
 //import TemplateListItem from './TemplateListItem'
-//import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
+//import {back_sleeve, back_banding, back_body, back_stripe, front_sleeve, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 //import ImageUploader from 'react-images-upload';
@@ -37,18 +37,18 @@ class DesignPage extends React.Component {
 				button : this.props.now_design.detail_buttons
 			},
 			
-			activeBackProperty : null,
-			activeFrontProperty : null,
-			clickedWhat: null
+			// activeBackProperty : null,
+			// activeFrontProperty : null,
+			// clickedWhat: null
 		};
 
 		this.onDrop = this.onDrop.bind(this);
 		
-		this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
-		this.addToBackCanvas = this.addToBackCanvas.bind(this);
-		this.addToBothCanvas = this.addToBothCanvas.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleChangeComplete = this.handleChangeComplete.bind(this);
+		// this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
+		// this.addToBackCanvas = this.addToBackCanvas.bind(this);
+		// this.addToBothCanvas = this.addToBothCanvas.bind(this);
+		// this.handleChange = this.handleChange.bind(this);
+		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 	
 	}
@@ -65,108 +65,53 @@ class DesignPage extends React.Component {
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-
-		
-		// var imgElement1 = document.createElement("img");
-		// var src1 = './images/templates/front_body/'+this.state.design.body.substring(1)+'_body.png';
-		// imgElement1.setAttribute("src", require(src1));
-				
-		// var imgElement2 = document.createElement("img");
-		// var src2 = './images/templates/back_body/'+this.state.design.body.substring(1)+'.png';
-		// imgElement2.setAttribute("src", require(src2));
-
-		// this.addToFrontCanvas(imgElement1, "front_body", 0);
-		// this.addToBackCanvas(imgElement2, "back_body", 0);
-
-
-		// var imgElement3 = document.createElement("img");
-		// var src3 = './images/templates/front_arm/'+this.state.design.sleeve.substring(1)+'_arm.png';
-		// imgElement3.setAttribute("src", require(src3));
-				
-		// var imgElement4 = document.createElement("img");
-		// var src4 = './images/templates/back_arm/'+this.state.design.sleeve.substring(1)+'.png';
-		// imgElement4.setAttribute("src", require(src4));
-
-		// this.addToFrontCanvas(imgElement3, "front_sleeve", 0);
-		// this.addToBackCanvas(imgElement4, "back_sleeve", 0);
-
-
-		// imgElement1 = document.createElement("img");
-		// src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
-		// imgElement1.setAttribute("src", require(src1));
-				
-		// imgElement2 = document.createElement("img");
-		// src2 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
-		// imgElement2.setAttribute("src", require(src2));
-
-		// this.addToFrontCanvas(imgElement1, "front_stripe", 0);
-		// this.addToBackCanvas(imgElement2, "back_stripe", 0);
-
-
-		// imgElement1 = document.createElement("img");
-		// src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
-		// imgElement1.setAttribute("src", require(src1));
-				
-		// imgElement2 = document.createElement("img");
-		// src2 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
-		// imgElement2.setAttribute("src", require(src2));
-
-		// this.addToFrontCanvas(imgElement1, "front_banding", 0);
-		// this.addToBackCanvas(imgElement2, "back_banding", 0);
-
-
-		// imgElement1 = document.createElement("img");
-		// src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
-		// imgElement1.setAttribute("src", require(src1));
-			
-		// this.addToFrontCanvas(imgElement1, "front_button", 0);
 	}
 
 	/*componentDidUpdate(prevProps, prevState) {
 	}*/
 
 
-	addToFrontCanvas(imgElement, property_type, z_Index) {
-		console.log("DesignPage - addToFrontCanvas")
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
+	// addToFrontCanvas(imgElement, property_type, z_Index) {
+	// 	console.log("DesignPage - addToFrontCanvas")
+	// 	var imgInstance = new fabric.Image(imgElement, {
+	// 		width: 430,
+	// 		height: 403,
+	// 		the_type: property_type,
+	// 		zIndex: z_Index
+	// 	});
 
-		this.setState({activeFrontProperty: imgInstance});
-	}
+	// 	this.setState({activeFrontProperty: imgInstance});
+	// }
 
-	addToBackCanvas(imgElement, property_type, z_Index) {
-		console.log("DesignPage - addToBackCanvas")
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
+	// addToBackCanvas(imgElement, property_type, z_Index) {
+	// 	console.log("DesignPage - addToBackCanvas")
+	// 	var imgInstance = new fabric.Image(imgElement, {
+	// 		width: 430,
+	// 		height: 403,
+	// 		the_type: property_type,
+	// 		zIndex: z_Index
+	// 	});
 
-		this.setState({activeBackProperty: imgInstance});
-	}
+	// 	this.setState({activeBackProperty: imgInstance});
+	// }
 
-	addToBothCanvas(imgElement, property_type, z_Index)  {
-		console.log("DesignPage - addToBothCanvas")
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
+	// addToBothCanvas(imgElement, property_type, z_Index)  {
+	// 	console.log("DesignPage - addToBothCanvas")
+	// 	var imgInstance = new fabric.Image(imgElement, {
+	// 		width: 430,
+	// 		height: 403,
+	// 		the_type: property_type,
+	// 		zIndex: z_Index
+	// 	});
 
-		this.setState({
-			activeFrontProperty: imgInstance,
-			activeBackProperty: imgInstance
-		});
-	}
+	// 	this.setState({
+	// 		activeFrontProperty: imgInstance,
+	// 		activeBackProperty: imgInstance
+	// 	});
+	// }
 
-	handleChangeComplete(color, event) {
-		console.log("DesignPage - handleChangeComplete")
+	handleFontChangeComplete(color, event) {
+		console.log("DesignPage - handleFontChangeComplete")
 		this.fontcolor = color.hex;
 	}
 
@@ -174,109 +119,56 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
-			case 'body': 
-				this.setState({design_body: color.hex}); 
-				//this.forceUpdate();
-				//var imgElement1 = document.getElementById('front_body');
-				var imgElement1 = document.createElement("img");
-				
-				
-				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
-				console.log("front body src is");
-				
-				imgElement1.setAttribute("src", require(src1));
-				console.log(src1);
-				//imgElement1.src = require(src1);
-				
-				
-
-				//var imgElement2 = document.getElementById('back_body');
-				var imgElement2 = document.createElement("img");
-				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
-				console.log("back body src is");
-				console.log(src2);
-				imgElement2.setAttribute("src", require(src2));
-				//imgElement2.src = require(src2);
-
-				this.addToFrontCanvas(imgElement1, "front_body", 0);
-				this.addToBackCanvas(imgElement2, "back_body", 0);
-				break;
-				
-			case 'sleeve': 
-			this.setState({design_sleeve: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_sleeve');
-			var src1 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
-			console.log("front sleeve src is");
-			console.log(src1);
-			imgElement1.src = require(src1);
-
-			var imgElement2 = document.getElementById('back_sleeve');
-			var src2 = './images/templates/back_arm/'+this.state.design_sleeve.substring(1)+'.png';
-			console.log("back sleeve src is");
-			console.log(src2);
-			imgElement2.src = require(src2);
-
-			this.addToFrontCanvas(imgElement1, "front_sleeve", 0);
-			this.addToBackCanvas(imgElement2, "back_sleeve", 0);
-			break;
-
-			case 'banding': 
-			this.setState({design_banding: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_banding');
-			var src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
-			console.log("front banding src is");
-			console.log(src1);
-			imgElement1.src = require(src1);
-
-			var imgElement2 = document.getElementById('back_banding');
-			var src2 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
-			console.log("back banding src is");
-			console.log(src2);
-			imgElement2.src = require(src2);
-
-			this.addToFrontCanvas(imgElement1, "front_banding", 0);
-			this.addToBackCanvas(imgElement2, "back_banding", 0);
-
-			break;
-
-			case 'stripe': 
-			this.setState({design_stripe: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_stripe');
-			var src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
-			console.log("front stripe src is");
-			console.log(src1);
-			imgElement1.src = require(src1);
-
-			var imgElement2 = document.getElementById('back_stripe');
-			var src2 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
-			console.log("back stripe src is");
-			console.log(src2);
-			imgElement2.src = require(src2);
-
-			this.addToFrontCanvas(imgElement1, "front_stripe", 2);
-			this.addToBackCanvas(imgElement2, "back_stripe", 2);
-
-			break;
-
-			case 'button': 
-			this.setState({design_button: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('img_button');
-			var src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
-			console.log("front button src is");
-			console.log(src1);
-			imgElement1.src = require(src1);
-
-			this.addToFrontCanvas(imgElement1, "front_button", 2);
-
-
-			break;
-
-			default:
+		case 'body': 
+			this.setState({body: color.hex}); 
+			//this.forceUpdate();
+			//var imgElement1 = document.getElementById('front_body');
+			// var imgElement1 = document.createElement("img");
 			
+			
+			// var src1 = './images/templates/front_body/front_body'+this.state.design_body.substring(1)+'.png';
+			// console.log("front body src is");
+			
+			// imgElement1.setAttribute("src", require(src1));
+			// console.log(src1);
+			// //imgElement1.src = require(src1);
+			
+			
+
+			// //var imgElement2 = document.getElementById('back_body');
+			// var imgElement2 = document.createElement("img");
+			// var src2 = './images/templates/back_body/back_body'+this.state.design_body.substring(1)+'.png';
+			// console.log("back body src is");
+			// console.log(src2);
+			// imgElement2.setAttribute("src", require(src2));
+			// //imgElement2.src = require(src2);
+
+			// this.addToFrontCanvas(imgElement1, "front_body", 0);
+			// this.addToBackCanvas(imgElement2, "back_body", 0);
+			break;
+				
+		case 'sleeve': 
+			this.setState({sleeve: color.hex}); 
+			// this.addToBackCanvas(imgElement2, "back_sleeve", 0);
+			break;
+
+		case 'banding': 
+			this.setState({banding: color.hex});
+			// this.addToBackCanvas(imgElement2, "back_banding", 0);
+			break;
+
+		case 'stripe': 
+			this.setState({stripe: color.hex}); 
+			// this.addToBackCanvas(imgElement2, "back_stripe", 2);
+
+			break;
+
+		case 'button': 
+			this.setState({design_button: color.hex}); 
+			// this.addToFrontCanvas(imgElement1, "front_button", 2);
+			break;
+
+		default:
 			break;
 		}
 		console.log(this.state)
@@ -303,26 +195,26 @@ class DesignPage extends React.Component {
 
 	}
 
-	handleChange(e){
-		console.log("DesignPage - handleChange")
-		let value = e.target.value;
-		if (value == "body") {
-			this.setState({clickedWhat: "body"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "sleeve"});
-		}
-		else if (value == "banding") {
-			this.setState({clickedWhat: "banding"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "stripe"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "button"});
-		}
-		this.forceUpdate();
-	}
+	// handleChange(e){
+	// 	console.log("DesignPage - handleChange")
+	// 	let value = e.target.value;
+	// 	if (value == "body") {
+	// 		this.setState({clickedWhat: "body"});
+	// 	}
+	// 	else if (value == "sleeve"){
+	// 		this.setState({clickedWhat: "sleeve"});
+	// 	}
+	// 	else if (value == "banding") {
+	// 		this.setState({clickedWhat: "banding"});
+	// 	}
+	// 	else if (value == "sleeve"){
+	// 		this.setState({clickedWhat: "stripe"});
+	// 	}
+	// 	else if (value == "sleeve"){
+	// 		this.setState({clickedWhat: "button"});
+	// 	}
+	// 	this.forceUpdate();
+	// }
 
 	onDrop = (e) => {
         console.log("hey");
@@ -449,7 +341,7 @@ class DesignPage extends React.Component {
 			<p>Text colour</p>
 				{/*<!-- colour -->*/}
 				{/*<input type="text" id="text_colour" />*/}
-				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
+				<CirclePicker id="text_colour" onChangeComplete={this.handleFontChangeComplete}/>
 
 			<p>Text style</p>
 				<select id="text_style" onChange={(e)=>this.handleChange(e)}>
@@ -498,11 +390,11 @@ class DesignPage extends React.Component {
 	{/*<ThreeScene/>*/}
 	<FabricCanvas
 	design = {this.state.design}
-	activeFrontProperty = {this.state.activeFrontProperty}
-	activeBackProperty = {this.state.activeBackProperty}
+	// activeFrontProperty = {this.state.activeFrontProperty}
+	// activeBackProperty = {this.state.activeBackProperty}
 	/>
-	{console.log("DesignPage - render - activeFrontProperty: ", this.state.activeFrontProperty)}
-	{console.log("DesignPage - render - activeBackProperty: ", this.state.activeBackProperty)}
+	{/* {console.log("DesignPage - render - activeFrontProperty: ", this.state.activeFrontProperty)}
+	{console.log("DesignPage - render - activeBackProperty: ", this.state.activeBackProperty)} */}
 
 	{this.props.isLoggedIn ?
 		(<div>
