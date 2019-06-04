@@ -28,11 +28,11 @@ class DesignPage extends React.Component {
 		super(props);
 
 		this.state = {
-			design_body : this.props.now_design.detail_body,
-			design_sleeve : this.props.now_design.detail_sleeve,
-			design_banding : this.props.now_design.detail_banding,
-			design_stripe : this.props.now_design.detail_stripes,
-			design_button : this.props.now_design.detail_buttons,
+			//design_body : this.props.now_design.detail_body,
+			//design_sleeve : this.props.now_design.detail_sleeve,
+			//design_banding : this.props.now_design.detail_banding,
+			//design_stripe : this.props.now_design.detail_stripes,
+			//design_button : this.props.now_design.detail_buttons,
 			activeBackProperty : null,
 			activeFrontProperty : null,
 			clickedWhat: null
@@ -150,18 +150,22 @@ class DesignPage extends React.Component {
 			break;
 			case 'sleeve': 
 			this.setState({design_sleeve: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_sleeve');
+			//this.forceUpdate();
+			//var imgElement1 = document.getElementById('front_sleeve');
+			var imgElement1 = document.createElement("img");
 			var src1 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
 			console.log("front sleeve src is");
 			console.log(src1);
-			imgElement1.src = require(src1);
+			//imgElement1.src = require(src1);
+			imgElement1.setAttribute("src", require(src1));
 
-			var imgElement2 = document.getElementById('back_sleeve');
+			//var imgElement2 = document.getElementById('back_sleeve');
+			var imgElement2 = document.createElement("img");
 			var src2 = './images/templates/back_arm/'+this.state.design_sleeve.substring(1)+'.png';
 			console.log("back sleeve src is");
 			console.log(src2);
-			imgElement2.src = require(src2);
+			//imgElement2.src = require(src2);
+			imgElement2.setAttribute("src", require(src2));
 
 			this.addToFrontCanvas(imgElement1, "front_sleeve", 0);
 			this.addToBackCanvas(imgElement2, "back_sleeve", 0);
@@ -169,18 +173,22 @@ class DesignPage extends React.Component {
 
 			case 'banding': 
 			this.setState({design_banding: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_banding');
+			//this.forceUpdate();
+			//var imgElement1 = document.getElementById('front_banding');
+			var imgElement1 = document.createElement("img");
 			var src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
 			console.log("front banding src is");
 			console.log(src1);
-			imgElement1.src = require(src1);
+			//imgElement1.src = require(src1);
+			imgElement1.setAttribute("src", require(src1));
 
-			var imgElement2 = document.getElementById('back_banding');
+			//var imgElement2 = document.getElementById('back_banding');
+			var imgElement2 = document.createElement("img");
 			var src2 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
 			console.log("back banding src is");
 			console.log(src2);
-			imgElement2.src = require(src2);
+			//imgElement2.src = require(src2);
+			imgElement2.setAttribute("src", require(src2));
 
 			this.addToFrontCanvas(imgElement1, "front_banding", 0);
 			this.addToBackCanvas(imgElement2, "back_banding", 0);
@@ -189,18 +197,22 @@ class DesignPage extends React.Component {
 
 			case 'stripe': 
 			this.setState({design_stripe: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('front_stripe');
+			//this.forceUpdate();
+			//var imgElement1 = document.getElementById('front_stripe');
+			var imgElement1 = document.createElement("img");
 			var src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
 			console.log("front stripe src is");
 			console.log(src1);
-			imgElement1.src = require(src1);
+			//imgElement1.src = require(src1);
+			imgElement1.setAttribute("src", require(src1));
 
-			var imgElement2 = document.getElementById('back_stripe');
+			//var imgElement2 = document.getElementById('back_stripe');
+			var imgElement2 = document.createElement("img");
 			var src2 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
 			console.log("back stripe src is");
 			console.log(src2);
-			imgElement2.src = require(src2);
+			//imgElement2.src = require(src2);
+			imgElement2.setAttribute("src", require(src2));
 
 			this.addToFrontCanvas(imgElement1, "front_stripe", 2);
 			this.addToBackCanvas(imgElement2, "back_stripe", 2);
@@ -209,12 +221,14 @@ class DesignPage extends React.Component {
 
 			case 'button': 
 			this.setState({design_button: color.hex}); 
-			this.forceUpdate();
-			var imgElement1 = document.getElementById('img_button');
+			//this.forceUpdate();
+			//var imgElement1 = document.getElementById('img_button');
+			var imgElement1 = document.createElement("img");
 			var src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
 			console.log("front button src is");
 			console.log(src1);
-			imgElement1.src = require(src1);
+			//imgElement1.src = require(src1);
+			imgElement1.setAttribute("src", require(src1));
 
 			this.addToFrontCanvas(imgElement1, "front_button", 2);
 
@@ -356,7 +370,7 @@ class DesignPage extends React.Component {
 							<h1>Colour</h1>
 							{colorPicker}
 								
-						<img src = '' id = "front_body"/>
+						{/*<img src = '' id = "front_body"/>
 						<img src = '' id = "back_body" />
 							
 						<img src = "" id = "front_sleeve" />
@@ -370,7 +384,7 @@ class DesignPage extends React.Component {
 						<img src = '' id = "back_banding" />
 
 
-						<img src = "" id = "img_button" />
+	  					<img src = "" id = "img_button" />*/}
 
 
 		<br></br>
