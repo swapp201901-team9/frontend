@@ -49,7 +49,7 @@ class FabricCanvas extends React.Component{
         this.the_front_canvas.add(this.designElementToImage(this.props.design.sleeve, "front_sleeve", 0))
         this.the_back_canvas.add(this.designElementToImage(this.props.design.sleeve, "back_sleeve", 0))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.stripe, "front_stripe", 2))
-        this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stipe", 2))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stripe", 2))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.banding, "front_banding", 0))
         this.the_back_canvas.add(this.designElementToImage(this.props.design.banding, "back_banding", 0))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
@@ -109,18 +109,25 @@ class FabricCanvas extends React.Component{
 
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
+        let changed;
+
         newprops.design.forEachObject((object) => {
-
-            
+            if(object !== this.props.design.object) {
+                changed = object;
+                console.log("changed: ", changed)
+            }
         })
-        if(newprops.design !== this.props.design){
 
-            this.updateFrontCanvasforImage(newprops.activeFrontProperty);
-        }
+        this.updateFrontCanvasforImage(this.designElementToImage(changed))
 
-        if(newprops.activeBackProperty !== this.props.activeBackProperty){
-            this.updateBackCanvasforImage(this.props.activeBackProperty,newprops.activeBackProperty);
-        }
+        // if(newprops.design !== this.props.design){
+
+        //     this.updateFrontCanvasforImage(newprops.activeFrontProperty);
+        // }
+
+        // if(newprops.activeBackProperty !== this.props.activeBackProperty){
+        //     this.updateBackCanvasforImage(this.props.activeBackProperty,newprops.activeBackProperty);
+        // }
     }
 
     updateFrontCanvasforImage = (next) => {
