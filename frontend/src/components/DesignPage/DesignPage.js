@@ -202,7 +202,7 @@ class DesignPage extends React.Component {
 
 	}
 
-	// handleChange(e){
+	handleChange(e){
 	// 	console.log("DesignPage - handleChange")
 	// 	let value = e.target.value;
 	// 	if (value == "body") {
@@ -224,7 +224,7 @@ class DesignPage extends React.Component {
 	// 	this.setState({clickedWhat: "body"});
 	// }
 	// 	this.forceUpdate();
-	// }
+	}
 
 	onDrop = (e) => {
         console.log("hey");

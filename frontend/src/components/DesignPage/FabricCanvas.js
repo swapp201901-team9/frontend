@@ -114,6 +114,7 @@ class FabricCanvas extends React.Component{
             } );
 
             this.the_front_canvas.remove(to_remove);
+            this.the_front_canvas.renderAll();
 
             // if(next.the_type === 'bg'){
             //     this.the_front_canvas.setBackgroundImage(next);
@@ -122,7 +123,9 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_front_canvas.add(next);
+            this.the_front_canvas.renderAll();
             this.the_front_canvas.moveTo(next, next.zIndex);
+            this.the_front_canvas.renderAll();
         }
     }
 
@@ -143,6 +146,7 @@ class FabricCanvas extends React.Component{
             } );
 
             this.the_back_canvas.remove(to_remove);
+            this.the_back_canvas.renderAll();
 
 
             // if(next.the_type === 'bg'){
@@ -152,8 +156,9 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_back_canvas.add(next);
-            //this.the_back_canvas.renderAll();
+            this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
+            this.the_back_canvas.renderAll();
 
 
         }
@@ -201,6 +206,8 @@ class FabricCanvas extends React.Component{
             canvas2.renderAll();
             canvas.moveTo(imgInstance, imgInstance.zIndex);
             canvas2.moveTo(imgInstance, imgInstance.zIndex);
+            canvas.renderAll();
+            canvas2.renderAll();
             console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
