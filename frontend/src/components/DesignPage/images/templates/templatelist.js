@@ -1,4 +1,4 @@
-const back_arm = [
+/*const back_arm = [
 	require('./back_arm/2a2a2a.png'),
 	require('./back_arm/2e4373.png'),
 	require('./back_arm/4a321f.png'),
@@ -161,4 +161,4 @@ export {
 	front_button,
 	front_stripe,
 	front_banding,
-};
+};*/
