@@ -88,18 +88,31 @@ describe('homepage reducer', () => {
 
             now_group: null,
             now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58"
-        
-            },
+                detail_body: "001c58",
+                detail_sleeve: "f8f8f8",
+                detail_banding: "001c58",
+                detail_stripe: "ffffff",
+                detail_button: "001c58"
 
-            my_requests: [],
-            load: 0,
-            loading: false,
-        })
+            // all_groups: [], 
+            // authorization: "", 
+            // filtered_groups: [], 
+            // group_designs: [], 
+            // group_users: [], 
+            // load: 0, 
+            // loading: false, 
+            // my_groups: [], 
+            // my_requests: [], 
+            // now_design: {
+            //     detaIl_buttons: "001c58", 
+            //     detail_banding: "001c58", 
+            //     detail_body: "001c58", 
+            //     detail_sleeve: "f8f8f8", 
+            //     detail_stripes: "ffffff" }, 
+            // now_group: null, 
+            // profile_user: null
+        
+            })
     })
     it('should return the signout state', () => {
         expect(homepageApp(undefined, actions.signOut())).toEqual(initState)
