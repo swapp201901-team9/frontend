@@ -120,58 +120,65 @@ class DesignPage extends React.Component {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 		case 'body': 
-			this.setState({body: color.hex}); 
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('front_body');
-			// var imgElement1 = document.createElement("img");
-			
-			
-			// var src1 = './images/templates/front_body/front_body'+this.state.design_body.substring(1)+'.png';
-			// console.log("front body src is");
-			
-			// imgElement1.setAttribute("src", require(src1));
-			// console.log(src1);
-			// //imgElement1.src = require(src1);
-			
-			
-
-			// //var imgElement2 = document.getElementById('back_body');
-			// var imgElement2 = document.createElement("img");
-			// var src2 = './images/templates/back_body/back_body'+this.state.design_body.substring(1)+'.png';
-			// console.log("back body src is");
-			// console.log(src2);
-			// imgElement2.setAttribute("src", require(src2));
-			// //imgElement2.src = require(src2);
-
-			// this.addToFrontCanvas(imgElement1, "front_body", 0);
-			// this.addToBackCanvas(imgElement2, "back_body", 0);
+		console.log("body")
+			this.setState({design : { 
+				body: color.hex,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			 }}); 
 			break;
 				
 		case 'sleeve': 
-			this.setState({sleeve: color.hex}); 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: color.hex,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}}); 
 			// this.addToBackCanvas(imgElement2, "back_sleeve", 0);
 			break;
 
 		case 'banding': 
-			this.setState({banding: color.hex});
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: color.hex,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}});
 			// this.addToBackCanvas(imgElement2, "back_banding", 0);
 			break;
 
 		case 'stripe': 
-			this.setState({stripe: color.hex}); 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: color.hex,
+				button: this.state.design.button 
+			}}); 
 			// this.addToBackCanvas(imgElement2, "back_stripe", 2);
 
 			break;
 
 		case 'button': 
-			this.setState({design_button: color.hex}); 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: color.hex
+			}}); 
 			// this.addToFrontCanvas(imgElement1, "front_button", 2);
 			break;
 
 		default:
 			break;
 		}
-		console.log(this.state)
+		console.log("this.state: ", this.state)
 	}
 
 	addText(isFront) {
