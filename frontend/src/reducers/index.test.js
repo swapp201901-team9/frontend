@@ -55,11 +55,11 @@ const initState = {
 
     now_group: null,
     now_design: {
-        body: "001c58",
-        sleeve: "f8f8f8",
-        banding: "001c58",
-        stripe: "ffffff",
-        button: "001c58"
+        detail_body: "001c58",
+        detail_sleeve: "f8f8f8",
+        detail_banding: "001c58",
+        detail_stripe: "ffffff",
+        detail_button: "001c58"
 
     },
 
@@ -93,6 +93,7 @@ describe('homepage reducer', () => {
                 detail_banding: "001c58",
                 detail_stripe: "ffffff",
                 detail_button: "001c58"
+            }
 
             // all_groups: [], 
             // authorization: "", 
@@ -133,11 +134,11 @@ describe('homepage reducer', () => {
 
             now_group: null,
             now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58"
+                detail_body: "001c58",
+                detail_sleeve: "f8f8f8",
+                detail_banding: "001c58",
+                detail_stripe: "ffffff",
+                detail_button: "001c58"
         
             },  
 
