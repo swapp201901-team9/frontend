@@ -6,12 +6,27 @@ class FabricCanvas extends React.Component{
 
     constructor(props) {
         super(props);
+        console.log("FabricCanvas - constructor - props: ", props)
         this.state = {pictures : []};
         this.onDrop = this.onDrop.bind(this);
+        this.designElementToImage = this.designElementToImage.bind(this)
+
+        // this.the_front_canvas = new fabric.Canvas('front-canvas', {
+        //     preserveObjectStacking: true,
+        //     height:403,
+        //     width:430,
+        // });
+
+        // this.the_back_canvas = new fabric.Canvas('back-canvas', {
+        //     preserveObjectStacking: true,
+        //     height:403,
+        //     width:430,
+        // });
+       
     }
 
-
-    componentDidMount(){
+    componentDidMount() {
+        console.log("FabricCanvas - componentDidMount")
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
@@ -25,10 +40,53 @@ class FabricCanvas extends React.Component{
             width:430,
         });
 
-        this.the_canvas = this.the_front_canvas;
+
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "back_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+        this.designElementToImage(this.props.design.body, "front_body", 0)
+
     }
 
+    designElementToImage(color, type, z_Index) {
+        console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
+        
+        var imgElement = document.createElement("img");
+        var src = './images/templates/'+type+'/'+color.substring(1)+'_body.png';
+        console.log("src: ", src)
+		imgElement.setAttribute("src", require(src));	
+        
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 430,
+			height: 403,
+			the_type: type                                                         ,
+			zIndex: z_Index
+		});
+
+        console.log("imgInstance: ", imgInstance)
+        this.the_front_canvas.add(imgInstance)
+        this.the_front_canvas.moveTo(imgInstance, imgInstance.zIndex)
+        console.log("the_front_canvas: ", this.the_front_canvas)
+    }
+    
+    // addToBackCanvas(imgElement, property_type, z_Index) {
+	// 	console.log("DesignPage - addToBackCanvas")
+	// 	var imgInstance = new fabric.Image(imgElement, {
+	// 		width: 430,
+	// 		height: 403,
+	// 		the_type: property_type,
+	// 		zIndex: z_Index
+	// 	});
+
+	// 	this.setState({activeBackProperty: imgInstance});
+	// }
+
     componentWillReceiveProps = (newprops) => {
+        console.log("FabricCanvas - componentWillReceiveProps")
 
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
@@ -42,6 +100,7 @@ class FabricCanvas extends React.Component{
     }
 
     updateFrontCanvasforImage = (prev,next) => {
+        console.log("FabricCanvas - updateFrontCanvasForImage")
 
         if(next){
 
@@ -69,7 +128,7 @@ class FabricCanvas extends React.Component{
 
     updateBackCanvasforImage = (prev,next) => {
 
-        console.log("updateCanvasForImage")
+        console.log("FabricCanvas - updateBackCanvasForImage")
 
 
         if(next){
@@ -182,7 +241,7 @@ class FabricCanvas extends React.Component{
     }
 
     saveToCanvas = () => {
-        console.log("saveToCanvas")
+        console.log("FabricCanvas - saveToCanvas")
 
         let link = document.createElement("a");
         link.href = this.the_canvas.toDataURL({format: 'png'});
@@ -190,12 +249,16 @@ class FabricCanvas extends React.Component{
          link.click();
 
     }
+
     fileChangedHandler = (event) => {
         const file = event.target.files[0];
         this.setState({selectedFile: file});
     }
 
     render(){
+        console.log("FabricCanvas - render - this.state: ", this.state)
+
+        
 
         return (
             <div className= "main-canvas-container">

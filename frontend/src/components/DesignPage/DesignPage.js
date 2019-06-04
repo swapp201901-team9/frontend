@@ -25,14 +25,18 @@ import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js'
 // export default class DesignPage extends React.Component {
 class DesignPage extends React.Component {
 	constructor(props){
+		console.log("DesignPage - constructor")
 		super(props);
 
 		this.state = {
-			design_body : this.props.now_design.detail_body,
-			design_sleeve : this.props.now_design.detail_sleeve,
-			design_banding : this.props.now_design.detail_banding,
-			design_stripe : this.props.now_design.detail_stripes,
-			design_button : this.props.now_design.detail_buttons,
+			design : {
+				body : this.props.now_design.detail_body,
+				sleeve : this.props.now_design.detail_sleeve,
+				banding : this.props.now_design.detail_banding,
+				stripe : this.props.now_design.detail_stripes,
+				button : this.props.now_design.detail_buttons
+			},
+			
 			activeBackProperty : null,
 			activeFrontProperty : null,
 			clickedWhat: null
@@ -46,7 +50,11 @@ class DesignPage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
+	
+	}
 
+	componentWillMount() {
+		console.log("DesignPage - componentWillMount")
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
@@ -57,26 +65,69 @@ class DesignPage extends React.Component {
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-	}
 
-	// componentDidMount(){
-	// 	this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-	// 	this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
-	// 	"#f8f8f8", "#4f4f53", "#2a2a2a"];
-	// 	this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
-	// 	this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-	// 	this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-  // }
+		
+		// var imgElement1 = document.createElement("img");
+		// var src1 = './images/templates/front_body/'+this.state.design.body.substring(1)+'_body.png';
+		// imgElement1.setAttribute("src", require(src1));
+				
+		// var imgElement2 = document.createElement("img");
+		// var src2 = './images/templates/back_body/'+this.state.design.body.substring(1)+'.png';
+		// imgElement2.setAttribute("src", require(src2));
+
+		// this.addToFrontCanvas(imgElement1, "front_body", 0);
+		// this.addToBackCanvas(imgElement2, "back_body", 0);
+
+
+		// var imgElement3 = document.createElement("img");
+		// var src3 = './images/templates/front_arm/'+this.state.design.sleeve.substring(1)+'_arm.png';
+		// imgElement3.setAttribute("src", require(src3));
+				
+		// var imgElement4 = document.createElement("img");
+		// var src4 = './images/templates/back_arm/'+this.state.design.sleeve.substring(1)+'.png';
+		// imgElement4.setAttribute("src", require(src4));
+
+		// this.addToFrontCanvas(imgElement3, "front_sleeve", 0);
+		// this.addToBackCanvas(imgElement4, "back_sleeve", 0);
+
+
+		// imgElement1 = document.createElement("img");
+		// src1 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
+		// imgElement1.setAttribute("src", require(src1));
+				
+		// imgElement2 = document.createElement("img");
+		// src2 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
+		// imgElement2.setAttribute("src", require(src2));
+
+		// this.addToFrontCanvas(imgElement1, "front_stripe", 0);
+		// this.addToBackCanvas(imgElement2, "back_stripe", 0);
+
+
+		// imgElement1 = document.createElement("img");
+		// src1 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
+		// imgElement1.setAttribute("src", require(src1));
+				
+		// imgElement2 = document.createElement("img");
+		// src2 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
+		// imgElement2.setAttribute("src", require(src2));
+
+		// this.addToFrontCanvas(imgElement1, "front_banding", 0);
+		// this.addToBackCanvas(imgElement2, "back_banding", 0);
+
+
+		// imgElement1 = document.createElement("img");
+		// src1 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
+		// imgElement1.setAttribute("src", require(src1));
+			
+		// this.addToFrontCanvas(imgElement1, "front_button", 0);
+	}
 
 	/*componentDidUpdate(prevProps, prevState) {
 	}*/
 
 
 	addToFrontCanvas(imgElement, property_type, z_Index) {
+		console.log("DesignPage - addToFrontCanvas")
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
 			height: 403,
@@ -88,6 +139,7 @@ class DesignPage extends React.Component {
 	}
 
 	addToBackCanvas(imgElement, property_type, z_Index) {
+		console.log("DesignPage - addToBackCanvas")
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
 			height: 403,
@@ -99,6 +151,7 @@ class DesignPage extends React.Component {
 	}
 
 	addToBothCanvas(imgElement, property_type, z_Index)  {
+		console.log("DesignPage - addToBothCanvas")
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
 			height: 403,
@@ -113,10 +166,12 @@ class DesignPage extends React.Component {
 	}
 
 	handleChangeComplete(color, event) {
+		console.log("DesignPage - handleChangeComplete")
 		this.fontcolor = color.hex;
 	}
 
 	handleDesignChangeComplete(color, event) {
+		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 			case 'body': 
@@ -145,9 +200,8 @@ class DesignPage extends React.Component {
 
 				this.addToFrontCanvas(imgElement1, "front_body", 0);
 				this.addToBackCanvas(imgElement2, "back_body", 0);
-
-
-			break;
+				break;
+				
 			case 'sleeve': 
 			this.setState({design_sleeve: color.hex}); 
 			this.forceUpdate();
@@ -229,7 +283,7 @@ class DesignPage extends React.Component {
 	}
 
 	addText(isFront) {
-		console.log("addText")
+		console.log("DesignPage - addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
 			fill: this.fontcolor,
@@ -250,6 +304,7 @@ class DesignPage extends React.Component {
 	}
 
 	handleChange(e){
+		console.log("DesignPage - handleChange")
 		let value = e.target.value;
 		if (value == "body") {
 			this.setState({clickedWhat: "body"});
@@ -305,6 +360,7 @@ class DesignPage extends React.Component {
     }
 
     render() {
+			console.log("DesignPage - render")
 			const clickedWhat = this.state.clickedWhat;
 			let colorPicker;
 			if (clickedWhat == "body") {
@@ -333,7 +389,6 @@ class DesignPage extends React.Component {
 				//this.forceUpdate();
 			}
 			else {
-				console.log("else")
 				colorPicker = <CirclePicker
 				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
 			}
@@ -442,9 +497,12 @@ class DesignPage extends React.Component {
 	=========================================-->*/}
 	{/*<ThreeScene/>*/}
 	<FabricCanvas
+	design = {this.state.design}
 	activeFrontProperty = {this.state.activeFrontProperty}
 	activeBackProperty = {this.state.activeBackProperty}
 	/>
+	{console.log("DesignPage - render - activeFrontProperty: ", this.state.activeFrontProperty)}
+	{console.log("DesignPage - render - activeBackProperty: ", this.state.activeBackProperty)}
 
 	{this.props.isLoggedIn ?
 		(<div>
