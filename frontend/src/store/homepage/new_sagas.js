@@ -199,6 +199,13 @@ function *watchLoginState() {
         else {
             yield put(actions.setState({
                 authorization: "",
+                now_design: {
+                    detail_body: "#001c58",
+                    detail_sleeve: "#cfcfcf",
+                    detail_banding: "#001c58",
+                    detail_stripes: "#cfcfcf",
+                    detail_buttons: "#cfcfcf"
+                },
                 load: 0,
                 loading: true
             }))
