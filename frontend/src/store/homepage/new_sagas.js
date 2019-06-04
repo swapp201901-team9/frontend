@@ -1270,11 +1270,11 @@ function *saveDesign(data) {
             responseType:'json',
             body: JSON.stringify({
                 "id": data.designid,
-                "detail_body": data.design["design_body"], 
-                "detail_sleeve": data.design["design_sleeve"],
-                "detail_banding": data.design["design_banding"],
-                "detail_stripes": data.design["design_stripe"],
-                "detail_buttons": data.design["design_button"]
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripes": data.design["stripe"],
+                "detail_buttons": data.design["button"]
             })
         });
         console.log("save design succeed ");
