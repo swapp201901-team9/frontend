@@ -1,15 +1,15 @@
-const back_sleeve = [
-	require('./back_sleeve/back_sleeve2a2a2a.png'),
-	require('./back_sleeve/back_sleeve2e4373.png'),
-	require('./back_sleeve/back_sleeve4a321f.png'),
-	require('./back_sleeve/back_sleeve4f4f53.png'),
-	require('./back_sleeve/back_sleeve485a2f.png'),
-	require('./back_sleeve/back_sleeve316863.png'),
-	require('./back_sleeve/back_sleeve462355.png'),
-	require('./back_sleeve/back_sleeve942727.png'),
-	require('./back_sleeve/back_sleevea65824.png'),
-	require('./back_sleeve/back_sleevef8f8f8.png'),
-]
+// const back_sleeve = [
+// 	require('./back_sleeve/back_sleeve2a2a2a.png'),
+// 	require('./back_sleeve/back_sleeve2e4373.png'),
+// 	require('./back_sleeve/back_sleeve4a321f.png'),
+// 	require('./back_sleeve/back_sleeve4f4f53.png'),
+// 	require('./back_sleeve/back_sleeve485a2f.png'),
+// 	require('./back_sleeve/back_sleeve316863.png'),
+// 	require('./back_sleeve/back_sleeve462355.png'),
+// 	require('./back_sleeve/back_sleeve942727.png'),
+// 	require('./back_sleeve/back_sleevea65824.png'),
+// 	require('./back_sleeve/back_sleevef8f8f8.png'),
+// ]
 
 
 const back_banding = [
@@ -66,18 +66,18 @@ const back_stripe = [
 
 ]
 
-const front_sleeve = [
-	require('./front_sleeve/front_sleeve2a2a2a.png'),
-	require('./front_sleeve/front_sleeve2e4373.png'),
-	require('./front_sleeve/front_sleeve4a321f.png'),
-	require('./front_sleeve/front_sleeve4f4f53.png'),
-	require('./front_sleeve/front_sleeve485a2f.png'),
-	require('./front_sleeve/front_sleeve316863.png'),
-	require('./front_sleeve/front_sleeve462355.png'),
-	require('./front_sleeve/front_sleevea65824.png'),
-	require('./front_sleeve/front_sleevef8f8f8.png'),
-	require('./front_sleeve/front_sleeve942727.png'),
-]
+// const front_sleeve = [
+// 	require('./front_sleeve/front_sleeve2a2a2a.png'),
+// 	require('./front_sleeve/front_sleeve2e4373.png'),
+// 	require('./front_sleeve/front_sleeve4a321f.png'),
+// 	require('./front_sleeve/front_sleeve4f4f53.png'),
+// 	require('./front_sleeve/front_sleeve485a2f.png'),
+// 	require('./front_sleeve/front_sleeve316863.png'),
+// 	require('./front_sleeve/front_sleeve462355.png'),
+// 	require('./front_sleeve/front_sleevea65824.png'),
+// 	require('./front_sleeve/front_sleevef8f8f8.png'),
+// 	require('./front_sleeve/front_sleeve942727.png'),
+// ]
 
 const front_body = [
 	require('./front_body/front_body00b7ee.png'),
@@ -152,11 +152,11 @@ const front_banding = [
 ]
 export {
 	
-	back_sleeve,
+	// back_sleeve,
 	back_banding,
 	back_body,
 	back_stripe,
-	front_sleeve,
+	// front_sleeve,
 	front_body,
 	front_button,
 	front_stripe,

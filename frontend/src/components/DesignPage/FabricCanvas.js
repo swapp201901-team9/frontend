@@ -7,7 +7,11 @@ class FabricCanvas extends React.Component{
     constructor(props) {
         super(props);
         console.log("FabricCanvas - constructor - props: ", props)
-        this.state = {pictures : []};
+        this.state = {
+            pictures : [],
+            front_property : null,
+            back_property: null
+        };
         this.onDrop = this.onDrop.bind(this);
         this.designElementToImage = this.designElementToImage.bind(this)
 
@@ -39,16 +43,16 @@ class FabricCanvas extends React.Component{
             height:403,
             width:430,
         });
-
-
-        this.designElementToImage(this.props.design.body, "front_body", 0)
-        this.designElementToImage(this.props.design.body, "back_body", 0)
-        this.designElementToImage(this.props.design.sleeve, "front_sleeve", 0)
-        this.designElementToImage(this.props.design.sleeve, "back_sleeve", 0)
-        this.designElementToImage(this.props.design.stripe, "front_stripe", 0)
-        this.designElementToImage(this.props.design.stripe, "front_stipe", 0)
-        this.designElementToImage(this.props.design.banding, "front_body", 0)
-        this.designElementToImage(this.props.design.banding, "front_body", 0)
+        
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.body, "front_body", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.body, "back_body", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.sleeve, "front_sleeve", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.sleeve, "back_sleeve", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.stripe, "front_stripe", 2))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stipe", 2))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.banding, "front_banding", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.banding, "back_banding", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
 
     }
 
@@ -56,7 +60,7 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
         
         var imgElement = document.createElement("img");
-        var src = './images/templates/'+type+'/'+color.substring(1)+'.png';
+        var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));	
         
@@ -68,9 +72,10 @@ class FabricCanvas extends React.Component{
 		});
 
         console.log("imgInstance: ", imgInstance)
-        this.the_front_canvas.add(imgInstance)
-        this.the_front_canvas.moveTo(imgInstance, imgInstance.zIndex)
-        console.log("the_front_canvas: ", this.the_front_canvas)
+        // this.the_front_canvas.add(imgInstance)
+        // this.the_front_canvas.moveTo(imgInstance, imgInstance.zIndex)
+        // console.log("the_front_canvas: ", this.the_front_canvas)
+        return imgInstance
     }
     
     // addToBackCanvas(imgElement, property_type, z_Index) {
@@ -85,13 +90,32 @@ class FabricCanvas extends React.Component{
 	// 	this.setState({activeBackProperty: imgInstance});
 	// }
 
+    // componentWillReceiveProps = (newprops) => {
+    //     console.log("FabricCanvas - componentWillReceiveProps")
+
+    //     // If Updated Item is not the same as the old one
+    //     //         => Update the canvas with newer item
+    //     if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
+    //         this.updateFrontCanvasforImage(this.props.activeFrontProperty,newprops.activeFrontProperty);
+    //     }
+
+    //     if(newprops.activeBackProperty !== this.props.activeBackProperty){
+    //         this.updateBackCanvasforImage(this.props.activeBackProperty,newprops.activeBackProperty);
+    //     }
+    // }
+
     componentWillReceiveProps = (newprops) => {
         console.log("FabricCanvas - componentWillReceiveProps")
 
         // If Updated Item is not the same as the old one
         //         => Update the canvas with newer item
-        if(newprops.activeFrontProperty !== this.props.activeFrontProperty){
-            this.updateFrontCanvasforImage(this.props.activeFrontProperty,newprops.activeFrontProperty);
+        newprops.design.forEachObject((object) => {
+
+            
+        })
+        if(newprops.design !== this.props.design){
+
+            this.updateFrontCanvasforImage(newprops.activeFrontProperty);
         }
 
         if(newprops.activeBackProperty !== this.props.activeBackProperty){
@@ -99,7 +123,7 @@ class FabricCanvas extends React.Component{
         }
     }
 
-    updateFrontCanvasforImage = (prev,next) => {
+    updateFrontCanvasforImage = (next) => {
         console.log("FabricCanvas - updateFrontCanvasForImage")
 
         if(next){
@@ -257,8 +281,6 @@ class FabricCanvas extends React.Component{
 
     render(){
         console.log("FabricCanvas - render - this.state: ", this.state)
-
-        
 
         return (
             <div className= "main-canvas-container">

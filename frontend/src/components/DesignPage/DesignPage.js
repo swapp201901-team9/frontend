@@ -303,7 +303,7 @@ class DesignPage extends React.Component {
 							<h1>Colour</h1>
 							{colorPicker}
 								
-						<img src = '' id = "front_body"/>
+						{/*<img src = '' id = "front_body"/>
 						<img src = '' id = "back_body" />
 							
 						<img src = "" id = "front_sleeve" />
@@ -317,7 +317,7 @@ class DesignPage extends React.Component {
 						<img src = '' id = "back_banding" />
 
 
-						<img src = "" id = "img_button" />
+	  					<img src = "" id = "img_button" />*/}
 
 
 		<br></br>
