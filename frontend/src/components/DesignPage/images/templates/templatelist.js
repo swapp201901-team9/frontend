@@ -9,7 +9,7 @@ require('./back_sleeve/back_sleeve601986.png'),
 require('./back_sleeve/back_sleeve626262.png'),
 require('./back_sleeve/back_sleeve910000.png'),
 require('./back_sleeve/back_sleeveaa89bd.png'),
-require('./back_sleeve/back_sleeveffffff.png'),
+require('./back_sleeve/back_sleevefcfcfc.png'),
 require('./back_sleeve/back_sleevef29c9f.png'),
 require('./back_sleeve/back_sleevef39800.png'),
 require('./back_sleeve/back_sleevefff45c.png'),
@@ -67,7 +67,7 @@ require('./back_stripe/back_stripecfcfcf.png'),
 require('./back_stripe/back_stripef29c9f.png'),
 require('./back_stripe/back_stripef39800.png'),
 require('./back_stripe/back_stripefff45c.png'),
-require('./back_stripe/back_stripeffffff.png'),
+require('./back_stripe/back_stripefcfcfc.png'),
 
 ]
 
@@ -82,7 +82,7 @@ require('./front_sleeve/front_sleeve626262.png'),
 require('./front_sleeve/front_sleeve601986.png'),
 require('./front_sleeve/front_sleeve910000.png'),
 require('./front_sleeve/front_sleeveaa89bd.png'),
-require('./front_sleeve/front_sleeveffffff.png'),
+require('./front_sleeve/front_sleevefcfcfc.png'),
 require('./front_sleeve/front_sleevef29c9f.png'),
 require('./front_sleeve/front_sleevef39800.png'),
 require('./front_sleeve/front_sleevefff45c.png'),
@@ -123,7 +123,7 @@ require('./front_button/front_buttoncfcfcf.png'),
 require('./front_button/front_buttonf29c9f.png'),
 require('./front_button/front_buttonf39800.png'),
 require('./front_button/front_buttonfff45c.png'),
-require('./front_button/front_buttonffffff.png'),
+require('./front_button/front_buttonfcfcfc.png'),
 ]
 
 const front_stripe = [
@@ -141,7 +141,7 @@ require('./front_stripe/front_stripecfcfcf.png'),
 require('./front_stripe/front_stripef29c9f.png'),
 require('./front_stripe/front_stripef39800.png'),
 require('./front_stripe/front_stripefff45c.png'),
-require('./front_stripe/front_stripefffff.png'),
+require('./front_stripe/front_stripefcfcfc.png'),
 ]
 
 const front_banding = [

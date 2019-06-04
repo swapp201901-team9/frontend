@@ -36,21 +36,21 @@ class DesignPage extends React.Component {
 				stripe : this.props.now_design.detail_stripes,
 				button : this.props.now_design.detail_buttons
 			},
-			
+
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
 			// clickedWhat: null
 		};
 
 		this.onDrop = this.onDrop.bind(this);
-		
+
 		// this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
 		// this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		// this.addToBothCanvas = this.addToBothCanvas.bind(this);
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
-	
+
 	}
 
 	componentWillMount() {
@@ -58,13 +58,13 @@ class DesignPage extends React.Component {
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#626262", "#001c58", "#232323"];
 		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 	}
 
 	/*componentDidUpdate(prevProps, prevState) {
@@ -119,21 +119,21 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
-		case 'body': 
-			this.setState({body: color.hex}); 
+		case 'body':
+			this.setState({body: color.hex});
 			//this.forceUpdate();
 			//var imgElement1 = document.getElementById('front_body');
 			// var imgElement1 = document.createElement("img");
-			
-			
+
+
 			// var src1 = './images/templates/front_body/front_body'+this.state.design_body.substring(1)+'.png';
 			// console.log("front body src is");
-			
+
 			// imgElement1.setAttribute("src", require(src1));
 			// console.log(src1);
 			// //imgElement1.src = require(src1);
-			
-			
+
+
 
 			// //var imgElement2 = document.getElementById('back_body');
 			// var imgElement2 = document.createElement("img");
@@ -146,25 +146,25 @@ class DesignPage extends React.Component {
 			// this.addToFrontCanvas(imgElement1, "front_body", 0);
 			// this.addToBackCanvas(imgElement2, "back_body", 0);
 			break;
-				
-		case 'sleeve': 
-			this.setState({sleeve: color.hex}); 
+
+		case 'sleeve':
+			this.setState({sleeve: color.hex});
 			// this.addToBackCanvas(imgElement2, "back_sleeve", 0);
 			break;
 
-		case 'banding': 
+		case 'banding':
 			this.setState({banding: color.hex});
 			// this.addToBackCanvas(imgElement2, "back_banding", 0);
 			break;
 
-		case 'stripe': 
-			this.setState({stripe: color.hex}); 
+		case 'stripe':
+			this.setState({stripe: color.hex});
 			// this.addToBackCanvas(imgElement2, "back_stripe", 2);
 
 			break;
 
-		case 'button': 
-			this.setState({design_button: color.hex}); 
+		case 'button':
+			this.setState({design_button: color.hex});
 			// this.addToFrontCanvas(imgElement1, "front_button", 2);
 			break;
 
@@ -240,14 +240,14 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
             console.log("imgInstance scale");
-            
+
         },false);
 
-       
+
         if (file) {
             reader.readAsDataURL(file);
         }
-       
+
         this.the_front_canvas = canvas;
     }
 
@@ -299,13 +299,13 @@ class DesignPage extends React.Component {
 									<option value = "stripe">stripe</option>
 									<option value = "button">button</option>
 								</select></center>
-						
+
 							<h1>Colour</h1>
 							{colorPicker}
-								
+
 						{/*<img src = '' id = "front_body"/>
 						<img src = '' id = "back_body" />
-							
+
 						<img src = "" id = "front_sleeve" />
 						<img src = '' id = "back_sleeve" />
 
