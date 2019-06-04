@@ -35,7 +35,7 @@ class ThreeScene extends Component{
     //this.cube = new THREE.Mesh(geometry, material)
     //this.scene.add(this.cube)
     const geometry = new THREE.BoxGeometry(1, 1, 1)
-    //const texture = new THREE.TextureLoader().load('./images/templates/back_body/00bee.png')
+    //const texture = new THREE.TextureLoader().load('./images/templates/back_body/back_body00bee.png')
     //const material = new THREE.MeshBasicMaterial({map : texture})
     const material = new THREE.MeshBasicMaterial({ color: '#433F81'     })
     this.cube = new THREE.Mesh(geometry, material)
