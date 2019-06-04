@@ -13,7 +13,6 @@ const homepageInitialState = {
 
     now_group: null, //현재 작업 or 구경(?) 중인 그룹
     now_design: {
-        // id: null,
         detail_body: "001c58",
         detail_sleeve: "f8f8f8",
         detail_banding: "001c58",
