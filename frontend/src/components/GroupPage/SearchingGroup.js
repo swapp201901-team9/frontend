@@ -5,23 +5,25 @@ import GroupList from './GroupList'
 import { toSearchGroup, toJoinGroup, gotoGroupDetail, toWithdrawGroup } from '../../actions/index.js';
 
 class SearchingGroup extends React.Component {
-	onSubmit = () => {
-		console.log("search onSubmit", this.searchword.value)
-		if(this.searchword.value !== undefined) {
-			this.newList = this.props.all_groups.filter(group => {
-				return group.group_name.includes(this.searchword.value)
-			});
-		}
-		console.log("after: ", this.newList)
-		this.props.onSearchGroup(this.newList)
-	}
 
 	render() {
+
+		let onSubmit = () => {
+			console.log("search onSubmit", this.searchword.value)
+			if(this.searchword.value !== undefined) {
+				this.newList = this.props.all_groups.filter(group => {
+					return group.group_name.includes(this.searchword.value)
+				});
+			}
+			console.log("after: ", this.newList)
+			this.props.onSearchGroup(this.newList)
+		}
+
 		return(
 			<div>
 				<form onSubmit={e => {
 					e.preventDefault()
-					this.onSubmit()
+					onSubmit()
 				}}>
 					<div className="SearchingBar">
 						<input

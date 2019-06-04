@@ -1,6 +1,5 @@
 import React from 'react';
 import {fabric} from 'fabric';
-//import ImageUploader from 'react-images-upload';
 //import './App.css';
 
 class FabricCanvas extends React.Component{
@@ -16,14 +15,14 @@ class FabricCanvas extends React.Component{
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
-            height:430,
-            width:403,
+            height:403,
+            width:430,
         });
 
         this.the_back_canvas = new fabric.Canvas('back-canvas', {
             preserveObjectStacking: true,
-            height:430,
-            width:403,
+            height:403,
+            width:430,
         });
 
         this.the_canvas = this.the_front_canvas;
@@ -201,27 +200,17 @@ class FabricCanvas extends React.Component{
         return (
             <div className= "main-canvas-container">
                 <button class="front_btn" type="button">Front</button>
-                <canvas id='front-canvas'
-                >
-                </canvas>
+                <canvas id='front-canvas'> </canvas>
 
-                  <input type = "file"
+                  {/*<input type = "file"
                          id = "input"
                          onChange = {this.onDrop} />
                   <img src = ""
-                        id = "img" />
-                  {/*<ImageUploader
-                    withIcon = {true}
-                    buttonText = 'Choose images'
-                    onChange = {this.onDrop}
-                    imgExtension = {['.jpg', '.gif', 'png', '.gif']}
-                    withPreview = {true}
-                  />*/}
+        id = "img" />*/}
+
 
                 <button class="back_btn" type="button">Back</button>
-                <canvas id='back-canvas'
-                >
-                </canvas>
+                <canvas id='back-canvas'> </canvas>
             </div>
         );
     }
