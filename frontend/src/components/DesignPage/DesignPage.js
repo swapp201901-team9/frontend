@@ -276,6 +276,9 @@ class DesignPage extends React.Component {
 		else if (value == "sleeve"){
 			this.setState({clickedWhat: "button"});
 		}
+		else {
+			this.setState({clickedWhat: "body"});
+		}
 		this.forceUpdate();
 	}
 
