@@ -137,5 +137,4 @@ describe('homepage reducer', () => {
         expect(homepageApp(undefined, actions.setState(state))).toEqual(state)
     })
 
-
 })
