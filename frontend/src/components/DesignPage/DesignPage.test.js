@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom';
 //import FabricCanvas from './FabricCanvas';
 //import TemplateList from './TemplateList';
 //import TemplateListItem from './TemplateListItem';
-import ResetButton from './ResetButton'
+import ResetButton from './ResetButton';
 //import SaveButton from './SaveButton'
 //import {create} from 'react-test-renderer';
 //import {configure, mount, shallow} from 'enzyme';
