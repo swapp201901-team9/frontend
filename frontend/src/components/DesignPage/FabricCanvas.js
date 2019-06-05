@@ -58,7 +58,7 @@ class FabricCanvas extends React.Component{
     }
 
     designElementToImage(color, type, z_Index) {
-        console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
+        // console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
         
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
@@ -270,7 +270,7 @@ class FabricCanvas extends React.Component{
     }
 
     render(){
-        console.log("FabricCanvas - render - this.state: ", this.state)
+        console.log("FabricCanvas - render - this.props: ", this.props)
 
         return (
             <div className= "main-canvas-container">
