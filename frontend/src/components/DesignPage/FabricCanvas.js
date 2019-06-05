@@ -19,7 +19,7 @@ class FabricCanvas extends React.Component{
 
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-       
+
 
     }
     componentWillUpdate(nextProps, nextState) {
@@ -67,7 +67,7 @@ class FabricCanvas extends React.Component{
 
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
-        
+
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 
@@ -107,7 +107,7 @@ class FabricCanvas extends React.Component{
                 }
             }
         }
-      
+
     }
 
     updateFrontCanvasforImage = (next) => {
@@ -138,7 +138,7 @@ class FabricCanvas extends React.Component{
             this.the_front_canvas.add(next);
             console.log("add to front canvas");
             //this.the_front_canvas.requestRenderAll();
-            
+
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
             //this.forceUpdate();
@@ -205,8 +205,8 @@ class FabricCanvas extends React.Component{
             console.log(preview.height);
 
             var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
+            width: 430,
+            height:460,
             the_type: "upload",
             zIndex: 10
             });
@@ -284,9 +284,15 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - render - this.state: ", this.state)
 
         return (
-            <div className= "main-canvas-container">
+            <div>
+              <div className="Button-Field">
                 <button class="front_btn" type="button">Front</button>
+                </div>
+                <div className="canvas-container">
+                <div className="canvas-bg">
                 <canvas id='front-canvas'> </canvas>
+                </div>
+                </div>
 
                   {/*<input type = "file"
                          id = "input"
@@ -294,10 +300,16 @@ class FabricCanvas extends React.Component{
                   <img src = ""
         id = "img" />*/}
 
-
+              <div className="Button-Field">
                 <button class="back_btn" type="button">Back</button>
+              </div>
+              <div className="canvas-container">
+              <div className="canvas-bg">
                 <canvas id='back-canvas'> </canvas>
+                </div>
+                </div>
             </div>
+
         );
     }
 }

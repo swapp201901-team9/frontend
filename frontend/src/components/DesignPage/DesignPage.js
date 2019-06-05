@@ -231,32 +231,32 @@ class DesignPage extends React.Component {
 			let colorPicker;
 			if (clickedWhat == "body") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "sleeve") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "banding") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "stripe") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "button") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
 				//this.forceUpdate();
 			}
 			else {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
 			}
 
       return (
