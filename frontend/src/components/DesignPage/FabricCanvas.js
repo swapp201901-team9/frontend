@@ -14,20 +14,22 @@ class FabricCanvas extends React.Component{
         };
         this.onDrop = this.onDrop.bind(this);
         this.designElementToImage = this.designElementToImage.bind(this)
+        this.updateFrontCanvasforImage = this.updateFrontCanvasforImage.bind(this)
+        this.updateBackCanvasforImage = this.updateBackCanvasforImage.bind(this)
+
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-        // this.the_front_canvas = new fabric.Canvas('front-canvas', {
-        //     preserveObjectStacking: true,
-        //     height:403,
-        //     width:430,
-        // });
+       
 
-        // this.the_back_canvas = new fabric.Canvas('back-canvas', {
-        //     preserveObjectStacking: true,
-        //     height:403,
-        //     width:430,
-        // });
+    }
+    componentWillUpdate(nextProps, nextState) {
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
+    }
 
+    componentDidUpdate(nextProps, nextState) {
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
     }
 
     componentDidMount() {
@@ -55,7 +57,9 @@ class FabricCanvas extends React.Component{
         this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stripe", 2))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
 
-        console.log("the_front_canvas: ", this.the_front_canvas)
+        console.log("the_front_canvas: ", this.the_front_canvas);
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
     }
 
     designElementToImage(color, type, z_Index) {
@@ -63,6 +67,7 @@ class FabricCanvas extends React.Component{
 
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 
@@ -86,13 +91,18 @@ class FabricCanvas extends React.Component{
         //         => Update the canvas with newer item
         for(let element of this.design_element){
             if(newprops.design[element] !== this.props.design[element]) {
-                if(element === "stripe" || element === "button") {
+                if(element === "stripe" ) {
                     this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 2))
                     this.updateBackCanvasforImage(this.designElementToImage(newprops.design[element], 'back_'+element, 2))
+                }
+                else if (element === "button") {
+                    this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 2))
                 }
                 else {
                     this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 0))
                     this.updateBackCanvasforImage(this.designElementToImage(newprops.design[element], 'back_'+element, 0))
+                    //this.forceUpdate();
+                    //console.log("force update");
 
                 }
             }
@@ -111,10 +121,13 @@ class FabricCanvas extends React.Component{
 
                 if(object.the_type === next.the_type){
                     to_remove = object;
+                    this.the_front_canvas.remove(to_remove);
                 }
             } );
 
-            this.the_front_canvas.remove(to_remove);
+            //this.the_front_canvas.remove(to_remove);
+            console.log("remove front canvas");
+            //this.the_front_canvas.renderAll();
 
             // if(next.the_type === 'bg'){
             //     this.the_front_canvas.setBackgroundImage(next);
@@ -123,7 +136,13 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_front_canvas.add(next);
+            console.log("add to front canvas");
+            //this.the_front_canvas.requestRenderAll();
+            
             this.the_front_canvas.moveTo(next, next.zIndex);
+            this.the_front_canvas.renderAll();
+            //this.forceUpdate();
+            //console.log("rerender");
         }
     }
 
@@ -140,10 +159,12 @@ class FabricCanvas extends React.Component{
 
                 if(object.the_type === next.the_type){
                     to_remove = object;
+                    this.the_back_canvas.remove(to_remove);
                 }
             } );
 
-            this.the_back_canvas.remove(to_remove);
+            //this.the_back_canvas.remove(to_remove);
+            //this.the_back_canvas.renderAll();
 
 
             // if(next.the_type === 'bg'){
@@ -155,6 +176,7 @@ class FabricCanvas extends React.Component{
             this.the_back_canvas.add(next);
             //this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
+            //this.the_back_canvas.renderAll();
 
 
         }
@@ -202,6 +224,8 @@ class FabricCanvas extends React.Component{
             canvas2.renderAll();
             canvas.moveTo(imgInstance, imgInstance.zIndex);
             canvas2.moveTo(imgInstance, imgInstance.zIndex);
+            canvas.renderAll();
+            canvas2.renderAll();
             console.log("imgInstance add");
 
             //var imgInstance = new fabric.Image(preview);
