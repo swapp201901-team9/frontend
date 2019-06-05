@@ -19,18 +19,17 @@ class FabricCanvas extends React.Component{
 
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-        // this.the_front_canvas = new fabric.Canvas('front-canvas', {
-        //     preserveObjectStacking: true,
-        //     height:403,
-        //     width:430,
-        // });
+       
 
-        // this.the_back_canvas = new fabric.Canvas('back-canvas', {
-        //     preserveObjectStacking: true,
-        //     height:403,
-        //     width:430,
-        // });
+    }
+    componentWillUpdate(nextProps, nextState) {
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
+    }
 
+    componentDidUpdate(nextProps, nextState) {
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
     }
 
     componentDidMount() {
@@ -54,26 +53,21 @@ class FabricCanvas extends React.Component{
         this.the_back_canvas.add(this.designElementToImage(this.props.design.sleeve, "back_sleeve", 0))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.banding, "front_banding", 0))
         this.the_back_canvas.add(this.designElementToImage(this.props.design.banding, "back_banding", 0))
-        this.the_front_canvas.add(this.designElementToImage(this.props.design.stripe, "front_stripe", 6))
-        this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stripe", 6))
-        this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 8))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.stripe, "front_stripe", 2))
+        this.the_back_canvas.add(this.designElementToImage(this.props.design.stripe, "back_stripe", 2))
+        this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
 
-        console.log("the_front_canvas: ", this.the_front_canvas)
+        console.log("the_front_canvas: ", this.the_front_canvas);
+        this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
     }
 
     designElementToImage(color, type, z_Index) {
         console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
-        //var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
-        if (type == "front_sleeve" || type == "back_sleeve") {
-            if (color.substring(1) == "cfcfcf") {
-                var src = './images/templates/' + type + '/' + type + 'fcfcfc'+'.png';
-            }
-        }
-        else {
-            var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
-        }
+        var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 
@@ -98,11 +92,11 @@ class FabricCanvas extends React.Component{
         for(let element of this.design_element){
             if(newprops.design[element] !== this.props.design[element]) {
                 if(element === "stripe" ) {
-                    this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 6))
-                    this.updateBackCanvasforImage(this.designElementToImage(newprops.design[element], 'back_'+element, 6))
+                    this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 2))
+                    this.updateBackCanvasforImage(this.designElementToImage(newprops.design[element], 'back_'+element, 2))
                 }
                 else if (element === "button") {
-                    this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 8))
+                    this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 2))
                 }
                 else {
                     this.updateFrontCanvasforImage(this.designElementToImage(newprops.design[element], 'front_'+element, 0))
@@ -142,10 +136,10 @@ class FabricCanvas extends React.Component{
 
             this.the_front_canvas.add(next);
             console.log("add to front canvas");
-            this.the_front_canvas.requestRenderAll();
+            //this.the_front_canvas.requestRenderAll();
             
-            //this.the_front_canvas.moveTo(next, next.zIndex);
-            //this.the_front_canvas.renderAll();
+            this.the_front_canvas.moveTo(next, next.zIndex);
+            this.the_front_canvas.renderAll();
             //this.forceUpdate();
             //console.log("rerender");
         }
@@ -178,8 +172,8 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_back_canvas.add(next);
-            this.the_back_canvas.renderAll();
-            //this.the_back_canvas.moveTo(next, next.zIndex);
+            //this.the_back_canvas.renderAll();
+            this.the_back_canvas.moveTo(next, next.zIndex);
             //this.the_back_canvas.renderAll();
 
 
