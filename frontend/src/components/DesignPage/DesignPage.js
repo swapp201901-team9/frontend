@@ -36,6 +36,15 @@ class DesignPage extends React.Component {
 				stripe : this.props.now_design.detail_stripes,
 				button : this.props.now_design.detail_buttons
 			},
+
+			text : {
+			 	textvalue: this.props.now_design.text_value,
+				fontFamily: this.props.now_design.font_family,
+				fill: this.props.now_design.font_fill,
+				fontStyle: this.props.now_design.font_style,
+				fontSize: this.props.now_design.font_size,
+			 	isFront: this.props.now_design.is_front,
+			}
 		};
 
 		this.onDrop = this.onDrop.bind(this);
@@ -139,7 +148,6 @@ class DesignPage extends React.Component {
 			fontStyle: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
 			zIndex: 10
-			// objecttype: 'image',
 		})
 
 		console.log(text)
@@ -326,6 +334,7 @@ class DesignPage extends React.Component {
 	{/*<ThreeScene/>*/}
 	<FabricCanvas
 	design = {this.state.design}
+	text = {this.state.text}
 	// activeFrontProperty = {this.state.activeFrontProperty}
 	// activeBackProperty = {this.state.activeBackProperty}
 	/>

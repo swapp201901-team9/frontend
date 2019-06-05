@@ -128,7 +128,6 @@ class FabricCanvas extends React.Component{
             } );
 
             this.the_front_canvas.remove(to_remove);
-            console.log("after remove")
 
             // if(next.the_type === 'bg'){
             //     this.the_front_canvas.setBackgroundImage(next);
@@ -137,7 +136,6 @@ class FabricCanvas extends React.Component{
             // }
 
             this.the_front_canvas.add(next);
-            console.log("after add")
             this.the_front_canvas.moveTo(next, next.zIndex);
         }
     }
