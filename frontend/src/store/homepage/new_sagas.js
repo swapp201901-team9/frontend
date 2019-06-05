@@ -99,6 +99,8 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
+    yield spawn(watchNewDesign);
+
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -119,7 +121,6 @@ function *loggedInMainPageSaga() {
 
     yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
-    yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
