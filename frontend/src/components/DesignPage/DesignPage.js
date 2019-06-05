@@ -40,7 +40,7 @@ class DesignPage extends React.Component {
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
-			clickedWhat: "body"
+			clickedWhat: null
 
 		};
 
@@ -234,6 +234,11 @@ class DesignPage extends React.Component {
 		this.forceUpdate();
 	}
 
+	clickedInitButton = (e) => {
+		this.setState({clickedWhat: "body"});
+		this.forceUpdate();
+	}
+
     render() {
 			console.log("DesignPage - render")
 			const clickedWhat = this.state.clickedWhat;
@@ -264,8 +269,9 @@ class DesignPage extends React.Component {
 				//this.forceUpdate();
 			}
 			else {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				// colorPicker = <CirclePicker
+				// width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
 			}
 
       return (

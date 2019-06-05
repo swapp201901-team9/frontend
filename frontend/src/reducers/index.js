@@ -13,11 +13,11 @@ const homepageInitialState = {
 
     now_group: null, //현재 작업 or 구경(?) 중인 그룹
     now_design: {
-        detail_body: "001c58",
-        detail_sleeve: "fcfcfc",
-        detail_banding: "001c58",
-        detail_stripes: "fcfcfc",
-        detail_buttons: "fcfcfc"
+        detail_body: "#001c58",
+        detail_sleeve: "#fcfcfc",
+        detail_banding: "#001c58",
+        detail_stripes: "#fcfcfc",
+        detail_buttons: "#fcfcfc"
     }, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
 
     my_requests: [],
