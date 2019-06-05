@@ -190,7 +190,7 @@ class DesignPage extends React.Component {
             width: 899,
             height:959,
             the_type: "upload",
-            zIndex: 10
+            zIndex: 12
             });
             console.log("imgInstance set");
             imgInstance.set({
