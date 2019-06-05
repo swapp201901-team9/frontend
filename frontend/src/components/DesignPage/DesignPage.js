@@ -174,7 +174,7 @@ class DesignPage extends React.Component {
 		else if (value == "banding") {
 			this.setState({clickedWhat: "banding"});
 		}
-		else if (value == "sleeve"){
+		else if (value == "stripe"){
 			this.setState({clickedWhat: "stripe"});
 		}
 		else if (value == "button"){
@@ -265,6 +265,7 @@ class DesignPage extends React.Component {
 					<div className="aside">
 						<h2 className="h_white">SELECT STYLE</h2>
 							<div className="content">
+							<h1>Colour</h1>
 								<center><select id="design_element"
 								onChange={(e)=>this.handleChange(e)}>
 									<option value = "body">body</option>
@@ -274,9 +275,11 @@ class DesignPage extends React.Component {
 									<option value = "button">button</option>
 								</select></center>
 
-							<h1>Colour</h1>
+
 							{colorPicker}
+							<div className="Button-Field-Side">
 							<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
+							</div>
 
 
 		<br></br>
