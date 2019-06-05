@@ -13,25 +13,28 @@ class FabricCanvas extends React.Component{
             back_property: null
         };
         this.onDrop = this.onDrop.bind(this);
-        this.designElementToImage = this.designElementToImage.bind(this)
-        this.updateFrontCanvasforImage = this.updateFrontCanvasforImage.bind(this)
-        this.updateBackCanvasforImage = this.updateBackCanvasforImage.bind(this)
+        this.designElementToImage = this.designElementToImage.bind(this);
+        this.updateFrontCanvasforImage = this.updateFrontCanvasforImage.bind(this);
+        this.updateBackCanvasforImage = this.updateBackCanvasforImage.bind(this);
 
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
        
 
     }
+    /*I do not know why but setting either of willupdate or didupdate works*/
     componentWillUpdate(nextProps, nextState) {
         this.the_front_canvas.renderAll();
         this.the_back_canvas.renderAll();
     }
 
-    componentDidUpdate(nextProps, nextState) {
-        this.the_front_canvas.renderAll();
-        this.the_back_canvas.renderAll();
+    // componentDidUpdate(nextProps, nextState) {
+    //     this.the_front_canvas.renderAll();
+    //     this.the_back_canvas.renderAll();
+    // }
+    componentWillMount() {
+       
     }
-
     componentDidMount() {
         console.log("FabricCanvas - componentDidMount")
 
@@ -58,8 +61,8 @@ class FabricCanvas extends React.Component{
         this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
 
         console.log("the_front_canvas: ", this.the_front_canvas);
-        this.the_front_canvas.renderAll();
-        this.the_back_canvas.renderAll();
+        //this.the_front_canvas.renderAll();
+        //this.the_back_canvas.renderAll();
     }
 
     designElementToImage(color, type, z_Index) {
