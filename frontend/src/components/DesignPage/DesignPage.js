@@ -67,19 +67,27 @@ class DesignPage extends React.Component {
 				// 	fontStyle: text.font_style,
 				// 	fontSize: text.font_size
 				// },
-			}
+			},
+
+			// activeBackProperty : null,
+			// activeFrontProperty : null,
+			clickedWhat: "body"
+
 		};
 
 		this.onDrop = this.onDrop.bind(this);
-		
+
 		// this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
 		// this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		// this.addToBothCanvas = this.addToBothCanvas.bind(this);
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
-		this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
+		this.clickedButton = this.clickedButton.bind(this);
+
+		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
 	
+
 	}
 
 	componentWillMount() {
@@ -87,9 +95,9 @@ class DesignPage extends React.Component {
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#626262", "#001c58", "#232323"];
 		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
@@ -107,6 +115,7 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
+
 		case 'body': 
 		console.log("body")
 			this.setState({design : { 
@@ -157,9 +166,17 @@ class DesignPage extends React.Component {
 				stripe: this.state.design.stripe,
 				button: color.hex
 			}}); 
+
 			break;
 
 		default:
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}}); 
 			break;
 		}
 	}
@@ -227,6 +244,7 @@ class DesignPage extends React.Component {
 			break;
 		}
 		console.log("this.state: ", this.state)
+		//this.forceUpdate();
 	}
 
 	addText() {
@@ -244,6 +262,30 @@ class DesignPage extends React.Component {
 
 	}
 
+	handleChange(e){
+		console.log("DesignPage - handleChange")
+		let value = e.target.value;
+		if (value == "body") {
+			this.setState({clickedWhat: "body"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "sleeve"});
+		}
+		else if (value == "banding") {
+			this.setState({clickedWhat: "banding"});
+		}
+		else if (value == "stripe"){
+			this.setState({clickedWhat: "stripe"});
+		}
+		else if (value == "button"){
+			this.setState({clickedWhat: "button"});
+		}
+		else {
+			this.setState({clickedWhat: this.state.clickedWhat});
+		}
+		//this.forceUpdate();
+	}
+
 	onDrop = (e) => {
         console.log("hey");
 
@@ -258,7 +300,7 @@ class DesignPage extends React.Component {
             width: 899,
             height:959,
             the_type: "upload",
-            zIndex: 10
+            zIndex: 12
             });
             console.log("imgInstance set");
             imgInstance.set({
@@ -268,16 +310,20 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
             console.log("imgInstance scale");
-            
+
         },false);
 
-       
+
         if (file) {
             reader.readAsDataURL(file);
         }
-       
+
         this.the_front_canvas = canvas;
-    }
+	}
+	
+	clickedButton = (e) => {
+		this.forceUpdate();
+	}
 
     render() {
 			console.log("DesignPage - render")
