@@ -36,18 +36,26 @@ class DesignPage extends React.Component {
 				stripe : this.props.now_design.detail_stripes,
 				button : this.props.now_design.detail_buttons
 			},
+
+
+			// activeBackProperty : null,
+			// activeFrontProperty : null,
+			// clickedWhat: null
+
 		};
 
 		this.onDrop = this.onDrop.bind(this);
-		
+
 		// this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
 		// this.addToBackCanvas = this.addToBackCanvas.bind(this);
 		// this.addToBothCanvas = this.addToBothCanvas.bind(this);
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
-		this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
+
+		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
 	
+
 	}
 
 	componentWillMount() {
@@ -55,13 +63,13 @@ class DesignPage extends React.Component {
 		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.sleeve_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#626262", "#001c58", "#232323"];
 		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 	}
 
 	handleFontChangeComplete(color, event) {
@@ -73,6 +81,7 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
+
 		case 'body': 
 		console.log("body")
 			this.setState({design : { 
@@ -123,6 +132,7 @@ class DesignPage extends React.Component {
 				stripe: this.state.design.stripe,
 				button: color.hex
 			}}); 
+
 			break;
 
 		default:
@@ -200,14 +210,14 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
             console.log("imgInstance scale");
-            
+
         },false);
 
-       
+
         if (file) {
             reader.readAsDataURL(file);
         }
-       
+
         this.the_front_canvas = canvas;
     }
 
@@ -259,13 +269,13 @@ class DesignPage extends React.Component {
 									<option value = "stripe">stripe</option>
 									<option value = "button">button</option>
 								</select></center>
-						
+
 							<h1>Colour</h1>
 							{colorPicker}
-								
+
 						{/*<img src = '' id = "front_body"/>
 						<img src = '' id = "back_body" />
-							
+
 						<img src = "" id = "front_sleeve" />
 						<img src = '' id = "back_sleeve" />
 

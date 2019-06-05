@@ -30,7 +30,7 @@ class FabricCanvas extends React.Component{
         //     height:403,
         //     width:430,
         // });
-       
+
     }
 
     componentDidMount() {
@@ -38,16 +38,16 @@ class FabricCanvas extends React.Component{
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
-            height:403,
+            height:460,
             width:430,
         });
 
         this.the_back_canvas = new fabric.Canvas('back-canvas', {
             preserveObjectStacking: true,
-            height:403,
+            height:460,
             width:430,
         });
-        
+
         this.the_front_canvas.add(this.designElementToImage(this.props.design.body, "front_body", 0))
         this.the_back_canvas.add(this.designElementToImage(this.props.design.body, "back_body", 0))
         this.the_front_canvas.add(this.designElementToImage(this.props.design.sleeve, "front_sleeve", 0))
@@ -63,15 +63,15 @@ class FabricCanvas extends React.Component{
 
     designElementToImage(color, type, z_Index) {
         console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
-        
+
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
         console.log("src: ", src)
-		imgElement.setAttribute("src", require(src));	
-        
+		imgElement.setAttribute("src", require(src));
+
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
-			height: 403,
+			height: 460,
 			the_type: type                                                         ,
 			zIndex: z_Index
 		});
@@ -79,6 +79,7 @@ class FabricCanvas extends React.Component{
         console.log("imgInstance: ", imgInstance)
         return imgInstance
     }
+
 
 
     componentWillReceiveProps = (newprops) => {
