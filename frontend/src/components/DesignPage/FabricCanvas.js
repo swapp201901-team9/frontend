@@ -264,7 +264,15 @@ class FabricCanvas extends React.Component{
               <div className="Button-Field">
                 <button class="front_btn" type="button">Front</button>
               </div>
-                <canvas id='front-canvas'> </canvas>
+              <div className="canvas-container">
+              <div className="canvas-bg">
+
+                <canvas id='front-canvas'>
+
+
+                </canvas>
+                  </div>
+              </div>
 
                   {/*<input type = "file"
                          id = "input"
@@ -275,7 +283,12 @@ class FabricCanvas extends React.Component{
               <div className="Button-Field">
                 <button class="back_btn" type="button">Back</button>
                 </div>
-                <canvas id='back-canvas'> </canvas>
+                <div className="canvas-bg">
+                <canvas id='back-canvas'>
+
+
+                </canvas>
+                </div>
             </div>
         );
     }
