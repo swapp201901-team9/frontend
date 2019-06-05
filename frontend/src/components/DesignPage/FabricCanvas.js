@@ -97,7 +97,7 @@ class FabricCanvas extends React.Component{
                 }
             }
         }
-      
+
     }
 
     updateFrontCanvasforImage = (next) => {
@@ -183,8 +183,8 @@ class FabricCanvas extends React.Component{
             console.log(preview.height);
 
             var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
+            width: 430,
+            height: 460,
             the_type: "upload",
             zIndex: 10
             });
@@ -260,8 +260,10 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - render - this.state: ", this.state)
 
         return (
-            <div className= "main-canvas-container">
+            <div>
+              <div className="Button-Field">
                 <button class="front_btn" type="button">Front</button>
+              </div>
                 <canvas id='front-canvas'> </canvas>
 
                   {/*<input type = "file"
@@ -270,8 +272,9 @@ class FabricCanvas extends React.Component{
                   <img src = ""
         id = "img" />*/}
 
-
+              <div className="Button-Field">
                 <button class="back_btn" type="button">Back</button>
+                </div>
                 <canvas id='back-canvas'> </canvas>
             </div>
         );
