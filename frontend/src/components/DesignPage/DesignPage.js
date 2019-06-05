@@ -114,69 +114,31 @@ class DesignPage extends React.Component {
 	handleDesignChangeComplete(color, event) {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
+		
 		switch(design_element) {
-
 		case 'body': 
 		console.log("body")
-			this.setState({design : { 
-				body: color.hex,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			 }}); 
+			this.setState({design : ({...this.state.design, body: color.hex})})
 			break;
 				
 		case 'sleeve': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: color.hex,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}}); 
+			this.setState({design : ({...this.state.design, sleeve: color.hex})})
 			break;
 
 		case 'banding': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: color.hex,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}});
+			this.setState({design : ({...this.state.design, banding: color.hex})})
 			break;
 
 		case 'stripe': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: color.hex,
-				button: this.state.design.button 
-			}}); 
-
+			this.setState({design : ({...this.state.design, stripe: color.hex})})
 			break;
 
 		case 'button': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: color.hex
-			}}); 
-
+			this.setState({design : ({...this.state.design, button: color.hex})}) 
 			break;
 
 		default:
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}}); 
+			this.setState({design : ({...this.state.design})}); 
 			break;
 		}
 	}
@@ -195,51 +157,36 @@ class DesignPage extends React.Component {
 				frontchest: ({...this.state.text.frontchest, [e.target.name]:e.target.value})
 			 })}); 
 			break;
+
+		case 'leftarm': 
+			console.log("leftarm")
+			this.setState({text : ({...this.state.text, 
+				frontchest: ({...this.state.text.frontchest, [e.target.name]:e.target.value})
+			 })}); 
+			break;
+
+		case 'frontchest': 
+			console.log("frontchest")
+			this.setState({text : ({...this.state.text, 
+				frontchest: ({...this.state.text.frontchest, [e.target.name]:e.target.value})
+			 })}); 
+			break;
+
+		case 'frontchest': 
+			console.log("frontchest")
+			this.setState({text : ({...this.state.text, 
+				frontchest: ({...this.state.text.frontchest, [e.target.name]:e.target.value})
+			 })}); 
+			break;
+
+		case 'frontchest': 
+			console.log("frontchest")
+			this.setState({text : ({...this.state.text, 
+				frontchest: ({...this.state.text.frontchest, [e.target.name]:e.target.value})
+			 })}); 
+			break;
 				
-		// case 'leftarm': 
-		// 	this.setState({design : { 
-		// 		body: this.state.design.body,
-		// 		sleeve: color.hex,
-		// 		banding: this.state.design.banding,
-		// 		stripe: this.state.design.stripe,
-		// 		button: this.state.design.button
-		// 	}}); 
-		// 	break;
-
-		// case 'rightarm': 
-		// 	this.setState({design : { 
-		// 		body: this.state.design.body,
-		// 		sleeve: this.state.design.sleeve,
-		// 		banding: color.hex,
-		// 		stripe: this.state.design.stripe,
-		// 		button: this.state.design.button
-		// 	}});
-		// 	break;
-
-		// case 'upperback': 
-		// 	this.setState({design : { 
-		// 		body: this.state.design.body,
-		// 		sleeve: this.state.design.sleeve,
-		// 		banding: this.state.design.banding,
-		// 		stripe: color.hex,
-		// 		button: this.state.design.button 
-		// 	}}); 
-
-		// 	break;
-
-		// case 'middleback': 
-		// 	this.setState({design : { 
-		// 		body: this.state.design.body,
-		// 		sleeve: this.state.design.sleeve,
-		// 		banding: this.state.design.banding,
-		// 		stripe: this.state.design.stripe,
-		// 		button: color.hex
-		// 	}}); 
-		// 	break;
-
-		// case 'lowerback':
-		// 	break;
-
+		
 		default:
 			break;
 		}
