@@ -201,10 +201,10 @@ function *watchLoginState() {
                 authorization: "",
                 now_design: {
                     detail_body: "#001c58",
-                    detail_sleeve: "#cfcfcf",
+                    detail_sleeve: "#fcfcfc",
                     detail_banding: "#001c58",
-                    detail_stripes: "#cfcfcf",
-                    detail_buttons: "#cfcfcf"
+                    detail_stripes: "#fcfcfc",
+                    detail_buttons: "#fcfcfc"
                 },
                 load: 0,
                 loading: true

@@ -52,6 +52,7 @@ class DesignPage extends React.Component {
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
+		this.clickedButton = this.clickedButton.bind(this);
 
 		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
 
@@ -136,9 +137,17 @@ class DesignPage extends React.Component {
 			break;
 
 		default:
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}}); 
 			break;
 		}
 		console.log("this.state: ", this.state)
+		//this.forceUpdate();
 	}
 
 	addText(isFront) {
@@ -180,10 +189,10 @@ class DesignPage extends React.Component {
 		else if (value == "button"){
 			this.setState({clickedWhat: "button"});
 		}
-	else {
-		this.setState({clickedWhat: this.state.clickedWhat});
-	}
-		this.forceUpdate();
+		else {
+			this.setState({clickedWhat: this.state.clickedWhat});
+		}
+		//this.forceUpdate();
 	}
 
 	onDrop = (e) => {
