@@ -40,7 +40,7 @@ class DesignPage extends React.Component {
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
-			clickedWhat: null
+			clickedWhat: "body"
 
 		};
 
@@ -177,11 +177,11 @@ class DesignPage extends React.Component {
 		else if (value == "sleeve"){
 			this.setState({clickedWhat: "stripe"});
 		}
-		else if (value == "sleeve"){
+		else if (value == "button"){
 			this.setState({clickedWhat: "button"});
 		}
 	else {
-		this.setState({clickedWhat: "body"});
+		this.setState({clickedWhat: this.state.clickedWhat});
 	}
 		this.forceUpdate();
 	}

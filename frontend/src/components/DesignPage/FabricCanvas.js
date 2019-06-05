@@ -121,10 +121,11 @@ class FabricCanvas extends React.Component{
 
                 if(object.the_type === next.the_type){
                     to_remove = object;
+                    this.the_front_canvas.remove(to_remove);
                 }
             } );
 
-            this.the_front_canvas.remove(to_remove);
+            //this.the_front_canvas.remove(to_remove);
             console.log("remove front canvas");
             //this.the_front_canvas.renderAll();
 
@@ -158,10 +159,11 @@ class FabricCanvas extends React.Component{
 
                 if(object.the_type === next.the_type){
                     to_remove = object;
+                    this.the_back_canvas.remove(to_remove);
                 }
             } );
 
-            this.the_back_canvas.remove(to_remove);
+            //this.the_back_canvas.remove(to_remove);
             //this.the_back_canvas.renderAll();
 
 
