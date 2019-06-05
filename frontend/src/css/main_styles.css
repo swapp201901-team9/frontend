@@ -583,6 +583,12 @@ canvas{
 
 
 .canvas-bg{
+  width: 430px;
+  height: 460px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
   background: url('./images/bg-canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
