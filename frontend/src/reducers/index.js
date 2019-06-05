@@ -16,7 +16,7 @@ const homepageInitialState = {
         detail_body: "001c58",
         detail_sleeve: "f8f8f8",
         detail_banding: "001c58",
-        detail_stripes: "ffffff",
+        detail_stripes: "fcfcfc",
         detail_buttons: "001c58"
     }, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
 
