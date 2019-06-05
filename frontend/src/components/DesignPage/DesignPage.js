@@ -40,7 +40,7 @@ class DesignPage extends React.Component {
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
-			// clickedWhat: null
+			clickedWhat: "body"
 
 		};
 
@@ -162,6 +162,30 @@ class DesignPage extends React.Component {
 
 	}
 
+	handleChange(e){
+		console.log("DesignPage - handleChange")
+		let value = e.target.value;
+		if (value == "body") {
+			this.setState({clickedWhat: "body"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "sleeve"});
+		}
+		else if (value == "banding") {
+			this.setState({clickedWhat: "banding"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "stripe"});
+		}
+		else if (value == "button"){
+			this.setState({clickedWhat: "button"});
+		}
+	else {
+		this.setState({clickedWhat: this.state.clickedWhat});
+	}
+		this.forceUpdate();
+	}
+
 	onDrop = (e) => {
         console.log("hey");
 
@@ -176,7 +200,7 @@ class DesignPage extends React.Component {
             width: 330,
             height:360,
             the_type: "upload",
-            zIndex: 10
+            zIndex: 12
             });
             console.log("imgInstance set");
             imgInstance.set({
@@ -195,7 +219,11 @@ class DesignPage extends React.Component {
         }
 
         this.the_front_canvas = canvas;
-    }
+	}
+	
+	clickedButton = (e) => {
+		this.forceUpdate();
+	}
 
     render() {
 			console.log("DesignPage - render")
@@ -250,22 +278,7 @@ class DesignPage extends React.Component {
 
 							<h1>Colour</h1>
 							{colorPicker}
-
-						{/*<img src = '' id = "front_body"/>
-						<img src = '' id = "back_body" />
-
-						<img src = "" id = "front_sleeve" />
-						<img src = '' id = "back_sleeve" />
-
-						<img src = "" id = "front_stripe" />
-						<img src = '' id = "back_stripe" />
-
-
-						<img src = "" id = "front_banding" />
-						<img src = '' id = "back_banding" />
-
-
-	  					<img src = "" id = "img_button" />*/}
+							<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
 
 
 		<br></br>
