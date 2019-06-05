@@ -163,27 +163,27 @@ class DesignPage extends React.Component {
 	}
 
 	handleChange(e){
-	// 	console.log("DesignPage - handleChange")
-	// 	let value = e.target.value;
-	// 	if (value == "body") {
-	// 		this.setState({clickedWhat: "body"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "sleeve"});
-	// 	}
-	// 	else if (value == "banding") {
-	// 		this.setState({clickedWhat: "banding"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "stripe"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "button"});
-	// 	}
-	// else {
-	// 	this.setState({clickedWhat: "body"});
-	// }
-	// 	this.forceUpdate();
+		console.log("DesignPage - handleChange")
+		let value = e.target.value;
+		if (value == "body") {
+			this.setState({clickedWhat: "body"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "sleeve"});
+		}
+		else if (value == "banding") {
+			this.setState({clickedWhat: "banding"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "stripe"});
+		}
+		else if (value == "sleeve"){
+			this.setState({clickedWhat: "button"});
+		}
+	else {
+		this.setState({clickedWhat: "body"});
+	}
+		this.forceUpdate();
 	}
 
 	onDrop = (e) => {

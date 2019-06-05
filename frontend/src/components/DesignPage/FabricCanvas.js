@@ -65,7 +65,15 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
-        var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        //var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        if (type == "front_sleeve" || type == "back_sleeve") {
+            if (color.substring(1) == "cfcfcf") {
+                var src = './images/templates/' + type + '/' + type + 'fcfcfc'+'.png';
+            }
+        }
+        else {
+            var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        }
         console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 
@@ -134,7 +142,7 @@ class FabricCanvas extends React.Component{
 
             this.the_front_canvas.add(next);
             console.log("add to front canvas");
-            //this.the_front_canvas.requestRenderAll();
+            this.the_front_canvas.requestRenderAll();
             
             //this.the_front_canvas.moveTo(next, next.zIndex);
             //this.the_front_canvas.renderAll();
