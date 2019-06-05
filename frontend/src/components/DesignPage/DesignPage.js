@@ -54,7 +54,7 @@ class DesignPage extends React.Component {
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 
 		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
-	
+
 
 	}
 
@@ -82,29 +82,29 @@ class DesignPage extends React.Component {
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
 
-		case 'body': 
+		case 'body':
 		console.log("body")
-			this.setState({design : { 
+			this.setState({design : {
 				body: color.hex,
 				sleeve: this.state.design.sleeve,
 				banding: this.state.design.banding,
 				stripe: this.state.design.stripe,
 				button: this.state.design.button
-			 }}); 
+			 }});
 			break;
-				
-		case 'sleeve': 
-			this.setState({design : { 
+
+		case 'sleeve':
+			this.setState({design : {
 				body: this.state.design.body,
 				sleeve: color.hex,
 				banding: this.state.design.banding,
 				stripe: this.state.design.stripe,
 				button: this.state.design.button
-			}}); 
+			}});
 			break;
 
-		case 'banding': 
-			this.setState({design : { 
+		case 'banding':
+			this.setState({design : {
 				body: this.state.design.body,
 				sleeve: this.state.design.sleeve,
 				banding: color.hex,
@@ -113,25 +113,25 @@ class DesignPage extends React.Component {
 			}});
 			break;
 
-		case 'stripe': 
-			this.setState({design : { 
+		case 'stripe':
+			this.setState({design : {
 				body: this.state.design.body,
 				sleeve: this.state.design.sleeve,
 				banding: this.state.design.banding,
 				stripe: color.hex,
-				button: this.state.design.button 
-			}}); 
+				button: this.state.design.button
+			}});
 
 			break;
 
-		case 'button': 
-			this.setState({design : { 
+		case 'button':
+			this.setState({design : {
 				body: this.state.design.body,
 				sleeve: this.state.design.sleeve,
 				banding: this.state.design.banding,
 				stripe: this.state.design.stripe,
 				button: color.hex
-			}}); 
+			}});
 
 			break;
 
@@ -197,8 +197,8 @@ class DesignPage extends React.Component {
         reader.addEventListener("load", function() {
             preview.src = reader.result;
             var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
+            width: 330,
+            height:360,
             the_type: "upload",
             zIndex: 12
             });
@@ -230,33 +230,35 @@ class DesignPage extends React.Component {
 			const clickedWhat = this.state.clickedWhat;
 			let colorPicker;
 			if (clickedWhat == "body") {
+				<div className="circle-picker">
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				</div>
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "sleeve") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "banding") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "stripe") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "button") {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
 				//this.forceUpdate();
 			}
 			else {
 				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
 			}
 
       return (
@@ -322,8 +324,10 @@ class DesignPage extends React.Component {
 			front-back button section
 	=========================================-->*/}
 		<div class="change_side">
-			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
-			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
+
+				<button class="front_btn" type="button" onClick={() => this.addText(true)}>FRONT</button>
+				<button class="back_btn" type="button" onClick={() => this.addText(false)}>BACK</button>
+
 		</div>
 
 
