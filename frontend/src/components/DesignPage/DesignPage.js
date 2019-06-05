@@ -37,9 +37,11 @@ class DesignPage extends React.Component {
 				button : this.props.now_design.detail_buttons
 			},
 
+
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
 			// clickedWhat: null
+
 		};
 
 		this.onDrop = this.onDrop.bind(this);
@@ -50,6 +52,9 @@ class DesignPage extends React.Component {
 		// this.handleChange = this.handleChange.bind(this);
 		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
+
+		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
+	
 
 	}
 
@@ -67,49 +72,6 @@ class DesignPage extends React.Component {
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 	}
 
-	/*componentDidUpdate(prevProps, prevState) {
-	}*/
-
-
-	// addToFrontCanvas(imgElement, property_type, z_Index) {
-	// 	console.log("DesignPage - addToFrontCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({activeFrontProperty: imgInstance});
-	// }
-
-	// addToBackCanvas(imgElement, property_type, z_Index) {
-	// 	console.log("DesignPage - addToBackCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({activeBackProperty: imgInstance});
-	// }
-
-	// addToBothCanvas(imgElement, property_type, z_Index)  {
-	// 	console.log("DesignPage - addToBothCanvas")
-	// 	var imgInstance = new fabric.Image(imgElement, {
-	// 		width: 430,
-	// 		height: 403,
-	// 		the_type: property_type,
-	// 		zIndex: z_Index
-	// 	});
-
-	// 	this.setState({
-	// 		activeFrontProperty: imgInstance,
-	// 		activeBackProperty: imgInstance
-	// 	});
-	// }
-
 	handleFontChangeComplete(color, event) {
 		console.log("DesignPage - handleFontChangeComplete")
 		this.fontcolor = color.hex;
@@ -119,59 +81,64 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
 		switch(design_element) {
-		case 'body':
-			this.setState({body: color.hex});
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('front_body');
-			// var imgElement1 = document.createElement("img");
 
-
-			// var src1 = './images/templates/front_body/front_body'+this.state.design_body.substring(1)+'.png';
-			// console.log("front body src is");
-
-			// imgElement1.setAttribute("src", require(src1));
-			// console.log(src1);
-			// //imgElement1.src = require(src1);
-
-
-
-			// //var imgElement2 = document.getElementById('back_body');
-			// var imgElement2 = document.createElement("img");
-			// var src2 = './images/templates/back_body/back_body'+this.state.design_body.substring(1)+'.png';
-			// console.log("back body src is");
-			// console.log(src2);
-			// imgElement2.setAttribute("src", require(src2));
-			// //imgElement2.src = require(src2);
-
-			// this.addToFrontCanvas(imgElement1, "front_body", 0);
-			// this.addToBackCanvas(imgElement2, "back_body", 0);
+		case 'body': 
+		console.log("body")
+			this.setState({design : { 
+				body: color.hex,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			 }}); 
+			break;
+				
+		case 'sleeve': 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: color.hex,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}}); 
 			break;
 
-		case 'sleeve':
-			this.setState({sleeve: color.hex});
-			// this.addToBackCanvas(imgElement2, "back_sleeve", 0);
+		case 'banding': 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: color.hex,
+				stripe: this.state.design.stripe,
+				button: this.state.design.button
+			}});
 			break;
 
-		case 'banding':
-			this.setState({banding: color.hex});
-			// this.addToBackCanvas(imgElement2, "back_banding", 0);
+		case 'stripe': 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: color.hex,
+				button: this.state.design.button 
+			}}); 
+
 			break;
 
-		case 'stripe':
-			this.setState({stripe: color.hex});
-			// this.addToBackCanvas(imgElement2, "back_stripe", 2);
+		case 'button': 
+			this.setState({design : { 
+				body: this.state.design.body,
+				sleeve: this.state.design.sleeve,
+				banding: this.state.design.banding,
+				stripe: this.state.design.stripe,
+				button: color.hex
+			}}); 
 
-			break;
-
-		case 'button':
-			this.setState({design_button: color.hex});
-			// this.addToFrontCanvas(imgElement1, "front_button", 2);
 			break;
 
 		default:
 			break;
 		}
-		console.log(this.state)
+		console.log("this.state: ", this.state)
 	}
 
 	addText(isFront) {
@@ -194,27 +161,6 @@ class DesignPage extends React.Component {
 		}
 
 	}
-
-	// handleChange(e){
-	// 	console.log("DesignPage - handleChange")
-	// 	let value = e.target.value;
-	// 	if (value == "body") {
-	// 		this.setState({clickedWhat: "body"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "sleeve"});
-	// 	}
-	// 	else if (value == "banding") {
-	// 		this.setState({clickedWhat: "banding"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "stripe"});
-	// 	}
-	// 	else if (value == "sleeve"){
-	// 		this.setState({clickedWhat: "button"});
-	// 	}
-	// 	this.forceUpdate();
-	// }
 
 	onDrop = (e) => {
         console.log("hey");
@@ -399,7 +345,7 @@ class DesignPage extends React.Component {
 	{this.props.isLoggedIn ?
 		(<div>
 			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
+			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design)}>SAVE</button>
 		</div>)
 		: <div></div>
 	}
