@@ -152,18 +152,6 @@ button{
 
 
 
-.TimeLine{
-  text-align: center;
-  position: absolute;
-  top: 150px;
-  left: 23em;
-  right:20em;
-  padding-bottom: 50px;
-}
-
-canvas
-
-
 /* Login Page css */
 
 
@@ -204,7 +192,10 @@ input:focus{
   background-color: #fff
 }
 
-
+.circle-picker{
+  margin-left: auto;
+  margin-right: auto;
+}
 
 
 
