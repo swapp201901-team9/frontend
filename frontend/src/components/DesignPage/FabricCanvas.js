@@ -9,8 +9,6 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - constructor - props: ", props)
         this.state = {
             pictures : [],
-            front_property : null,
-            back_property: null
         };
         this.onDrop = this.onDrop.bind(this);
         this.designElementToImage = this.designElementToImage.bind(this);
@@ -19,9 +17,9 @@ class FabricCanvas extends React.Component{
 
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-       
-
+        this.text_element = ["textvalue", "fontFamily", "fill", "fontStyle", "fontSize", "isFront"]
     }
+    
     /*I do not know why but setting either of willupdate or didupdate works*/
     componentWillUpdate(nextProps, nextState) {
         this.the_front_canvas.renderAll();
@@ -66,7 +64,7 @@ class FabricCanvas extends React.Component{
     }
 
     designElementToImage(color, type, z_Index) {
-        console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
+        // console.log("FabricCanvas - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
@@ -79,10 +77,23 @@ class FabricCanvas extends React.Component{
 			height: 460,
 			the_type: type                                                         ,
 			zIndex: z_Index
-		});
-
-        console.log("imgInstance: ", imgInstance)
+        });
+        
         return imgInstance
+    }
+
+    textToImage() {
+        console.log("FabricCanvas - textToImage")
+
+        var textInstance = new fabric.IText(this.props.text.textvalue, {
+            fontFamily: this.props.text.fontFamily,
+            fill: this.props.text.fill,
+            fontStyle: this.props.text.fontStyle,
+            fontSize: this.props.text.fontSize,
+            zIndex: 10
+        })
+
+        return textInstance
     }
 
 
@@ -284,7 +295,7 @@ class FabricCanvas extends React.Component{
     }
 
     render(){
-        console.log("FabricCanvas - render - this.state: ", this.state)
+        console.log("FabricCanvas - render - this.props: ", this.props)
 
         return (
             <div className= "main-canvas-container">
