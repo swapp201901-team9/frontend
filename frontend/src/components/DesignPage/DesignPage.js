@@ -197,8 +197,8 @@ class DesignPage extends React.Component {
         reader.addEventListener("load", function() {
             preview.src = reader.result;
             var imgInstance = new fabric.Image(preview, {
-            width: 330,
-            height:360,
+            width: 899,
+            height:959,
             the_type: "upload",
             zIndex: 12
             });
@@ -220,7 +220,7 @@ class DesignPage extends React.Component {
 
         this.the_front_canvas = canvas;
 	}
-	
+
 	clickedButton = (e) => {
 		this.forceUpdate();
 	}
@@ -230,10 +230,8 @@ class DesignPage extends React.Component {
 			const clickedWhat = this.state.clickedWhat;
 			let colorPicker;
 			if (clickedWhat == "body") {
-				<div className="circle-picker">
 				colorPicker = <CirclePicker
 				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-				</div>
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "sleeve") {
@@ -324,10 +322,8 @@ class DesignPage extends React.Component {
 			front-back button section
 	=========================================-->*/}
 		<div class="change_side">
-
-				<button class="front_btn" type="button" onClick={() => this.addText(true)}>FRONT</button>
-				<button class="back_btn" type="button" onClick={() => this.addText(false)}>BACK</button>
-
+			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
+			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
 		</div>
 
 

@@ -152,6 +152,17 @@ button{
 
 
 
+.TimeLine{
+  text-align: center;
+  position: absolute;
+  top: 150px;
+  left: 23em;
+  right:20em;
+  padding-bottom: 50px;
+}
+
+
+
 /* Login Page css */
 
 
@@ -192,10 +203,7 @@ input:focus{
   background-color: #fff
 }
 
-.circle-picker{
-  margin-left: auto;
-  margin-right: auto;
-}
+
 
 
 
@@ -235,7 +243,6 @@ input:focus{
   margin: 0px;
   padding: 6px 15px;
   font-size: 16px;
-
 }
 
 hr{
@@ -269,10 +276,30 @@ img{
 /* ====================
 [3] t-shirt design area
 ==================== */
+.design_area{
+	margin: 0 auto;
+	position: relative;
+	width: 504px;
+	height: 504px;
+}
 
+.canvas_area_front,
+.canvas_area_back{
+    position: absolute;
+    width: 192px;
+    height: 302px;
+    top: 50%;
+    left: 50%;
+    margin: -151px 0 0 -96px;
+}
 
+.canvas_area_back{
+	display: none;
+}
 
-
+.design_area canvas{
+    border: 1px dashed #757575;
+}
 
 
 /* ====================
@@ -524,6 +551,9 @@ img{
     margin-bottom: 20px;
 }
 
+#previewModal .canvas-container{
+    margin: 0 auto;
+}
 
 #back_preview{
     margin-top: 40px;
@@ -554,36 +584,31 @@ img{
 }
 
 /* Canvas */
-
-canvas{
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-
-}
-.canvas-container{
-
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
+#front-canvas{
+    background: #ccc;
+    background: url('./images/bg-canvas.png');
+    background-repeat: repeat;
+    border:1px solid #ececec;
+    margin: 10px auto;
+    display: block;
+    height: 375px;
+    width: 375px;
 
 
-.canvas-bg{
-  width: 430px;
-  height: 460px;
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  }
+
+#back-canvas{
+  background: #ccc;
   background: url('./images/bg-canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
+  margin: 10px auto;
+  display: block;
+  height: 375px;
+  width: 375px;
+
 }
+
 
 
 /*grouppage*/
