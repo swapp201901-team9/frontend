@@ -30,44 +30,13 @@ class DesignPage extends React.Component {
 
 		this.state = {
 			design : {
-				body: this.props.now_design.detail_body,
-				sleeve: this.props.now_design.detail_sleeve,
-				banding: this.props.now_design.detail_banding,
-				stripe: this.props.now_design.detail_stripes,
-				button: this.props.now_design.detail_buttons
+				body : this.props.now_design.detail_body,
+				sleeve : this.props.now_design.detail_sleeve,
+				banding : this.props.now_design.detail_banding,
+				stripe : this.props.now_design.detail_stripes,
+				button : this.props.now_design.detail_buttons
 			},
 
-			text : {
-				frontchest: {
-					textvalue: "Hi",
-					fontFamily: "arial",
-					fill: "#e91e63",
-					fontStyle: "italic",
-					fontSize: 100
-				},
-				leftarm: {
-					textvalue: "Hi",
-					fontFamily: "arial",
-					fill: "#e91e63",
-					fontStyle: "italic",
-					fontSize: 100
-				}
-			
-				// frontchest: this.props.now_design.front_chest,
-				// leftarm: this.props.now_design.left_arm,
-				// rightarm: this.props.now_design.right_arm,
-				// upperback: this.props.now_design.upper_back,
-				// middleback: this.props.now_design.middle_back,
-				// lowerback: this.props.now_design.lower_back
-
-				// {
-				// 	textvalue: text.text_value,
-				// 	fontFamily: text.font_family,
-				// 	fill: text.font_fill,
-				// 	fontStyle: text.font_style,
-				// 	fontSize: text.font_size
-				// },
-			},
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
@@ -101,9 +70,7 @@ class DesignPage extends React.Component {
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-
-		this.text_style_id = ["text_area", "text_font", "text_style", "text_size", "text_colour"]
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
 	}
 
 	handleFontChangeComplete(color, event) {
@@ -194,7 +161,7 @@ class DesignPage extends React.Component {
 		//this.forceUpdate();
 	}
 
-	addText() {
+	addText(isFront) {
 		console.log("DesignPage - addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
@@ -202,10 +169,16 @@ class DesignPage extends React.Component {
 			fontStyle: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
 			zIndex: 10
+			// objecttype: 'image',
 		})
 
 		console.log(text)
-	
+		if(isFront) {
+			this.setState({activeFrontProperty: text})
+		}
+		else {
+			this.setState({activeBackProperty: text})
+		}
 
 	}
 
@@ -308,80 +281,70 @@ class DesignPage extends React.Component {
 
       return (
       <div>
-		<section className="wrap clear col3">
-			<div className="aside">
-				<h2 className="h_white">SELECT STYLE</h2>
-					<div className="content">
+				<section className="wrap clear col3">
+					<div className="aside">
+						<h2 className="h_white">SELECT STYLE</h2>
+							<div className="content">
+								<center><select id="design_element"
+								onChange={(e)=>this.handleChange(e)}>
+									<option value = "body">body</option>
+									<option value = "sleeve">sleeve</option>
+									<option value = "banding">banding</option>
+									<option value = "stripe">stripe</option>
+									<option value = "button">button</option>
+								</select></center>
 
-						{/*<!--========================================
-							Design section
-						=========================================-->*/}
-						<h1>Design</h1>
-						<center><select id="design_element"
-						onChange={(e)=>this.handleChange(e)}>
-							<option value = "body">body</option>
-							<option value = "sleeve">sleeve</option>
-							<option value = "banding">banding</option>
-							<option value = "stripe">stripe</option>
-							<option value = "button">button</option>
-						</select></center>
-						<br></br>
-						{colorPicker}
-						<br></br>
-		
-						{/* <div class="design_tool"> */}
-						{/*<!--========================================
-						Text section
-						=========================================-->*/}
-						
-						<h1>Text</h1>
-							<center><select id="text_element">
-								<option value="frontchest">Front Chest</option>
-								<option value="leftarm">Left Arm</option>
-								<option value="rightarm">Right Arm</option>
-								<option value="upperback">Upper Back</option>
-								<option value="middleback">Middle Back</option>
-								<option value="lowerback">Lower Back</option>
-							</select>
-						
-							<textarea id="text_area" defaultValue="S" name="textvalue"
-							onChange={(e)=>this.handleTextChangeComplete(e)}/>
+							<h1>Colour</h1>
+							{colorPicker}
+							<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
 
-							<p>Font</p> 
-							<select id="text_font" name="fontFamily"
-							onChange={(e)=>this.handleTextChangeComplete(e)}>
-								<option>arial</option>
-								<option>tahoma</option>
-								<option>times new roman</option>
-								<option>anton</option>
-								<option>Akronim</option>
-								<option>Alex Brush</option>
-								<option>Aguafina Script</option>
-							</select>
-							
-							<p>Text style</p>
-							<select id="text_style" name="fontStyle"
-							onChange={(e)=>this.handleTextChangeComplete(e)}>
-								<option>normal</option>
-								<option>italic</option>
-								<option>oblique</option>
-								<option>bold</option>
-							</select>
 
-							<p>Text size</p> 
-							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" name="fontSize"/>
+		<br></br>
+		<div class="design_tool">
 
-							<p>Colour</p>
-								<CirclePicker id="text_colour" name="fill"
-								onChangeComplete={this.handleTextChangeComplete}/>
+		<h1>Text</h1>
+			<textarea id="text_area" defaultValue="Hello"/>
 
-							</center>
-							
-						</div>
+			<p>Choose a font</p>
+			<select id="text_font">
+				{/*<!-- all fonts -->*/}
+				<option>arial</option>
+				<option>tahoma</option>
+				<option>times new roman</option>
+				<option>anton</option>
+				<option>Akronim</option>
+				<option>Alex Brush</option>
+				<option>Aguafina Script</option>
+			</select>
 
-						<div>
-							<button class="front_btn" type="button" onClick={() => this.addText()}>Enter</button>
-						</div>
+			<p>Text colour</p>
+				{/*<!-- colour -->*/}
+				{/*<input type="text" id="text_colour" />*/}
+				<CirclePicker id="text_colour" onChangeComplete={this.handleFontChangeComplete}/>
+
+			<p>Text style</p>
+				<select id="text_style" onChange={(e)=>this.handleChange(e)}>
+					{/*<!-- font style -->*/}
+					<option>normal</option>
+					<option>italic</option>
+					<option>oblique</option>
+					<option>bold</option>
+				</select>
+
+			<div class="font_size">
+				{/*<!-- font size -->*/}
+				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
+			</div>
+		</div>
+
+
+		{/*<!--========================================
+			front-back button section
+	=========================================-->*/}
+		<div class="change_side">
+			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
+			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
+		</div>
 
 
 
@@ -395,7 +358,7 @@ class DesignPage extends React.Component {
                   <img src = ""
                         id = "img" />
 			</div>
-          {/* </div> */}
+          </div>
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
@@ -406,7 +369,6 @@ class DesignPage extends React.Component {
 	{/*<ThreeScene/>*/}
 	<FabricCanvas
 	design = {this.state.design}
-	text = {this.state.text}
 	// activeFrontProperty = {this.state.activeFrontProperty}
 	// activeBackProperty = {this.state.activeBackProperty}
 	/>
