@@ -19,7 +19,7 @@ class FabricCanvas extends React.Component{
 
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-        this.text_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
+        this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
        
 
     }
@@ -62,11 +62,10 @@ class FabricCanvas extends React.Component{
         this.the_front_canvas.add(this.designElementToImage(this.props.design.button, "front_button", 2))
 
         this.the_front_canvas.add(this.textElementToImage(this.props.text.frontchest, "frontchest"))
-        // this.the_front_canvas.add(this.textElementToImage(this.props.text.leftarm, "leftarm"))
         this.the_front_canvas.add(this.textElementToImage(this.props.text.rightarm, "rightarm"))
-        // this.the_back_canvas.add(this.textElementToImage(this.props.text.upperback, "upperback"))
-        // this.the_back_canvas.add(this.textElementToImage(this.props.text.middleback, "middleback"))
-        // this.the_back_canvas.add(this.textElementToImage(this.props.text.lowerback, "lowerback"))
+        this.the_back_canvas.add(this.textElementToImage(this.props.text.upperback, "upperback"))
+        this.the_back_canvas.add(this.textElementToImage(this.props.text.middleback, "middleback"))
+        this.the_back_canvas.add(this.textElementToImage(this.props.text.lowerback, "lowerback"))
         // console.log("the_front_canvas: ", this.the_front_canvas);
         //this.the_front_canvas.renderAll();
         //this.the_back_canvas.renderAll();
@@ -103,31 +102,24 @@ class FabricCanvas extends React.Component{
                 fill: text.fill,
                 fontStyle: text.fontStyle,
                 fontSize: text.fontSize,
+                the_type: type,
                 zIndex: 10,
                 left: 250,
-                top: 110
+                top: 110,
+                textAlign: "center"
             })
-            break;
-        case "leftarm":
-            imgInstance = new fabric.IText(text.textvalue, {
-                fontFamily: text.fontFamily,
-                fill: text.fill,
-                fontStyle: text.fontStyle,
-                fontSize: text.fontSize,
-                zIndex: 10,
-                left: 250,
-                top: 110
-            })
-            break;
+            break; 
         case "rightarm":
             imgInstance = new fabric.IText(text.textvalue, {
                 fontFamily: text.fontFamily,
                 fill: text.fill,
                 fontStyle: text.fontStyle,
                 fontSize: text.fontSize,
+                the_type: type,
                 zIndex: 10,
                 left: 50,
-                top: 120
+                top: 120,
+                textAlign: "center"
             })
             break;
         case "upperback":
@@ -136,9 +128,11 @@ class FabricCanvas extends React.Component{
                 fill: text.fill,
                 fontStyle: text.fontStyle,
                 fontSize: text.fontSize,
+                the_type: type,
                 zIndex: 10,
-                left: 250,
-                top: 110
+                left: 140,
+                top: 120,
+                textAlign: "center"
             })    
             break;
         case "middleback":
@@ -147,9 +141,11 @@ class FabricCanvas extends React.Component{
                 fill: text.fill,
                 fontStyle: text.fontStyle,
                 fontSize: text.fontSize,
+                the_type: type,
                 zIndex: 10,
-                left: 250,
-                top: 110
+                left: 160,
+                top: 145,
+                textAlign: "center"
             })    
             break;
         case "lowerback":
@@ -158,9 +154,11 @@ class FabricCanvas extends React.Component{
                 fill: text.fill,
                 fontStyle: text.fontStyle,
                 fontSize: text.fontSize,
+                the_type: type,
                 zIndex: 10,
-                left: 250,
-                top: 110
+                left: 120,
+                top: 170,
+                textAlign: "center"
             })    
             break;
         default:
@@ -205,15 +203,17 @@ class FabricCanvas extends React.Component{
                 case "frontchest":
                     this.updateFrontCanvasforImage(this.textElementToImage(newprops.text.frontchest, "frontchest"))
                     break;
-                case "leftarm":
-                    break;
                 case "rightarm":
+                this.updateFrontCanvasforImage(this.textElementToImage(newprops.text.rightarm, "rightarm"))
                     break;
                 case "upperback":
+                this.updateBackCanvasforImage(this.textElementToImage(newprops.text.upperback, "upperback"))
                     break;
                 case "middleback":
+                this.updateBackCanvasforImage(this.textElementToImage(newprops.text.middleback, "middleback"))
                     break;
                 case "lowerback":
+                this.updateBackCanvasforImage(this.textElementToImage(newprops.text.lowerback, "lowerback"))
                     break;
                 default:
                     break;
@@ -233,6 +233,7 @@ class FabricCanvas extends React.Component{
             this.the_front_canvas.forEachObject( (object) => {
             
                 if(object.the_type === next.the_type){
+                    console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
                     to_remove = object;
                     this.the_front_canvas.remove(to_remove);
                 }

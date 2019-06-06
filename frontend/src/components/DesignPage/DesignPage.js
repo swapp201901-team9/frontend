@@ -42,36 +42,36 @@ class DesignPage extends React.Component {
 					textvalue: "S",
 					fontFamily: "arial",
 					fill: "#fe0e0e",
-					fontStyle: "normal",
-					fontSize: 50
+					fontStyle: "bold",
+					fontSize: 50,
 				},
 				rightarm: {
 					textvalue: "19",
 					fontFamily: "arial",
 					fill: "#e91e63",
-					fontStyle: "normal",
+					fontStyle: "bold",
 					fontSize: 50
 				},
 				upperback: {
-					textvalue: "19",
+					textvalue: "SEOUL NAT'L",
 					fontFamily: "arial",
 					fill: "#e91e63",
-					fontStyle: "normal",
-					fontSize: 50
+					fontStyle: "bold",
+					fontSize: 25
 				},
 				middleback: {
-					textvalue: "19",
+					textvalue: "UNIVERSITY",
 					fontFamily: "arial",
 					fill: "#e91e63",
-					fontStyle: "normal",
-					fontSize: 50
+					fontStyle: "bold",
+					fontSize: 20
 				},
 				lowerback: {
-					textvalue: "19",
+					textvalue: "Department of\nComputer Science",
 					fontFamily: "arial",
 					fill: "#e91e63",
-					fontStyle: "normal",
-					fontSize: 50
+					fontStyle: "italic",
+					fontSize: 15
 				}
 			
 				// frontchest: this.props.now_design.front_chest,
@@ -91,13 +91,15 @@ class DesignPage extends React.Component {
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
-			clickedWhat: null
+			clickedWhat: null,
+			textClickedWhat: "frontchest"
 
 		};
 
 		this.onDrop = this.onDrop.bind(this);
 
-		this.handleChange = this.handleChange.bind(this);
+		this.handleDesignChange = this.handleDesignChange.bind(this);
+		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 		this.handleTextChangeComplete = this.handleTextChangeComplete.bind(this);
 		this.handleTextColorChangeComplete = this.handleTextColorChangeComplete.bind(this);
@@ -195,8 +197,8 @@ class DesignPage extends React.Component {
 
 	}
 
-	handleChange(e){
-		console.log("DesignPage - handleChange")
+	handleDesignChange(e){
+		console.log("DesignPage - handleDesignChange")
 		let value = e.target.value;
 		if (value == "body") {
 			this.setState({clickedWhat: "body"});
@@ -215,6 +217,30 @@ class DesignPage extends React.Component {
 		}
 		else {
 			this.setState({clickedWhat: this.state.clickedWhat});
+		}
+		//this.forceUpdate();
+	}
+
+	handleTextChange(e){
+		console.log("DesignPage - handleTextChange")
+		let value = e.target.value;
+		if (value == "frontchest") {
+			this.setState({textClickedWhat: "frontchest"});
+		}
+		else if (value == "rightarm"){
+			this.setState({textClickedWhat: "rightarm"});
+		}
+		else if (value == "upperback") {
+			this.setState({textClickedWhat: "upperback"});
+		}
+		else if (value == "middleback"){
+			this.setState({textClickedWhat: "middleback"});
+		}
+		else if (value == "lowerback"){
+			this.setState({textClickedWhat: "lowerback"});
+		}
+		else {
+			this.setState({textClickedWhat: this.state.textClickedWhat});
 		}
 		//this.forceUpdate();
 	}
@@ -314,8 +340,8 @@ class DesignPage extends React.Component {
 							Design section
 						=========================================-->*/}
 						<h1>Design</h1>
-						<center><select id="design_element"
-						onChange={(e)=>this.handleChange(e)}>
+						<center><select id="design_element" 
+						onChange={(e)=>this.handleDesignChange(e)}>
 							<option value = "body">body</option>
 							<option value = "sleeve">sleeve</option>
 							<option value = "banding">banding</option>
@@ -325,7 +351,7 @@ class DesignPage extends React.Component {
 						<br></br>
 						{colorPicker}
 						<br></br>
-						<div className="Button-Field-Side">
+						<div className="Button-Field-Side"> 
 						<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
 						</div>
 		
@@ -335,16 +361,16 @@ class DesignPage extends React.Component {
 						=========================================-->*/}
 						
 						<h1>Text</h1>
-							<center><select id="text_element">
+							<center><select id="text_element"
+							onChange={(e)=>this.handleTextChange(e)}>
 								<option value="frontchest">Front Chest</option>
-								<option value="leftarm">Left Arm</option>
 								<option value="rightarm">Right Arm</option>
 								<option value="upperback">Upper Back</option>
 								<option value="middleback">Middle Back</option>
 								<option value="lowerback">Lower Back</option>
 							</select>
-						
-							<textarea id="text_area" defaultValue="S" name="textvalue"
+{console.log("default: ", this.state.text[this.state.textClickedWhat].textvalue)}
+							<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} name="textvalue"
 							onChange={(e)=>this.handleTextChangeComplete(e)}/>
 
 							<p>Font</p> 
@@ -369,7 +395,7 @@ class DesignPage extends React.Component {
 							</select>
 
 							<p>Text size</p> 
-							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" name="fontSize"/>
+							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" name="fontSize" onChange={(e)=>this.handleTextChangeComplete(e)}/>
 
 							<p>Colour</p>
 								<CirclePicker id="text_colour" name="fill"
