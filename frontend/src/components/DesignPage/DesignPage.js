@@ -30,13 +30,51 @@ class DesignPage extends React.Component {
 
 		this.state = {
 			design : {
-				body : this.props.now_design.detail_body,
-				sleeve : this.props.now_design.detail_sleeve,
-				banding : this.props.now_design.detail_banding,
-				stripe : this.props.now_design.detail_stripes,
-				button : this.props.now_design.detail_buttons
+				body: this.props.now_design.detail_body,
+				sleeve: this.props.now_design.detail_sleeve,
+				banding: this.props.now_design.detail_banding,
+				stripe: this.props.now_design.detail_stripes,
+				button: this.props.now_design.detail_buttons
 			},
 
+			text : {
+				frontchest: {
+					textvalue: "S",
+					fontFamily: "arial",
+					fill: "#fe0e0e",
+					fontStyle: "normal",
+					fontSize: 50
+				},
+				leftarm: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#e91e63",
+					fontStyle: "normal",
+					fontSize: 50
+				},
+				rightarm: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#e91e63",
+					fontStyle: "normal",
+					fontSize: 50
+				}
+			
+				// frontchest: this.props.now_design.front_chest,
+				// leftarm: this.props.now_design.left_arm,
+				// rightarm: this.props.now_design.right_arm,
+				// upperback: this.props.now_design.upper_back,
+				// middleback: this.props.now_design.middle_back,
+				// lowerback: this.props.now_design.lower_back
+
+				// {
+				// 	textvalue: text.text_value,
+				// 	fontFamily: text.font_family,
+				// 	fill: text.font_fill,
+				// 	fontStyle: text.font_style,
+				// 	fontSize: text.font_size
+				// },
+			},
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
@@ -46,14 +84,12 @@ class DesignPage extends React.Component {
 
 		this.onDrop = this.onDrop.bind(this);
 
-		// this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
-		// this.addToBackCanvas = this.addToBackCanvas.bind(this);
-		// this.addToBothCanvas = this.addToBothCanvas.bind(this);
-		// this.handleChange = this.handleChange.bind(this);
-		// this.handleChangeComplete = this.handleChangeComplete.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
+		this.handleTextChangeComplete = this.handleTextChangeComplete.bind(this);
+		this.handleTextColorChangeComplete = this.handleTextColorChangeComplete.bind(this);
 		this.clickedButton = this.clickedButton.bind(this);
-
+		console.log("design page state: ", this.state.design)
 		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
 	
 
@@ -70,87 +106,68 @@ class DesignPage extends React.Component {
 		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
+		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+
+		this.text_style_id = ["text_area", "text_font", "text_style", "text_size", "text_colour"]
 	}
 
-	handleFontChangeComplete(color, event) {
-		console.log("DesignPage - handleFontChangeComplete")
-		this.fontcolor = color.hex;
-	}
+	
 
 	handleDesignChangeComplete(color, event) {
 		console.log("DesignPage - handleDesignChangeComplete")
 		let design_element = document.getElementById("design_element").value;
-		switch(design_element) {
 
-		case 'body': 
-		console.log("body")
-			this.setState({design : { 
-				body: color.hex,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			 }}); 
-			break;
+		this.setState({design : ({...this.state.design, [design_element]: color.hex})})
+		
+		// switch(design_element) {
+		// case 'body': 
+		// console.log("body")
+		// 	this.setState({design : ({...this.state.design, body: color.hex})})
+		// 	break;
 				
-		case 'sleeve': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: color.hex,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}}); 
-			break;
+		// case 'sleeve': 
+		// 	this.setState({design : ({...this.state.design, sleeve: color.hex})})
+		// 	break;
 
-		case 'banding': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: color.hex,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}});
-			break;
+		// case 'banding': 
+		// 	this.setState({design : ({...this.state.design, banding: color.hex})})
+		// 	break;
 
-		case 'stripe': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: color.hex,
-				button: this.state.design.button 
-			}}); 
+		// case 'stripe': 
+		// 	this.setState({design : ({...this.state.design, stripe: color.hex})})
+		// 	break;
 
-			break;
+		// case 'button': 
+		// 	this.setState({design : ({...this.state.design, button: color.hex})}) 
+		// 	break;
 
-		case 'button': 
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: color.hex
-			}}); 
+		// default:
+		// 	this.setState({design : ({...this.state.design})}); 
+		// 	break;
+		// }
+	}
 
-			break;
+	handleTextChangeComplete(e) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextChangeComplete e.target: ", e.target, " text element: ", text_element)
 
-		default:
-			this.setState({design : { 
-				body: this.state.design.body,
-				sleeve: this.state.design.sleeve,
-				banding: this.state.design.banding,
-				stripe: this.state.design.stripe,
-				button: this.state.design.button
-			}}); 
-			break;
-		}
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
+		})});
+
 		console.log("this.state: ", this.state)
 		//this.forceUpdate();
 	}
 
-	addText(isFront) {
+	handleTextColorChangeComplete(color) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextColorChangeComplete")
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], fill: color.hex})
+		})});
+	}
+
+	addText() {
 		console.log("DesignPage - addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
@@ -158,16 +175,10 @@ class DesignPage extends React.Component {
 			fontStyle: document.getElementById("text_style").value,
 			fontSize: document.getElementById("text_size").value,
 			zIndex: 10
-			// objecttype: 'image',
 		})
 
 		console.log(text)
-		if(isFront) {
-			this.setState({activeFrontProperty: text})
-		}
-		else {
-			this.setState({activeBackProperty: text})
-		}
+	
 
 	}
 
@@ -246,21 +257,25 @@ class DesignPage extends React.Component {
 			if (clickedWhat == "body") {
 				colorPicker = <CirclePicker
 				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "sleeve") {
 				colorPicker = <CirclePicker
 				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "banding") {
 				colorPicker = <CirclePicker
 				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "stripe") {
 				colorPicker = <CirclePicker
 				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "button") {
@@ -272,74 +287,88 @@ class DesignPage extends React.Component {
 				// colorPicker = <CirclePicker
 				// width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
 				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
+
 			}
 
       return (
       <div>
-				<section className="wrap clear col3">
-					<div className="aside">
-						<h2 className="h_white">SELECT STYLE</h2>
-							<div className="content">
-								<center><select id="design_element"
-								onChange={(e)=>this.handleChange(e)}>
-									<option value = "body">body</option>
-									<option value = "sleeve">sleeve</option>
-									<option value = "banding">banding</option>
-									<option value = "stripe">stripe</option>
-									<option value = "button">button</option>
-								</select></center>
+		<section className="wrap clear col3">
+			<div className="aside">
+				<h2 className="h_white">SELECT STYLE</h2>
+					<div className="content">
 
-							<h1>Colour</h1>
-							{colorPicker}
-							<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
+						{/*<!--========================================
+							Design section
+						=========================================-->*/}
+						<h1>Design</h1>
+						<center><select id="design_element"
+						onChange={(e)=>this.handleChange(e)}>
+							<option value = "body">body</option>
+							<option value = "sleeve">sleeve</option>
+							<option value = "banding">banding</option>
+							<option value = "stripe">stripe</option>
+							<option value = "button">button</option>
+						</select></center>
+						<br></br>
+						{colorPicker}
+						<br></br>
+						<div className="Button-Field-Side">
+						<button  onClick={(e) => this.clickedButton(e)}>ADD</button>
+						</div>
+		
+						{/* <div class="design_tool"> */}
+						{/*<!--========================================
+						Text section
+						=========================================-->*/}
+						
+						<h1>Text</h1>
+							<center><select id="text_element">
+								<option value="frontchest">Front Chest</option>
+								<option value="leftarm">Left Arm</option>
+								<option value="rightarm">Right Arm</option>
+								<option value="upperback">Upper Back</option>
+								<option value="middleback">Middle Back</option>
+								<option value="lowerback">Lower Back</option>
+							</select>
+						
+							<textarea id="text_area" defaultValue="S" name="textvalue"
+							onChange={(e)=>this.handleTextChangeComplete(e)}/>
 
+							<p>Font</p> 
+							<select id="text_font" name="fontFamily"
+							onChange={(e)=>this.handleTextChangeComplete(e)}>
+								<option>arial</option>
+								<option>tahoma</option>
+								<option>times new roman</option>
+								<option>anton</option>
+								<option>Akronim</option>
+								<option>Alex Brush</option>
+								<option>Aguafina Script</option>
+							</select>
+							
+							<p>Text style</p>
+							<select id="text_style" name="fontStyle"
+							onChange={(e)=>this.handleTextChangeComplete(e)}>
+								<option>normal</option>
+								<option>italic</option>
+								<option>oblique</option>
+								<option>bold</option>
+							</select>
 
-		<br></br>
-		<div class="design_tool">
+							<p>Text size</p> 
+							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" name="fontSize"/>
 
-		<h1>Text</h1>
-			<textarea id="text_area" defaultValue="Hello"/>
+							<p>Colour</p>
+								<CirclePicker id="text_colour" name="fill"
+								onChangeComplete={this.handleTextColorChangeComplete}/>
 
-			<p>Choose a font</p>
-			<select id="text_font">
-				{/*<!-- all fonts -->*/}
-				<option>arial</option>
-				<option>tahoma</option>
-				<option>times new roman</option>
-				<option>anton</option>
-				<option>Akronim</option>
-				<option>Alex Brush</option>
-				<option>Aguafina Script</option>
-			</select>
+							</center>
+							
+						</div>
 
-			<p>Text colour</p>
-				{/*<!-- colour -->*/}
-				{/*<input type="text" id="text_colour" />*/}
-				<CirclePicker id="text_colour" onChangeComplete={this.handleFontChangeComplete}/>
-
-			<p>Text style</p>
-				<select id="text_style" onChange={(e)=>this.handleChange(e)}>
-					{/*<!-- font style -->*/}
-					<option>normal</option>
-					<option>italic</option>
-					<option>oblique</option>
-					<option>bold</option>
-				</select>
-
-			<div class="font_size">
-				{/*<!-- font size -->*/}
-				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
-			</div>
-		</div>
-
-
-		{/*<!--========================================
-			front-back button section
-	=========================================-->*/}
-		<div class="change_side">
-			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
-			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
-		</div>
+						<div>
+							<button class="front_btn" type="button" onClick={() => this.addText()}>Enter</button>
+						</div>
 
 
 
@@ -353,7 +382,7 @@ class DesignPage extends React.Component {
                   <img src = ""
                         id = "img" />
 			</div>
-          </div>
+          {/* </div> */}
               <div className="main">
                 <h2 className="h_white">SAMPLE VIEW</h2>
                 <div className="content">
@@ -364,6 +393,7 @@ class DesignPage extends React.Component {
 	{/*<ThreeScene/>*/}
 	<FabricCanvas
 	design = {this.state.design}
+	text = {this.state.text}
 	// activeFrontProperty = {this.state.activeFrontProperty}
 	// activeBackProperty = {this.state.activeBackProperty}
 	/>
@@ -375,7 +405,9 @@ class DesignPage extends React.Component {
 			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design)}>SAVE</button>
 		</div>)
-		: <div></div>
+		: <div>
+			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+		</div>
 	}
 
 
