@@ -58,41 +58,20 @@ class DesignPage extends React.Component {
 					fill: "#e91e63",
 					fontStyle: "normal",
 					fontSize: 50
-				}
-			
-				// frontchest: this.props.now_design.front_chest,
-				// leftarm: this.props.now_design.left_arm,
-				// rightarm: this.props.now_design.right_arm,
-				// upperback: this.props.now_design.upper_back,
-				// middleback: this.props.now_design.middle_back,
-				// lowerback: this.props.now_design.lower_back
-
-				// {
-				// 	textvalue: text.text_value,
-				// 	fontFamily: text.font_family,
-				// 	fill: text.font_fill,
-				// 	fontStyle: text.font_style,
-				// 	fontSize: text.font_size
-				// },
+				},
 			},
-
-			// activeBackProperty : null,
-			// activeFrontProperty : null,
+			logo : null,
 			clickedWhat: null
 
 		};
 
 		this.onDrop = this.onDrop.bind(this);
-
 		this.handleChange = this.handleChange.bind(this);
 		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 		this.handleTextChangeComplete = this.handleTextChangeComplete.bind(this);
 		this.handleTextColorChangeComplete = this.handleTextColorChangeComplete.bind(this);
 		this.clickedButton = this.clickedButton.bind(this);
 		console.log("design page state: ", this.state.design)
-		//this.handleFontChangeComplete = this.handleFontChangeComplete.bind(this);
-	
-
 	}
 
 	componentWillMount() {
@@ -107,7 +86,6 @@ class DesignPage extends React.Component {
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
 		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-
 		this.text_style_id = ["text_area", "text_font", "text_style", "text_size", "text_colour"]
 	}
 
@@ -118,33 +96,6 @@ class DesignPage extends React.Component {
 		let design_element = document.getElementById("design_element").value;
 
 		this.setState({design : ({...this.state.design, [design_element]: color.hex})})
-		
-		// switch(design_element) {
-		// case 'body': 
-		// console.log("body")
-		// 	this.setState({design : ({...this.state.design, body: color.hex})})
-		// 	break;
-				
-		// case 'sleeve': 
-		// 	this.setState({design : ({...this.state.design, sleeve: color.hex})})
-		// 	break;
-
-		// case 'banding': 
-		// 	this.setState({design : ({...this.state.design, banding: color.hex})})
-		// 	break;
-
-		// case 'stripe': 
-		// 	this.setState({design : ({...this.state.design, stripe: color.hex})})
-		// 	break;
-
-		// case 'button': 
-		// 	this.setState({design : ({...this.state.design, button: color.hex})}) 
-		// 	break;
-
-		// default:
-		// 	this.setState({design : ({...this.state.design})}); 
-		// 	break;
-		// }
 	}
 
 	handleTextChangeComplete(e) {
@@ -167,7 +118,7 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-	addText() {
+	/*addText() {
 		console.log("DesignPage - addText")
 		let text = new fabric.IText(document.getElementById("text_area").value, {
 			fontFamily: document.getElementById("text_font").value,
@@ -176,11 +127,8 @@ class DesignPage extends React.Component {
 			fontSize: document.getElementById("text_size").value,
 			zIndex: 10
 		})
-
 		console.log(text)
-	
-
-	}
+	}*/
 
 	handleChange(e){
 		console.log("DesignPage - handleChange")
@@ -203,42 +151,53 @@ class DesignPage extends React.Component {
 		else {
 			this.setState({clickedWhat: this.state.clickedWhat});
 		}
-		//this.forceUpdate();
 	}
 
 	onDrop = (e) => {
         console.log("hey");
 
-        e.preventDefault();
-        var preview = document.getElementById('img');
-        var file = document.getElementById('input').files[0];
-        var canvas = this.the_front_canvas;
-        let reader = new FileReader();
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-            var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
-            the_type: "upload",
-            zIndex: 12
-            });
-            console.log("imgInstance set");
-            imgInstance.set({
-                scaleY: 0.1,
-                scaleX: 0.1,
-                originX: "center",
-                originY: "center"
-            });
-            console.log("imgInstance scale");
+		e.preventDefault();
+		const scope = this;
+		var img = document.createElement("img");
+		var file = document.getElementById('input').files[0];
+		let reader = new FileReader();
+		reader.addEventListener("load", function() {
+			img.src = reader.result;
+			scope.setState({logo: img});
+		})
 
-        },false);
-
-
-        if (file) {
+		if (file) {
             reader.readAsDataURL(file);
         }
+        // var preview = document.getElementById('img');
+        // var file = document.getElementById('input').files[0];
+        // var canvas = this.the_front_canvas;
+        // let reader = new FileReader();
+        // reader.addEventListener("load", function() {
+        //     preview.src = reader.result;
+        //     var imgInstance = new fabric.Image(preview, {
+        //     width: 899,
+        //     height:959,
+        //     the_type: "upload",
+        //     zIndex: 12
+        //     });
+        //     console.log("imgInstance set");
+        //     imgInstance.set({
+        //         scaleY: 0.1,
+        //         scaleX: 0.1,
+        //         originX: "center",
+        //         originY: "center"
+        //     });
+        //     console.log("imgInstance scale");
 
-        this.the_front_canvas = canvas;
+        // },false);
+
+
+        // if (file) {
+        //     reader.readAsDataURL(file);
+        // }
+
+        // this.the_front_canvas = canvas;
 	}
 	
 	clickedButton = (e) => {
@@ -286,7 +245,7 @@ class DesignPage extends React.Component {
 			else {
 				// colorPicker = <CirclePicker
 				// width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
+				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>START</button>
 
 			}
 
@@ -376,11 +335,12 @@ class DesignPage extends React.Component {
 			Image Upload Modal
 	=========================================-->*/}
 	<h1>Logo</h1>
+	
     <input type = "file"
                          id = "input"
                          onChange = {this.onDrop} />
-                  <img src = ""
-                        id = "img" />
+                  {/*<img src = ""
+                        id = "img" />*/}
 			</div>
           {/* </div> */}
               <div className="main">
