@@ -91,7 +91,7 @@ class DesignPage extends React.Component {
 
 			// activeBackProperty : null,
 			// activeFrontProperty : null,
-			clickedWhat: "body"
+			clickedWhat: null
 
 		};
 
@@ -258,38 +258,49 @@ class DesignPage extends React.Component {
 		this.forceUpdate();
 	}
 
+	clickedInitButton = (e) => {
+		this.setState({clickedWhat: "body"});
+		this.forceUpdate();
+	}
+
     render() {
 			console.log("DesignPage - render")
 			const clickedWhat = this.state.clickedWhat;
 			let colorPicker;
 			if (clickedWhat == "body") {
 				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "sleeve") {
 				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "banding") {
 				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "stripe") {
 				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
+
 				//this.forceUpdate();
 			}
 			else if (clickedWhat == "button") {
 				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
+				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
 				//this.forceUpdate();
 			}
 			else {
-				colorPicker = <CirclePicker
-				width="220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				// colorPicker = <CirclePicker
+				// width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
+				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
+
 			}
 
       return (

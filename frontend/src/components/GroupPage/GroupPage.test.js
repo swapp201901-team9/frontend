@@ -2,6 +2,7 @@
 // import {shallow, configure} from 'enzyme';
 // import {create} from 'react-test-renderer';
 // import Adapter from 'enzyme-adapter-react-15';
+import * as actions from '../../actions/index'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GroupPage from "./GroupPage";
@@ -10,9 +11,18 @@ import GroupPage from "./GroupPage";
 
 //configure({ adapter: new Adapter() });
 
+describe ('ACTIONS', ()=> {
+    it('should create an action with correct type', () => {
+        const expectedAction = {
+            type: 'NAV_BAR'
+        }
+        expect(actions.showNavBar()).toEqual(expectedAction)
+    })
+})
+
 describe('GroupPage', () => {
-    ReactDOM.render(<GroupPage/>, div);
-    ReactDOM.unmountComponentAtNode(div);
+    //ReactDOM.render(<GroupPage/>, div);
+    //ReactDOM.unmountComponentAtNode(div);
 
     // let component = null
 
