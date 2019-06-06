@@ -37,7 +37,7 @@ describe ('ACTIONS', ()=> {
 
         }
         expect(actions.toSearchGroup()).toEqual(expectedAction)
-    }))
+    })
 })
 
 describe('GroupPage', () => {
