@@ -45,14 +45,28 @@ class DesignPage extends React.Component {
 					fontStyle: "normal",
 					fontSize: 50
 				},
-				leftarm: {
+				rightarm: {
 					textvalue: "19",
 					fontFamily: "arial",
 					fill: "#e91e63",
 					fontStyle: "normal",
 					fontSize: 50
 				},
-				rightarm: {
+				upperback: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#e91e63",
+					fontStyle: "normal",
+					fontSize: 50
+				},
+				middleback: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#e91e63",
+					fontStyle: "normal",
+					fontSize: 50
+				},
+				lowerback: {
 					textvalue: "19",
 					fontFamily: "arial",
 					fill: "#e91e63",
@@ -61,7 +75,6 @@ class DesignPage extends React.Component {
 				}
 			
 				// frontchest: this.props.now_design.front_chest,
-				// leftarm: this.props.now_design.left_arm,
 				// rightarm: this.props.now_design.right_arm,
 				// upperback: this.props.now_design.upper_back,
 				// middleback: this.props.now_design.middle_back,
