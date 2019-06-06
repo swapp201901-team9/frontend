@@ -38,6 +38,15 @@ describe ('ACTIONS', ()=> {
         }
         expect(actions.toSearchGroup()).toEqual(expectedAction)
     })
+
+    it('should create an action to like design in group page', (designid) => {
+        const expectedAction = {
+            type: LIKE_DESIGN,
+            designid: designid,
+
+        }
+        expect(actions.toLikeDesign()).toEqual(expectedAction)
+    })
 })
 
 describe('GroupPage', () => {
