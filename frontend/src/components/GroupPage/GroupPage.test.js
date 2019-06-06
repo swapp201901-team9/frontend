@@ -6,18 +6,38 @@ import * as actions from '../../actions/index'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GroupPage from "./GroupPage";
+import { SEARCH_GROUP } from '../../actions/types';
 // import GroupAdminPage from "./GroupAdminPage";
 // import CreateGroup from "./CreateGroup";
 
 //configure({ adapter: new Adapter() });
 
+
+
 describe ('ACTIONS', ()=> {
-    it('should create an action with correct type', () => {
+    it('should create an action to show navigation bar', () => {
         const expectedAction = {
             type: 'NAV_BAR'
         }
         expect(actions.showNavBar()).toEqual(expectedAction)
     })
+
+    it('should create an action to sign out', () => {
+        const expectedAction = {
+            type: 'SIGN_OUT'
+
+        }
+        expect(actions.signOut()).toEqual(expectedAction)
+    })
+
+    it('should create an action to search group', (newList) => {
+        const expectedAction = {
+            type: SEARCH_GROUP,
+            newList: newList
+
+        }
+        expect(actions.toSearchGroup()).toEqual(expectedAction)
+    }))
 })
 
 describe('GroupPage', () => {
