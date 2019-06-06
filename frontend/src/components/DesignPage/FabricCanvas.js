@@ -63,6 +63,7 @@ class FabricCanvas extends React.Component{
         console.log("the_front_canvas: ", this.the_front_canvas);
         //this.the_front_canvas.renderAll();
         //this.the_back_canvas.renderAll();
+        
     }
 
     designElementToImage(color, type, z_Index) {
