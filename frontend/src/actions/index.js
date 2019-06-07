@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -154,6 +154,17 @@ export const gotoAdminGroup = (groupid) => {
     }
 }
 
+
+
+export const gotoEditDesign = (designid) => {
+    console.log("gotoEditDesign action")
+    console.log(designid)
+    return {
+        type: TO_EDIT_DESIGN,
+        designid: designid,
+    }
+}
+
 export const toLikeDesign = (designid) => {
     console.log("likeDesign action")
     console.log(designid)
@@ -231,63 +242,23 @@ export const toNewDesign = () => {
     }
 }
 
-export const toSaveDesign = (designid, design, text) => {
-    console.log("saveDesign action", designid, design, text)
+export const toSaveDesign = (designid, design, text, image) => {
+    console.log("saveDesign action", designid, design, text, image)
     return {
         type: SAVE_DESIGN,
         designid: designid, 
         design: design,
         text: text,
+        image: image,
     }
 }
 
-export const toPostDesign = (designid, groupid, design, text) => {
-    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design, " text: ", text)
+export const toPostDesign = (designid, groupid, design) => {
+    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design)
     return {
         type: POST_DESIGN,
         designid: designid,
         groupid: groupid,
         design: design,
-        text: text,
     }
 }
-
-// export const toChangeBody = (color) => {
-//     console.log("changeBody action", color)
-//     return {
-//         type: CHANGE_BODY,
-//         color: color,
-//     }
-// }
-
-// export const toChangeSleeve = (color) => {
-//     console.log("changeSleeve action", color)
-//     return {
-//         type: CHANGE_SLEEVE,
-//         color: color,
-//     }
-// }
-
-// export const toChangeBanding = (color) => {
-//     console.log("changeBanding action", color)
-//     return {
-//         type: CHANGE_BANDING,
-//         color: color,
-//     }
-// }
-
-// export const toChangeStripe = (color) => {
-//     console.log("changeStripe action", color)
-//     return {
-//         type: CHANGE_STRIPE,
-//         color: color,
-//     }
-// }
-
-// export const toChangeButton = (color) => {
-//     console.log("changeButton action", color)
-//     return {
-//         type: CHANGE_BUTTON,
-//         color: color,
-//     }
-// }

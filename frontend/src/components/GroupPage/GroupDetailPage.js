@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DesignTemp from './DesignTemp.js';
-import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign, toPostDesign } from '../../actions/index.js';
+import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign, toPostDesign, gotoEditDesign } from '../../actions/index.js';
 import NavBar from '../NavBar/NavBar.js';
 import MyGroupList from './MyGroupList.js';
 
@@ -48,11 +48,11 @@ class GroupDetailPage extends React.Component {
                       {this.props.group_designs.map(design =>
                         <DesignTemp
                           key={design.id}
-                          design={design.design}
-                          text={design.text}
+                          design={design}
                           group={this.props.now_group}
                           my_groups={this.props.my_groups}
-                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, design.design, design.text)}
+                          onClickEdit={() => this.props.onToEdit(design.id)}
+                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, design)}
                           onClickLike={() => this.props.onLikeDesign(design.id)}
                           onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
                           onClickDelete={() => this.deleteDesignCheck(this.props.now_group.id, design.id)}
@@ -82,6 +82,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  onToEdit: (designid) => dispatch(gotoEditDesign(designid)),
   onPostDesign: (designid, groupid, design, text) => dispatch(toPostDesign(designid, groupid, design, text)),
   onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
   onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),

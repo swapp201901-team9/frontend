@@ -88,6 +88,11 @@ class DesignPage extends React.Component {
 				// lowerback: this.props.now_design.lower_back
 			},
 
+			image: {
+				front: "",
+				back: "",
+			},
+
 			designClickedWhat: null,
 			textClickedWhat: "frontchest",
 		};
@@ -108,6 +113,7 @@ class DesignPage extends React.Component {
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onDrop = this.onDrop.bind(this);
+		this.onClickSave = this.onClickSave.bind(this);
 	}
 
 	componentWillMount() {
@@ -529,7 +535,19 @@ class DesignPage extends React.Component {
     fileChangedHandler = (event) => {
         const file = event.target.files[0];
         this.setState({selectedFile: file});
-    }
+	}
+	
+
+	onClickSave = () => {
+		console.log("clickSave")
+		let image = {
+			front: this.the_front_canvas.toDataURL({format:'png'}),
+			back: this.the_back_canvas.toDataURL({format: 'png'})
+		}
+
+		this.setState({image: image})
+		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
+	}
 
     render() {
 		console.log("DesignPage - render state: ", this.state)
@@ -657,13 +675,13 @@ class DesignPage extends React.Component {
 					{this.props.isLoggedIn ?
 						(<div>
 							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-							<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button>
+							{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
+							<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 						</div>)
 						: <div>
 							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 						</div>
 					}
-
 				</div>
 			</div>
 
@@ -689,7 +707,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onNew: () => dispatch(toNewDesign()),
-	onSave: (designid, design, text) => dispatch(toSaveDesign(designid, design, text)),
+	onSave: (designid, design, text, image) => dispatch(toSaveDesign(designid, design, text, image)),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)
