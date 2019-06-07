@@ -6,7 +6,7 @@ import * as actions from '../../actions/index'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import GroupPage from "./GroupPage";
-import { SEARCH_GROUP } from '../../actions/types';
+import { SEARCH_GROUP, LIKE_DESIGN } from '../../actions/types';
 // import GroupAdminPage from "./GroupAdminPage";
 // import CreateGroup from "./CreateGroup";
 
@@ -34,7 +34,6 @@ describe ('ACTIONS', ()=> {
         const expectedAction = {
             type: SEARCH_GROUP,
             newList: newList
-
         }
         expect(actions.toSearchGroup()).toEqual(expectedAction)
     })
