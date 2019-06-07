@@ -231,22 +231,24 @@ export const toNewDesign = () => {
     }
 }
 
-export const toSaveDesign = (designid, design) => {
-    console.log("saveDesign action", designid, design)
+export const toSaveDesign = (designid, design, text) => {
+    console.log("saveDesign action", designid, design, text)
     return {
         type: SAVE_DESIGN,
         designid: designid, 
         design: design,
+        text: text,
     }
 }
 
-export const toPostDesign = (designid, groupid, design) => {
-    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design)
+export const toPostDesign = (designid, groupid, design, text) => {
+    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design, " text: ", text)
     return {
         type: POST_DESIGN,
         designid: designid,
         groupid: groupid,
         design: design,
+        text: text,
     }
 }
 
