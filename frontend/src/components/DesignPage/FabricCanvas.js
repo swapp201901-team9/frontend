@@ -104,8 +104,8 @@ class FabricCanvas extends React.Component{
                 fontSize: text.fontSize,
                 the_type: type,
                 zIndex: 10,
-                left: 250,
-                top: 110,
+                left: text.left,
+                top: text.top,
                 textAlign: "center"
             })
             break; 
@@ -156,8 +156,8 @@ class FabricCanvas extends React.Component{
                 fontSize: text.fontSize,
                 the_type: type,
                 zIndex: 10,
-                left: 120,
-                top: 170,
+                // left: 120,
+                // top: 170,
                 textAlign: "center"
             })    
             break;

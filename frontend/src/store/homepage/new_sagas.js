@@ -1258,7 +1258,7 @@ function *newDesign(data) {
 }
 
 function *saveDesign(data) {
-    console.log("saveDesign designid: ", data.designid, " design: ", data.design)
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text)
     const backPath = '';
     try{
         yield call(xhr.send, fixed_url+backPath, {
@@ -1275,7 +1275,12 @@ function *saveDesign(data) {
                 "detail_sleeve": data.design["sleeve"],
                 "detail_banding": data.design["banding"],
                 "detail_stripes": data.design["stripe"],
-                "detail_buttons": data.design["button"]
+                "detail_buttons": data.design["button"],
+                "front_chest": data.text["frontchest"],
+                "right_arm": data.text["rightarm"],
+                "upper_back": data.text["upperback"],
+                "middle_back": data.text["middleback"],
+                "lower_back": data.text["lowerback"],
             })
         });
         console.log("save design succeed ");
@@ -1288,7 +1293,7 @@ function *saveDesign(data) {
 }
 
 function *postDesign(data) {
-    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design)
+    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design, " text: ", data.text)
     const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
     try{
         yield call(xhr.get, fixed_url+backPath,{
