@@ -20,12 +20,8 @@ class FabricCanvas extends React.Component{
         this.logoElementToImage = this.logoElementToImage.bind(this);
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
-<<<<<<< HEAD
         this.text_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
         this.logo_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
-=======
-        this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
->>>>>>> upstream/master
        
 
     }

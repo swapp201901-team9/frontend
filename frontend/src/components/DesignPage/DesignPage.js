@@ -65,25 +65,6 @@ class DesignPage extends React.Component {
 				middleback: {
 					textvalue: "UNIVERSITY",
 					fontFamily: "arial",
-<<<<<<< HEAD
-					fill: "#e91e63",
-					fontStyle: "normal",
-					fontSize: 50
-				},
-			},
-			logo : null,
-			clickedWhat: null
-
-		};
-
-		this.onDrop = this.onDrop.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
-		this.handleTextChangeComplete = this.handleTextChangeComplete.bind(this);
-		this.handleTextColorChangeComplete = this.handleTextColorChangeComplete.bind(this);
-		this.clickedButton = this.clickedButton.bind(this);
-		console.log("design page state: ", this.state.design)
-=======
 					fill: "#ffc107",
 					fontStyle: "bold",
 					fontSize: 20,
@@ -127,24 +108,10 @@ class DesignPage extends React.Component {
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onDrop = this.onDrop.bind(this);
->>>>>>> upstream/master
 	}
 
 	componentWillMount() {
 		console.log("DesignPage - componentWillMount")
-<<<<<<< HEAD
-		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-		this.sleeve_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#626262", "#001c58", "#232323"];
-		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"];
-		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-		this.text_style_id = ["text_area", "text_font", "text_style", "text_size", "text_colour"]
-=======
 		this.design_color = {
 			body: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
 				"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"],
@@ -160,7 +127,6 @@ class DesignPage extends React.Component {
 
 		this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
 		this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
->>>>>>> upstream/master
 	}
 
 	componentDidMount() {
@@ -287,41 +253,6 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-<<<<<<< HEAD
-	/*addText() {
-		console.log("DesignPage - addText")
-		let text = new fabric.IText(document.getElementById("text_area").value, {
-			fontFamily: document.getElementById("text_font").value,
-			fill: this.fontcolor,
-			fontStyle: document.getElementById("text_style").value,
-			fontSize: document.getElementById("text_size").value,
-			zIndex: 10
-		})
-		console.log(text)
-	}*/
-
-	handleChange(e){
-		console.log("DesignPage - handleChange")
-		let value = e.target.value;
-		if (value == "body") {
-			this.setState({clickedWhat: "body"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "sleeve"});
-		}
-		else if (value == "banding") {
-			this.setState({clickedWhat: "banding"});
-		}
-		else if (value == "stripe"){
-			this.setState({clickedWhat: "stripe"});
-		}
-		else if (value == "button"){
-			this.setState({clickedWhat: "button"});
-		}
-		else {
-			this.setState({clickedWhat: this.state.clickedWhat});
-		}
-=======
 	
     // componentDidUpdate(nextProps, nextState) {
     //     this.the_front_canvas.renderAll();
@@ -464,7 +395,6 @@ class DesignPage extends React.Component {
 				left:movingObject.get('left'),
 				top: movingObject.get('top')})
 		})});
->>>>>>> upstream/master
 	}
 
 	onDrop = (e) => {
@@ -614,49 +544,6 @@ class DesignPage extends React.Component {
     }
 
     render() {
-<<<<<<< HEAD
-			console.log("DesignPage - render")
-			const clickedWhat = this.state.clickedWhat;
-			let colorPicker;
-			if (clickedWhat == "body") {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "sleeve") {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
-
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "banding") {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
-
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "stripe") {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
-
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "button") {
-				colorPicker = <CirclePicker
-				width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
-				//this.forceUpdate();
-			}
-			else {
-				// colorPicker = <CirclePicker
-				// width = "220" id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-				colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>START</button>
-
-			}
-
-      return (
-      <div>
-=======
 		console.log("DesignPage - render state: ", this.state)
 		const clickedWhat = this.state.designClickedWhat;
 		let colorPicker;
@@ -670,7 +557,6 @@ class DesignPage extends React.Component {
 		}
 
 		return (
->>>>>>> upstream/master
 		<section className="wrap clear col3">
 
 			{/*<!--========================================
@@ -758,62 +644,12 @@ class DesignPage extends React.Component {
 
 
 
-<<<<<<< HEAD
-		{/*<!--========================================
-			Image Upload Modal
-	=========================================-->*/}
-	<h1>Logo</h1>
-	<center><select id="logo_element">
-		<option value="frontchest">Front Chest</option>
-		<option value="leftarm">Left Arm</option>
-		<option value="rightarm">Right Arm</option>
-		<option value="upperback">Upper Back</option>
-		<option value="middleback">Middle Back</option>
-		<option value="lowerback">Lower Back</option>
-		</select>
-							
-    <input type = "file"
-            id = "input"
-            onChange = {this.onDrop} />
-            {/*<img src = ""
-			id = "img" />*/}
-	</center>
-			</div>
-          {/* </div> */}
-              <div className="main">
-                <h2 className="h_white">SAMPLE VIEW</h2>
-                <div className="content">
-
-                {/*<!--========================================
-			front-back button section
-	=========================================-->*/}
-	{/*<ThreeScene/>*/}
-	<FabricCanvas
-	design = {this.state.design}
-	text = {this.state.text}
-	// activeFrontProperty = {this.state.activeFrontProperty}
-	// activeBackProperty = {this.state.activeBackProperty}
-	/>
-	{/* {console.log("DesignPage - render - activeFrontProperty: ", this.state.activeFrontProperty)}
-	{console.log("DesignPage - render - activeBackProperty: ", this.state.activeBackProperty)} */}
-
-	{this.props.isLoggedIn ?
-		(<div>
-			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design)}>SAVE</button>
-		</div>)
-		: <div>
-			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-		</div>
-	}
-=======
 			{/*<!--========================================
 				CENTER DESIGN SECTION
 			=========================================-->*/}	
 			<div className="main">
 				<h2 className="h_white">SAMPLE VIEW</h2>
 				<div className="content">
->>>>>>> upstream/master
 
 					{/*<!--========================================
 						Fabric Canvas Section
