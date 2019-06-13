@@ -335,12 +335,21 @@ class DesignPage extends React.Component {
 			Image Upload Modal
 	=========================================-->*/}
 	<h1>Logo</h1>
-	
+	<center><select id="logo_element">
+		<option value="frontchest">Front Chest</option>
+		<option value="leftarm">Left Arm</option>
+		<option value="rightarm">Right Arm</option>
+		<option value="upperback">Upper Back</option>
+		<option value="middleback">Middle Back</option>
+		<option value="lowerback">Lower Back</option>
+		</select>
+							
     <input type = "file"
-                         id = "input"
-                         onChange = {this.onDrop} />
-                  {/*<img src = ""
-                        id = "img" />*/}
+            id = "input"
+            onChange = {this.onDrop} />
+            {/*<img src = ""
+			id = "img" />*/}
+	</center>
 			</div>
           {/* </div> */}
               <div className="main">

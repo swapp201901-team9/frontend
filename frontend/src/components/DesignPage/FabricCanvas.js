@@ -17,9 +17,11 @@ class FabricCanvas extends React.Component{
         this.updateFrontCanvasforImage = this.updateFrontCanvasforImage.bind(this);
         this.updateBackCanvasforImage = this.updateBackCanvasforImage.bind(this);
 
+        this.logoElementToImage = this.logoElementToImage.bind(this);
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
         this.text_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
+        this.logo_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
        
 
     }
@@ -93,8 +95,105 @@ class FabricCanvas extends React.Component{
         return imgInstance
     }
 
-    textElementToImage(text, type) {
+    textElementToImage(img, type) {
         console.log("FabricCanvas - textElementToImage")
+        let imgInstance;
+        switch(type) {
+        case "frontchest":
+            imgInstance = new fabric.Image(img, {
+                width: 899,
+                height:959,
+                zIndex: 10,
+                left: 450,
+                top: 110
+            });
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+                });
+            break;
+
+        case "leftarm":
+            imgInstance = new fabric.Image(img, {
+                width: 899,
+                height:959,
+                zIndex: 10,
+                left: 250,
+                top: 110
+            });
+            break;
+        case "rightarm":
+            imgInstance = new fabric.Image(img, {
+                width: 899,
+                height:959,
+                zIndex: 10,
+                left: 50,
+                top: 110
+            });
+            imgInstance.set({
+                scaleY: 0.1,
+                scaleX: 0.1,
+                originX: "center",
+                originY: "center"
+            });
+            break;
+        case "upperback":
+            imgInstance = new fabric.Image(img, {
+            width: 899,
+            height:959,
+            zIndex: 10,
+            left: 450,
+            top: 110
+         });
+            imgInstance.set({
+            scaleY: 0.2,
+            scaleX: 0.2,
+            originX: "center",
+            originY: "center"
+            });
+            break;
+        case "middleback":
+            imgInstance = new fabric.Image(img, {
+            width: 899,
+            height:959,
+            zIndex: 10,
+            left: 450,
+            top: 450
+            });
+             imgInstance.set({
+            scaleY: 0.2,
+            scaleX: 0.2,
+            originX: "center",
+            originY: "center"
+            });
+            break;
+        case "lowerback":
+            imgInstance = new fabric.Image(img, {
+            width: 899,
+            height:959,
+            zIndex: 10,
+            left: 450,
+            top: 600
+            });
+            imgInstance.set({
+            scaleY: 0.2,
+            scaleX: 0.2,
+            originX: "center",
+            originY: "center"
+            });
+            break;
+        default:
+            break;
+        }
+       
+        console.log("text imgInstance: ", imgInstance)
+        return imgInstance
+    }
+
+    logoElementToImage(text, type) {
+        console.log("FabricCanvas - logoElementToImage")
         let imgInstance;
         switch(type) {
         case "frontchest":
