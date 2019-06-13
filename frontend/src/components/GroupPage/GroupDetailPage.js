@@ -48,10 +48,11 @@ class GroupDetailPage extends React.Component {
                       {this.props.group_designs.map(design =>
                         <DesignTemp
                           key={design.id}
-                          design={design}
+                          design={design.design}
+                          text={design.text}
                           group={this.props.now_group}
                           my_groups={this.props.my_groups}
-                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, design)}
+                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, design.design, design.text)}
                           onClickLike={() => this.props.onLikeDesign(design.id)}
                           onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
                           onClickDelete={() => this.deleteDesignCheck(this.props.now_group.id, design.id)}
@@ -81,7 +82,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onPostDesign: (designid, groupid, design) => dispatch(toPostDesign(designid, groupid, design)),
+  onPostDesign: (designid, groupid, design, text) => dispatch(toPostDesign(designid, groupid, design, text)),
   onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
   onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),
   onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid))
