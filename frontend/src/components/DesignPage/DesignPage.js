@@ -638,7 +638,9 @@ class DesignPage extends React.Component {
 	constructor(props){
 		console.log("DesignPage - constructor")
 		super(props);
-
+		var imgElement = document.createElement("img");
+        var src ='./images/logo.jpg';
+		imgElement.setAttribute("src", require(src));
 		this.state = {
 			design : {
 				body: this.props.now_design.detail_body,
@@ -699,27 +701,27 @@ class DesignPage extends React.Component {
 
 			logo : {
 				frontchest: {
-					src: require('./images/logo.jpg'),
+					img: imgElement,
 					left: 250,
 					top: 110,
 				},
 				rightarm: {
-					src: require('./images/logo.jpg'),
+					img: imgElement,
 					left: 50,
 					top: 120,
 				},
 				upperback: {
-					src: require('./images/logo.jpg'),
+					img: imgElement,
 					left: 135,
 					top: 125,
 				},
 				middleback: {
-					src: require('./images/logo.jpg'),
+					img: imgElement,
 					left: 155,
 					top: 155,
 				},
 				lowerback: {
-					src: require('./images/logo.jpg'),
+					img: imgElement,
 					left: 150,
 					top: 190,
 				}
@@ -745,7 +747,7 @@ class DesignPage extends React.Component {
 		this.clickedInitButton = this.clickedInitButton.bind(this);
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
-		this.onDrop = this.onDrop.bind(this);
+		//this.onDrop = this.onDrop.bind(this);
 	}
 
 	componentWillMount() {
@@ -905,7 +907,8 @@ class DesignPage extends React.Component {
 	}
 
 	handleLogoChange = (e) => {
-        console.log("hey");
+		console.log("hey");
+		let logo_element = document.getElementById("logo_element").value;
 
 		e.preventDefault();
 		const scope = this;
@@ -965,7 +968,7 @@ class DesignPage extends React.Component {
         console.log("FabricCanvas - textElementToImage")
         let imgInstance;
         
-        imgInstance = new fabric.Image(img.src, {
+        imgInstance = new fabric.Image(img.img, {
             width: 899,
 			height:959,
 			the_type: type,
@@ -1050,40 +1053,40 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-	onDrop = (e) => {
-        console.log("hey");
+	// onDrop = (e) => {
+    //     console.log("hey");
 
-        e.preventDefault();
-        var preview = document.getElementById('img');
-        var file = document.getElementById('input').files[0];
-        var canvas = this.the_front_canvas;
-        let reader = new FileReader();
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-            var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
-            the_type: "upload",
-            zIndex: 12
-            });
-            console.log("imgInstance set");
-            imgInstance.set({
-                scaleY: 0.1,
-                scaleX: 0.1,
-                originX: "center",
-                originY: "center"
-            });
-            console.log("imgInstance scale");
+    //     e.preventDefault();
+    //     var preview = document.getElementById('img');
+    //     var file = document.getElementById('input').files[0];
+    //     var canvas = this.the_front_canvas;
+    //     let reader = new FileReader();
+    //     reader.addEventListener("load", function() {
+    //         preview.src = reader.result;
+    //         var imgInstance = new fabric.Image(preview, {
+    //         width: 899,
+    //         height:959,
+    //         the_type: "upload",
+    //         zIndex: 12
+    //         });
+    //         console.log("imgInstance set");
+    //         imgInstance.set({
+    //             scaleY: 0.1,
+    //             scaleX: 0.1,
+    //             originX: "center",
+    //             originY: "center"
+    //         });
+    //         console.log("imgInstance scale");
 
-        },false);
+    //     },false);
 
 
-        if (file) {
-            reader.readAsDataURL(file);
-        }
+    //     if (file) {
+    //         reader.readAsDataURL(file);
+    //     }
 
-        this.the_front_canvas = canvas;
-	}
+    //     this.the_front_canvas = canvas;
+	// }
 
     saveToCanvas = () => {
         console.log("DesignPage - saveToCanvas")
