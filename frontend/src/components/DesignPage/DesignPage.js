@@ -840,6 +840,17 @@ class DesignPage extends React.Component {
 				}
             }
 		}
+
+		for (let element of this.logo_element) {
+			if(nextState.logo[element] !== this.state.logo[element]) {
+				if(element === "frontchest" || element === "rightarm") {
+					this.updateFrontCanvas(this.logoElementToImage(nextState.logo[element], element))
+				}
+				else {
+					this.updateBackCanvas(this.logoElementToImage(nextState.logo[element], element))
+				}
+            }
+		}
 		
 		this.the_front_canvas.renderAll();
         this.the_back_canvas.renderAll();
@@ -954,7 +965,7 @@ class DesignPage extends React.Component {
         console.log("FabricCanvas - textElementToImage")
         let imgInstance;
         
-        imgInstance = new fabric.Image(img, {
+        imgInstance = new fabric.Image(img.src, {
             width: 899,
 			height:959,
 			the_type: type,
