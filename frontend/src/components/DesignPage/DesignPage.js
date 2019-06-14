@@ -1,19 +1,15 @@
 import React from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
-
-import FabricCanvas from './FabricCanvas';
+//import FabricCanvas from './FabricCanvas';
 import MyGroupList from '../GroupPage/MyGroupList';
-
 //import ImageUploader from 'react-images-upload';
 
 import { toSaveDesign, toNewDesign } from '../../actions/index.js';
 
-//import ThreeScene from './ThreeScene';
-
-//the templates are imported as images and passed as porps to the TemplateList components.
+//the templates are imported as images and passed as props to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
 //it gets passed onto FabricCanvas as prop
 //FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas
@@ -80,16 +76,34 @@ class DesignPage extends React.Component {
 					left: 150,
 					top: 190,
 				}
+			},
 			
-				// frontchest: this.props.now_design.front_chest,
-				// rightarm: this.props.now_design.right_arm,
-				// upperback: this.props.now_design.upper_back,
-				// middleback: this.props.now_design.middle_back,
-				// lowerback: this.props.now_design.lower_back
+			logo : {
+				frontchest: {
+					left: 250,
+					top: 110,
+				},
+				rightarm: {
+					left: 50,
+					top: 120,
+				},
+				upperback: {
+					left: 135,
+					top: 125,
+				},
+				middleback: {
+					left: 155,
+					top: 155,
+				},
+				lowerback: {
+					left: 150,
+					top: 190,
+				}
 			},
 
 			designClickedWhat: null,
 			textClickedWhat: "frontchest",
+			logoClickedWhat: null
 		};
 
 
@@ -100,6 +114,7 @@ class DesignPage extends React.Component {
 
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
+		this.logoElementToImage = this.logoElementToImage.bind(this);
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
@@ -207,13 +222,9 @@ class DesignPage extends React.Component {
 				}
             }
 		}
-		
 		this.the_front_canvas.renderAll();
         this.the_back_canvas.renderAll();
-      
 	}
-	
-
 
 	handleElementChange(e){
 		console.log("DesignPage - handleElementChange target: ", e.target)
@@ -253,14 +264,6 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-	
-    // componentDidUpdate(nextProps, nextState) {
-    //     this.the_front_canvas.renderAll();
-    //     this.the_back_canvas.renderAll();
-    // }
-
-
-
     designElementToImage(color, type, z_Index) {
         console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
 
@@ -297,10 +300,30 @@ class DesignPage extends React.Component {
         
         // console.log("text imgInstance: ", imgInstance)
         return imgInstance
+	}
+	
+	logoElementToImage(img, type) {
+        console.log("FabricCanvas - textElementToImage")
+        let imgInstance;
+        
+        imgInstance = new fabric.Image(img, {
+            width: 899,
+			height:959,
+			the_type: type,
+            zIndex: 10,
+            left: 450,
+            top: 600
+        });
+        imgInstance.set({
+            scaleY: 0.2,
+            scaleX: 0.2,
+            originX: "center",
+            originY: "center"
+        });
+         
+        //console.log("text imgInstance: ", imgInstance)
+        return imgInstance;
     }
-
-
-
 
     updateFrontCanvas = (next) => {
         console.log("DesignPage - updateFrontCanvas next: ", next)
@@ -372,8 +395,6 @@ class DesignPage extends React.Component {
         }
     }
 
-
-
 	clickedInitButton = (e) => {
 		this.setState({designClickedWhat: "body"});
 		this.forceUpdate();
@@ -382,7 +403,6 @@ class DesignPage extends React.Component {
 	clickedAddButton = (e) => {
 		this.forceUpdate();
 	}
-
 
 
 	moveHandler = (e) =>{
@@ -407,7 +427,8 @@ class DesignPage extends React.Component {
 		let reader = new FileReader();
 		reader.addEventListener("load", function() {
 			img.src = reader.result;
-			scope.setState({logo: img});
+			//scope.setState({logo: img});
+			scope.logoElementToImage(img, null);
 		})
 
 		if (file) {
@@ -444,90 +465,6 @@ class DesignPage extends React.Component {
         // this.the_front_canvas = canvas;
 	}
 
-	// FabricCanvas onDrop
-    // onDrop = (e) => {
-    //     console.log("hey");
-
-    //     e.preventDefault();
-    //     var preview = document.getElementById('img');
-    //     //var img = new Image(40, 40);
-    //     var file = document.getElementById('input').files[0];
-    //     var canvas = this.the_front_canvas;
-    //     var canvas2 = this.the_back_canvas;
-    //     let reader = new FileReader();
-    //     reader.addEventListener("load", function() {
-    //         preview.src = reader.result;
-    //         //img.src = reader.result;
-    //         /*var imgInstance = new fabric.Image(preview, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //         });*/
-    //         console.log(preview.width);
-    //         console.log(preview.height);
-
-    //         var imgInstance = new fabric.Image(preview, {
-    //         width: 899,
-    //         height:959,
-    //         the_type: "upload",
-    //         zIndex: 10
-    //         });
-    //         console.log("imgInstance set");
-    //         imgInstance.set({
-    //             scaleY: 0.1,
-    //             scaleX: 0.1,
-    //             originX: "center",
-    //             originY: "center"
-    //         });
-    //         console.log("imgInstance scale");
-    //         canvas.add(imgInstance);
-    //         canvas2.add(imgInstance);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         canvas.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas2.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         console.log("imgInstance add");
-
-    //         //var imgInstance = new fabric.Image(preview);
-    //         /*this.the_canvas = new fabric.Canvas('main-canvas', {
-    //             preserveObjectStacking: true,
-    //             height:959,
-    //             width:899,
-    //         });*/
-
-    //     },false);
-
-    //     /*reader.onloadend = () => {
-    //         var img = new Image(40,40);
-	//         img.src = reader.result;
-
-    //         var imgInstance = new fabric.Image(img, {
-    //             width: 899,
-    //             height: 959,
-    //             the_type: "upload",
-    //             zIndex: 2
-    //         });
-    //         this.the_canvas.add(imgInstance);
-    //     }*/
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     }
-    //     //console.log(img.src);
-    //     /*var imgInstance = new fabric.Image(img, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //     });*/
-    //     //var imgInstance = new fabric.Image(img);
-    //     //this.the_canvas.add(imgInstance);
-    //     this.the_front_canvas = canvas;
-    // }
-
     saveToCanvas = () => {
         console.log("DesignPage - saveToCanvas")
 
@@ -535,7 +472,6 @@ class DesignPage extends React.Component {
         link.href = this.the_canvas.toDataURL({format: 'png'});
         link.download = "design.png";
         link.click();
-
     }
 
     fileChangedHandler = (event) => {

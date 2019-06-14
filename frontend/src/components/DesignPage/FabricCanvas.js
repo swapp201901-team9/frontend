@@ -94,7 +94,7 @@ class FabricCanvas extends React.Component{
         return imgInstance
     }
 
-    textElementToImage(img, type) {
+    logoElementToImage(img, type) {
         console.log("FabricCanvas - textElementToImage")
         let imgInstance;
         switch(type) {
@@ -191,7 +191,7 @@ class FabricCanvas extends React.Component{
         return imgInstance
     }
 
-    logoElementToImage(text, type) {
+    textElementToImage(text, type) {
         console.log("FabricCanvas - logoElementToImage")
         let imgInstance;
         switch(type) {
@@ -262,13 +262,9 @@ class FabricCanvas extends React.Component{
             break;
         default:
             break;
-                
-            
         }
-       
-        
-        console.log("text imgInstance: ", imgInstance)
-        return imgInstance
+        console.log("text imgInstance: ", imgInstance);
+        return imgInstance;
     }
 
 
