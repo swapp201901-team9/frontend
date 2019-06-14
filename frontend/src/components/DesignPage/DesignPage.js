@@ -8,7 +8,9 @@ import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
 import { toSaveDesign, toNewDesign } from '../../actions/index.js';
-import { tsImportEqualsDeclaration } from '@babel/types';
+//import { tsImportEqualsDeclaration } from '@babel/types';
+
+import logo from './images/templates/templatelist';
 
 //the templates are imported as images and passed as props to the TemplateList components.
 //if the user chooses any of the properties, the state gets updated in the DesignPage component
@@ -695,8 +697,37 @@ class DesignPage extends React.Component {
 			
 			},
 
+			logo : {
+				frontchest: {
+					src: null,
+					left: 250,
+					top: 110,
+				},
+				rightarm: {
+					src: null,
+					left: 50,
+					top: 120,
+				},
+				upperback: {
+					src: null,
+					left: 135,
+					top: 125,
+				},
+				middleback: {
+					src: null,
+					left: 155,
+					top: 155,
+				},
+				lowerback: {
+					src: null,
+					left: 150,
+					top: 190,
+				}
+			},
+
 			designClickedWhat: null,
 			textClickedWhat: "frontchest",
+
 		};
 
 
