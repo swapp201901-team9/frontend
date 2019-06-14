@@ -727,17 +727,18 @@ class DesignPage extends React.Component {
 
 			designClickedWhat: null,
 			textClickedWhat: "frontchest",
-
+			logoClickedWhat: null,
 		};
-
 
 		this.handleElementChange = this.handleElementChange.bind(this);
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
+		this.handleLogoChange = this.handleLogoChange.bind(this);
 
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
+		this.logoElementToImage = this.logoElementToImage.bind(this);
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
@@ -765,6 +766,7 @@ class DesignPage extends React.Component {
 
 		this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
 		this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
+		this.logo_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
 	}
 
 	componentDidMount() {
@@ -805,10 +807,6 @@ class DesignPage extends React.Component {
         this.the_back_canvas.add(this.textElementToImage(this.state.text.upperback, "upperback"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
-
-        // console.log("the_front_canvas: ", this.the_front_canvas);
-        //this.the_front_canvas.renderAll();
-		//this.the_back_canvas.renderAll();
 	}
 
 
@@ -829,8 +827,6 @@ class DesignPage extends React.Component {
                 else {
                     this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 0))
                     this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 0))
-                    //this.forceUpdate();
-                    //console.log("force update");
                 }
             }
         }
@@ -851,6 +847,10 @@ class DesignPage extends React.Component {
       
 	}
 	
+    // componentDidUpdate(nextProps, nextState) {
+    //     this.the_front_canvas.renderAll();
+    //     this.the_back_canvas.renderAll();
+    // }
 
 
 	handleElementChange(e){
@@ -859,10 +859,13 @@ class DesignPage extends React.Component {
 		let value = e.target.value;
 
 		if(id === "design_element") {
-			this.setState({designClickedWhat: value})
+			this.setState({designClickedWhat: value});
 		}
 		else if(id === "text_element") {
-			this.setState({textClickedWhat: value})
+			this.setState({textClickedWhat: value});
+		}
+		else if (id == "logo_element") {
+			this.setState({logoClickedWhat: value});
 		}
 	}
 
@@ -891,13 +894,24 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-	
-    // componentDidUpdate(nextProps, nextState) {
-    //     this.the_front_canvas.renderAll();
-    //     this.the_back_canvas.renderAll();
-    // }
+	handleLogoChange = (e) => {
+        console.log("hey");
 
+		e.preventDefault();
+		const scope = this;
+		var img = document.createElement("img");
+		var file = document.getElementById('input').files[0];
+		let reader = new FileReader();
+		reader.addEventListener("load", function() {
+			img.src = reader.result;
+			//scope.setState({logo: img});
+			//scope.logoElementToImage(img, null);
+		})
 
+		if (file) {
+            reader.readAsDataURL(file);
+        }
+	}
 
     designElementToImage(color, type, z_Index) {
         console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
@@ -934,18 +948,37 @@ class DesignPage extends React.Component {
 		})
         
         // console.log("text imgInstance: ", imgInstance)
-        return imgInstance
+        return imgInstance;
     }
 
-
+	logoElementToImage(img, type) {
+        console.log("FabricCanvas - textElementToImage")
+        let imgInstance;
+        
+        imgInstance = new fabric.Image(img, {
+            width: 899,
+			height:959,
+			the_type: type,
+            zIndex: 10,
+            left: 450,
+            top: 600
+        });
+        imgInstance.set({
+            scaleY: 0.2,
+            scaleX: 0.2,
+            originX: "center",
+            originY: "center"
+        });
+         
+        //console.log("text imgInstance: ", imgInstance)
+        return imgInstance;
+    }
 
 
     updateFrontCanvas = (next) => {
         console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
-			// this.the_front_canvas.add(next);
-
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
@@ -957,24 +990,9 @@ class DesignPage extends React.Component {
                 }
             } );
 
-            //this.the_front_canvas.remove(to_remove);
-            // console.log("remove front canvas");
-            //this.the_front_canvas.renderAll();
-
-            // if(next.the_type === 'bg'){
-            //     this.the_front_canvas.setBackgroundImage(next);
-            //     this.the_front_canvas.renderAll();
-            //     return;
-            // }
-
             this.the_front_canvas.add(next);
-            // console.log("add to front canvas");
-            //this.the_front_canvas.requestRenderAll();
-            
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
-            // this.forceUpdate();
-            //console.log("rerender");
         }
     }
 
@@ -993,35 +1011,20 @@ class DesignPage extends React.Component {
                 }
             } );
 
-            //this.the_back_canvas.remove(to_remove);
-            //this.the_back_canvas.renderAll();
-
-
-            // if(next.the_type === 'bg'){
-            //     this.the_back_canvas.setBackgroundImage(next);
-            //     this.the_back_canvas.renderAll();
-            //     return;
-            // }
-
             this.the_back_canvas.add(next);
-            //this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
             //this.the_back_canvas.renderAll();
         }
     }
 
-
-
 	clickedInitButton = (e) => {
-		this.setState({designClickedWhat: "body"});
+		this.setState({designClickedWhat: "body", logoClickedWhat: "frontchest"});
 		this.forceUpdate();
 	}
 
 	clickedAddButton = (e) => {
 		this.forceUpdate();
 	}
-
-
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
@@ -1069,90 +1072,6 @@ class DesignPage extends React.Component {
 
         this.the_front_canvas = canvas;
 	}
-
-	// FabricCanvas onDrop
-    // onDrop = (e) => {
-    //     console.log("hey");
-
-    //     e.preventDefault();
-    //     var preview = document.getElementById('img');
-    //     //var img = new Image(40, 40);
-    //     var file = document.getElementById('input').files[0];
-    //     var canvas = this.the_front_canvas;
-    //     var canvas2 = this.the_back_canvas;
-    //     let reader = new FileReader();
-    //     reader.addEventListener("load", function() {
-    //         preview.src = reader.result;
-    //         //img.src = reader.result;
-    //         /*var imgInstance = new fabric.Image(preview, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //         });*/
-    //         console.log(preview.width);
-    //         console.log(preview.height);
-
-    //         var imgInstance = new fabric.Image(preview, {
-    //         width: 899,
-    //         height:959,
-    //         the_type: "upload",
-    //         zIndex: 10
-    //         });
-    //         console.log("imgInstance set");
-    //         imgInstance.set({
-    //             scaleY: 0.1,
-    //             scaleX: 0.1,
-    //             originX: "center",
-    //             originY: "center"
-    //         });
-    //         console.log("imgInstance scale");
-    //         canvas.add(imgInstance);
-    //         canvas2.add(imgInstance);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         canvas.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas2.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         console.log("imgInstance add");
-
-    //         //var imgInstance = new fabric.Image(preview);
-    //         /*this.the_canvas = new fabric.Canvas('main-canvas', {
-    //             preserveObjectStacking: true,
-    //             height:959,
-    //             width:899,
-    //         });*/
-
-    //     },false);
-
-    //     /*reader.onloadend = () => {
-    //         var img = new Image(40,40);
-	//         img.src = reader.result;
-
-    //         var imgInstance = new fabric.Image(img, {
-    //             width: 899,
-    //             height: 959,
-    //             the_type: "upload",
-    //             zIndex: 2
-    //         });
-    //         this.the_canvas.add(imgInstance);
-    //     }*/
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     }
-    //     //console.log(img.src);
-    //     /*var imgInstance = new fabric.Image(img, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //     });*/
-    //     //var imgInstance = new fabric.Image(img);
-    //     //this.the_canvas.add(imgInstance);
-    //     this.the_front_canvas = canvas;
-    // }
 
     saveToCanvas = () => {
         console.log("DesignPage - saveToCanvas")
@@ -1263,8 +1182,15 @@ class DesignPage extends React.Component {
 						Image Upload Section
 					=========================================-->*/}
 					<h1>Logo</h1>
-					<input type = "file" id = "input" onChange = {this.onDrop} />
-					<img src = "" id = "img" />
+					<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="frontchest">Front Chest</option>
+							<option value="rightarm">Right Arm</option>
+							<option value="upperback">Upper Back</option>
+							<option value="middleback">Middle Back</option>
+							<option value="lowerback">Lower Back</option>
+						</select>
+					<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+					{/*<img src = "" id = "img" />*/}
 				</div>
 			</div>
 
