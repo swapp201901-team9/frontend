@@ -41,6 +41,8 @@ class DesignPage extends React.Component {
 					fill: "#3f51b5",
 					fontStyle: "bold",
 					fontSize: 50,
+					stroke: "#f29c9f",
+					strokeWidth: 2,
 					left: 250,
 					top: 110,
 				},
@@ -50,6 +52,8 @@ class DesignPage extends React.Component {
 					fill: "#607d8b",
 					fontStyle: "bold",
 					fontSize: 50,
+					stroke: "",
+					strokeWidth: 0,
 					left: 50,
 					top: 120,
 				},
@@ -59,6 +63,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "bold",
 					fontSize: 25,
+					stroke: "",
+					strokeWidth: 0,
 					left: 135,
 					top: 125,
 				},
@@ -68,6 +74,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "bold",
 					fontSize: 20,
+					stroke: "",
+					strokeWidth: 0,
 					left: 155,
 					top: 155,
 				},
@@ -77,6 +85,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "italic",
 					fontSize: 15,
+					stroke: "",
+					strokeWidth: 0,
 					left: 150,
 					top: 190,
 				}
@@ -102,6 +112,7 @@ class DesignPage extends React.Component {
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
+		this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
 
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
@@ -252,10 +263,19 @@ class DesignPage extends React.Component {
 
 	handleTextColorChange(color) {
 		let text_element = document.getElementById("text_element").value;
-		console.log("DesignPage - handleTextColorChange")
+		console.log("DesignPage - handleTextColorChange", color)
 
 		this.setState({text : ({...this.state.text, 
 			[text_element]: ({...this.state.text[text_element], fill: color.hex})
+		})});
+	}
+
+	handleStrokeColorChange(color) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextColorChange", color)
+
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], stroke: color.hex})
 		})});
 	}
 
@@ -294,6 +314,8 @@ class DesignPage extends React.Component {
 			fill: text.fill,
 			fontStyle: text.fontStyle,
 			fontSize: text.fontSize,
+			stroke: text.stroke,
+			strokeWidth: text.strokeWidth,
 			the_type: type,
 			zIndex: 10,
 			left: text.left,
@@ -634,7 +656,13 @@ class DesignPage extends React.Component {
 							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
 						<p>Color</p>
-							<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
+						<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
+
+						
+						<p>Border</p>
+						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
+							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+						<CirclePicker width="220" id="stroke_color" name="stroke" onChangeComplete={this.handleStrokeColorChange}/>
 
 					</center>
 			
