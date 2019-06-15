@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fabric} from 'fabric';
-import {CirclePicker, ChromePicker, CompactPicker, SketchPicker, HuePicker, SliderPicker} from 'react-color';
+import {CirclePicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
 //import FabricCanvas from './FabricCanvas';
 import MyGroupList from '../GroupPage/MyGroupList';
@@ -18,20 +18,71 @@ class DesignPage extends React.Component {
 		super(props);
 
 		this.state = {
-			design: {
-				body: this.props.now_design.design.body,
-				sleeve: this.props.now_design.design.sleeve,
-				banding: this.props.now_design.design.banding,
-				stripe: this.props.now_design.design.stripe,
-				button: this.props.now_design.design.button
+			design : {
+				body: this.props.now_design.detail_body,
+				sleeve: this.props.now_design.detail_sleeve,
+				banding: this.props.now_design.detail_banding,
+				stripe: this.props.now_design.detail_stripes,
+				button: this.props.now_design.detail_buttons
 			},
 
-			text: {
-				frontchest: this.props.now_design.text.frontchest,
-				rigntarm: this.props.now_design.text.rigntarm,
-				upperback: this.props.now_design.text.upperback,
-				middleback: this.props.now_design.text.middleback,
-				lowerback: this.props.now_design.text.lowerback,
+			text : {
+				frontchest: {
+					textvalue: "S",
+					fontFamily: "arial",
+					fill: "#3f51b5",
+					fontStyle: "bold",
+					fontSize: 50,
+					stroke: "#f29c9f",
+					strokeWidth: 2,
+					left: 250,
+					top: 110,
+				},
+				rightarm: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#607d8b",
+					fontStyle: "bold",
+					fontSize: 50,
+					stroke: "",
+					strokeWidth: 0,
+					left: 50,
+					top: 120,
+				},
+				upperback: {
+					textvalue: "SEOUL NAT'L",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "bold",
+					fontSize: 25,
+					stroke: "",
+					strokeWidth: 0,
+					left: 135,
+					top: 125,
+				},
+				middleback: {
+					textvalue: "UNIVERSITY",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "bold",
+					fontSize: 20,
+					stroke: "",
+					strokeWidth: 0,
+					left: 155,
+					top: 155,
+				},
+				lowerback: {
+					textvalue: "Department of\nComputer Science",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "italic",
+					fontSize: 15,
+					stroke: "",
+					strokeWidth: 0,
+					left: 150,
+					top: 190,
+				}
+			
 			},
 
 			logo : {
@@ -58,8 +109,8 @@ class DesignPage extends React.Component {
 			},
 
 			image: {
-				front: this.props.now_design.image.front,
-				back: this.props.now_design.image.back,
+				front: "",
+				back: "",
 			},
 
 			element: null,
@@ -67,10 +118,6 @@ class DesignPage extends React.Component {
 			designClickedWhat: null,
 			textClickedWhat: null,
 			logoClickedWhat: null,
-			displayTextColor: false,
-			displayBorderColor: false,
-			frontnext: null,
-			backnext: null,
 		};
 
 		this.handleElementChange = this.handleElementChange.bind(this);
@@ -87,9 +134,9 @@ class DesignPage extends React.Component {
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
-		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
-		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
-		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
+		this.clickedDesignInitButton = this.clickedDesignInitButton.bind(this);
+		this.clickedTextInitButton = this.clickedTextInitButton.bind(this);
+		this.clickedLogoInitButton = this.clickedLogoInitButton.bind(this);
 
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
@@ -262,10 +309,7 @@ class DesignPage extends React.Component {
 
 		this.setState({text : ({...this.state.text, 
 			[text_element]: ({...this.state.text[text_element], fill: color.hex})
-		}),
-			huecolor: color.rgb,
-			slidercolor: color.rgb
-		});
+		})});
 	}
 
 	handleStrokeColorChange(color) {
@@ -276,8 +320,6 @@ class DesignPage extends React.Component {
 			[text_element]: ({...this.state.text[text_element], stroke: color.hex})
 		})});
 	}
-
-
 
 	
     // componentDidUpdate(nextProps, nextState) {
@@ -340,7 +382,7 @@ class DesignPage extends React.Component {
 
 		var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
         
-        console.log("src: ", src)
+        // console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 		console.log(this.state.element);
 		var imgInstance = new fabric.Image(imgElement, {
@@ -402,8 +444,7 @@ class DesignPage extends React.Component {
     }
 
     updateFrontCanvas = (next) => {
-		console.log("DesignPage - updateFrontCanvas next: ", next)
-		this.setState({frontnext: next})
+        console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
             let to_remove;
@@ -418,19 +459,13 @@ class DesignPage extends React.Component {
             } );
 
             this.the_front_canvas.add(next);
-            console.log("add to front canvas");
-            //this.the_front_canvas.requestRenderAll();
-            
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
-            this.forceUpdate();
-            //console.log("rerender");
         }
     }
 
     updateBackCanvas = (next) => {
-		console.log("DesignPage - updateBackCanvas next: ", next)
-		this.setState({backnext: next})
+        console.log("DesignPage - updateBackCanvas next: ", next)
 
         if(next){
 
@@ -450,17 +485,21 @@ class DesignPage extends React.Component {
         }
     }
 
-	clickedDesignPopButton = (e) => {
-		this.state.designClickedWhat ? this.setState({designClickedWhat: null }) : this.setState({ designClickedWhat: "body" })
+	clickedDesignInitButton = (e) => {
+		this.setState({designClickedWhat: "body"});
 		this.forceUpdate();
 	}
-	clickedTextPopButton = (e) => {
-		this.state.textClickedWhat ? this.setState({ textClickedWhat: null }) : this.setState({ textClickedWhat: "frontchest" });
+	clickedTextInitButton = (e) => {
+		this.setState({ textClickedWhat: "frontchest"});
 		this.forceUpdate();
 	}
 
-	clickedLogoPopButton = (e) => {
-		this.state.logoClickedWhat ? this.setState({ logoClickedWhat: null }) : this.setState({ logoClickedWhat: "front" });
+	clickedLogoInitButton = (e) => {
+		this.setState({ logoClickedWhat: "front"});
+		this.forceUpdate();
+	}
+
+	clickedAddButton = (e) => {
 		this.forceUpdate();
 	}
 
@@ -503,8 +542,6 @@ class DesignPage extends React.Component {
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
 	}
 
-
-
     render() {
 		console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
@@ -515,19 +552,8 @@ class DesignPage extends React.Component {
 		let textPicker;
 		let logoPicker;
 
-		const popover = {
-			position: 'absolute',
-			zIndex: '2',
-		  }
-		const cover = {
-			position: 'fixed',
-			top: '0px',
-			right: '0px',
-			bottom: '0px',
-			left: '0px',
-		}
-
 		if(designClickedWhat === null) {
+			colorPicker = <button  onClick={(e) => this.clickedDesignInitButton(e)}>DEFAULT</button>
 		}
 		else {
 			colorPicker = <center>
@@ -542,82 +568,78 @@ class DesignPage extends React.Component {
 			<CirclePicker width="220" id="design_colour" 
 				onChangeComplete={this.handleDesignChange} colors={this.design_color[designClickedWhat]}/>
 			<br/>
+			<div className="Button-Field-Side"> 
+				<button onClick={(e) => this.clickedAddButton(e)}>ADD</button>
+			</div>
 		</center>;
 		}
 
 		if(textClickedWhat === null) {
+			textPicker = <button  onClick={(e) => this.clickedTextInitButton(e)}>DEFAULT</button>
 		}
 		else {
 			textPicker = <center>
-							<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-								<option value="frontchest">Front Chest</option>
-								<option value="rightarm">Right Arm</option>
-								<option value="upperback">Upper Back</option>
-								<option value="middleback">Middle Back</option>
-								<option value="lowerback">Lower Back</option>
-							</select>
-							
-							<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
-								name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+						<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="frontchest">Front Chest</option>
+							<option value="rightarm">Right Arm</option>
+							<option value="upperback">Upper Back</option>
+							<option value="middleback">Middle Back</option>
+							<option value="lowerback">Lower Back</option>
+						</select>
+						
+						<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
+							name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-							<p>Font</p> 
-							<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-								<option>arial</option>
-								<option>tahoma</option>
-								<option>times new roman</option>
-								<option>anton</option>
-								<option>Akronim</option>
-								<option>Alex Brush</option>
-								<option>Aguafina Script</option>
-								<option>mistral</option>
-							</select>
-							
-							<p>Style</p>
-							<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-								<option>normal</option>
-								<option>italic</option>
-								<option>oblique</option>
-								<option>bold</option>
-							</select>
+						<p>Font</p> 
+						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+							<option>arial</option>
+							<option>tahoma</option>
+							<option>times new roman</option>
+							<option>anton</option>
+							<option>Akronim</option>
+							<option>Alex Brush</option>
+							<option>Aguafina Script</option>
+						</select>
+						
+						<p>Style</p>
+						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+							<option>normal</option>
+							<option>italic</option>
+							<option>oblique</option>
+							<option>bold</option>
+						</select>
 
-							<p>Size</p> 
-							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
-								name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+						<p>Size</p> 
+						<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
+							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
-							<p>Color</p>
-							<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-								<button>pick color</button>
-							</div> 
-							{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-								<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
-							</div> : null }
+						<p>Color</p>
+						<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
 
-							
-							<p>Border</p>
-							<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
-								name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-							<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-								<button>pick color</button>
-							</div> 
-							{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-								<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
-							</div> : null }
+						
+						<p>Border</p>
+						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
+							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+						<CirclePicker width="220" id="stroke_color" name="stroke" onChangeComplete={this.handleStrokeColorChange}/>
+
 					</center>;
 		}
 
 		if(logoClickedWhat === null) {
+			console.log("logo clicked what null");
+			logoPicker = <button  onClick={(e) => this.clickedLogoInitButton(e)}>DEFAULT</button>
 		}
 		else {
 			console.log("logo clicked what not null")
 			logoPicker = <center>
-							<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-											<option value="front">Front Chest</option>
-											<option value="arm_right">Right Arm</option>
-											<option value="arm_left">Left Arm </option>
-											<option value="back">Lower Back</option>
-							</select>
-							<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-						</center>;
+			<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="front">Front Chest</option>
+							<option value="arm_right">Right Arm</option>
+							<option value="arm_left">Left Arm </option>
+							<option value="back">Lower Back</option>
+			</select>
+			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+			</center>;
 		}
 
 
@@ -636,21 +658,21 @@ class DesignPage extends React.Component {
 					{/*<!--========================================
 						Design section
 					=========================================-->*/}
-					<h1>Design</h1> <button onClick={(e) => this.clickedDesignPopButton(e)}>pop</button>
+					<h1>Design</h1>
 					{colorPicker}
 	
 
 					{/*<!--========================================
 						Text section
 					=========================================-->*/}
-					<h1>Text</h1> <button onClick={(e) => this.clickedTextPopButton(e)}>pop</button>
+					<h1>Text</h1>
 					{textPicker}
 			
 
 					{/*<!--========================================
 						Image Upload Section
 					=========================================-->*/}
-					<h1>Logo</h1> <button onClick={(e) => this.clickedLogoPopButton(e)}>pop</button>
+					<h1>Logo</h1>
 					{logoPicker}
 					
 				</div>
