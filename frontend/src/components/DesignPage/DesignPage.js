@@ -19,11 +19,11 @@ class DesignPage extends React.Component {
 
 		this.state = {
 			design : {
-				body: this.props.now_design.detail_body,
-				sleeve: this.props.now_design.detail_sleeve,
-				banding: this.props.now_design.detail_banding,
-				stripe: this.props.now_design.detail_stripes,
-				button: this.props.now_design.detail_buttons
+				body: this.props.now_design.design.body,
+				sleeve: this.props.now_design.design.sleeve,
+				banding: this.props.now_design.design.banding,
+				stripe: this.props.now_design.design.stripe,
+				button: this.props.now_design.design.button
 			},
 
 			text: {
@@ -58,14 +58,17 @@ class DesignPage extends React.Component {
 			},
 
 			image: {
-				front: "",
-				back: "",
+				front: this.props.now_design.image.front,
+				back: this.props.now_design.image.back,
 			},
 
 			element: null,
-			designClickedWhat: null,
+			designClickedWhat: "body",
 			textClickedWhat: null,
 			logoClickedWhat: null,
+
+			displayTextColor: false,
+			displayBorderColor: false,
 		};
 
 
@@ -83,9 +86,9 @@ class DesignPage extends React.Component {
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
-		this.clickedDesignInitButton = this.clickedDesignInitButton.bind(this);
-		this.clickedTextInitButton = this.clickedTextInitButton.bind(this);
-		this.clickedLogoInitButton = this.clickedLogoInitButton.bind(this);
+		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
+		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
+		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
@@ -310,7 +313,7 @@ class DesignPage extends React.Component {
 	}
 
     designElementToImage(color, type, z_Index) {
-        // console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
+        console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
         
@@ -448,22 +451,22 @@ class DesignPage extends React.Component {
         }
     }
 
-	clickedDesignInitButton = (e) => {
-		this.setState({designClickedWhat: "body"});
-		this.forceUpdate();
+	clickedDesignPopButton = () => {
+		console.log("clicked", this.state.designClickedWhat)
+		this.state.designClickedWhat 
+			? this.setState({designClickedWhat: null})
+			: this.setState({designClickedWhat: "body"});
 	}
-	clickedTextInitButton = (e) => {
-		this.setState({ textClickedWhat: "frontchest"});
-		this.forceUpdate();
-	}
-
-	clickedLogoInitButton = (e) => {
-		this.setState({ logoClickedWhat: "front"});
-		this.forceUpdate();
+	clickedTextPopButton = () => {
+		this.state.textClickedWhat 
+			? this.setState({textClickedWhat: null})
+			: this.setState({textClickedWhat: "frontchest"});
 	}
 
-	clickedAddButton = (e) => {
-		this.forceUpdate();
+	clickedLogoPopButton = () => {
+		this.state.logoClickedWhat 
+			? this.setState({logoClickedWhat: null})
+			: this.setState({logoClickedWhat: "front"});
 	}
 
 	moveHandler = (e) =>{
@@ -519,6 +522,7 @@ class DesignPage extends React.Component {
 			position: 'absolute',
 			zIndex: '2',
 		  }
+
 		const cover = {
 			position: 'fixed',
 			top: '0px',
@@ -598,7 +602,7 @@ class DesignPage extends React.Component {
 						<button>pick color</button>
 					</div> 
 					{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
+						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
 					</div> : null }
 			</center>
 		: <div/>
@@ -633,20 +637,22 @@ class DesignPage extends React.Component {
 						Design section
 					=========================================-->*/}
 					<h1>Design</h1>
+					<button onClick={this.clickedDesignPopButton}>pop</button>
 					{colorPicker}
 	
 
 					{/*<!--========================================
 						Text section
-					=========================================-->*/}
+					=========================================-->*/}	
 					<h1>Text</h1>
+					<button onClick={this.clickedTextPopButton}>pop</button>
 					{textPicker}
-			
 
 					{/*<!--========================================
 						Image Upload Section
 					=========================================-->*/}
 					<h1>Logo</h1>
+					<button onClick={this.clickedLogoPopButton}>pop</button>
 					{logoPicker}
 					
 				</div>
