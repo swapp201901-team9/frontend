@@ -234,7 +234,7 @@ function *watchLoginState() {
             console.log("username: ", username)
             console.log(yield select())
             let data, parent_data;
-            
+
             if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
                 // localStorage.removeItem('parent');
                 let my_groups_data, now_design_data;
@@ -278,7 +278,7 @@ function *watchLoginState() {
                     //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
                 }));
             }
-            
+
             /* group 정보를 get 하는 부분
              * 1) profile_data backend에서 get (url: 'users/'+username+'/')
              * 2) all_groups_data backend에서 get (url: 'groups/')
@@ -303,7 +303,7 @@ function *watchLoginState() {
                     console.log(error)
                     alert("all groups data error")
                 }
-                
+
                 //my_groups data
                 try{
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
@@ -316,9 +316,9 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
-                    alert("my groups data error")    
+                    alert("my groups data error")
                 }
-                
+
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
                     all_groups: all_groups_data.body,
@@ -330,7 +330,7 @@ function *watchLoginState() {
             }
 
             // username또는 id를 기준으로 backend에 겟을 날리는 경우
-            else { 
+            else {
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];
 
@@ -406,7 +406,7 @@ function *watchLoginState() {
                         });
                         console.log("GET my groups data: ", my_groups_data.body)
                     } catch(error){
-                        alert("my groups data error")    
+                        alert("my groups data error")
                     }
 
                     //group designs
@@ -425,7 +425,7 @@ function *watchLoginState() {
                             console.log("you are not permitted");
                             alert("가입하지 않은 그룹입니다")
                             yield put(actions.changeUrl('/groups/'))
-                        }   
+                        }
                         else {
                             console.log(error)
                             alert("group designs error");
@@ -462,7 +462,7 @@ function *watchLoginState() {
                     } catch(error){
                         alert("group data error");
                     }
-                    
+
                     try{
                         group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
                             headers: {
@@ -637,7 +637,7 @@ function *watchCreateGroup() {
         yield call(createGroup, data);
         //SA TODO: groupname은 한글일텐데 url에 넣어도 되는가?
         //backend에서 redierect 처리
-		//yield put(actions.changeUrl('/group/' + data.groupname + '/')); 
+		//yield put(actions.changeUrl('/group/' + data.groupname + '/'));
 
 	}
 }
@@ -974,7 +974,7 @@ function *createGroup(data){
             console.log("already existing name");
             alert("이미 있는 이름입니다")
             yield put(actions.changeUrl('/groups/'))
-        }        
+        }
         else {
             console.log(error)
             alert("*createGroup error")
@@ -986,7 +986,7 @@ function *searchGroup(data){
     console.log("searchGroup", data.newList)
     let username = window.atob(localStorage.getItem("auth")).split(":")[0]
     let all_groups_data, my_groups_data;
-                
+
     //all_groups data
     try{
         all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
@@ -1002,7 +1002,7 @@ function *searchGroup(data){
         console.log(error)
         alert("all groups data error")
     }
-    
+
     //my_groups data
     try{
         my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
@@ -1015,9 +1015,9 @@ function *searchGroup(data){
         });
         console.log("GET my groups data: ", my_groups_data.body)
     } catch(error){
-        alert("my groups data error")    
+        alert("my groups data error")
     }
-    
+
     yield put(actions.setState({
         authorization: window.atob(localStorage['auth']),
         all_groups: all_groups_data.body,
@@ -1026,7 +1026,7 @@ function *searchGroup(data){
         load: 0,
         loading: true
     }));
-    
+
 }
 
 function *joinGroup(data){
@@ -1181,7 +1181,7 @@ function *changeGroupInfo(data) {
         alert("chage groupinfo error");
         return;
     }
-}           
+}
 
 function *deleteGroupUser(data) {
     console.log("deleteGroupUser groupid: ", data.groupid, " userid: ", data.userid)
@@ -1311,11 +1311,11 @@ function *saveDesign(data) {
             body: JSON.stringify({
                 "id": data.designid,
                 "design": {
-                    "body": data.design["body"], 
-                    "sleeve": data.design["sleeve"], 
-                    "banding": data.design["banding"], 
-                    "stripe": data.design["stripe"], 
-                    "button": data.design["button"], 
+                    "body": data.design["body"],
+                    "sleeve": data.design["sleeve"],
+                    "banding": data.design["banding"],
+                    "stripe": data.design["stripe"],
+                    "button": data.design["button"],
                 },
                 "text": data.text,
                 "image": {
@@ -1358,5 +1358,3 @@ function *postDesign(data) {
         return ;
     }
 }
-
-
