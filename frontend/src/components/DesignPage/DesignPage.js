@@ -147,9 +147,9 @@ class DesignPage extends React.Component {
         this.the_back_canvas.add(this.designElementToImage(this.state.design.sleeve, "back_sleeve", 0))
         this.the_front_canvas.add(this.designElementToImage(this.state.design.banding, "front_banding", 0))
         this.the_back_canvas.add(this.designElementToImage(this.state.design.banding, "back_banding", 0))
-        this.the_front_canvas.add(this.designElementToImage(this.state.design.stripe, "front_stripe", 2))
-        this.the_back_canvas.add(this.designElementToImage(this.state.design.stripe, "back_stripe", 2))
-        this.the_front_canvas.add(this.designElementToImage(this.state.design.button, "front_button", 2))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.stripe, "front_stripe", 3))
+        this.the_back_canvas.add(this.designElementToImage(this.state.design.stripe, "back_stripe", 3))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.button, "front_button", 3))
 
         this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
         this.the_front_canvas.add(this.textElementToImage(this.state.text.rightarm, "rightarm"))
@@ -175,11 +175,11 @@ class DesignPage extends React.Component {
         for(let element of this.design_element){
             if(nextState.design[element] !== this.state.design[element]) {
                 if(element === "stripe" ) {
-                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 2))
-                    this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 2))
+                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 3))
+                    this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 3))
                 }
                 else if (element === "button") {
-                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 2))
+                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 3))
                 }
                 else {
                     this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 0))
