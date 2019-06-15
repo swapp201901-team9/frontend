@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fabric} from 'fabric';
-import {CirclePicker, ChromePicker, CompactPicker, SketchPicker, HuePicker, SliderPicker} from 'react-color';
+import {CirclePicker, SketchPicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
 //import FabricCanvas from './FabricCanvas';
 import MyGroupList from '../GroupPage/MyGroupList';
@@ -18,12 +18,12 @@ class DesignPage extends React.Component {
 		super(props);
 
 		this.state = {
-			design: {
-				body: this.props.now_design.design.body,
-				sleeve: this.props.now_design.design.sleeve,
-				banding: this.props.now_design.design.banding,
-				stripe: this.props.now_design.design.stripe,
-				button: this.props.now_design.design.button
+			design : {
+				body: this.props.now_design.detail_body,
+				sleeve: this.props.now_design.detail_sleeve,
+				banding: this.props.now_design.detail_banding,
+				stripe: this.props.now_design.detail_stripes,
+				button: this.props.now_design.detail_buttons
 			},
 
 			text: {
@@ -58,18 +58,14 @@ class DesignPage extends React.Component {
 			},
 
 			image: {
-				front: this.props.now_design.image.front,
-				back: this.props.now_design.image.back,
+				front: "",
+				back: "",
 			},
 
 			element: null,
 			designClickedWhat: null,
 			textClickedWhat: null,
 			logoClickedWhat: null,
-			displayTextColor: false,
-			displayBorderColor: false,
-			frontnext: null,
-			backnext: null,
 		};
 
 
@@ -87,9 +83,9 @@ class DesignPage extends React.Component {
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
-		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
-		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
-		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
+		this.clickedDesignInitButton = this.clickedDesignInitButton.bind(this);
+		this.clickedTextInitButton = this.clickedTextInitButton.bind(this);
+		this.clickedLogoInitButton = this.clickedLogoInitButton.bind(this);
 
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
@@ -261,10 +257,7 @@ class DesignPage extends React.Component {
 
 		this.setState({text : ({...this.state.text, 
 			[text_element]: ({...this.state.text[text_element], fill: color.hex})
-		}),
-			huecolor: color.rgb,
-			slidercolor: color.rgb
-		});
+		})});
 	}
 
 	handleStrokeColorChange(color) {
@@ -275,8 +268,6 @@ class DesignPage extends React.Component {
 			[text_element]: ({...this.state.text[text_element], stroke: color.hex})
 		})});
 	}
-
-
 
 	
     // componentDidUpdate(nextProps, nextState) {
@@ -416,8 +407,7 @@ class DesignPage extends React.Component {
     }
 
     updateFrontCanvas = (next) => {
-		console.log("DesignPage - updateFrontCanvas next: ", next)
-		this.setState({frontnext: next})
+        console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
             let to_remove;
@@ -432,19 +422,13 @@ class DesignPage extends React.Component {
             } );
 
             this.the_front_canvas.add(next);
-            console.log("add to front canvas");
-            //this.the_front_canvas.requestRenderAll();
-            
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
-            this.forceUpdate();
-            //console.log("rerender");
         }
     }
 
     updateBackCanvas = (next) => {
-		console.log("DesignPage - updateBackCanvas next: ", next)
-		this.setState({backnext: next})
+        console.log("DesignPage - updateBackCanvas next: ", next)
 
         if(next){
 
@@ -464,17 +448,21 @@ class DesignPage extends React.Component {
         }
     }
 
-	clickedDesignPopButton = (e) => {
-		this.state.designClickedWhat ? this.setState({designClickedWhat: null }) : this.setState({ designClickedWhat: "body" })
+	clickedDesignInitButton = (e) => {
+		this.setState({designClickedWhat: "body"});
 		this.forceUpdate();
 	}
-	clickedTextPopButton = (e) => {
-		this.state.textClickedWhat ? this.setState({ textClickedWhat: null }) : this.setState({ textClickedWhat: "frontchest" });
+	clickedTextInitButton = (e) => {
+		this.setState({ textClickedWhat: "frontchest"});
 		this.forceUpdate();
 	}
 
-	clickedLogoPopButton = (e) => {
-		this.state.logoClickedWhat ? this.setState({ logoClickedWhat: null }) : this.setState({ logoClickedWhat: "front" });
+	clickedLogoInitButton = (e) => {
+		this.setState({ logoClickedWhat: "front"});
+		this.forceUpdate();
+	}
+
+	clickedAddButton = (e) => {
 		this.forceUpdate();
 	}
 
@@ -516,8 +504,6 @@ class DesignPage extends React.Component {
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
 	}
-
-
 
     render() {
 		console.log("DesignPage - render state: ", this.state)
@@ -646,21 +632,21 @@ class DesignPage extends React.Component {
 					{/*<!--========================================
 						Design section
 					=========================================-->*/}
-					<h1>Design</h1> <button onClick={(e) => this.clickedDesignPopButton(e)}>pop</button>
+					<h1>Design</h1>
 					{colorPicker}
 	
 
 					{/*<!--========================================
 						Text section
 					=========================================-->*/}
-					<h1>Text</h1> <button onClick={(e) => this.clickedTextPopButton(e)}>pop</button>
+					<h1>Text</h1>
 					{textPicker}
 			
 
 					{/*<!--========================================
 						Image Upload Section
 					=========================================-->*/}
-					<h1>Logo</h1> <button onClick={(e) => this.clickedLogoPopButton(e)}>pop</button>
+					<h1>Logo</h1>
 					{logoPicker}
 					
 				</div>
