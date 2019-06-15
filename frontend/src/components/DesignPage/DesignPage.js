@@ -138,7 +138,7 @@ class DesignPage extends React.Component {
 
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
-		this.onDrop = this.onDrop.bind(this);
+		// this.onDrop = this.onDrop.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
 	}
 
