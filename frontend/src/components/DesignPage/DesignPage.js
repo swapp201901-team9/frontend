@@ -542,11 +542,10 @@ class DesignPage extends React.Component {
 			console.log("logo clicked what not null")
 			logoPicker = <center>
 			<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-							<option value="frontchest">Front Chest</option>
-							<option value="rightarm">Right Arm</option>
-							<option value="upperback">Upper Back</option>
-							<option value="middleback">Middle Back</option>
-							<option value="lowerback">Lower Back</option>
+							<option value="front">Front Chest</option>
+							<option value="arm_right">Right Arm</option>
+							<option value="arm_left">Left Arm </option>
+							<option value="back">Lower Back</option>
 			</select>
 			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
 			</center>;
