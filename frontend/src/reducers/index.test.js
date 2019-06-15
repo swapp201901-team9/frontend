@@ -55,11 +55,11 @@ const initState = {
 
     now_group: null,
     now_design: {
-        body: "001c58",
-        sleeve: "f8f8f8",
-        banding: "001c58",
-        stripe: "ffffff",
-        button: "001c58"
+        /*detail_body: "001c58",
+        detail_sleeve: "f8f8f8",
+        detail_banding: "001c58",
+        detail_stripes: "ffffff",
+        detail_buttons: "001c58"*/
 
     },
 
@@ -88,18 +88,19 @@ describe('homepage reducer', () => {
 
             now_group: null,
             now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58"
-        
+                /*detail_body: "001c58",
+                detail_sleeve: "f8f8f8",
+                detail_banding: "001c58",
+                detail_stripes: "ffffff",
+                detail_buttons: "001c58"*/
             },
 
             my_requests: [],
             load: 0,
             loading: false,
-        })
+           
+        
+            })
     })
     it('should return the signout state', () => {
         expect(homepageApp(undefined, actions.signOut())).toEqual(initState)
@@ -120,11 +121,11 @@ describe('homepage reducer', () => {
 
             now_group: null,
             now_design: {
-                body: "001c58",
-                sleeve: "f8f8f8",
-                banding: "001c58",
-                stripe: "ffffff",
-                button: "001c58"
+                /*detail_body: "001c58",
+                detail_sleeve: "f8f8f8",
+                detail_banding: "001c58",
+                detail_stripes: "ffffff",
+                detail_buttons: "001c58"*/
         
             },  
 

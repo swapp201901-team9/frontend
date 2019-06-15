@@ -99,6 +99,8 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
+    yield spawn(watchNewDesign);
+
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -119,7 +121,6 @@ function *loggedInMainPageSaga() {
 
     yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
-    yield spawn(watchPostDesign);
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
     // yield spawn(watchChangeBanding);
@@ -199,6 +200,13 @@ function *watchLoginState() {
         else {
             yield put(actions.setState({
                 authorization: "",
+                now_design: {
+                    detail_body: "#001c58",
+                    detail_sleeve: "#fcfcfc",
+                    detail_banding: "#001c58",
+                    detail_stripes: "#fcfcfc",
+                    detail_buttons: "#fcfcfc"
+                },
                 load: 0,
                 loading: true
             }))
@@ -1250,7 +1258,7 @@ function *newDesign(data) {
 }
 
 function *saveDesign(data) {
-    console.log("saveDesign designid: ", data.designid, " design: ", data.design)
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text)
     const backPath = '';
     try{
         yield call(xhr.send, fixed_url+backPath, {
@@ -1263,11 +1271,16 @@ function *saveDesign(data) {
             responseType:'json',
             body: JSON.stringify({
                 "id": data.designid,
-                "detail_body": data.design["design_body"], 
-                "detail_sleeve": data.design["design_sleeve"],
-                "detail_banding": data.design["design_banding"],
-                "detail_stripes": data.design["design_stripe"],
-                "detail_buttons": data.design["design_button"]
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripes": data.design["stripe"],
+                "detail_buttons": data.design["button"],
+                "front_chest": data.text["frontchest"],
+                "right_arm": data.text["rightarm"],
+                "upper_back": data.text["upperback"],
+                "middle_back": data.text["middleback"],
+                "lower_back": data.text["lowerback"],
             })
         });
         console.log("save design succeed ");
@@ -1280,7 +1293,7 @@ function *saveDesign(data) {
 }
 
 function *postDesign(data) {
-    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design)
+    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design, " text: ", data.text)
     const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
     try{
         yield call(xhr.get, fixed_url+backPath,{

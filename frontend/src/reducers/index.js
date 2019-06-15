@@ -12,14 +12,7 @@ const homepageInitialState = {
     group_designs: [], //특정 그룹에 속한 모든 디자인 리스트
 
     now_group: null, //현재 작업 or 구경(?) 중인 그룹
-    now_design: {
-        // id: null,
-        detail_body: "001c58",
-        detail_sleeve: "f8f8f8",
-        detail_banding: "001c58",
-        detail_stripe: "ffffff",
-        detaIl_button: "001c58"
-    }, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
+    now_design: {}, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
 
     my_requests: [],
     load : 0,

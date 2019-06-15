@@ -1,18 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import {fabric} from 'fabric';
 import {CirclePicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
 
 import FabricCanvas from './FabricCanvas';
-//import TemplateList from './TemplateList'
-//import TemplateListItem from './TemplateListItem'
-//import {back_arm, back_banding, back_body, back_stripe, front_arm, front_body, front_button, front_stripe, front_banding} from './images/templates/templatelist';
 import MyGroupList from '../GroupPage/MyGroupList';
 
 //import ImageUploader from 'react-images-upload';
 
-import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign } from '../../actions/index.js';
 
 //import ThreeScene from './ThreeScene';
 
@@ -25,261 +22,379 @@ import { toSaveDesign, toPostDesign, toNewDesign } from '../../actions/index.js'
 // export default class DesignPage extends React.Component {
 class DesignPage extends React.Component {
 	constructor(props){
+		console.log("DesignPage - constructor")
 		super(props);
 
 		this.state = {
-			//design_body : this.props.now_design.detail_body,
-			//design_sleeve : this.props.now_design.detail_sleeve,
-			//design_banding : this.props.now_design.detail_banding,
-			//design_stripe : this.props.now_design.detail_stripes,
-			//design_button : this.props.now_design.detail_buttons,
-			activeBackProperty : null,
-			activeFrontProperty : null,
-			clickedWhat: null
+			design : {
+				body: this.props.now_design.detail_body,
+				sleeve: this.props.now_design.detail_sleeve,
+				banding: this.props.now_design.detail_banding,
+				stripe: this.props.now_design.detail_stripes,
+				button: this.props.now_design.detail_buttons
+			},
+
+			text : {
+				frontchest: {
+					textvalue: "S",
+					fontFamily: "arial",
+					fill: "#3f51b5",
+					fontStyle: "bold",
+					fontSize: 50,
+					left: 250,
+					top: 110,
+				},
+				rightarm: {
+					textvalue: "19",
+					fontFamily: "arial",
+					fill: "#607d8b",
+					fontStyle: "bold",
+					fontSize: 50,
+					left: 50,
+					top: 120,
+				},
+				upperback: {
+					textvalue: "SEOUL NAT'L",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "bold",
+					fontSize: 25,
+					left: 135,
+					top: 125,
+				},
+				middleback: {
+					textvalue: "UNIVERSITY",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "bold",
+					fontSize: 20,
+					left: 155,
+					top: 155,
+				},
+				lowerback: {
+					textvalue: "Department of\nComputer Science",
+					fontFamily: "arial",
+					fill: "#ffc107",
+					fontStyle: "italic",
+					fontSize: 15,
+					left: 150,
+					top: 190,
+				}
+			
+				// frontchest: this.props.now_design.front_chest,
+				// rightarm: this.props.now_design.right_arm,
+				// upperback: this.props.now_design.upper_back,
+				// middleback: this.props.now_design.middle_back,
+				// lowerback: this.props.now_design.lower_back
+			},
+
+			designClickedWhat: null,
+			textClickedWhat: "frontchest",
 		};
 
-		this.onDrop = this.onDrop.bind(this);
+
+		this.handleElementChange = this.handleElementChange.bind(this);
+		this.handleDesignChange = this.handleDesignChange.bind(this);
+		this.handleTextChange = this.handleTextChange.bind(this);
+		this.handleTextColorChange = this.handleTextColorChange.bind(this);
+
+		this.designElementToImage = this.designElementToImage.bind(this);
+		this.textElementToImage = this.textElementToImage.bind(this);
+        this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
+		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
-		this.addToFrontCanvas = this.addToFrontCanvas.bind(this);
-		this.addToBackCanvas = this.addToBackCanvas.bind(this);
-		this.addToBothCanvas = this.addToBothCanvas.bind(this);
-		this.handleChange = this.handleChange.bind(this);
-		this.handleChangeComplete = this.handleChangeComplete.bind(this);
-		this.handleDesignChangeComplete = this.handleDesignChangeComplete.bind(this);
 
-		this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-		this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
-		"#f8f8f8", "#4f4f53", "#2a2a2a"];
-		this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
-		this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-		this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-		"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
+		this.clickedInitButton = this.clickedInitButton.bind(this);
+		this.clickedAddButton = this.clickedAddButton.bind(this);
+		this.moveHandler = this.moveHandler.bind(this);
+		this.onDrop = this.onDrop.bind(this);
 	}
 
-	// componentDidMount(){
-	// 	this.body_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-	// 	this.sleeve_color = ["#942727", "#a65824", "#485a2f", "#316863", "#2e4373", "#462355", "#4a321f",
-	// 	"#f8f8f8", "#4f4f53", "#2a2a2a"];
-	// 	this.stripe_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#ffffff", "#cfcfcf", "#001c58", "#232323"];
-	// 	this.banding_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-	// 	this.button_color = ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
-	// 	"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"];
-  // }
-
-	/*componentDidUpdate(prevProps, prevState) {
-	}*/
-
-
-	addToFrontCanvas(imgElement, property_type, z_Index) {
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
-
-		this.setState({activeFrontProperty: imgInstance});
-	}
-
-	addToBackCanvas(imgElement, property_type, z_Index) {
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
-
-		this.setState({activeBackProperty: imgInstance});
-	}
-
-	addToBothCanvas(imgElement, property_type, z_Index)  {
-		var imgInstance = new fabric.Image(imgElement, {
-			width: 430,
-			height: 403,
-			the_type: property_type,
-			zIndex: z_Index
-		});
-
-		this.setState({
-			activeFrontProperty: imgInstance,
-			activeBackProperty: imgInstance
-		});
-	}
-
-	handleChangeComplete(color, event) {
-		this.fontcolor = color.hex;
-	}
-
-	handleDesignChangeComplete(color, event) {
-		let design_element = document.getElementById("design_element").value;
-		switch(design_element) {
-			case 'body': 
-				this.setState({design_body: color.hex}); 
-				//this.forceUpdate();
-				//var imgElement1 = document.getElementById('front_body');
-				var imgElement1 = document.createElement("img");
-				var src1 = './images/templates/front_body/'+this.state.design_body.substring(1)+'_body.png';
-				//console.log("front body src is");
-				
-				imgElement1.setAttribute("src", require(src1));
-				//console.log(src1);
-				//imgElement1.src = require(src1);
-
-				//var imgElement2 = document.getElementById('back_body');
-				var imgElement2 = document.createElement("img");
-				var src2 = './images/templates/back_body/'+this.state.design_body.substring(1)+'.png';
-				console.log("back body src is");
-				//console.log(src2);
-				imgElement2.setAttribute("src", require(src2));
-				//imgElement2.src = require(src2);
-
-				this.addToFrontCanvas(imgElement1, "front_body", 0);
-				this.addToBackCanvas(imgElement2, "back_body", 0);
-
-
-			break;
-			case 'sleeve': 
-			this.setState({design_sleeve: color.hex}); 
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('front_sleeve');
-			var imgElement3 = document.createElement("img");
-			var src3 = './images/templates/front_arm/'+this.state.design_sleeve.substring(1)+'_arm.png';
-			//console.log("front sleeve src is");
-			//console.log(src1);
-			//imgElement1.src = require(src1);
-			imgElement3.setAttribute("src", require(src3));
-
-			//var imgElement2 = document.getElementById('back_sleeve');
-			var imgElement4 = document.createElement("img");
-			var src4 = './images/templates/back_arm/'+this.state.design_sleeve.substring(1)+'.png';
-			//console.log("back sleeve src is");
-			//console.log(src2);
-			//imgElement2.src = require(src2);
-			imgElement4.setAttribute("src", require(src4));
-
-			this.addToFrontCanvas(imgElement3, "front_sleeve", 0);
-			this.addToBackCanvas(imgElement4, "back_sleeve", 0);
-			break;
-
-			case 'banding': 
-			this.setState({design_banding: color.hex}); 
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('front_banding');
-			var imgElement5 = document.createElement("img");
-			var src5 = './images/templates/front_banding/'+this.state.design_banding.substring(1)+'_banding.png';
-			//console.log("front banding src is");
-			//console.log(src1);
-			//imgElement1.src = require(src1);
-			imgElement5.setAttribute("src", require(src5));
-
-			//var imgElement2 = document.getElementById('back_banding');
-			var imgElement6 = document.createElement("img");
-			var src6 = './images/templates/back_banding/'+this.state.design_banding.substring(1)+'.png';
-			//console.log("back banding src is");
-			//console.log(src2);
-			//imgElement2.src = require(src2);
-			imgElement6.setAttribute("src", require(src6));
-
-			this.addToFrontCanvas(imgElement5, "front_banding", 0);
-			this.addToBackCanvas(imgElement6, "back_banding", 0);
-
-			break;
-
-			case 'stripe': 
-			this.setState({design_stripe: color.hex}); 
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('front_stripe');
-			var imgElement7 = document.createElement("img");
-			var src7 = './images/templates/front_stripe/'+this.state.design_stripe.substring(1)+'_stripe.png';
-			//console.log("front stripe src is");
-			//console.log(src1);
-			//imgElement1.src = require(src1);
-			imgElement7.setAttribute("src", require(src7));
-
-			//var imgElement2 = document.getElementById('back_stripe');
-			var imgElement8 = document.createElement("img");
-			var src8 = './images/templates/back_stripe/'+this.state.design_stripe.substring(1)+'.png';
-			//console.log("back stripe src is");
-			//console.log(src2);
-			//imgElement2.src = require(src2);
-			imgElement8.setAttribute("src", require(src8));
-
-			this.addToFrontCanvas(imgElement7, "front_stripe", 2);
-			this.addToBackCanvas(imgElement8, "back_stripe", 2);
-
-			break;
-
-			case 'button': 
-			this.setState({design_button: color.hex}); 
-			//this.forceUpdate();
-			//var imgElement1 = document.getElementById('img_button');
-			var imgElement9 = document.createElement("img");
-			var src9 = './images/templates/front_button/'+this.state.design_button.substring(1)+'_button.png';
-			//console.log("front button src is");
-			//console.log(src1);
-			//imgElement1.src = require(src1);
-			imgElement9.setAttribute("src", require(src9));
-
-			this.addToFrontCanvas(imgElement9, "front_button", 3);
-
-
-			break;
-
-			default:
-			
-			break;
+	componentWillMount() {
+		console.log("DesignPage - componentWillMount")
+		this.design_color = {
+			body: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+				"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"],
+			sleeve: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+				"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#626262", "#001c58", "#232323"],
+			stripe: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+				"#097c25", "#0075a9", "#601986", "#580b0b", "#fcfcfc", "#cfcfcf", "#001c58", "#232323"],
+			banding: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+				"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"],
+			button: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
+				"#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"]
 		}
-		console.log(this.state)
+
+		this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
+		this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
 	}
 
-	addText(isFront) {
-		console.log("addText")
-		let text = new fabric.IText(document.getElementById("text_area").value, {
-			fontFamily: document.getElementById("text_font").value,
-			fill: this.fontcolor,
-			fontStyle: document.getElementById("text_style").value,
-			fontSize: document.getElementById("text_size").value,
-			zIndex: 10
-			// objecttype: 'image',
+	componentDidMount() {
+        console.log("DesignPage - componentDidMount")
+
+		this.the_front_canvas = new fabric.Canvas('front-canvas', {
+            preserveObjectStacking: true,
+            height:460,
+            width:430,
+        });
+
+        this.the_back_canvas = new fabric.Canvas('back-canvas', {
+            preserveObjectStacking: true,
+            height:460,
+            width:430,
+		});
+		
+		this.the_front_canvas.on({
+			'object:moved': this.moveHandler,
 		})
 
-		console.log(text)
-		if(isFront) {
-			this.setState({activeFrontProperty: text})
-		}
-		else {
-			this.setState({activeBackProperty: text})
-		}
+		this.the_back_canvas.on({
+			'object:moved': this.moveHandler,
+		})
 
+		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.state.design.body, "back_body", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.sleeve, "front_sleeve", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.state.design.sleeve, "back_sleeve", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.banding, "front_banding", 0))
+        this.the_back_canvas.add(this.designElementToImage(this.state.design.banding, "back_banding", 0))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.stripe, "front_stripe", 2))
+        this.the_back_canvas.add(this.designElementToImage(this.state.design.stripe, "back_stripe", 2))
+        this.the_front_canvas.add(this.designElementToImage(this.state.design.button, "front_button", 2))
+
+        this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
+        this.the_front_canvas.add(this.textElementToImage(this.state.text.rightarm, "rightarm"))
+        this.the_back_canvas.add(this.textElementToImage(this.state.text.upperback, "upperback"))
+        this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
+        this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
+
+        // console.log("the_front_canvas: ", this.the_front_canvas);
+        //this.the_front_canvas.renderAll();
+		//this.the_back_canvas.renderAll();
 	}
 
-	handleChange(e){
+
+	componentWillUpdate = (nextProps, nextState) => {
+		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+	
+        // If Updated Item is not the same as the old one
+        //         => Update the canvas with newer item
+        for(let element of this.design_element){
+            if(nextState.design[element] !== this.state.design[element]) {
+                if(element === "stripe" ) {
+                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 2))
+                    this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 2))
+                }
+                else if (element === "button") {
+                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 2))
+                }
+                else {
+                    this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 0))
+                    this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 0))
+                    //this.forceUpdate();
+                    //console.log("force update");
+                }
+            }
+        }
+
+        for(let element of this.text_element){
+            if(nextState.text[element] !== this.state.text[element]) {
+				if(element === "frontchest" || element === "rightarm") {
+					this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
+				}
+				else {
+					this.updateBackCanvas(this.textElementToImage(nextState.text[element], element))
+				}
+            }
+		}
+		
+		this.the_front_canvas.renderAll();
+        this.the_back_canvas.renderAll();
+      
+	}
+	
+
+
+	handleElementChange(e){
+		console.log("DesignPage - handleElementChange target: ", e.target)
+		let id = e.target.id;
 		let value = e.target.value;
-		if (value == "body") {
-			this.setState({clickedWhat: "body"});
+
+		if(id === "design_element") {
+			this.setState({designClickedWhat: value})
 		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "sleeve"});
+		else if(id === "text_element") {
+			this.setState({textClickedWhat: value})
 		}
-		else if (value == "banding") {
-			this.setState({clickedWhat: "banding"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "stripe"});
-		}
-		else if (value == "sleeve"){
-			this.setState({clickedWhat: "button"});
-		}
-		else {
-			this.setState({clickedWhat: "body"});
-		}
+	}
+
+	handleDesignChange(color) {
+		console.log("DesignPage - handleDesignChange")
+		let design_element = document.getElementById("design_element").value;
+
+		this.setState({design : ({...this.state.design, [design_element]: color.hex})})
+	}
+
+	handleTextChange(e) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextChange e.target: ", e.target, " text element: ", text_element)
+
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
+		})});
+	}
+
+	handleTextColorChange(color) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextColorChange")
+
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], fill: color.hex})
+		})});
+	}
+
+	
+    // componentDidUpdate(nextProps, nextState) {
+    //     this.the_front_canvas.renderAll();
+    //     this.the_back_canvas.renderAll();
+    // }
+
+
+
+    designElementToImage(color, type, z_Index) {
+        console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
+
+        var imgElement = document.createElement("img");
+        var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        
+        // console.log("src: ", src)
+		imgElement.setAttribute("src", require(src));
+
+		var imgInstance = new fabric.Image(imgElement, {
+			width: 430,
+			height: 460,
+			the_type: type                                                         ,
+			zIndex: z_Index
+		});
+
+        // console.log("imgInstance: ", imgInstance)
+        return imgInstance
+    }
+
+    textElementToImage(text, type) {
+        console.log("DesignPage - textElementToImage")
+        let imgInstance = new fabric.IText(text.textvalue, {
+			fontFamily: text.fontFamily,
+			fill: text.fill,
+			fontStyle: text.fontStyle,
+			fontSize: text.fontSize,
+			the_type: type,
+			zIndex: 10,
+			left: text.left,
+			top: text.top,
+			textAlign: "center"
+		})
+        
+        // console.log("text imgInstance: ", imgInstance)
+        return imgInstance
+    }
+
+
+
+
+    updateFrontCanvas = (next) => {
+        console.log("DesignPage - updateFrontCanvas next: ", next)
+
+        if(next){
+			// this.the_front_canvas.add(next);
+
+            let to_remove;
+            // Find the same kind of element
+            this.the_front_canvas.forEachObject( (object) => {
+            
+                if(object.the_type === next.the_type){
+                    console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
+                    to_remove = object;
+                    this.the_front_canvas.remove(to_remove);
+                }
+            } );
+
+            //this.the_front_canvas.remove(to_remove);
+            // console.log("remove front canvas");
+            //this.the_front_canvas.renderAll();
+
+            // if(next.the_type === 'bg'){
+            //     this.the_front_canvas.setBackgroundImage(next);
+            //     this.the_front_canvas.renderAll();
+            //     return;
+            // }
+
+            this.the_front_canvas.add(next);
+            // console.log("add to front canvas");
+            //this.the_front_canvas.requestRenderAll();
+            
+            this.the_front_canvas.moveTo(next, next.zIndex);
+            this.the_front_canvas.renderAll();
+            // this.forceUpdate();
+            //console.log("rerender");
+        }
+    }
+
+    updateBackCanvas = (next) => {
+        console.log("DesignPage - updateBackCanvas next: ", next)
+
+        if(next){
+
+            let to_remove;
+            // Find the same kind of element
+            this.the_back_canvas.forEachObject( (object) => {
+
+                if(object.the_type === next.the_type){
+                    to_remove = object;
+                    this.the_back_canvas.remove(to_remove);
+                }
+            } );
+
+            //this.the_back_canvas.remove(to_remove);
+            //this.the_back_canvas.renderAll();
+
+
+            // if(next.the_type === 'bg'){
+            //     this.the_back_canvas.setBackgroundImage(next);
+            //     this.the_back_canvas.renderAll();
+            //     return;
+            // }
+
+            this.the_back_canvas.add(next);
+            //this.the_back_canvas.renderAll();
+            this.the_back_canvas.moveTo(next, next.zIndex);
+            //this.the_back_canvas.renderAll();
+        }
+    }
+
+
+
+	clickedInitButton = (e) => {
+		this.setState({designClickedWhat: "body"});
 		this.forceUpdate();
+	}
+
+	clickedAddButton = (e) => {
+		this.forceUpdate();
+	}
+
+
+
+	moveHandler = (e) =>{
+		let movingObject = e.target;
+		console.log(movingObject)
+		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
+
+		this.setState({text : ({...this.state.text, 
+			[movingObject.the_type]: ({...this.state.text[movingObject.the_type],
+				left:movingObject.get('left'),
+				top: movingObject.get('top')})
+		})});
 	}
 
 	onDrop = (e) => {
@@ -296,7 +411,7 @@ class DesignPage extends React.Component {
             width: 899,
             height:959,
             the_type: "upload",
-            zIndex: 10
+            zIndex: 12
             });
             console.log("imgInstance set");
             imgInstance.set({
@@ -306,193 +421,275 @@ class DesignPage extends React.Component {
                 originY: "center"
             });
             console.log("imgInstance scale");
-            
+
         },false);
 
-       
+
         if (file) {
             reader.readAsDataURL(file);
         }
-       
+
         this.the_front_canvas = canvas;
+	}
+
+	// FabricCanvas onDrop
+    // onDrop = (e) => {
+    //     console.log("hey");
+
+    //     e.preventDefault();
+    //     var preview = document.getElementById('img');
+    //     //var img = new Image(40, 40);
+    //     var file = document.getElementById('input').files[0];
+    //     var canvas = this.the_front_canvas;
+    //     var canvas2 = this.the_back_canvas;
+    //     let reader = new FileReader();
+    //     reader.addEventListener("load", function() {
+    //         preview.src = reader.result;
+    //         //img.src = reader.result;
+    //         /*var imgInstance = new fabric.Image(preview, {
+    //         width: 40,
+    //         height: 40,
+    //         the_type: "upload",
+    //         zIndex: 2
+    //         });*/
+    //         console.log(preview.width);
+    //         console.log(preview.height);
+
+    //         var imgInstance = new fabric.Image(preview, {
+    //         width: 899,
+    //         height:959,
+    //         the_type: "upload",
+    //         zIndex: 10
+    //         });
+    //         console.log("imgInstance set");
+    //         imgInstance.set({
+    //             scaleY: 0.1,
+    //             scaleX: 0.1,
+    //             originX: "center",
+    //             originY: "center"
+    //         });
+    //         console.log("imgInstance scale");
+    //         canvas.add(imgInstance);
+    //         canvas2.add(imgInstance);
+    //         canvas.renderAll();
+    //         canvas2.renderAll();
+    //         canvas.moveTo(imgInstance, imgInstance.zIndex);
+    //         canvas2.moveTo(imgInstance, imgInstance.zIndex);
+    //         canvas.renderAll();
+    //         canvas2.renderAll();
+    //         console.log("imgInstance add");
+
+    //         //var imgInstance = new fabric.Image(preview);
+    //         /*this.the_canvas = new fabric.Canvas('main-canvas', {
+    //             preserveObjectStacking: true,
+    //             height:959,
+    //             width:899,
+    //         });*/
+
+    //     },false);
+
+    //     /*reader.onloadend = () => {
+    //         var img = new Image(40,40);
+	//         img.src = reader.result;
+
+    //         var imgInstance = new fabric.Image(img, {
+    //             width: 899,
+    //             height: 959,
+    //             the_type: "upload",
+    //             zIndex: 2
+    //         });
+    //         this.the_canvas.add(imgInstance);
+    //     }*/
+
+    //     if (file) {
+    //         reader.readAsDataURL(file);
+    //     }
+    //     //console.log(img.src);
+    //     /*var imgInstance = new fabric.Image(img, {
+    //         width: 40,
+    //         height: 40,
+    //         the_type: "upload",
+    //         zIndex: 2
+    //     });*/
+    //     //var imgInstance = new fabric.Image(img);
+    //     //this.the_canvas.add(imgInstance);
+    //     this.the_front_canvas = canvas;
+    // }
+
+    saveToCanvas = () => {
+        console.log("DesignPage - saveToCanvas")
+
+        let link = document.createElement("a");
+        link.href = this.the_canvas.toDataURL({format: 'png'});
+        link.download = "design.png";
+        link.click();
+
+    }
+
+    fileChangedHandler = (event) => {
+        const file = event.target.files[0];
+        this.setState({selectedFile: file});
     }
 
     render() {
-			const clickedWhat = this.state.clickedWhat;
-			let colorPicker;
-			if (clickedWhat == "body") {
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "sleeve") {
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.sleeve_color}/>;
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "banding") {
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.banding_color}/>;
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "stripe") {
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.stripe_color}/>;
-				//this.forceUpdate();
-			}
-			else if (clickedWhat == "button") {
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.button_color}/>;
-				//this.forceUpdate();
-			}
-			else {
-				console.log("else")
-				colorPicker = <CirclePicker
-				id="design_colour" onChangeComplete={this.handleDesignChangeComplete} colors={this.body_color}/>;
-			}
+		console.log("DesignPage - render state: ", this.state)
+		const clickedWhat = this.state.designClickedWhat;
+		let colorPicker;
 
-      return (
-      <div>
-				<section className="wrap clear col3">
-					<div className="aside">
-						<h2 className="h_white">SELECT STYLE</h2>
-							<div className="content">
-								<center><select id="design_element"
-								onChange={(e)=>this.handleChange(e)}>
-									<option value = "body">body</option>
-									<option value = "sleeve">sleeve</option>
-									<option value = "banding">banding</option>
-									<option value = "stripe">stripe</option>
-									<option value = "button">button</option>
-								</select></center>
+		if(clickedWhat === null) {
+			colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
+		}
+		else {
+			colorPicker = <CirclePicker width="220" id="design_colour" 
+				onChangeComplete={this.handleDesignChange} colors={this.design_color[clickedWhat]}/>;
+		}
+
+		return (
+		<section className="wrap clear col3">
+
+			{/*<!--========================================
+				LEFT SIDE BAR
+			=========================================-->*/}	
+			<div className="aside">
+				<h2 className="h_white">SELECT STYLE</h2>
+				
+				<div className="content">
+
+					{/*<!--========================================
+						Design section
+					=========================================-->*/}
+					<h1>Design</h1>
+					<center>
+						<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value = "body">body</option>
+							<option value = "sleeve">sleeve</option>
+							<option value = "banding">banding</option>
+							<option value = "stripe">stripe</option>
+							<option value = "button">button</option>
+						</select>
+						<br/><br/>
+						{colorPicker}
+						<br/>
+						<div className="Button-Field-Side"> 
+							<button onClick={(e) => this.clickedAddButton(e)}>ADD</button>
+						</div>
+					</center>
+	
+
+					{/*<!--========================================
+						Text section
+					=========================================-->*/}
+					<h1>Text</h1>
+					<center>
+						<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="frontchest">Front Chest</option>
+							<option value="rightarm">Right Arm</option>
+							<option value="upperback">Upper Back</option>
+							<option value="middleback">Middle Back</option>
+							<option value="lowerback">Lower Back</option>
+						</select>
 						
-							<h1>Colour</h1>
-							{colorPicker}
-								
-						{/*<img src = '' id = "front_body"/>
-						<img src = '' id = "back_body" />
-							
-						<img src = "" id = "front_sleeve" />
-						<img src = '' id = "back_sleeve" />
+						<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
+							name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-						<img src = "" id = "front_stripe" />
-						<img src = '' id = "back_stripe" />
+						<p>Font</p> 
+						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+							<option>arial</option>
+							<option>tahoma</option>
+							<option>times new roman</option>
+							<option>anton</option>
+							<option>Akronim</option>
+							<option>Alex Brush</option>
+							<option>Aguafina Script</option>
+						</select>
+						
+						<p>Style</p>
+						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+							<option>normal</option>
+							<option>italic</option>
+							<option>oblique</option>
+							<option>bold</option>
+						</select>
 
+						<p>Size</p> 
+						<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
+							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
-						<img src = "" id = "front_banding" />
-						<img src = '' id = "back_banding" />
+						<p>Color</p>
+							<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
 
+					</center>
+			
 
-	  					<img src = "" id = "img_button" />*/}
-
-
-		<br></br>
-		<div class="design_tool">
-
-		<h1>Text</h1>
-			<textarea id="text_area" defaultValue="Hello"/>
-
-			<p>Choose a font</p>
-			<select id="text_font">
-				{/*<!-- all fonts -->*/}
-				<option>arial</option>
-				<option>tahoma</option>
-				<option>times new roman</option>
-				<option>anton</option>
-				<option>Akronim</option>
-				<option>Alex Brush</option>
-				<option>Aguafina Script</option>
-			</select>
-
-			<p>Text colour</p>
-				{/*<!-- colour -->*/}
-				{/*<input type="text" id="text_colour" />*/}
-				<CirclePicker id="text_colour" onChangeComplete={this.handleChangeComplete}/>
-
-			<p>Text style</p>
-				<select id="text_style" onChange={(e)=>this.handleChange(e)}>
-					{/*<!-- font style -->*/}
-					<option>normal</option>
-					<option>italic</option>
-					<option>oblique</option>
-					<option>bold</option>
-				</select>
-
-			<div class="font_size">
-				{/*<!-- font size -->*/}
-				<p>Font Size :</p> <input type="range"  min="0" max="200" defaultValue="100" id="text_size" />
+					{/*<!--========================================
+						Image Upload Section
+					=========================================-->*/}
+					<h1>Logo</h1>
+					<input type = "file" id = "input" onChange = {this.onDrop} />
+					<img src = "" id = "img" />
+				</div>
 			</div>
-		</div>
-
-
-		{/*<!--========================================
-			front-back button section
-	=========================================-->*/}
-		<div class="change_side">
-			<button class="front_btn" type="button" onClick={() => this.addText(true)}>Front</button>
-			<button class="back_btn" type="button" onClick={() => this.addText(false)}>Back</button>
-		</div>
 
 
 
-		{/*<!--========================================
-			Image Upload Modal
-	=========================================-->*/}
-	<h1>Logo</h1>
-    <input type = "file"
-                         id = "input"
-                         onChange = {this.onDrop} />
-                  <img src = ""
-                        id = "img" />
+			{/*<!--========================================
+				CENTER DESIGN SECTION
+			=========================================-->*/}	
+			<div className="main">
+				<h2 className="h_white">SAMPLE VIEW</h2>
+				<div className="content">
+
+					{/*<!--========================================
+						Fabric Canvas Section
+					=========================================-->*/}
+					{/*<ThreeScene/>*/}
+					<div className= "main-canvas-container">
+						<button class="front_btn" type="button">Front</button>
+						<canvas id='front-canvas'/>
+
+						<button class="back_btn" type="button">Back</button>
+						<canvas id='back-canvas'/>
+					</div>
+		
+					{/*<!--========================================
+						NEW & SAVE Button Section
+					=========================================-->*/}
+					{this.props.isLoggedIn ?
+						(<div>
+							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+							<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button>
+						</div>)
+						: <div>
+							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+						</div>
+					}
+
+				</div>
 			</div>
-          </div>
-              <div className="main">
-                <h2 className="h_white">SAMPLE VIEW</h2>
-                <div className="content">
 
-                {/*<!--========================================
-			front-back button section
-	=========================================-->*/}
-	{/*<ThreeScene/>*/}
-	<FabricCanvas
-	activeFrontProperty = {this.state.activeFrontProperty}
-	activeBackProperty = {this.state.activeBackProperty}
-	/>
-
-	{this.props.isLoggedIn ?
-		(<div>
-			<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-			<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state)}>SAVE</button>
-		</div>)
-		: <div></div>
-	}
-
-
+			{/*<!--========================================
+				RIGHT SIDE BAR
+			=========================================-->*/}	
+			<div className="aside">
+				<h2 className="h_black">MY GROUP</h2>
+				<div className="content">
+					{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+				</div>
 			</div>
-		</div>
-		<div className="aside">
-			<h2 className="h_black">MY GROUP</h2>
-			<div className="content">
-				{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
-			</div>
-		</div>
-	</section>
-      </div>
-
-      );
+		</section>
+		);
     }
-	}
+}
 
-	const mapStateToProps = (state) => ({
-		isLoggedIn: state.authorization,
-		now_design: state.now_design,
-		my_groups: state.my_groups,
-	})
+const mapStateToProps = (state) => ({
+	isLoggedIn: state.authorization,
+	now_design: state.now_design,
+	my_groups: state.my_groups,
+})
 
-	const mapDispatchToProps = (dispatch) => ({
-		onNew: () => dispatch(toNewDesign()),
-		onSave: (designid, design_detail) => dispatch(toSaveDesign(designid, design_detail)),
-		onPost: (designid, groupid, design_detail) => dispatch(toPostDesign(designid, groupid, design_detail)),
-	})
+const mapDispatchToProps = (dispatch) => ({
+	onNew: () => dispatch(toNewDesign()),
+	onSave: (designid, design, text) => dispatch(toSaveDesign(designid, design, text)),
+})
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)

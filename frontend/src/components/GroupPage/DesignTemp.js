@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DesignTemp = ({ design, group, my_groups, onClickPost, onClickLike, onClickUnlike, onClickDelete }) => {
+const DesignTemp = ({ design, text, group, my_groups, onClickPost, onClickLike, onClickUnlike, onClickDelete }) => {
     return (
         <div>
             <div>
@@ -12,7 +12,7 @@ const DesignTemp = ({ design, group, my_groups, onClickPost, onClickLike, onClic
                 banding: {design.detail_banding}<br/>
                 stripe: {design.detail_stripes}<br/>
                 button: {design.detail_buttons}<br/>
-                {console.log(design)}
+                {console.log(design, text)}
             </div>
             {(group.group_type === "UR")
                 ? (<div>
