@@ -1310,18 +1310,18 @@ function *saveDesign(data) {
             responseType:'json',
             body: JSON.stringify({
                 "id": data.designid,
-                "body": data.design["body"], 
-                "sleeve": data.design["sleeve"],
-                "banding": data.design["banding"],
-                "stripe": data.design["stripe"],
-                "button": data.design["button"],
-                "front_chest_text": data.text["frontchest"],
-                "right_arm_text": data.text["rightarm"],
-                "upper_back_text": data.text["upperback"],
-                "middle_back_text": data.text["middleback"],
-                "lower_back_text": data.text["lowerback"],
-                "front_image_url": data.image["front"],
-                "back_image_url": data.image["back"]
+                "detail_body": data.design["body"], 
+                "detail_sleeve": data.design["sleeve"],
+                "detail_banding": data.design["banding"],
+                "detail_stripes": data.design["stripe"],
+                "detail_buttons": data.design["button"],
+                "front_chest": data.text["frontchest"],
+                "right_arm": data.text["rightarm"],
+                "upper_back": data.text["upperback"],
+                "middle_back": data.text["middleback"],
+                "lower_back": data.text["lowerback"],
+                "front_image": data.image["front"],
+                "back_image": data.image["back"]
             })
         });
         console.log("save design succeed ");
