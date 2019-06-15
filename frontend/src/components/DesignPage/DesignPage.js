@@ -439,6 +439,7 @@ class DesignPage extends React.Component {
 		this.state.designClickedWhat 
 			? this.setState({designClickedWhat: null})
 			: this.setState({designClickedWhat: "body"});
+		
 	}
 	clickedTextPopButton = () => {
 		this.state.textClickedWhat 
@@ -457,11 +458,27 @@ class DesignPage extends React.Component {
 		console.log(movingObject)
 		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
 
+		// this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
+		// this.logo_element = ["front", "back"]
+		if (movingObject.the_type === "frontchest" ||
+		movingObject.the_type === "rightarm" ||
+		movingObject.the_type === "upperback" ||
+		movingObject.the_type === "middleback" ||
+		movingObject.the_type === "lowerback") {
 		this.setState({text : ({...this.state.text, 
 			[movingObject.the_type]: ({...this.state.text[movingObject.the_type],
 				left:movingObject.get('left'),
 				top: movingObject.get('top')})
 		})});
+		}
+		else if (movingObject.the_type === "front" ||
+				movingObject.the_type === "back") {
+				this.setState({logo : ({...this.state.logo, 
+					[movingObject.the_type]: ({...this.state.logo[movingObject.the_type],
+					left:movingObject.get('left'),
+					top: movingObject.get('top')})
+				})});	
+		}
 	}
 
 	onClickSave = () => {
@@ -574,8 +591,8 @@ class DesignPage extends React.Component {
 	  logoPicker = logoClickedWhat 
 			? <center>
 				<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-								<option value="front">Front Chest</option>
-								<option value="back">Lower Back</option>
+								<option value="front">Front</option>
+								<option value="back">Lower</option>
 				</select>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
 			</center> 
