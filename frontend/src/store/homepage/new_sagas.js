@@ -1321,6 +1321,10 @@ function *saveDesign(data) {
                 "image": {
                     "front": data.image["front"],
                     "back": data.image["back"]
+                },
+                "logo": {
+                    "front": data.logo["front"],
+                    "back": data.logo["back"]
                 }
             })
         });

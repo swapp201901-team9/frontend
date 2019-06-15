@@ -55,7 +55,6 @@ class DesignPage extends React.Component {
 			displayBorderColor: false,
 		};
 
-
 		this.handleElementChange = this.handleElementChange.bind(this);
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
@@ -155,6 +154,7 @@ class DesignPage extends React.Component {
 		//update for design element
         for(let element of this.design_element){
             if(nextState.design[element] !== this.state.design[element]) {
+				console.log("design: ", nextState.design[element])
                 if(element === "stripe" ) {
                     this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 3))
                     this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 3))
@@ -172,6 +172,7 @@ class DesignPage extends React.Component {
 		//update for text element
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
+				console.log("text: ", nextState.text[element])
 				if(element === "frontchest" || element === "rightarm") {
 					this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
 				}
