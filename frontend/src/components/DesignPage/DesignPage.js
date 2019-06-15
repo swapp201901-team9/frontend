@@ -299,6 +299,7 @@ class DesignPage extends React.Component {
             reader.readAsDataURL(file);
         }
 	}
+  
 	getDataUrl = (img) => {
 		var canvas = document.createElement('canvas')
   		var ctx = canvas.getContext('2d')
@@ -348,9 +349,9 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-		console.log("DesignPage - textElementToImage", text, type)
-		
-		// const scope = this
+        console.log("DesignPage - textElementToImage", text, type)
+      
+      	// const scope = this
 		// imgElement.addEventListener('load', function(event){
 		// 	var dataUrl = scope.getDataUrl(event.currentTarget)
 		// 	var img = document.createElement("img");
@@ -363,7 +364,6 @@ class DesignPage extends React.Component {
 		// 	});
 		// 	scope.setState({element: imgInstance});
 		// })
-
         let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -607,8 +607,7 @@ class DesignPage extends React.Component {
 			</center>
 		: <div/>
 		
-
-		logoPicker = logoClickedWhat 
+	  logoPicker = logoClickedWhat 
 			? <center>
 				<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
 								<option value="front">Front Chest</option>
