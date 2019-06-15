@@ -161,6 +161,11 @@ require('./front_banding/front_bandingf39800.png'),
 require('./front_banding/front_bandingfff45c.png'),
 require('./front_banding/front_banding626262.png'),
 ]
+
+const logo = [
+    require('../logo.jpg'),
+    require('../Unknown.png'),
+]
 export {
 
 back_sleeve,
@@ -172,4 +177,6 @@ front_body,
 front_button,
 front_stripe,
 front_banding,
+logo,
+
 };

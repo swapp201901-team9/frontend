@@ -152,18 +152,20 @@ yield spawn(watchGoToAdminGroup);
 }
 
 function *groupDetailPageSaga() {
-console.log("Group Detail Page Saga");
-yield spawn(watchLoginState);
-yield spawn(watchSignOut);
-yield spawn(watchGoToMain);
 
-yield spawn(watchToEditDesign);
-yield spawn(watchPostDesign);
-yield spawn(watchLikeDesign);
-yield spawn(watchUnlikeDesign);
-yield spawn(watchGoToGroupDetail);
-yield spawn(watchGoToAdminGroup);
-yield spawn(watchDeleteGroupDesign);
+    console.log("Group Detail Page Saga");
+    yield spawn(watchLoginState);
+    yield spawn(watchSignOut);
+    yield spawn(watchGoToMain);
+
+    yield spawn(watchToEditDesign);
+    yield spawn(watchPostDesign);
+    yield spawn(watchLikeDesign);
+    yield spawn(watchUnlikeDesign);
+    yield spawn(watchGoToGroupDetail);
+    yield spawn(watchGoToAdminGroup);
+    yield spawn(watchDeleteGroupDesign);
+
 }
 
 function *groupAdminPageSaga() {
@@ -212,34 +214,14 @@ if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' 
             alert("main now_design error")
         }
 
-        yield put(actions.setState({
-            authorization: "",
-            now_design: now_design_data.body,
-            load: 0,
-            loading: true
-        }))
-    }
-}
-else {
-    if(localStorage.getItem("auth") === null) {
-        yield put(actions.changeUrl('/'));
-    }
-    else {
-        const path = window.location.pathname;
-        let username = window.atob(localStorage.getItem("auth")).split(":")[0]
-        console.log("username: ", username)
-        console.log(yield select())
-        let data, parent_data;
-
-        if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
-            // localStorage.removeItem('parent');
-            let my_groups_data, now_design_data;
+        else {
+            let now_design_data;
 
             try{
                 now_design_data = yield call(xhr.get, fixed_url+'', {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Basic '+localStorage['auth'],
+
                         Accept: 'application/json'
                     },
                     responsetype: 'json',
@@ -250,25 +232,11 @@ else {
                 alert("main now_design error")
             }
 
-            try {
-                my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Basic '+localStorage['auth'],
-                        Accept: 'application/json'
-                    },
-                    responseType: 'json',
-                });
-                console.log("GET my groups data: ", my_groups_data.body)
-            } catch(error) {
-                console.log(error)
-                alert("main mygroups error");
-            }
 
             yield put(actions.setState({
-                authorization: window.atob(localStorage['auth']),
+                authorization: "",
                 now_design: now_design_data.body,
-                my_groups: my_groups_data.body,
+
                 load: 0,
                 loading: true
                 //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
@@ -688,6 +656,15 @@ yield call(toEditDesign, data);
 }
 }
 
+
+function *watchToEditDesign() {
+    while(true) {
+        const data = yield take(TO_EDIT_DESIGN);
+        console.log("watchToEditDesign");
+        yield call(toEditDesign, data);
+    }
+}
+
 function *watchLikeDesign() {
 while(true) {
 const data = yield take(LIKE_DESIGN);
@@ -1064,24 +1041,29 @@ alert("*toGroupDetail error")
 }
 }
 
+
+
+
 function *toEditDesign(data) {
-console.log("toEditDesign")
-// const path = 'groups/like/' + data.designid + '/';
-try {
-// yield call(xhr.get, fixed_url + path, {
-// headers: {
-// "Authorization": "Basic " + localStorage['auth'],
-// "Content-Type": 'application/json',
-// Accept: 'application/json'
-// },
-// contentType: 'json'
-// });
-// yield put(actions.changeUrl(window.location.pathname));
-} catch(error){
-console.log(error)
-alert("*toEditDesign error")
+    console.log("toEditDesign")
+    // const path = 'groups/like/' + data.designid + '/';
+    try {
+		// yield call(xhr.get, fixed_url + path, {
+        //     headers: {
+        //         "Authorization": "Basic " + localStorage['auth'],
+        //         "Content-Type": 'application/json',
+        //         Accept: 'application/json'
+        //     },
+        //     contentType: 'json'
+        // });
+        // yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*toEditDesign error")
+    }
 }
-}
+
+
 
 function *likeDesign(data) {
 console.log("likeDesign")
@@ -1264,40 +1246,41 @@ return;
 }
 
 function *saveDesign(data) {
-console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image)
-const backPath = '';
-try{
-yield call(xhr.send, fixed_url+backPath, {
-method: 'PUT',
-headers: {
-"Authorization": "Basic "+localStorage['auth'],
-"Content-Type": 'application/json',
-Accept: 'application/json',
-},
-responseType:'json',
-body: JSON.stringify({
-"id": data.designid,
-"detail_body": data.design["body"],
-"detail_sleeve": data.design["sleeve"],
-"detail_banding": data.design["banding"],
-"detail_stripes": data.design["stripe"],
-"detail_buttons": data.design["button"],
-"front_chest": data.text["frontchest"],
-"right_arm": data.text["rightarm"],
-"upper_back": data.text["upperback"],
-"middle_back": data.text["middleback"],
-"lower_back": data.text["lowerback"],
-"front_image": data.image["front"],
-"back_image": data.image["back"]
-})
-});
-console.log("save design succeed ");
-yield put(actions.changeUrl('/main/'));
-}catch(error){
-console.log(error)
-alert("save design error");
-return;
-}
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image)
+    const backPath = '';
+    try{
+        yield call(xhr.send, fixed_url+backPath, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({
+                "id": data.designid,
+                "design": {
+                    "body": data.design["body"],
+                    "sleeve": data.design["sleeve"],
+                    "banding": data.design["banding"],
+                    "stripe": data.design["stripe"],
+                    "button": data.design["button"],
+                },
+                "text": data.text,
+                "image": {
+                    "front": data.image["front"],
+                    "back": data.image["back"]
+                }
+            })
+        });
+        console.log("save design succeed ");
+        yield put(actions.changeUrl('/main/'));
+    }catch(error){
+        console.log(error)
+        alert("save design error");
+        return;
+    }
+
 }
 
 function *postDesign(data) {
