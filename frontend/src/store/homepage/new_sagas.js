@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, CHANGE_BODY, CHANGE_SLEEVE, CHANGE_BANDING, CHANGE_STRIPE, CHANGE_BUTTON, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -159,6 +159,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
 
+    yield spawn(watchToEditDesign);
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
     yield spawn(watchUnlikeDesign);
@@ -677,6 +678,15 @@ function *watchGoToAdminGroup() {
 	}
 }
 
+
+function *watchToEditDesign() {
+    while(true) {
+        const data = yield take(TO_EDIT_DESIGN);
+        console.log("watchToEditDesign");
+        yield call(toEditDesign, data);
+    }
+}
+
 function *watchLikeDesign() {
     while(true) {
         const data = yield take(LIKE_DESIGN);
@@ -1070,6 +1080,24 @@ function *toAdminGroup(data){
 
 
 
+function *toEditDesign(data) {
+    console.log("toEditDesign")
+    // const path = 'groups/like/' + data.designid + '/';
+    try {
+		// yield call(xhr.get, fixed_url + path, {
+        //     headers: {
+        //         "Authorization": "Basic " + localStorage['auth'],
+        //         "Content-Type": 'application/json',
+        //         Accept: 'application/json'
+        //     },
+        //     contentType: 'json'
+        // });
+        // yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*toEditDesign error")
+    }
+}
 
 
 function *likeDesign(data) {
@@ -1258,7 +1286,7 @@ function *newDesign(data) {
 }
 
 function *saveDesign(data) {
-    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text)
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image)
     const backPath = '';
     try{
         yield call(xhr.send, fixed_url+backPath, {
@@ -1281,6 +1309,8 @@ function *saveDesign(data) {
                 "upper_back": data.text["upperback"],
                 "middle_back": data.text["middleback"],
                 "lower_back": data.text["lowerback"],
+                "front_image": data.image["front"],
+                "back_image": data.image["back"]
             })
         });
         console.log("save design succeed ");
