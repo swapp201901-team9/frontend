@@ -382,8 +382,8 @@ class DesignPage extends React.Component {
 
         let imgInstance;
         imgInstance = new fabric.Image(img, {
-            width: 899,
-			height:959,
+            width: 430,
+			height:460,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
