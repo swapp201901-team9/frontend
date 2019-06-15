@@ -354,7 +354,22 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-        console.log("DesignPage - textElementToImage", text, type)
+		console.log("DesignPage - textElementToImage", text, type)
+		
+		// const scope = this
+		// imgElement.addEventListener('load', function(event){
+		// 	var dataUrl = scope.getDataUrl(event.currentTarget)
+		// 	var img = document.createElement("img");
+		// 	img.src = dataUrl;
+		// 	var imgInstance = new fabric.Image(img, {
+		// 		width: 430,
+		// 		height: 460,
+		// 		the_type: type                                                         ,
+		// 		zIndex: z_Index
+		// 	});
+		// 	scope.setState({element: imgInstance});
+		// })
+
         let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -527,6 +542,7 @@ class DesignPage extends React.Component {
 		}
 
 		if(designClickedWhat === null) {
+			<div></div>
 		}
 		else {
 			colorPicker = <center>
@@ -545,6 +561,7 @@ class DesignPage extends React.Component {
 		}
 
 		if(textClickedWhat === null) {
+			<div></div>
 		}
 		else {
 			textPicker = <center>
@@ -605,6 +622,7 @@ class DesignPage extends React.Component {
 		}
 
 		if(logoClickedWhat === null) {
+			<div></div>
 		}
 		else {
 			console.log("logo clicked what not null")
