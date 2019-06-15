@@ -1,26 +1,17 @@
 import React from 'react';
-import {reactCSS} from 'reactcss';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker, ChromePicker, CompactPicker, SketchPicker, HuePicker, SliderPicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
-
-import FabricCanvas from './FabricCanvas';
+//import FabricCanvas from './FabricCanvas';
 import MyGroupList from '../GroupPage/MyGroupList';
-
 //import ImageUploader from 'react-images-upload';
 
 import { toSaveDesign, toNewDesign } from '../../actions/index.js';
+//import { tsImportEqualsDeclaration } from '@babel/types';
 
-//import ThreeScene from './ThreeScene';
+//import logo from './images/templates/templatelist';
 
-//the templates are imported as images and passed as porps to the TemplateList components.
-//if the user chooses any of the properties, the state gets updated in the DesignPage component
-//it gets passed onto FabricCanvas as prop
-//FabricCanvas uses lifecycle method ComponentWillReceiveProps() to update the canvas
-//about saveToCanvas: use a method from fabric named TODataUrl()
-
-// export default class DesignPage extends React.Component {
 class DesignPage extends React.Component {
 	constructor(props){
 		console.log("DesignPage - constructor")
@@ -92,11 +83,29 @@ class DesignPage extends React.Component {
 					top: 190,
 				}
 			
-				// frontchest: this.props.now_design.front_chest,
-				// rightarm: this.props.now_design.right_arm,
-				// upperback: this.props.now_design.upper_back,
-				// middleback: this.props.now_design.middle_back,
-				// lowerback: this.props.now_design.lower_back
+			},
+
+			logo : {
+				front: {
+					src : './images/logo.jpg',
+					left: 250,
+					top: 110,
+				},
+				arm_right: {
+					src : './images/logo.jpg',
+					left: 50,
+					top: 120,
+				},
+				arm_left: {
+					src : './images/logo.jpg',
+					left: 155,
+					top: 120,
+				},
+				back: {
+					src : './images/logo.jpg',
+					left: 135,
+					top: 125,
+				},
 			},
 
 			image: {
@@ -105,28 +114,32 @@ class DesignPage extends React.Component {
 			},
 
 			designClickedWhat: null,
-			textClickedWhat: "frontchest",
+			textClickedWhat: null,
+			logoClickedWhat: null,
 			displayTextColor: false,
 			displayBorderColor: false,
 		};
-
 
 		this.handleElementChange = this.handleElementChange.bind(this);
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
 		this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
+		this.handleLogoChange = this.handleLogoChange.bind(this);
 
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
+		this.logoElementToImage = this.logoElementToImage.bind(this);
+
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
+		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
+		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
+		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
-		this.clickedInitButton = this.clickedInitButton.bind(this);
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
-		this.onDrop = this.onDrop.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
 	}
 
@@ -147,6 +160,7 @@ class DesignPage extends React.Component {
 
 		this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
 		this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
+		this.logo_element = ["front", "arm_right", "arm_left", "back"]
 	}
 
 	componentDidMount() {
@@ -186,11 +200,13 @@ class DesignPage extends React.Component {
         this.the_front_canvas.add(this.textElementToImage(this.state.text.rightarm, "rightarm"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.upperback, "upperback"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
-        this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
-
-        // console.log("the_front_canvas: ", this.the_front_canvas);
-        //this.the_front_canvas.renderAll();
-		//this.the_back_canvas.renderAll();
+		this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
+		
+		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
+        this.the_front_canvas.add(this.logoElementToImage(this.state.logo.arm_right, "arm_right"))
+        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.arm_left, "arm_left"))
+        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+        
 	}
 
 
@@ -198,7 +214,9 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 	
         // If Updated Item is not the same as the old one
-        //         => Update the canvas with newer item
+		//         => Update the canvas with newer item
+		
+		//update for design element
         for(let element of this.design_element){
             if(nextState.design[element] !== this.state.design[element]) {
                 if(element === "stripe" ) {
@@ -211,12 +229,11 @@ class DesignPage extends React.Component {
                 else {
                     this.updateFrontCanvas(this.designElementToImage(nextState.design[element], 'front_'+element, 0))
                     this.updateBackCanvas(this.designElementToImage(nextState.design[element], 'back_'+element, 0))
-                    //this.forceUpdate();
-                    //console.log("force update");
                 }
             }
         }
 
+		//update for text element
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
 				if(element === "frontchest" || element === "rightarm") {
@@ -227,12 +244,28 @@ class DesignPage extends React.Component {
 				}
             }
 		}
+
+		//update for logo element
+		for (let element of this.logo_element) {
+			if(nextState.logo[element] !== this.state.logo[element]) {
+				if(element === "front" || element === "arm_right"|| element === "arm_left") {
+					this.updateFrontCanvas(this.logoElementToImage(nextState.logo[element], element))
+				}
+				else {
+					this.updateBackCanvas(this.logoElementToImage(nextState.logo[element], element))
+				}
+            }
+		}
 		
 		this.the_front_canvas.renderAll();
         this.the_back_canvas.renderAll();
       
 	}
 	
+    // componentDidUpdate(nextProps, nextState) {
+    //     this.the_front_canvas.renderAll();
+    //     this.the_back_canvas.renderAll();
+    // }
 
 
 	handleElementChange(e){
@@ -241,10 +274,13 @@ class DesignPage extends React.Component {
 		let value = e.target.value;
 
 		if(id === "design_element") {
-			this.setState({designClickedWhat: value})
+			this.setState({designClickedWhat: value});
 		}
 		else if(id === "text_element") {
-			this.setState({textClickedWhat: value})
+			this.setState({textClickedWhat: value});
+		}
+		else if (id == "logo_element") {
+			this.setState({logoClickedWhat: value});
 		}
 	}
 
@@ -293,7 +329,26 @@ class DesignPage extends React.Component {
     //     this.the_back_canvas.renderAll();
     // }
 
+	handleLogoChange = (e) => {
+		e.preventDefault();
+		let logo_element = document.getElementById("logo_element").value;
+		const scope = this;
+		//var img = document.createElement("img");
+		var file = document.getElementById('input').files[0];
+		let reader = new FileReader();
+		reader.addEventListener("load", function() {
+			//img.src = reader.result;
+			
+			scope.setState({logo: ({...scope.state.logo, 
+				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
+			}) });
+			
+		})
 
+		if (file) {
+            reader.readAsDataURL(file);
+        }
+	}
 
     designElementToImage(color, type, z_Index) {
         console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
@@ -332,18 +387,38 @@ class DesignPage extends React.Component {
 		})
         
         // console.log("text imgInstance: ", imgInstance)
-        return imgInstance
+        return imgInstance;
     }
 
+	logoElementToImage(logo, type) {
+		console.log("FabricCanvas - textElementToImage")
+		
+		let img = document.createElement("img");
+		img.setAttribute("src", require(logo.src));
 
-
+        let imgInstance;
+        imgInstance = new fabric.Image(img, {
+            width: 899,
+			height:959,
+			the_type: type,
+            zIndex: 10,
+            left: logo.left,
+            top: logo.top
+        });
+        imgInstance.set({
+            scaleY: 0.1,
+            scaleX: 0.1,
+            originX: "center",
+            originY: "center"
+        });
+    
+        return imgInstance;
+    }
 
     updateFrontCanvas = (next) => {
         console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
-			// this.the_front_canvas.add(next);
-
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
@@ -354,16 +429,6 @@ class DesignPage extends React.Component {
                     this.the_front_canvas.remove(to_remove);
                 }
             } );
-
-            //this.the_front_canvas.remove(to_remove);
-            // console.log("remove front canvas");
-            //this.the_front_canvas.renderAll();
-
-            // if(next.the_type === 'bg'){
-            //     this.the_front_canvas.setBackgroundImage(next);
-            //     this.the_front_canvas.renderAll();
-            //     return;
-            // }
 
             this.the_front_canvas.add(next);
             console.log("add to front canvas");
@@ -391,35 +456,29 @@ class DesignPage extends React.Component {
                 }
             } );
 
-            //this.the_back_canvas.remove(to_remove);
-            //this.the_back_canvas.renderAll();
-
-
-            // if(next.the_type === 'bg'){
-            //     this.the_back_canvas.setBackgroundImage(next);
-            //     this.the_back_canvas.renderAll();
-            //     return;
-            // }
-
             this.the_back_canvas.add(next);
-            //this.the_back_canvas.renderAll();
             this.the_back_canvas.moveTo(next, next.zIndex);
-            //this.the_back_canvas.renderAll();
+            this.the_back_canvas.renderAll();
         }
     }
 
+	clickedDesignPopButton = (e) => {
+		this.state.designClickedWhat ? this.setState({designClickedWhat: null }) : this.setState({ designClickedWhat: "body" })
+		this.forceUpdate();
+	}
+	clickedTextPopButton = (e) => {
+		this.state.textClickedWhat ? this.setState({ textClickedWhat: null }) : this.setState({ textClickedWhat: "frontchest" });
+		this.forceUpdate();
+	}
 
-
-	clickedInitButton = (e) => {
-		this.setState({designClickedWhat: "body"});
+	clickedLogoPopButton = (e) => {
+		this.state.logoClickedWhat ? this.setState({ logoClickedWhat: null }) : this.setState({ logoClickedWhat: "front" });
 		this.forceUpdate();
 	}
 
 	clickedAddButton = (e) => {
 		this.forceUpdate();
 	}
-
-
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
@@ -432,125 +491,6 @@ class DesignPage extends React.Component {
 				top: movingObject.get('top')})
 		})});
 	}
-
-	onDrop = (e) => {
-        console.log("hey");
-
-        e.preventDefault();
-        var preview = document.getElementById('img');
-        var file = document.getElementById('input').files[0];
-        var canvas = this.the_front_canvas;
-        let reader = new FileReader();
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-            var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
-            the_type: "upload",
-            zIndex: 12
-            });
-            console.log("imgInstance set");
-            imgInstance.set({
-                scaleY: 0.1,
-                scaleX: 0.1,
-                originX: "center",
-                originY: "center"
-            });
-            console.log("imgInstance scale");
-
-        },false);
-
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-
-        this.the_front_canvas = canvas;
-	}
-
-	// FabricCanvas onDrop
-    // onDrop = (e) => {
-    //     console.log("hey");
-
-    //     e.preventDefault();
-    //     var preview = document.getElementById('img');
-    //     //var img = new Image(40, 40);
-    //     var file = document.getElementById('input').files[0];
-    //     var canvas = this.the_front_canvas;
-    //     var canvas2 = this.the_back_canvas;
-    //     let reader = new FileReader();
-    //     reader.addEventListener("load", function() {
-    //         preview.src = reader.result;
-    //         //img.src = reader.result;
-    //         /*var imgInstance = new fabric.Image(preview, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //         });*/
-    //         console.log(preview.width);
-    //         console.log(preview.height);
-
-    //         var imgInstance = new fabric.Image(preview, {
-    //         width: 899,
-    //         height:959,
-    //         the_type: "upload",
-    //         zIndex: 10
-    //         });
-    //         console.log("imgInstance set");
-    //         imgInstance.set({
-    //             scaleY: 0.1,
-    //             scaleX: 0.1,
-    //             originX: "center",
-    //             originY: "center"
-    //         });
-    //         console.log("imgInstance scale");
-    //         canvas.add(imgInstance);
-    //         canvas2.add(imgInstance);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         canvas.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas2.moveTo(imgInstance, imgInstance.zIndex);
-    //         canvas.renderAll();
-    //         canvas2.renderAll();
-    //         console.log("imgInstance add");
-
-    //         //var imgInstance = new fabric.Image(preview);
-    //         /*this.the_canvas = new fabric.Canvas('main-canvas', {
-    //             preserveObjectStacking: true,
-    //             height:959,
-    //             width:899,
-    //         });*/
-
-    //     },false);
-
-    //     /*reader.onloadend = () => {
-    //         var img = new Image(40,40);
-	//         img.src = reader.result;
-
-    //         var imgInstance = new fabric.Image(img, {
-    //             width: 899,
-    //             height: 959,
-    //             the_type: "upload",
-    //             zIndex: 2
-    //         });
-    //         this.the_canvas.add(imgInstance);
-    //     }*/
-
-    //     if (file) {
-    //         reader.readAsDataURL(file);
-    //     }
-    //     //console.log(img.src);
-    //     /*var imgInstance = new fabric.Image(img, {
-    //         width: 40,
-    //         height: 40,
-    //         the_type: "upload",
-    //         zIndex: 2
-    //     });*/
-    //     //var imgInstance = new fabric.Image(img);
-    //     //this.the_canvas.add(imgInstance);
-    //     this.the_front_canvas = canvas;
-    // }
 
     saveToCanvas = () => {
         console.log("DesignPage - saveToCanvas")
@@ -583,8 +523,13 @@ class DesignPage extends React.Component {
 
     render() {
 		console.log("DesignPage - render state: ", this.state)
-		const clickedWhat = this.state.designClickedWhat;
+		const designClickedWhat = this.state.designClickedWhat;
+		const textClickedWhat = this.state.textClickedWhat;
+		const logoClickedWhat = this.state.logoClickedWhat;
+
 		let colorPicker;
+		let textPicker;
+		let logoPicker;
 
 		const popover = {
 			position: 'absolute',
@@ -598,13 +543,103 @@ class DesignPage extends React.Component {
 			left: '0px',
 		}
 
-		if(clickedWhat === null) {
-			colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
+		if(designClickedWhat === null) {
 		}
 		else {
-			colorPicker = <CirclePicker width="220" id="design_colour" 
-				onChangeComplete={this.handleDesignChange} colors={this.design_color[clickedWhat]}/>;
+			colorPicker = <center>
+			<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+				<option value = "body">body</option>
+				<option value = "sleeve">sleeve</option>
+				<option value = "banding">banding</option>
+				<option value = "stripe">stripe</option>
+				<option value = "button">button</option>
+			</select>
+			<br/><br/>
+			<CirclePicker width="220" id="design_colour" 
+				onChangeComplete={this.handleDesignChange} colors={this.design_color[designClickedWhat]}/>
+			<br/>
+			<div className="Button-Field-Side"> 
+				<button onClick={(e) => this.clickedAddButton(e)}>ADD</button>
+			</div>
+		</center>;
 		}
+
+		if(textClickedWhat === null) {
+		}
+		else {
+			textPicker = <center>
+							<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+								<option value="frontchest">Front Chest</option>
+								<option value="rightarm">Right Arm</option>
+								<option value="upperback">Upper Back</option>
+								<option value="middleback">Middle Back</option>
+								<option value="lowerback">Lower Back</option>
+							</select>
+							
+							<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
+								name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+
+							<p>Font</p> 
+							<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+								<option>arial</option>
+								<option>tahoma</option>
+								<option>times new roman</option>
+								<option>anton</option>
+								<option>Akronim</option>
+								<option>Alex Brush</option>
+								<option>Aguafina Script</option>
+								<option>mistral</option>
+							</select>
+							
+							<p>Style</p>
+							<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+								<option>normal</option>
+								<option>italic</option>
+								<option>oblique</option>
+								<option>bold</option>
+							</select>
+
+							<p>Size</p> 
+							<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
+								name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+
+							<p>Color</p>
+							<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+								<button>pick color</button>
+							</div> 
+							{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+								<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+							</div> : null }
+
+							
+							<p>Border</p>
+							<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
+								name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+							<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+								<button>pick color</button>
+							</div> 
+							{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
+								<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
+							</div> : null }
+					</center>;
+		}
+
+		if(logoClickedWhat === null) {
+		}
+		else {
+			console.log("logo clicked what not null")
+			logoPicker = <center>
+							<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+											<option value="front">Front Chest</option>
+											<option value="arm_right">Right Arm</option>
+											<option value="arm_left">Left Arm </option>
+											<option value="back">Lower Back</option>
+							</select>
+							<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+						</center>;
+		}
+
+
 
 		return (
 		<section className="wrap clear col3">
@@ -620,96 +655,25 @@ class DesignPage extends React.Component {
 					{/*<!--========================================
 						Design section
 					=========================================-->*/}
-					<h1>Design</h1>
-					<center>
-						<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
-							<option value = "body">body</option>
-							<option value = "sleeve">sleeve</option>
-							<option value = "banding">banding</option>
-							<option value = "stripe">stripe</option>
-							<option value = "button">button</option>
-						</select>
-						<br/><br/>
-						{colorPicker}
-						<br/>
-						<div className="Button-Field-Side"> 
-							<button onClick={(e) => this.clickedAddButton(e)}>ADD</button>
-						</div>
-					</center>
+					<h1>Design</h1> <button onClick={(e) => this.clickedDesignPopButton(e)}>pop</button>
+					{colorPicker}
 	
 
 					{/*<!--========================================
 						Text section
 					=========================================-->*/}
-					<h1>Text</h1>
-					<center>
-						<select id="text_element" defaultValue="frontchest" onChange={(e)=>this.handleElementChange(e)}>
-							<option value="frontchest">Front Chest</option>
-							<option value="rightarm">Right Arm</option>
-							<option value="upperback">Upper Back</option>
-							<option value="middleback">Middle Back</option>
-							<option value="lowerback">Lower Back</option>
-						</select>
-						
-						<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
-							name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
-
-						<p>Font</p> 
-						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-							<option>arial</option>
-							<option>tahoma</option>
-							<option>times new roman</option>
-							<option>anton</option>
-							<option>Akronim</option>
-							<option>Alex Brush</option>
-							<option>Aguafina Script</option>
-							<option>mistral</option>
-						</select>
-						
-						<p>Style</p>
-						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-							<option>normal</option>
-							<option>italic</option>
-							<option>oblique</option>
-							<option>bold</option>
-						</select>
-
-						<p>Size</p> 
-						<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
-							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
-
-						<p>Color</p>
-						<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-							<button>pick color</button>
-						</div> 
-						{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-          					<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
-        				</div> : null }
-
-						
-						<p>Border</p>
-						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
-							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-						<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-							<button>pick color</button>
-						</div> 
-						{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-          					<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
-        				</div> : null }
-
-					</center>
+					<h1>Text</h1> <button onClick={(e) => this.clickedTextPopButton(e)}>pop</button>
+					{textPicker}
 			
 
 					{/*<!--========================================
 						Image Upload Section
 					=========================================-->*/}
-					<h1>Logo</h1>
-					<input type = "file" id = "input" onChange = {this.onDrop} />
-					<img src = "" id = "img" />
+					<h1>Logo</h1> <button onClick={(e) => this.clickedLogoPopButton(e)}>pop</button>
+					{logoPicker}
+					
 				</div>
 			</div>
-
-
 
 			{/*<!--========================================
 				CENTER DESIGN SECTION
