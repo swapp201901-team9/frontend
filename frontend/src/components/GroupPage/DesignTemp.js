@@ -4,14 +4,9 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
     return (
         <div>
             <div>
-                id: {design.id}<br/>
-                owner: {design.owner}<br/>
-                likes: {design.likes}<br/>
-                body: {design.detail_body}<br/>
-                sleeve: {design.detail_sleeve}<br/>
-                banding: {design.detail_banding}<br/>
-                stripe: {design.detail_stripes}<br/>
-                button: {design.detail_buttons}<br/>
+                {console.log("design: ", design)}
+                <img src={design.front_image_url} />
+                <img src={design.back_image_url} />
             </div>
             {(group.group_type === "UR")
                 ? (<div>

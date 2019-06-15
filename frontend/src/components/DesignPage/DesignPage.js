@@ -35,6 +35,7 @@ class DesignPage extends React.Component {
 				lowerback: this.props.now_design.text.lowerback,
 			},
 			
+
 			logo: {
 				front: this.props.now_design.logo.front,
 				back: this.props.now_design.logo.back,
@@ -373,8 +374,8 @@ class DesignPage extends React.Component {
 
         let imgInstance;
         imgInstance = new fabric.Image(img, {
-            width: 899,
-			height:959,
+            width: 430,
+			height:460,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
@@ -631,14 +632,18 @@ class DesignPage extends React.Component {
 					{/*<ThreeScene/>*/}
 					<div id="plain-react">
 						<Tabs className="tabs tabs-1" onChange={tab => console.log(`Tab selected: ${tab}`)}> 
+
 							<TabLink to="front">FRONT</TabLink>
 							<TabLink to="back">BACK</TabLink>
 							<TabContent for="front">
+
 								<div classname="canvas-bg">
 									<canvas id="front-canvas" />
 								</div>
 							</TabContent>
+
 							<TabContent for="back">
+
 								<div classname="canvas-bg">
 									<canvas id="back-canvas"/>
 								</div>
