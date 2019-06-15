@@ -1319,8 +1319,8 @@ function *saveDesign(data) {
                 },
                 "text": data.text,
                 "image": {
-                    "front": data.image["front"],
-                    "back": data.image["back"]
+                    "frontImg": data.image["frontImg"],
+                    "backImg": data.image["backImg"]
                 },
                 "logo": {
                     "front": data.logo["front"],
