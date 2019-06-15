@@ -33,6 +33,8 @@ class DesignPage extends React.Component {
 					fill: "#3f51b5",
 					fontStyle: "bold",
 					fontSize: 50,
+					stroke: "#f29c9f",
+					strokeWidth: 2,
 					left: 250,
 					top: 110,
 				},
@@ -42,6 +44,8 @@ class DesignPage extends React.Component {
 					fill: "#607d8b",
 					fontStyle: "bold",
 					fontSize: 50,
+					stroke: "",
+					strokeWidth: 0,
 					left: 50,
 					top: 120,
 				},
@@ -51,6 +55,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "bold",
 					fontSize: 25,
+					stroke: "",
+					strokeWidth: 0,
 					left: 135,
 					top: 125,
 				},
@@ -60,6 +66,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "bold",
 					fontSize: 20,
+					stroke: "",
+					strokeWidth: 0,
 					left: 155,
 					top: 155,
 				},
@@ -69,6 +77,8 @@ class DesignPage extends React.Component {
 					fill: "#ffc107",
 					fontStyle: "italic",
 					fontSize: 15,
+					stroke: "",
+					strokeWidth: 0,
 					left: 150,
 					top: 190,
 				}
@@ -98,6 +108,11 @@ class DesignPage extends React.Component {
 				},
 			},
 
+			image: {
+				front: "",
+				back: "",
+			},
+
 			designClickedWhat: null,
 			textClickedWhat: null,
 			logoClickedWhat: null,
@@ -107,6 +122,7 @@ class DesignPage extends React.Component {
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
+		this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
 		this.handleLogoChange = this.handleLogoChange.bind(this);
 
 		this.designElementToImage = this.designElementToImage.bind(this);
@@ -122,6 +138,7 @@ class DesignPage extends React.Component {
 
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
+		this.onClickSave = this.onClickSave.bind(this);
 	}
 
 	componentWillMount() {
@@ -283,12 +300,27 @@ class DesignPage extends React.Component {
 
 	handleTextColorChange(color) {
 		let text_element = document.getElementById("text_element").value;
-		console.log("DesignPage - handleTextColorChange")
+		console.log("DesignPage - handleTextColorChange", color)
 
 		this.setState({text : ({...this.state.text, 
 			[text_element]: ({...this.state.text[text_element], fill: color.hex})
 		})});
 	}
+
+	handleStrokeColorChange(color) {
+		let text_element = document.getElementById("text_element").value;
+		console.log("DesignPage - handleTextColorChange", color)
+
+		this.setState({text : ({...this.state.text, 
+			[text_element]: ({...this.state.text[text_element], stroke: color.hex})
+		})});
+	}
+
+	
+    // componentDidUpdate(nextProps, nextState) {
+    //     this.the_front_canvas.renderAll();
+    //     this.the_back_canvas.renderAll();
+    // }
 
 	handleLogoChange = (e) => {
 		e.preventDefault();
@@ -341,6 +373,8 @@ class DesignPage extends React.Component {
 			fill: text.fill,
 			fontStyle: text.fontStyle,
 			fontSize: text.fontSize,
+			stroke: text.stroke,
+			strokeWidth: text.strokeWidth,
 			the_type: type,
 			zIndex: 10,
 			left: text.left,
@@ -461,6 +495,22 @@ class DesignPage extends React.Component {
 
     }
 
+    fileChangedHandler = (event) => {
+        const file = event.target.files[0];
+        this.setState({selectedFile: file});
+	}
+	
+
+	onClickSave = () => {
+		console.log("clickSave")
+		let image = {
+			front: this.the_front_canvas.toDataURL({format:'png'}),
+			back: this.the_back_canvas.toDataURL({format: 'png'})
+		}
+
+		this.setState({image: image})
+		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
+	}
 
     render() {
 		console.log("DesignPage - render state: ", this.state)
@@ -499,44 +549,50 @@ class DesignPage extends React.Component {
 		}
 		else {
 			textPicker = <center>
-			<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-				<option value="frontchest">Front Chest</option>
-				<option value="rightarm">Right Arm</option>
-				<option value="upperback">Upper Back</option>
-				<option value="middleback">Middle Back</option>
-				<option value="lowerback">Lower Back</option>
-			</select>
-			
-			<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
-				name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+						<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="frontchest">Front Chest</option>
+							<option value="rightarm">Right Arm</option>
+							<option value="upperback">Upper Back</option>
+							<option value="middleback">Middle Back</option>
+							<option value="lowerback">Lower Back</option>
+						</select>
+						
+						<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
+							name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-			<p>Font</p> 
-			<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-				<option>arial</option>
-				<option>tahoma</option>
-				<option>times new roman</option>
-				<option>anton</option>
-				<option>Akronim</option>
-				<option>Alex Brush</option>
-				<option>Aguafina Script</option>
-			</select>
-			
-			<p>Style</p>
-			<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-				<option>normal</option>
-				<option>italic</option>
-				<option>oblique</option>
-				<option>bold</option>
-			</select>
+						<p>Font</p> 
+						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+							<option>arial</option>
+							<option>tahoma</option>
+							<option>times new roman</option>
+							<option>anton</option>
+							<option>Akronim</option>
+							<option>Alex Brush</option>
+							<option>Aguafina Script</option>
+						</select>
+						
+						<p>Style</p>
+						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+							<option>normal</option>
+							<option>italic</option>
+							<option>oblique</option>
+							<option>bold</option>
+						</select>
 
-			<p>Size</p> 
-			<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
-				name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+						<p>Size</p> 
+						<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
+							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
-			<p>Color</p>
-				<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
+						<p>Color</p>
+						<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
 
-		</center>;
+						
+						<p>Border</p>
+						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
+							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+						<CirclePicker width="220" id="stroke_color" name="stroke" onChangeComplete={this.handleStrokeColorChange}/>
+
+					</center>;
 		}
 
 		if(logoClickedWhat === null) {
@@ -617,13 +673,13 @@ class DesignPage extends React.Component {
 					{this.props.isLoggedIn ?
 						(<div>
 							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-							<button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button>
+							{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
+							<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 						</div>)
 						: <div>
 							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 						</div>
 					}
-
 				</div>
 			</div>
 
@@ -649,7 +705,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onNew: () => dispatch(toNewDesign()),
-	onSave: (designid, design, text) => dispatch(toSaveDesign(designid, design, text)),
+	onSave: (designid, design, text, image) => dispatch(toSaveDesign(designid, design, text, image)),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)

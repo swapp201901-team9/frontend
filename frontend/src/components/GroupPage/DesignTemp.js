@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DesignTemp = ({ design, text, group, my_groups, onClickPost, onClickLike, onClickUnlike, onClickDelete }) => {
+const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClickLike, onClickUnlike, onClickDelete }) => {
     return (
         <div>
             <div>
@@ -12,7 +12,6 @@ const DesignTemp = ({ design, text, group, my_groups, onClickPost, onClickLike, 
                 banding: {design.detail_banding}<br/>
                 stripe: {design.detail_stripes}<br/>
                 button: {design.detail_buttons}<br/>
-                {console.log(design, text)}
             </div>
             {(group.group_type === "UR")
                 ? (<div>
@@ -20,9 +19,13 @@ const DesignTemp = ({ design, text, group, my_groups, onClickPost, onClickLike, 
                         {my_groups.filter(group => {
                             return group.group_type !== "UR"
                         }).map(option => {
-                            return <option value={option.id}> {option.group_type} {option.group_name} </option>
+                            return <option key={option.id} value={option.id}> {option.group_type} {option.group_name} </option>
                         })}
                         </select>
+                        <button class="post_btn" type="button" 
+                            onClick={onClickEdit}>
+                            EDIT
+                        </button>
                         <button class="post_btn" type="button" 
                             onClick={() => onClickPost(document.getElementById("post_group").value)}>
                             POST
