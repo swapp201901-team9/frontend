@@ -113,6 +113,8 @@ class DesignPage extends React.Component {
 				back: "",
 			},
 
+			element: null,
+
 			designClickedWhat: null,
 			textClickedWhat: null,
 			logoClickedWhat: null,
@@ -139,6 +141,9 @@ class DesignPage extends React.Component {
 		this.clickedAddButton = this.clickedAddButton.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
+
+		this.getDataUrl = this.getDataUrl.bind(this);
+
 	}
 
 	componentWillMount() {
@@ -330,13 +335,11 @@ class DesignPage extends React.Component {
 		var file = document.getElementById('input').files[0];
 		let reader = new FileReader();
 		reader.addEventListener("load", function() {
-			//img.src = reader.result;
-
-			var image= new Image();
-			image.src = reader.result;
+			//var image= new Image();
+			//image.src = reader.result;
 			console.log(reader.result);
 			scope.setState({logo: ({...scope.state.logo, 
-				[logo_element]: ({...scope.state.logo[logo_element], src :image.src})
+				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
 			
 		})
@@ -345,16 +348,43 @@ class DesignPage extends React.Component {
             reader.readAsDataURL(file);
         }
 	}
+	getDataUrl = (img) => {
+		var canvas = document.createElement('canvas')
+  		var ctx = canvas.getContext('2d')
+
+  		canvas.width = img.width
+  		canvas.height = img.height
+  		ctx.drawImage(img, 0, 0)
+
+  		// If the image is not png, the format
+  		// must be specified here
+  		return canvas.toDataURL()
+	}
 
     designElementToImage(color, type, z_Index) {
         console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
-        var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
+        
+		const scope = this
+		imgElement.addEventListener('load', function(event){
+			var dataUrl = scope.getDataUrl(event.currentTarget)
+			var img = document.createElement("img");
+			img.src = dataUrl;
+			var imgInstance = new fabric.Image(img, {
+				width: 430,
+				height: 460,
+				the_type: type                                                         ,
+				zIndex: z_Index
+			});
+			scope.setState({element: imgInstance});
+		})
+
+		var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
         
         // console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
-
+		console.log(this.state.element);
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
 			height: 460,
@@ -362,8 +392,8 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-        // console.log("imgInstance: ", imgInstance)
-        return imgInstance
+		return imgInstance;
+        
     }
 
     textElementToImage(text, type) {
