@@ -18,71 +18,20 @@ class DesignPage extends React.Component {
 		super(props);
 
 		this.state = {
-			design : {
-				body: this.props.now_design.detail_body,
-				sleeve: this.props.now_design.detail_sleeve,
-				banding: this.props.now_design.detail_banding,
-				stripe: this.props.now_design.detail_stripes,
-				button: this.props.now_design.detail_buttons
+			design: {
+				body: this.props.now_design.design.body,
+				sleeve: this.props.now_design.design.sleeve,
+				banding: this.props.now_design.design.banding,
+				stripe: this.props.now_design.design.stripe,
+				button: this.props.now_design.design.button
 			},
 
-			text : {
-				frontchest: {
-					textvalue: "S",
-					fontFamily: "arial",
-					fill: "#3f51b5",
-					fontStyle: "bold",
-					fontSize: 50,
-					stroke: "#f29c9f",
-					strokeWidth: 2,
-					left: 250,
-					top: 110,
-				},
-				rightarm: {
-					textvalue: "19",
-					fontFamily: "arial",
-					fill: "#607d8b",
-					fontStyle: "bold",
-					fontSize: 50,
-					stroke: "",
-					strokeWidth: 0,
-					left: 50,
-					top: 120,
-				},
-				upperback: {
-					textvalue: "SEOUL NAT'L",
-					fontFamily: "arial",
-					fill: "#ffc107",
-					fontStyle: "bold",
-					fontSize: 25,
-					stroke: "",
-					strokeWidth: 0,
-					left: 135,
-					top: 125,
-				},
-				middleback: {
-					textvalue: "UNIVERSITY",
-					fontFamily: "arial",
-					fill: "#ffc107",
-					fontStyle: "bold",
-					fontSize: 20,
-					stroke: "",
-					strokeWidth: 0,
-					left: 155,
-					top: 155,
-				},
-				lowerback: {
-					textvalue: "Department of\nComputer Science",
-					fontFamily: "arial",
-					fill: "#ffc107",
-					fontStyle: "italic",
-					fontSize: 15,
-					stroke: "",
-					strokeWidth: 0,
-					left: 150,
-					top: 190,
-				}
-			
+			text: {
+				frontchest: this.props.now_design.text.frontchest,
+				rigntarm: this.props.now_design.text.rigntarm,
+				upperback: this.props.now_design.text.upperback,
+				middleback: this.props.now_design.text.middleback,
+				lowerback: this.props.now_design.text.lowerback,
 			},
 
 			logo : {
@@ -109,8 +58,8 @@ class DesignPage extends React.Component {
 			},
 
 			image: {
-				front: "",
-				back: "",
+				front: this.props.now_design.image.front,
+				back: this.props.now_design.image.back,
 			},
 
 			designClickedWhat: null,
@@ -118,6 +67,8 @@ class DesignPage extends React.Component {
 			logoClickedWhat: null,
 			displayTextColor: false,
 			displayBorderColor: false,
+			frontnext: null,
+			backnext: null,
 		};
 
 		this.handleElementChange = this.handleElementChange.bind(this);
@@ -416,50 +367,52 @@ class DesignPage extends React.Component {
     }
 
     updateFrontCanvas = (next) => {
-        console.log("DesignPage - updateFrontCanvas next: ", next)
+		console.log("DesignPage - updateFrontCanvas next: ", next)
+		this.setState({frontnext: next})
 
-        if(next){
-            let to_remove;
-            // Find the same kind of element
-            this.the_front_canvas.forEachObject( (object) => {
+        // if(next){
+        //     let to_remove;
+        //     // Find the same kind of element
+        //     this.the_front_canvas.forEachObject( (object) => {
             
-                if(object.the_type === next.the_type){
-                    console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
-                    to_remove = object;
-                    this.the_front_canvas.remove(to_remove);
-                }
-            } );
+        //         if(object.the_type === next.the_type){
+        //             console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
+        //             to_remove = object;
+        //             this.the_front_canvas.remove(to_remove);
+        //         }
+        //     } );
 
-            this.the_front_canvas.add(next);
-            console.log("add to front canvas");
-            //this.the_front_canvas.requestRenderAll();
+        //     this.the_front_canvas.add(next);
+        //     console.log("add to front canvas");
+        //     //this.the_front_canvas.requestRenderAll();
             
-            this.the_front_canvas.moveTo(next, next.zIndex);
-            this.the_front_canvas.renderAll();
-            this.forceUpdate();
-            //console.log("rerender");
-        }
+        //     this.the_front_canvas.moveTo(next, next.zIndex);
+        //     this.the_front_canvas.renderAll();
+        //     this.forceUpdate();
+        //     //console.log("rerender");
+        // }
     }
 
     updateBackCanvas = (next) => {
-        console.log("DesignPage - updateBackCanvas next: ", next)
+		console.log("DesignPage - updateBackCanvas next: ", next)
+		this.setState({backnext: next})
 
-        if(next){
+        // if(next){
 
-            let to_remove;
-            // Find the same kind of element
-            this.the_back_canvas.forEachObject( (object) => {
+        //     let to_remove;
+        //     // Find the same kind of element
+        //     this.the_back_canvas.forEachObject( (object) => {
 
-                if(object.the_type === next.the_type){
-                    to_remove = object;
-                    this.the_back_canvas.remove(to_remove);
-                }
-            } );
+        //         if(object.the_type === next.the_type){
+        //             to_remove = object;
+        //             this.the_back_canvas.remove(to_remove);
+        //         }
+        //     } );
 
-            this.the_back_canvas.add(next);
-            this.the_back_canvas.moveTo(next, next.zIndex);
-            this.the_back_canvas.renderAll();
-        }
+        //     this.the_back_canvas.add(next);
+        //     this.the_back_canvas.moveTo(next, next.zIndex);
+        //     this.the_back_canvas.renderAll();
+        // }
     }
 
 	clickedDesignPopButton = (e) => {
@@ -477,7 +430,44 @@ class DesignPage extends React.Component {
 	}
 
 	clickedAddButton = (e) => {
-		this.forceUpdate();
+		if(this.state.frontnext){
+            let to_remove;
+            // Find the same kind of element
+            this.the_front_canvas.forEachObject( (object) => {
+            
+                if(object.the_type === this.state.frontnext.the_type){
+                    console.log("obcject.the_type: ", object.the_type, " this.state.frontnext.the_type: ", this.state.frontnext.the_type)
+                    to_remove = object;
+                    this.the_front_canvas.remove(to_remove);
+                }
+            } );
+
+            this.the_front_canvas.add(this.state.frontnext);
+            console.log("add to front canvas");
+            //this.the_front_canvas.requestRenderAll();
+            
+            this.the_front_canvas.moveTo(this.state.frontnext, this.state.frontnext.zIndex);
+            this.the_front_canvas.renderAll();
+            this.forceUpdate();
+			//console.log("rerender");
+		}
+		
+		if(this.state.backnext) {
+			let to_remove;
+
+			// Find the same kind of element
+			this.the_back_canvas.forEachObject( (object) => {
+
+				if(object.the_type === this.state.backnext.the_type){
+					to_remove = object;
+					this.the_back_canvas.remove(to_remove);
+				}
+			} );
+
+			this.the_back_canvas.add(this.state.backnext);
+			this.the_back_canvas.moveTo(this.state.backnext, this.state.backnext.zIndex);
+			this.the_back_canvas.renderAll();
+		}
 	}
 
 	moveHandler = (e) =>{
