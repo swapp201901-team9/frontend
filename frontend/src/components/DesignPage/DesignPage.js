@@ -301,7 +301,7 @@ class DesignPage extends React.Component {
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
         
-        // console.log("src: ", src)
+        console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
 
 		var imgInstance = new fabric.Image(imgElement, {
@@ -311,7 +311,7 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-        // console.log("imgInstance: ", imgInstance)
+		console.log("imgInstance: ", imgInstance)
         return imgInstance
     }
 
@@ -366,12 +366,12 @@ class DesignPage extends React.Component {
             // }
 
             this.the_front_canvas.add(next);
-            // console.log("add to front canvas");
+            console.log("add to front canvas");
             //this.the_front_canvas.requestRenderAll();
             
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
-            // this.forceUpdate();
+            this.forceUpdate();
             //console.log("rerender");
         }
     }
@@ -578,6 +578,8 @@ class DesignPage extends React.Component {
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
 	}
+
+
 
     render() {
 		console.log("DesignPage - render state: ", this.state)
