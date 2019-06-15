@@ -455,7 +455,7 @@ class DesignPage extends React.Component {
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
-		console.log(movingObject)
+		console.log("moving: ", movingObject)
 		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
 
 		// this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
@@ -467,7 +467,7 @@ class DesignPage extends React.Component {
 		movingObject.the_type === "lowerback") {
 		this.setState({text : ({...this.state.text, 
 			[movingObject.the_type]: ({...this.state.text[movingObject.the_type],
-				left:movingObject.get('left'),
+				left: movingObject.get('left'),
 				top: movingObject.get('top')})
 		})});
 		}
@@ -489,7 +489,7 @@ class DesignPage extends React.Component {
 		}
 
 		this.setState({image: image})
-		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image)
+		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
 	}
 
     render() {
@@ -707,7 +707,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	onNew: () => dispatch(toNewDesign()),
-	onSave: (designid, design, text, image) => dispatch(toSaveDesign(designid, design, text, image)),
+	onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)
