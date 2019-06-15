@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fabric} from 'fabric';
-import {CirclePicker} from 'react-color';
+import {CirclePicker, SketchPicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
 //import FabricCanvas from './FabricCanvas';
 import MyGroupList from '../GroupPage/MyGroupList';
@@ -345,7 +345,22 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-        console.log("DesignPage - textElementToImage", text, type)
+		console.log("DesignPage - textElementToImage", text, type)
+		
+		// const scope = this
+		// imgElement.addEventListener('load', function(event){
+		// 	var dataUrl = scope.getDataUrl(event.currentTarget)
+		// 	var img = document.createElement("img");
+		// 	img.src = dataUrl;
+		// 	var imgInstance = new fabric.Image(img, {
+		// 		width: 430,
+		// 		height: 460,
+		// 		the_type: type                                                         ,
+		// 		zIndex: z_Index
+		// 	});
+		// 	scope.setState({element: imgInstance});
+		// })
+
         let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -500,95 +515,106 @@ class DesignPage extends React.Component {
 		let textPicker;
 		let logoPicker;
 
-		if(designClickedWhat === null) {
-			colorPicker = <button  onClick={(e) => this.clickedDesignInitButton(e)}>DEFAULT</button>
-		}
-		else {
-			colorPicker = <center>
-			<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
-				<option value = "body">body</option>
-				<option value = "sleeve">sleeve</option>
-				<option value = "banding">banding</option>
-				<option value = "stripe">stripe</option>
-				<option value = "button">button</option>
-			</select>
-			<br/><br/>
-			<CirclePicker width="220" id="design_colour" 
-				onChangeComplete={this.handleDesignChange} colors={this.design_color[designClickedWhat]}/>
-			<br/>
-			<div className="Button-Field-Side"> 
-				<button onClick={(e) => this.clickedAddButton(e)}>ADD</button>
-			</div>
-		</center>;
+		const popover = {
+			position: 'absolute',
+			zIndex: '2',
+		  }
+		const cover = {
+			position: 'fixed',
+			top: '0px',
+			right: '0px',
+			bottom: '0px',
+			left: '0px',
 		}
 
-		if(textClickedWhat === null) {
-			textPicker = <button  onClick={(e) => this.clickedTextInitButton(e)}>DEFAULT</button>
-		}
-		else {
-			textPicker = <center>
-						<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-							<option value="frontchest">Front Chest</option>
-							<option value="rightarm">Right Arm</option>
-							<option value="upperback">Upper Back</option>
-							<option value="middleback">Middle Back</option>
-							<option value="lowerback">Lower Back</option>
-						</select>
-						
-						<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
-							name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+		
+		colorPicker = designClickedWhat 
+			? <center>
+				<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+					<option value = "body">body</option>
+					<option value = "sleeve">sleeve</option>
+					<option value = "banding">banding</option>
+					<option value = "stripe">stripe</option>
+					<option value = "button">button</option>
+				</select>
+				<br/><br/>
+				<CirclePicker width="220" id="design_colour" 
+					onChangeComplete={this.handleDesignChange} colors={this.design_color[designClickedWhat]}/>
+				<br/>
+			</center>
+			: <div />
 
-						<p>Font</p> 
-						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-							<option>arial</option>
-							<option>tahoma</option>
-							<option>times new roman</option>
-							<option>anton</option>
-							<option>Akronim</option>
-							<option>Alex Brush</option>
-							<option>Aguafina Script</option>
-						</select>
-						
-						<p>Style</p>
-						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-							<option>normal</option>
-							<option>italic</option>
-							<option>oblique</option>
-							<option>bold</option>
-						</select>
 
-						<p>Size</p> 
-						<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
-							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+		textPicker = textClickedWhat
+			? <center>
+					<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+						<option value="frontchest">Front Chest</option>
+						<option value="rightarm">Right Arm</option>
+						<option value="upperback">Upper Back</option>
+						<option value="middleback">Middle Back</option>
+						<option value="lowerback">Lower Back</option>
+					</select>
+					
+					<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
+						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-						<p>Color</p>
-						<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
+					<p>Font</p> 
+					<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+						<option>arial</option>
+						<option>tahoma</option>
+						<option>times new roman</option>
+						<option>anton</option>
+						<option>Akronim</option>
+						<option>Alex Brush</option>
+						<option>Aguafina Script</option>
+						<option>mistral</option>
+					</select>
+					
+					<p>Style</p>
+					<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+						<option>normal</option>
+						<option>italic</option>
+						<option>oblique</option>
+						<option>bold</option>
+					</select>
 
-						
-						<p>Border</p>
-						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
-							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-						<CirclePicker width="220" id="stroke_color" name="stroke" onChangeComplete={this.handleStrokeColorChange}/>
+					<p>Size</p> 
+					<input type="range"  min="0" max="200" defaultValue="100" id="text_size" 
+						name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
-					</center>;
-		}
+					<p>Color</p>
+					<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+						<button>pick color</button>
+					</div> 
+					{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+					</div> : null }
 
-		if(logoClickedWhat === null) {
-			console.log("logo clicked what null");
-			logoPicker = <button  onClick={(e) => this.clickedLogoInitButton(e)}>DEFAULT</button>
-		}
-		else {
-			console.log("logo clicked what not null")
-			logoPicker = <center>
-			<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-							<option value="front">Front Chest</option>
-							<option value="arm_right">Right Arm</option>
-							<option value="arm_left">Left Arm </option>
-							<option value="back">Lower Back</option>
-			</select>
-			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-			</center>;
-		}
+					
+					<p>Border</p>
+					<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
+						name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+					<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+						<button>pick color</button>
+					</div> 
+					{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
+						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
+					</div> : null }
+			</center>
+		: <div/>
+		
+
+		logoPicker = logoClickedWhat 
+			? <center>
+				<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+								<option value="front">Front Chest</option>
+								<option value="arm_right">Right Arm</option>
+								<option value="arm_left">Left Arm </option>
+								<option value="back">Lower Back</option>
+				</select>
+				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+			</center> 
+			: <div/>
 
 
 
