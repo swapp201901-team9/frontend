@@ -199,15 +199,26 @@ function *watchLoginState() {
             yield put(actions.changeUrl('/main/'));
         }
         else {
+            let now_design_data;
+
+            try{
+                now_design_data = yield call(xhr.get, fixed_url+'', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': 'Basic '+localStorage['auth'],
+                        Accept: 'application/json'
+                    },
+                    responsetype: 'json',
+                });
+                console.log("GET now_design data: ", now_design_data.body)
+            } catch(error) {
+                console.log(error)
+                alert("main now_design error")
+            }
+
             yield put(actions.setState({
                 authorization: "",
-                now_design: {
-                    detail_body: "#001c58",
-                    detail_sleeve: "#fcfcfc",
-                    detail_banding: "#001c58",
-                    detail_stripes: "#fcfcfc",
-                    detail_buttons: "#fcfcfc"
-                },
+                now_design: now_design_data.body,
                 load: 0,
                 loading: true
             }))
