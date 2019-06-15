@@ -161,7 +161,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: #999;
     border: 2px solid #ddd;
     border-radius: 21px;
-    background: url("./selector.png") no-repeat right 6px center;
+    background: url("./selector.png") no-repeat right 12px center;
     apperance: none;
     -webkit-appearance: none;
   }
@@ -314,8 +314,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   img{
-  width: 700px;
+    width: 50%
   }
+
 
   *{
   margin: 0;
