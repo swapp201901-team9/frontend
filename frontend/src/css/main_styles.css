@@ -125,15 +125,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   
   .Button-Field-Side{
+  
   box-sizing: border-box;
   font-size: 12px;
   color: black;
   padding: 10px 0px 10px 0px;
   margin: 10px 0px 10px 0px;
-  
   }
   
   button{
+  
   width: 100%;
   height: 40px;
   border-radius: 21px;
@@ -152,10 +153,89 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-color: #fff;
   color: #c13a3a;
   }
+  select {
+  width: 100%;
+  height: 30px;
+  padding: 2px 8px;
+  font-size: 12px;
+  color: #999;
+  border: 1px solid #ddd;
+  background: url("./selector.png") no-repeat right 6px center;
+  apperance: none;
+  -webkit-appearance: none;
+  }
+  select::-ms-expand {display:none;}
+  
+  /tab/
+  
+  #plain-react .tabs {
+  width: 100%;
+  display: inline-block;
+  margin-right: 30px;
+  vertical-align: top;
+  }
+  
+  #plain-react .tabs-1 .tab-links {
+  
+  margin: 0;
+  padding: 0;
+  box-shadow: 0px;
+  border: 1px solid #ccc;
+  border-bottom: 1px solid #868686;
+  height: 35px;
+  position: relative;
+  top: 5px;
+  
+  }
+  
+  #plain-react .tabs-1 .tab-link {
+  width: 20%;
+  border-radius: 2px;
+  font-size: 13px;
+  margin: 2px 10px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  color: #666;
+  box-shadow: none;
+  background: transparent;
+  display: inline;
+  position: relative;
+  height: 40px;
+  line-height: 41px;
+  top: -4px;
+  left: -1px;
+  outline: none;
+  }
+  
+  #plain-react .tabs-1 .tab-link:hover,
+  #plain-react .tabs-1 .tab-link:focus {
+  color: #666464;
+  }
+  
+  #plain-react .tabs-1 .tab-link-active,
+  #plain-react .tabs-1 .tab-link-active:hover,
+  #plain-react .tabs-1 .tab-link-active:focus {
+  color: #c13a3a;
+  border: 1px solid transparent;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  text-decoration: underline;
+  }
+  
+  #plain-react .tabs-1 .content {
+  padding: 15px;
+  border: 1px solid #868686;
+  border-top: 1px solid transparent;
+  
+  }
+  
+  #plain-react .tabs-1 .tabcontent: {
+  }
   
   /* Login Page css */
   
   .Text-Field{
+  
   line-height: 20px;
   font-size: 10px;
   color: black;
@@ -229,7 +309,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   
   hr{
   color: rgb(237,30,39);
-  font-family: 궁서;
   }
   
   img{
@@ -248,6 +327,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   .reset_save a{
   font-size: 12px;
   color: #ffff00;
+  
   }
   
   /* ====================
@@ -533,6 +613,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   /* Canvas */
   
   canvas{
+  
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
@@ -546,9 +627,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-left: auto;
   margin-right: auto;
   display: block;
-  }
   
+  }
   .canvas-bg{
+  
   width: 430px;
   height: 460px;
   padding-left: 0;
@@ -558,6 +640,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background: url('./images/bg-canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
+  
   }
   
   canvas #front-canvas{
