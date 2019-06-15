@@ -1,7 +1,8 @@
 import React from 'react';
+import {reactCSS} from 'reactcss';
 import {connect} from 'react-redux'
 import {fabric} from 'fabric';
-import {CirclePicker} from 'react-color';
+import {CirclePicker, ChromePicker, CompactPicker, SketchPicker, HuePicker, SliderPicker} from 'react-color';
 //import ThreeScene from './ThreeScene';
 
 import FabricCanvas from './FabricCanvas';
@@ -105,6 +106,8 @@ class DesignPage extends React.Component {
 
 			designClickedWhat: null,
 			textClickedWhat: "frontchest",
+			displayTextColor: false,
+			displayBorderColor: false,
 		};
 
 
@@ -267,7 +270,10 @@ class DesignPage extends React.Component {
 
 		this.setState({text : ({...this.state.text, 
 			[text_element]: ({...this.state.text[text_element], fill: color.hex})
-		})});
+		}),
+			huecolor: color.rgb,
+			slidercolor: color.rgb
+		});
 	}
 
 	handleStrokeColorChange(color) {
@@ -278,6 +284,8 @@ class DesignPage extends React.Component {
 			[text_element]: ({...this.state.text[text_element], stroke: color.hex})
 		})});
 	}
+
+
 
 	
     // componentDidUpdate(nextProps, nextState) {
@@ -576,6 +584,18 @@ class DesignPage extends React.Component {
 		const clickedWhat = this.state.designClickedWhat;
 		let colorPicker;
 
+		const popover = {
+			position: 'absolute',
+			zIndex: '2',
+		  }
+		const cover = {
+			position: 'fixed',
+			top: '0px',
+			right: '0px',
+			bottom: '0px',
+			left: '0px',
+		}
+
 		if(clickedWhat === null) {
 			colorPicker = <button  onClick={(e) => this.clickedInitButton(e)}>DEFAULT</button>
 		}
@@ -621,7 +641,7 @@ class DesignPage extends React.Component {
 					=========================================-->*/}
 					<h1>Text</h1>
 					<center>
-						<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+						<select id="text_element" defaultValue="frontchest" onChange={(e)=>this.handleElementChange(e)}>
 							<option value="frontchest">Front Chest</option>
 							<option value="rightarm">Right Arm</option>
 							<option value="upperback">Upper Back</option>
@@ -641,6 +661,7 @@ class DesignPage extends React.Component {
 							<option>Akronim</option>
 							<option>Alex Brush</option>
 							<option>Aguafina Script</option>
+							<option>mistral</option>
 						</select>
 						
 						<p>Style</p>
@@ -656,13 +677,23 @@ class DesignPage extends React.Component {
 							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
 						<p>Color</p>
-						<CirclePicker width="220" id="text_colour" name="fill" onChangeComplete={this.handleTextColorChange}/>
+						<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+							<button>pick color</button>
+						</div> 
+						{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+          					<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+        				</div> : null }
 
 						
 						<p>Border</p>
 						<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width" 
 							name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-						<CirclePicker width="220" id="stroke_color" name="stroke" onChangeComplete={this.handleStrokeColorChange}/>
+						<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+							<button>pick color</button>
+						</div> 
+						{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
+          					<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleStrokeColorChange} />
+        				</div> : null }
 
 					</center>
 			
