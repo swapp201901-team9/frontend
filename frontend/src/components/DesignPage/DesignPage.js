@@ -10,16 +10,12 @@ import MyGroupList from '../GroupPage/MyGroupList';
 import { toSaveDesign, toNewDesign } from '../../actions/index.js';
 //import { tsImportEqualsDeclaration } from '@babel/types';
 
-import logo from './images/templates/templatelist';
+//import logo from './images/templates/templatelist';
 
 class DesignPage extends React.Component {
 	constructor(props){
 		console.log("DesignPage - constructor")
 		super(props);
-
-		var imgElement = document.createElement("img");
-        var src ='./images/logo.jpg';
-		imgElement.setAttribute("src", require(src));
 
 		this.state = {
 			design : {
@@ -80,31 +76,26 @@ class DesignPage extends React.Component {
 			},
 
 			logo : {
-				frontchest: {
-					img: imgElement,
+				front: {
+					src : './images/logo.jpg',
 					left: 250,
 					top: 110,
 				},
-				rightarm: {
-					img: imgElement,
+				arm_right: {
+					src : './images/logo.jpg',
 					left: 50,
 					top: 120,
 				},
-				upperback: {
-					img: imgElement,
+				arm_left: {
+					src : './images/logo.jpg',
+					left: 155,
+					top: 120,
+				},
+				back: {
+					src : './images/logo.jpg',
 					left: 135,
 					top: 125,
 				},
-				middleback: {
-					img: imgElement,
-					left: 155,
-					top: 155,
-				},
-				lowerback: {
-					img: imgElement,
-					left: 150,
-					top: 190,
-				}
 			},
 
 			designClickedWhat: null,
@@ -121,6 +112,7 @@ class DesignPage extends React.Component {
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
 		this.logoElementToImage = this.logoElementToImage.bind(this);
+
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 		
@@ -149,7 +141,7 @@ class DesignPage extends React.Component {
 
 		this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
 		this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
-		this.logo_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
+		this.logo_element = ["front", "arm_right", "arm_left", "back"]
 	}
 
 	componentDidMount() {
@@ -191,11 +183,11 @@ class DesignPage extends React.Component {
         this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
 		this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
 		
-		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.frontchest, "frontchest"))
-        this.the_front_canvas.add(this.logoElementToImage(this.state.logo.rightarm, "rightarm"))
-        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.upperback, "upperback"))
-        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.middleback, "middleback"))
-        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.lowerback, "lowerback"))
+		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
+        this.the_front_canvas.add(this.logoElementToImage(this.state.logo.arm_right, "arm_right"))
+        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.arm_left, "arm_left"))
+        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+        
 	}
 
 
@@ -237,7 +229,7 @@ class DesignPage extends React.Component {
 		//update for logo element
 		for (let element of this.logo_element) {
 			if(nextState.logo[element] !== this.state.logo[element]) {
-				if(element === "frontchest" || element === "rightarm") {
+				if(element === "front" || element === "arm_right"|| element === "arm_left") {
 					this.updateFrontCanvas(this.logoElementToImage(nextState.logo[element], element))
 				}
 				else {
@@ -299,19 +291,17 @@ class DesignPage extends React.Component {
 	}
 
 	handleLogoChange = (e) => {
-		console.log("hey");
-		let logo_element = document.getElementById("logo_element").value;
-
 		e.preventDefault();
+		let logo_element = document.getElementById("logo_element").value;
 		const scope = this;
-		var img = document.createElement("img");
+		//var img = document.createElement("img");
 		var file = document.getElementById('input').files[0];
 		let reader = new FileReader();
 		reader.addEventListener("load", function() {
-			img.src = reader.result;
+			//img.src = reader.result;
 			
-			scope.setState({logo: ({...this.state.logo, 
-				[logo_element]: ({...this.state.logo[logo_element], img :img})
+			scope.setState({logo: ({...scope.state.logo, 
+				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
 			
 		})
@@ -359,17 +349,20 @@ class DesignPage extends React.Component {
         return imgInstance;
     }
 
-	logoElementToImage(img, type) {
-        console.log("FabricCanvas - textElementToImage")
+	logoElementToImage(logo, type) {
+		console.log("FabricCanvas - textElementToImage")
+		
+		let img = document.createElement("img");
+		img.setAttribute("src", require(logo.src));
+
         let imgInstance;
-        
-        imgInstance = new fabric.Image(img.img, {
+        imgInstance = new fabric.Image(img, {
             width: 899,
 			height:959,
 			the_type: type,
             zIndex: 10,
-            left: 450,
-            top: 600
+            left: logo.left,
+            top: logo.top
         });
         imgInstance.set({
             scaleY: 0.1,
@@ -433,7 +426,7 @@ class DesignPage extends React.Component {
 	}
 
 	clickedLogoInitButton = (e) => {
-		this.setState({ logoClickedWhat: "frontchest"});
+		this.setState({ logoClickedWhat: "front"});
 		this.forceUpdate();
 	}
 
@@ -468,7 +461,7 @@ class DesignPage extends React.Component {
 		console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
-		const logoClickedWhat = this.logoClickedWhat;
+		const logoClickedWhat = this.state.logoClickedWhat;
 
 		let colorPicker;
 		let textPicker;
@@ -542,9 +535,11 @@ class DesignPage extends React.Component {
 		}
 
 		if(logoClickedWhat === null) {
+			console.log("logo clicked what null");
 			logoPicker = <button  onClick={(e) => this.clickedLogoInitButton(e)}>DEFAULT</button>
 		}
 		else {
+			console.log("logo clicked what not null")
 			logoPicker = <center>
 			<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
 							<option value="frontchest">Front Chest</option>
@@ -592,8 +587,6 @@ class DesignPage extends React.Component {
 					
 				</div>
 			</div>
-
-
 
 			{/*<!--========================================
 				CENTER DESIGN SECTION
