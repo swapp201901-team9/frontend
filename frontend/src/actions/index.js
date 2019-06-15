@@ -242,14 +242,15 @@ export const toNewDesign = () => {
     }
 }
 
-export const toSaveDesign = (designid, design, text, image) => {
-    console.log("saveDesign action", designid, design, text, image)
+export const toSaveDesign = (designid, design, text, image, logo) => {
+    console.log("saveDesign action", designid, design, text, image, logo)
     return {
         type: SAVE_DESIGN,
         designid: designid, 
         design: design,
         text: text,
         image: image,
+        logo: logo,
     }
 }
 
