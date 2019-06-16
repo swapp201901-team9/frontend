@@ -184,21 +184,23 @@ export const toUnlikeDesign = (designid) => {
 
 
 
-export const toAddComment = (designid, contents) => {
-    console.log("addComment action: ", designid, contents)
+export const toAddComment = (designid, name, message) => {
+    console.log("addComment action: ", designid, name, message)
     return {
         type: ADD_COMMENT,
         designid: designid,
-        contents: contents,
+        name: name,
+        message: message,
     }
 }
 
-export const toEditComment = (commentid, contents) => {
-    console.log("editComment action: ", commentid, contents)
+export const toEditComment = (commentid, name, message) => {
+    console.log("editComment action: ", commentid, name, message)
     return {
         type: EDIT_COMMENT,
         commentid: commentid,
-        contents: contents,
+        name: name,
+        message: message,
     }
 }
 

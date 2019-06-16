@@ -1,9 +1,9 @@
 import React from "react";
 import Comment from "./Comment";
 
-export default function CommentList(comments) {
-  let comment_list = comments.comments
-  console.log("comments: ", comment_list, " length: ", comment_list.length)
+const CommentList = ({ comments }) => {
+  let comment_list = comments
+  console.log("CommentList comments: ", comment_list, " length: ", comment_list.length)
   return (
     <div className="commentList">
       <h5 className="text-muted mb-4">
@@ -17,9 +17,15 @@ export default function CommentList(comments) {
         </div>
       ) : null}
 
-      {comment_list.map((comment, index) => (
-        <Comment key={index} message={comment} />
-      ))}
+      {comment_list.map(comment => 
+        <ul key={comment.id}>
+          <Comment comment={comment} />      
+        </ul>
+      )}
+      
     </div>
   );
 }
+
+
+export default CommentList

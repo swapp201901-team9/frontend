@@ -49,17 +49,19 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
                         {design.liked
-                        ? (<button onClick={onClickUnlike}>UNLIKE</button>)
-                        : (<button onClick={onClickLike}>LIKE</button>)
+                        ? (<button onClick={onClickUnlike}>UNLIKE DESIGN</button>)
+                        : (<button onClick={onClickLike}>LIKE DESIGN</button>)
                         }
-
+                        
+                        <h2>댓글</h2>
+                        {console.log("DesignTemp design.comments: ", design.comments)}
                         <CommentForm designid={design.id}/>
-                        <CommentList comments={["hi", "hello"]}/>
+                        <CommentList comments={design.comments}/>
                     </div>
             }
-
+            <br />
             {/* design의 주인일 때 - 삭제 가능 */}
-            {design.auth && <button onClick={onClickDelete}>DELETE</button>}
+            {design.auth && <button onClick={onClickDelete}>DELETE DESIGN</button>}
             <br/>
         </div>
     )
