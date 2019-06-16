@@ -1093,17 +1093,17 @@ function *toAdminGroup(data){
 
 function *toEditDesign(data) {
     console.log("toEditDesign")
-    // const path = 'groups/like/' + data.designid + '/';
+    const path = 'groups/edit/' + data.designid + '/';
     try {
-		// yield call(xhr.get, fixed_url + path, {
-        //     headers: {
-        //         "Authorization": "Basic " + localStorage['auth'],
-        //         "Content-Type": 'application/json',
-        //         Accept: 'application/json'
-        //     },
-        //     contentType: 'json'
-        // });
-        // yield put(actions.changeUrl(window.location.pathname));
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl('/main/'));
     } catch(error){
         console.log(error)
         alert("*toEditDesign error")
@@ -1242,7 +1242,7 @@ function *deleteGroupDesign(data) {
         });
         console.log("delete design succeed!");
         alert("Delete Success!")
-        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+        yield put(actions.changeUrl('/group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
         alert("delete design error");
@@ -1297,7 +1297,7 @@ function *newDesign(data) {
 }
 
 function *saveDesign(data) {
-    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image)
+    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
     try{
         yield call(xhr.send, fixed_url+backPath, {
@@ -1338,7 +1338,7 @@ function *saveDesign(data) {
 }
 
 function *postDesign(data) {
-    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design, " text: ", data.text)
+    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
     try{
         yield call(xhr.get, fixed_url+backPath,{
