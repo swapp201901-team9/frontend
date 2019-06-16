@@ -523,7 +523,7 @@ class DesignPage extends React.Component {
 
 		colorPicker = designClickedWhat
 			? <center>
-				<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+				<select className="select select_32" id="design_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value = "body">body</option>
 					<option value = "sleeve">sleeve</option>
 					<option value = "banding">banding</option>
@@ -540,7 +540,7 @@ class DesignPage extends React.Component {
 
 		textPicker = textClickedWhat
 			? <center>
-					<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+					<select className="select select_32" id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 						<option value="frontchest">Front Chest</option>
 						<option value="rightarm">Right Arm</option>
 						<option value="upperback">Upper Back</option>
@@ -552,7 +552,7 @@ class DesignPage extends React.Component {
 						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 					<div className="section-field">
 						<span id="title2">Font</span>
-						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+						<select  id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
 							<option>arial</option>
 							<option>tahoma</option>
 							<option>Alfa Slab One</option>
@@ -634,6 +634,7 @@ class DesignPage extends React.Component {
 					<div className="section-field">
 						<span className="title1"> Color Match</span>
 						<button id="popbtn" onClick={this.clickedDesignPopButton}>
+
 						</button>
 						{colorPicker}
 					</div>
@@ -699,12 +700,12 @@ class DesignPage extends React.Component {
 					=========================================-->*/}
 					{this.props.isLoggedIn ?
 						(<div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+							<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>RESET</button>
 							{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
-							<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
+							<button className="button save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 						</div>)
 						: <div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+							<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>RESET</button>
 						</div>
 					}
 				</div>
