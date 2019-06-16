@@ -222,6 +222,7 @@ class DesignPage extends React.Component {
 	}
 
 	handleCanvasChange(tab) {
+		console.log("clicked tab "+tab);
 		this.setState({logoClickedWhat: tab});
 	}
 
