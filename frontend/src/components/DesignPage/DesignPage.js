@@ -451,7 +451,7 @@ class DesignPage extends React.Component {
 			? this.setState({textClickedWhat: null})
 			: this.setState({textClickedWhat: "frontchest"});
 	}
-
+	/*******************problem detected */
 	clickedLogoPopButton = () => {
 		this.state.logoClickedWhat
 			? this.setState({logoClickedWhat: null})
