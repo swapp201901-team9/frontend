@@ -237,7 +237,7 @@ class DesignPage extends React.Component {
 
 	handleTextChange(e) {
 		let text_element = document.getElementById("text_element").value;
-		console.log("DesignPage - handleTextChange e.target: ", e.target, " text element: ", text_element)
+		console.log("DesignPage - handleTextChange e.target: ", e.target.name, e.target.value, " text element: ", text_element)
 
 		this.setState({text : ({...this.state.text,
 			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
@@ -432,7 +432,7 @@ class DesignPage extends React.Component {
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
-
+				console.log("object in front canvas: ", object)
                 if(object.the_type === next.the_type){
                     console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
                     to_remove = object;

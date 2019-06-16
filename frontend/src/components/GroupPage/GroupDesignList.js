@@ -9,7 +9,7 @@ const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {
                         <img src={design.front_image_url} />
                         <img src={design.back_image_url} /> 
                     </div>
-                    <button onClick={() => onClickDeleteDesign(groupid, design.id)}>DELETE</button>
+                    <button onClick={() => onClickDeleteDesign(groupid, design.id)}>삭제</button>
                 </ul> 
             )}
         </div>  
