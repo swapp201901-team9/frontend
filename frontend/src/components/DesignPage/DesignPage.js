@@ -268,7 +268,7 @@ class DesignPage extends React.Component {
 
 	handleLogoChange = (e) => {
 		e.preventDefault();
-		let logo_element = document.getElementById("logo_element").value;
+		let logo_element = this.state.logoClickedWhat;
 		const scope = this;
 		//var img = document.createElement("img");
 		var file = document.getElementById('input').files[0];
