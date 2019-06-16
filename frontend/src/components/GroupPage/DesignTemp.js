@@ -1,6 +1,8 @@
 import React from 'react';
 
 const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClickLike, onClickUnlike, onClickDelete }) => {
+    let post_group
+
     return (
         <div>
             <div>
@@ -10,19 +12,29 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
             </div>
             {(group.group_type === "UR")
                 ? (<div>
-                        <select id="post_group">
-                        {my_groups.filter(group => {
-                            return group.group_type !== "UR"
-                        }).map(option => {
-                            return <option key={option.id} value={option.id}> {option.group_type} {option.group_name} </option>
-                        })}
+                        <select id="post_group" ref={node=>{post_group=node;}}>
+                            <option>그룹을 선택하세요</option>
+                            {my_groups.filter(group => {
+                                return group.group_type !== "UR"
+                            }).map(option => {
+                                console.log("option: ", option)
+                                return <option key={option.id} value={option.id}> {option.group_type} {option.group_name} </option>
+                            })}
                         </select>
                         <button class="post_btn" type="button"
                             onClick={onClickEdit}>
                             EDIT
                         </button>
                         <button class="post_btn" type="button"
-                            onClick={() => onClickPost(document.getElementById("post_group").value)}>
+                            onClick={() => {
+                                console.log("post_group: ", post_group)
+                                if(post_group === undefined || post_group === "그룹을 선택하세요") {
+                                    alert("그룹을 선택하세요")
+                                }
+                                else {
+                                    onClickPost(document.getElementById("post_group").value)
+                                }
+                                }}>
                             POST
                         </button>
                     </div>)
