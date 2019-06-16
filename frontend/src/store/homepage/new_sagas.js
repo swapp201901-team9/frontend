@@ -1157,44 +1157,43 @@ function *unlikeDesign(data) {
 
 
 
-
-
 function *addComment(data) {
-    console.log("addComment")
-    // const path = 'groups/edit/' + data.designid + '/';
-    // try {
-	// 	yield call(xhr.get, fixed_url + path, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json'
-    //     });
-    //     yield put(actions.changeUrl('/main/'));
-    // } catch(error){
-    //     console.log(error)
-    //     alert("*addComment error")
-    // }
+    console.log("addComment data.comment: ", data.name, data.message)
+    const path = 'groups/comment/' + data.designid + '/';
+    try {
+		yield call(xhr.post, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json',
+            body: JSON.stringify({"name": data.name, "comment": data.message})
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("addComment error")
+    }
 }
 
 function *editComment(data) {
     console.log("editComment")
-    // const path = 'groups/edit/' + data.designid + '/';
-    // try {
-	// 	yield call(xhr.get, fixed_url + path, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json'
-    //     });
-    //     yield put(actions.changeUrl('/main/'));
-    // } catch(error){
-    //     console.log(error)
-    //     alert("*editComment error")
-    // }
+    const path = 'groups/edit/' + data.designid + '/';
+    try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl('/main/'));
+    } catch(error){
+        console.log(error)
+        alert("*editComment error")
+    }
 }
 
 function *deleteComment(data) {

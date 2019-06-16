@@ -5,6 +5,8 @@ import { toAddComment } from "../../actions";
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.name;
     this.message;
     // bind context to methods
     this.onSubmit = this.onSubmit.bind(this);
@@ -22,14 +24,14 @@ class CommentForm extends React.Component {
       return;
     }
 
-    this.props.onAddComment(this.props.designid, this.message.value)
+    this.props.onAddComment(this.props.designid, this.name.value, this.message.value)
   }
 
   /**
    * Simple validation
    */
   isFormValid() {
-    return this.message !== "";
+    return this.name !== "" && this.message !== "";
   }
 
   render() {
@@ -37,16 +39,15 @@ class CommentForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          {/* <div className="form-group">
+          <div className="form-group">
             <input
-              onChange={this.handleFieldChange}
-              value={this.state.comment.name}
+              ref={ node => {this.name=node;} }
               className="form-control"
-              placeholder="😎 Your Name"
+              placeholder="Your Name"
               name="name"
               type="text"
             />
-          </div> */}
+          </div>
 
           <div className="form-group">
             <textarea
@@ -71,7 +72,7 @@ class CommentForm extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  onAddComment: (designid, contents) => dispatch(toAddComment(designid, contents)),
+  onAddComment: (designid, name, message) => dispatch(toAddComment(designid, name, message)),
 })
 
 export default connect (null, mapDispatchToProps)(CommentForm)
