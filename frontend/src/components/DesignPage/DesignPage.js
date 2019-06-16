@@ -42,8 +42,8 @@ class DesignPage extends React.Component {
 			},
 
 			image: {
-				front: this.props.now_design.image.front,
-				back: this.props.now_design.image.back,
+				frontImg: this.props.now_design.image.frontImg,
+				backImg: this.props.now_design.image.backImg,
 			},
 
 			element: null,
@@ -484,8 +484,8 @@ class DesignPage extends React.Component {
 	onClickSave = () => {
 		console.log("clickSave")
 		let image = {
-			front: this.the_front_canvas.toDataURL({format:'png'}),
-			back: this.the_back_canvas.toDataURL({format: 'png'})
+			frontImg: this.the_front_canvas.toDataURL({format:'png'}),
+			backImg: this.the_back_canvas.toDataURL({format: 'png'})
 		}
 
 		this.setState({image: image})
@@ -651,16 +651,16 @@ class DesignPage extends React.Component {
 					<div id="plain-react">
 						<Tabs className="tabs tabs-1" onChange={tab => console.log(`Tab selected: ${tab}`)}> 
 
-							<TabLink to="front">FRONT</TabLink>
-							<TabLink to="back">BACK</TabLink>
-							<TabContent for="front">
+							<TabLink to="head">FRONT</TabLink>
+							<TabLink to="tail">BACK</TabLink>
+							<TabContent for="head">
 
 								<div classname="canvas-bg">
 									<canvas id="front-canvas" />
 								</div>
 							</TabContent>
 
-							<TabContent for="back">
+							<TabContent for="tail">
 
 								<div classname="canvas-bg">
 									<canvas id="back-canvas"/>
