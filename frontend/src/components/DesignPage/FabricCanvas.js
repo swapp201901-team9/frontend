@@ -20,9 +20,9 @@ class FabricCanvas extends React.Component{
         this.logoElementToImage = this.logoElementToImage.bind(this);
 
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
+
         this.text_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
         this.logo_element = ["frontchest", "leftarm", "rightarm", "upperback", "middleback", "lowerback"]
-       
 
     }
     /*I do not know why but setting either of willupdate or didupdate works*/
@@ -36,7 +36,7 @@ class FabricCanvas extends React.Component{
     //     this.the_back_canvas.renderAll();
     // }
     componentWillMount() {
-       
+
     }
     componentDidMount() {
         console.log("FabricCanvas - componentDidMount")
@@ -71,7 +71,7 @@ class FabricCanvas extends React.Component{
         // console.log("the_front_canvas: ", this.the_front_canvas);
         //this.the_front_canvas.renderAll();
         //this.the_back_canvas.renderAll();
-        
+
     }
 
     designElementToImage(color, type, z_Index) {
@@ -79,8 +79,10 @@ class FabricCanvas extends React.Component{
 
         var imgElement = document.createElement("img");
         var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
-        
+
+
         // console.log("src: ", src)
+
 		imgElement.setAttribute("src", require(src));
 
 		var imgInstance = new fabric.Image(imgElement, {
@@ -186,7 +188,7 @@ class FabricCanvas extends React.Component{
         default:
             break;
         }
-       
+
         console.log("text imgInstance: ", imgInstance)
         return imgInstance
     }
@@ -207,7 +209,7 @@ class FabricCanvas extends React.Component{
                 top: text.top,
                 textAlign: "center"
             })
-            break; 
+            break;
         case "rightarm":
             imgInstance = new fabric.IText(text.textvalue, {
                 fontFamily: text.fontFamily,
@@ -232,7 +234,7 @@ class FabricCanvas extends React.Component{
                 left: 140,
                 top: 120,
                 textAlign: "center"
-            })    
+            })
             break;
         case "middleback":
             imgInstance = new fabric.IText(text.textvalue, {
@@ -245,7 +247,7 @@ class FabricCanvas extends React.Component{
                 left: 160,
                 top: 145,
                 textAlign: "center"
-            })    
+            })
             break;
         case "lowerback":
             imgInstance = new fabric.IText(text.textvalue, {
@@ -258,13 +260,15 @@ class FabricCanvas extends React.Component{
                 // left: 120,
                 // top: 170,
                 textAlign: "center"
-            })    
+            })
             break;
         default:
             break;
+
         }
         console.log("text imgInstance: ", imgInstance);
         return imgInstance;
+
     }
 
 
@@ -292,6 +296,7 @@ class FabricCanvas extends React.Component{
             }
         }
 
+
         for(let element of this.text_element){
             if(newprops.text[element] !== this.props.text[element]) {
                 switch(element) {
@@ -315,7 +320,7 @@ class FabricCanvas extends React.Component{
                 }
             }
         }
-      
+
     }
 
     updateFrontCanvasforImage = (next) => {
@@ -326,7 +331,7 @@ class FabricCanvas extends React.Component{
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
-            
+
                 if(object.the_type === next.the_type){
                     console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
                     to_remove = object;
@@ -347,7 +352,7 @@ class FabricCanvas extends React.Component{
             this.the_front_canvas.add(next);
             // console.log("add to front canvas");
             //this.the_front_canvas.requestRenderAll();
-            
+
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
             //this.forceUpdate();
@@ -414,8 +419,8 @@ class FabricCanvas extends React.Component{
             console.log(preview.height);
 
             var imgInstance = new fabric.Image(preview, {
-            width: 899,
-            height:959,
+            width: 430,
+            height:460,
             the_type: "upload",
             zIndex: 10
             });
@@ -493,9 +498,15 @@ class FabricCanvas extends React.Component{
         console.log("FabricCanvas - render - this.state: ", this.state)
 
         return (
-            <div className= "main-canvas-container">
+            <div>
+              <div className="Button-Field">
                 <button class="front_btn" type="button">Front</button>
+                </div>
+                <div className="canvas-container">
+                <div className="canvas-bg">
                 <canvas id='front-canvas'> </canvas>
+                </div>
+                </div>
 
                   {/*<input type = "file"
                          id = "input"
@@ -503,10 +514,16 @@ class FabricCanvas extends React.Component{
                   <img src = ""
         id = "img" />*/}
 
-
+              <div className="Button-Field">
                 <button class="back_btn" type="button">Back</button>
+              </div>
+              <div className="canvas-container">
+              <div className="canvas-bg">
                 <canvas id='back-canvas'> </canvas>
+                </div>
+                </div>
             </div>
+
         );
     }
 }

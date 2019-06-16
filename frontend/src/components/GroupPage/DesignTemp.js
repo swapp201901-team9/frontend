@@ -17,16 +17,16 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                             return <option key={option.id} value={option.id}> {option.group_type} {option.group_name} </option>
                         })}
                         </select>
-                        <button class="post_btn" type="button" 
+                        <button class="post_btn" type="button"
                             onClick={onClickEdit}>
                             EDIT
                         </button>
-                        <button class="post_btn" type="button" 
+                        <button class="post_btn" type="button"
                             onClick={() => onClickPost(document.getElementById("post_group").value)}>
                             POST
                         </button>
                     </div>)
-                : (design.liked 
+                : (design.liked
                     ? (<button onClick={onClickUnlike}>UNLIKE</button>)
                     : (<button onClick={onClickLike}>LIKE</button>)
                     )
