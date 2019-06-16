@@ -48,7 +48,7 @@ class DesignPage extends React.Component {
 			element: null,
 			designClickedWhat: "body",
 			textClickedWhat: null,
-			logoClickedWhat: null,
+			logoClickedWhat: "front_close",
 
 			displayTextColor: false,
 			displayBorderColor: false,
@@ -222,7 +222,7 @@ class DesignPage extends React.Component {
 	}
 
 	handleCanvasChange(tab) {
-		console.log("clicked tab "+tab);
+		console.log("logoClickedWhat tab value "+tab);
 		this.setState({logoClickedWhat: tab});
 	}
 
@@ -269,6 +269,10 @@ class DesignPage extends React.Component {
 	handleLogoChange = (e) => {
 		e.preventDefault();
 		let logo_element = this.state.logoClickedWhat;
+		if (logo_element === "front_close" || logo_element==="back_close") {
+			console.log("trying to add image but logoClickedWhat value close")
+		}
+		else {
 		const scope = this;
 		//var img = document.createElement("img");
 		var file = document.getElementById('input').files[0];
@@ -280,12 +284,12 @@ class DesignPage extends React.Component {
 			scope.setState({logo: ({...scope.state.logo,
 				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
-
-		})
+		});
 
 		if (file) {
             reader.readAsDataURL(file);
-        }
+		}
+		}
 	}
 
 	getDataUrl = (img) => {
@@ -451,11 +455,25 @@ class DesignPage extends React.Component {
 			? this.setState({textClickedWhat: null})
 			: this.setState({textClickedWhat: "frontchest"});
 	}
-	/*******************problem detected */
+	/******************* problem detected *************/
 	clickedLogoPopButton = () => {
-		this.state.logoClickedWhat
-			? this.setState({logoClickedWhat: null})
-			: this.setState({logoClickedWhat: "front"});
+		// this.state.logoClickedWhat
+		// 	? this.setState({logoClickedWhat: null})
+		// 	: this.setState({logoClickedWhat: "front"});
+		var temp = this.state.logoClickedWhat;
+		if (temp === "front_close"){
+			this.setState({logoClickedWhat: "front"});
+		}
+		else if (temp === "back_close") {
+			this.setState({logoClickedWhat: "back"});
+		}
+		else if (temp === "front") {
+			this.setState({logoClickedWhat: "front_close"});
+		}
+		else if (temp === "back") {
+			this.setState({logoClickedWhat: "back_close"})
+		}
+		
 	}
 
 	moveHandler = (e) =>{
@@ -593,16 +611,25 @@ class DesignPage extends React.Component {
 			</center>
 		: <div/>
 
-	  logoPicker = logoClickedWhat
-			? <center>
-				{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-								<option value="front">Front</option>
-								<option value="back">Lower</option>
-				</select>*/}
-				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-			</center>
-			: <div/>
 
+	//   logoPicker = logoClickedWhat
+	// 		? <center>
+	// 			{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+	// 							<option value="front">Front</option>
+	// 							<option value="back">Lower</option>
+	// 			</select>*/}
+	// 			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+	// 		</center>
+	// 		: <div/>
+		if (logoClickedWhat === "front_close" || logoClickedWhat === "back_close"){
+			logoPicker = <div/>
+		}
+		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
+			logoPicker = <input type = "file" id = "input" onChange = {this.handleLogoChange} />
+		}
+		else {
+			logoPicker = <div>logoClickedWhat does not have valid value</div>
+		}
 
 
 		return (
