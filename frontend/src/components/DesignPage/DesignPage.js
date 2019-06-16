@@ -74,7 +74,7 @@ class DesignPage extends React.Component {
 		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
-		this.clickedAddButton = this.clickedAddButton.bind(this);
+		//his.clickedAddButton = this.clickedAddButton.bind(this);
 
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
@@ -453,9 +453,9 @@ class DesignPage extends React.Component {
             this.the_back_canvas.renderAll();
         }
     }
-	clickedAddButton = () => {
-		this.forceUpdate();
-	}
+	// clickedAddButton = () => {
+	// 	this.forceUpdate();
+	// }
 	clickedDesignPopButton = () => {
 		//console.log("clicked", this.state.designClickedWhat)
 		this.state.designClickedWhat
@@ -647,7 +647,6 @@ class DesignPage extends React.Component {
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
 			logoPicker = <center>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-				<button onClick = {this.clickedAddButton}> add </button>
 				</center>;
 		}
 		else {
