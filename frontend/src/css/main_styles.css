@@ -31,6 +31,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   text-align: center;
   line-height:60px;
   }
+
+  h2{
+    font-size: 18px;
+  }
+
+  .title1{
+  font-family: 'Bree Serif', serif;
+  text-align: left;
+  font-size: 17px;
+  line-height: 30px;
+  }
+
+#title2{
+    float: left;
+    margin-left: 8px;
+    font-size: 13px;
+    line-height: 32px;
+  }
+
   .h_white{
   color:#000;
   border-bottom:1px solid #d8d8d8;
@@ -133,10 +152,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   button{
-
-
   width: 100%;
-  height: 40px;
+  height: 35px;
   border-radius: 21px;
   border: none;
   box-shadow: 2px 3px 7px 0 rgba(243, 138, 138, 0.5);
@@ -153,10 +170,49 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-color: #fff;
   color: #c13a3a;
 }
+  .button_60{
+    width: 60%;
+    height: 30px;
+    margin-top:8px;
+    display: inline-block;
+    float: right;
+    color: #fff;
+  }
+
+  #popbtn {
+  	width: 24px;
+  	height: 30px;
+    margin: 4px;
+  	background: url( "./open.png" ) no-repeat;
+  	border-radius: 0px;
+  	border: none;
+    box-shadow: none;
+  	outline: none;
+    float: right;
+  }
+
+
+
+  .section-field{
+    padding: 2px;
+    margin: 5px 2px 35px 2px;
+  }
+  .section-field2{
+    padding: 2px;
+    margin: 5px 2px 4px 2px;
+  }
+#stroke_width{
+  margin-left:8px;
+}
+#text_size{
+  margin-left:8px;
+}
+
   select {
     width: 100%;
-    height: 40px;
+    height: 32px;
     padding: 2px 14px;
+    margin: 4px 0px;
     font-size: 12px;
     color: #999;
     border: 2px solid #ddd;
@@ -166,6 +222,36 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -webkit-appearance: none;
   }
   select::-ms-expand {display:none;}
+
+   #text_font{
+     width: 60%;
+     height: 32px;
+     padding: 2px 14px;
+     margin: 4px 0px;
+     float: right;
+     font-size: 12px;
+     color: #999;
+     border: 2px solid #ddd;
+     border-radius: 21px;
+     background: url("./selector.png") no-repeat right 12px center;
+     apperance: none;
+     -webkit-appearance: none;
+   }
+ #text_style{
+   width: 60%;
+   height: 32px;
+   padding: 2px 14px;
+   margin: 4px 0px;
+   float: right;
+   font-size: 12px;
+   color: #999;
+   border: 2px solid #ddd;
+   border-radius: 21px;
+   background: url("./selector.png") no-repeat right 12px center;
+   apperance: none;
+   -webkit-appearance: none;
+ }
+
 
   /*tab*/
 
@@ -509,10 +595,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-bottom: 10px;
   }
 
-  #text_area, .wrapper,
-  .font_style, .font_size
+  #text_area
   {
-  margin-top: 25px;
+  width: 94%;
+  margin-top: 2px;
   }
 
   .text_tool_window #text_area{

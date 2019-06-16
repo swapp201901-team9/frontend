@@ -444,7 +444,7 @@ class DesignPage extends React.Component {
 		this.state.designClickedWhat
 			? this.setState({designClickedWhat: null})
 			: this.setState({designClickedWhat: "body"});
-		
+
 	}
 	clickedTextPopButton = () => {
 		this.state.textClickedWhat
@@ -470,7 +470,7 @@ class DesignPage extends React.Component {
 		movingObject.the_type === "upperback" ||
 		movingObject.the_type === "middleback" ||
 		movingObject.the_type === "lowerback") {
-		this.setState({text : ({...this.state.text, 
+		this.setState({text : ({...this.state.text,
 			[movingObject.the_type]: ({...this.state.text[movingObject.the_type],
 				left: movingObject.get('left'),
 				top: movingObject.get('top')})
@@ -478,11 +478,11 @@ class DesignPage extends React.Component {
 		}
 		else if (movingObject.the_type === "front" ||
 				movingObject.the_type === "back") {
-				this.setState({logo : ({...this.state.logo, 
+				this.setState({logo : ({...this.state.logo,
 					[movingObject.the_type]: ({...this.state.logo[movingObject.the_type],
 					left:movingObject.get('left'),
 					top: movingObject.get('top')})
-				})});	
+				})});
 		}
 	}
 
@@ -550,48 +550,60 @@ class DesignPage extends React.Component {
 
 					<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
 						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
-
-					<p>Font</p>
-					<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-						<option>arial</option>
-						<option>tahoma</option>
-						<option>Alfa Slab One</option>
-						<option>Teko</option>
-						<option>Damion</option>
-					</select>
-
-					<p>Style</p>
-					<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-						<option>normal</option>
-						<option>italic</option>
-						<option>oblique</option>
-						<option>bold</option>
-					</select>
-
-					<p>Size</p>
-					<input type="range"  min="0" max="200" defaultValue="100" id="text_size"
-						name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
-
-					<p>Color</p>
-					<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-						<button>pick color</button>
+					<div className="section-field">
+						<span id="title2">Font</span>
+						<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+							<option>arial</option>
+							<option>tahoma</option>
+							<option>Alfa Slab One</option>
+							<option>Teko</option>
+							<option>Damion</option>
+						</select>
+						<br/>
 					</div>
-					{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
-					</div> : null }
+					<div className="section-field">
+						<span id="title2">Style</span>
+						<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+							<option>normal</option>
+							<option>italic</option>
+							<option>oblique</option>
+							<option>bold</option>
+						</select>
+						<br/>
+						</div>
+					<div className="section-field2">
+						<span id="title2">Size</span>
+						<input type="range"  min="0" max="200" defaultValue="100" id="text_size"
+							name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+					</div>
 
-
-					<p>Border</p>
+					<div className="section-field">
+						<span id="title2">Color</span>
+						<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+							<button className="button button_60">Pick Color</button>
+						</div>
+						{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+							<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+						</div> : null }
+					</div>
+					<div className="section-field">
+					</div>
+					<div className="section-field">
+					<span id="title2">Border</span>
+					<button className="button button_60">Pick Color</button><br/>
 					<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 						name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
 					<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-						<button>pick color</button>
+
 					</div>
+
 					{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
 						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
 					</div> : null }
+					</div>
 			</center>
 		: <div/>
+
 
 	  logoPicker = logoClickedWhat
 			? <center>
@@ -619,25 +631,33 @@ class DesignPage extends React.Component {
 					{/*<!--========================================
 						Design section
 					=========================================-->*/}
-					<h1>Design</h1>
-					<button onClick={this.clickedDesignPopButton}>pop</button>
-					{colorPicker}
-
+					<div className="section-field">
+						<span className="title1"> Color Match</span>
+						<button id="popbtn" onClick={this.clickedDesignPopButton}>
+						</button>
+						{colorPicker}
+					</div>
 
 					{/*<!--========================================
 						Text section
 					=========================================-->*/}
-					<h1>Text</h1>
-					<button onClick={this.clickedTextPopButton}>pop</button>
-					{textPicker}
+					<div className="section-field">
+						<span className="title1"> Text</span>
+						<button id="popbtn" onClick={this.clickedTextPopButton}>
+
+						</button>
+						{textPicker}
+					</div>
 
 					{/*<!--========================================
 						Image Upload Section
 					=========================================-->*/}
-					<h1>Logo</h1>
-					<button onClick={this.clickedLogoPopButton}>pop</button>
-					{logoPicker}
-
+					<div className="section-field">
+						<span className="title1"> Logo</span>
+						<button id="popbtn" onClick={this.clickedLogoPopButton}>
+						</button>
+						{logoPicker}
+					</div>
 				</div>
 			</div>
 
@@ -654,7 +674,7 @@ class DesignPage extends React.Component {
 					=========================================-->*/}
 					{/*<ThreeScene/>*/}
 					<div id="plain-react">
-						<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
+						<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}>
 
 							<TabLink to="front">FRONT</TabLink>
 							<TabLink to="back">BACK</TabLink>
