@@ -229,7 +229,14 @@ class DesignPage extends React.Component {
 
 	handleCanvasChange(tab) {
 		console.log("logoClickedWhat tab value "+tab);
-		this.setState({logoClickedWhat: tab});
+		let logoTab = this.state.logoClickedWhat
+		if(logoTab === "front_close" || logoTab === "back_close") {
+			this.setState({logoClickedWhat: tab + "_close"});
+		}
+		else {
+			this.setState({logoClickedWhat: tab});
+		}
+		
 	}
 
 	handleDesignChange(color) {
@@ -241,7 +248,7 @@ class DesignPage extends React.Component {
 
 	handleTextChange(e) {
 		let text_element = document.getElementById("text_element").value;
-		console.log("DesignPage - handleTextChange e.target: ", e.target, " text element: ", text_element)
+		console.log("DesignPage - handleTextChange e.target: ", e.target.name, e.target.value, " text element: ", text_element)
 
 		this.setState({text : ({...this.state.text,
 			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
@@ -344,12 +351,14 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-		console.log("design imgInstance: ", imgInstance)
+		// console.log("design imgInstance: ", imgInstance)
 		return imgInstance;
 
     }
 
     textElementToImage(text, type) {
+        // console.log("DesignPage - textElementToImage", text, type)
+
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -364,12 +373,12 @@ class DesignPage extends React.Component {
 			top: text.top,
 		})
 
-        console.log("text imgInstance: ", imgInstance)
+        // console.log("text imgInstance: ", imgInstance)
         return imgInstance;
     }
 
 	logoElementToImage(logo, type) {
-		console.log("DesignPage - logoElementToImage", logo, type)
+		// console.log("DesignPage - logoElementToImage", logo, type)
 
 		let img = new Image();
 		const scope = this;
@@ -413,13 +422,13 @@ class DesignPage extends React.Component {
     }
 
     updateFrontCanvas = (next) => {
-        console.log("DesignPage - updateFrontCanvas next: ", next)
+        // console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
-
+				console.log("object in front canvas: ", object)
                 if(object.the_type === next.the_type){
                     console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
                     to_remove = object;
@@ -434,7 +443,7 @@ class DesignPage extends React.Component {
     }
 
     updateBackCanvas = (next) => {
-        console.log("DesignPage - updateBackCanvas next: ", next)
+        // console.log("DesignPage - updateBackCanvas next: ", next)
 
         if(next){
 
@@ -498,8 +507,8 @@ class DesignPage extends React.Component {
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
-		console.log("moving: ", movingObject)
-		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
+		// console.log("moving: ", movingObject)
+		// console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
 
 		// this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
 		// this.logo_element = ["front", "back"]
@@ -536,7 +545,7 @@ class DesignPage extends React.Component {
 	}
 
     render() {
-		console.log("DesignPage - render state: ", this.state)
+		// console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
