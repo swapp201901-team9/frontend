@@ -1093,17 +1093,17 @@ function *toAdminGroup(data){
 
 function *toEditDesign(data) {
     console.log("toEditDesign")
-    // const path = 'groups/like/' + data.designid + '/';
+    const path = 'groups/edit/' + data.designid + '/';
     try {
-		// yield call(xhr.get, fixed_url + path, {
-        //     headers: {
-        //         "Authorization": "Basic " + localStorage['auth'],
-        //         "Content-Type": 'application/json',
-        //         Accept: 'application/json'
-        //     },
-        //     contentType: 'json'
-        // });
-        // yield put(actions.changeUrl(window.location.pathname));
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl('/main/'));
     } catch(error){
         console.log(error)
         alert("*toEditDesign error")
@@ -1242,7 +1242,7 @@ function *deleteGroupDesign(data) {
         });
         console.log("delete design succeed!");
         alert("Delete Success!")
-        yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
+        yield put(actions.changeUrl('/group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
         alert("delete design error");
