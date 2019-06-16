@@ -24,7 +24,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   a:hover, a:visited, a{
   text-decoration: none;
   }
-  
+
   /* heading */
   h1,h2,h3,h4,h5,h6{
   font-family: 'Bree Serif', serif;
@@ -40,32 +40,32 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   color:#fff;
   border-bottom:1px solid #d8d8d8;
   }
-  
+
   /* layout */
   .wrap{
   width:100%;
   max-width: 1080px;
   margin:0 auto
   }
-  
+
   .col3 > div{
   float:left;
   }
-  
+
   .col3 > .aside{
   width:24%;
   }
-  
+
   .col3 > .main{
   width:48%;
   margin:20px 2%;
   }
-  
+
   .main{
   width:48%;
   margin:20px auto;
   }
-  
+
   header {
   width: 100%;
   background-image: linear-gradient(to right, #de5736, #6414d2), linear-gradient(to right, #bb2929, #a83685 34%, #513ab0 66%, #1964ac);
@@ -94,46 +94,47 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   display:block;
   padding:20px 40px;
   color: #fff;
-  
+
   }
-  
+
   .clear:after{
   content:'';
   display: block;
   height:0;
   clear:both;
   }
-  
+
   section > div{
   margin:20px 0; /* margin: 20px 0 20px 0 */
   padding-bottom : 50px;
   background:#fff;
   box-sizing: border-box;
   }
-  
+
   .content{
   padding:20px;
   }
-  
+
   .Button-Field{
   box-sizing: border-box;
   font-size: 12px;
   color: black;
   padding: 10px 0px 10px 0px;
   margin: 10px 60px 10px 60px;
-  
+
   }
-  
+
   .Button-Field-Side{
   box-sizing: border-box;
   font-size: 12px;
   color: black;
   padding: 10px 0px 10px 0px;
   margin: 10px 0px 10px 0px;
-  
   }
-  
+
   button{
+
+
   width: 100%;
   height: 40px;
   border-radius: 21px;
@@ -151,19 +152,100 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border: solid 2px #c13a3a;
   background-color: #fff;
   color: #c13a3a;
+}
+  select {
+    width: 100%;
+    height: 40px;
+    padding: 2px 14px;
+    font-size: 12px;
+    color: #999;
+    border: 2px solid #ddd;
+    border-radius: 21px;
+    background: url("./selector.png") no-repeat right 12px center;
+    apperance: none;
+    -webkit-appearance: none;
   }
-  
+  select::-ms-expand {display:none;}
+
+  /*tab*/
+
+
+  #plain-react .tabs {
+    width: 100%;
+    display: inline-block;
+    margin-right: 30px;
+    vertical-align: top;
+  }
+
+  #plain-react .tabs-1 .tab-links {
+
+    margin: 0;
+    padding: 0;
+    box-shadow: 0px;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #868686;
+    height: 35px;
+    position: relative;
+    top: 5px;
+
+  }
+
+  #plain-react .tabs-1 .tab-link {
+    width: 20%;
+    border-radius: 21px;
+    font-size: 13px;
+    margin: 2px 10px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: #666;
+    box-shadow: none;
+    background: transparent;
+    display: inline;
+    position: relative;
+    height: 40px;
+    line-height: 41px;
+    top: -4px;
+    left: -1px;
+    outline: none;
+  }
+
+  #plain-react .tabs-1 .tab-link:hover,
+  #plain-react .tabs-1 .tab-link:focus {
+    color: #666464;
+  }
+  #plain-react .tabs-1 .tab-link-active,
+  #plain-react .tabs-1 .tab-link-active:hover,
+  #plain-react .tabs-1 .tab-link-active:focus {
+    color: #c13a3a;
+    border: 1px solid transparent;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+
+
+  #plain-react .tabs-1 .content {
+    padding: 15px;
+    border: 1px solid #868686;
+    border-top: 1px solid transparent;
+
+  }
+
+  #plain-react .tabs-1 .tabcontent: {
+  }
+
+
   /* Login Page css */
-  
+
   .Text-Field{
   line-height: 20px;
   font-size: 10px;
   color: black;
   margin: 0px 60px;
   padding: 10px 0px;
-  
+
   }
-  
+
   .label{
   display:inline-block;
   width: 100%;
@@ -172,7 +254,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-color: rgba(237,156,156,0.5);
   font-size: 10px;
   }
-  
+
   input{
   box-sizing: border-box;
   display:block;
@@ -185,15 +267,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 16px;
   background-color: #fff
   }
-  
+
   input:focus{
   border: solid 2px #C13A3A;
   outline: none;
   background-color: #fff
   }
-  
+
   /* SignUp Page css */
-  
+
   #to_main{
   border: none;
   width: 135px;
@@ -208,11 +290,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   .PROFILEIMG{
   width: 50px;
   }
-  
+
   #p_img{
   width: 200px;
   }
-  
+
   /* 일반적인 버튼 및 textarea등 태그에 대한 css */
   .bordered_textarea{
   box-sizing: border-box;
@@ -226,34 +308,34 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 6px 15px;
   font-size: 16px;
   }
-  
+
   hr{
   color: rgb(237,30,39);
-  font-family: 궁서;
   }
-  
+
   img{
-  width: 700px;
+    width: 50%
   }
-  
+
+
   *{
   margin: 0;
   padding: 0;
   }
-  
+
   .clear_fix{
   overflow: auto;
   }
-  
+
   .reset_save a{
   font-size: 12px;
   color: #ffff00;
   }
-  
+
   /* ====================
   [3] t-shirt design area
   ==================== */
-  
+
   /* ====================
   [4] right help area
   ==================== */
@@ -266,11 +348,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   top: 100px;
   right: 20px;
   }
-  
+
   .help_window_wrapper{
   position: relative;
   }
-  
+
   .help_window{
   visibility: hidden;
   padding: 9px 14px;
@@ -283,7 +365,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-radius: 4px;
   box-shadow: 0 1px 9px 1px #CCCCCC;
   }
-  
+
   .help_window::before{
   content: "";
   position: absolute;
@@ -294,16 +376,16 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-style: solid;
   border-color: transparent transparent transparent #555;
   }
-  
+
   .help_window p{
   text-align: left;
   }
-  
+
   .help_window p span{
   font-weight: bold;
   margin-left: 5px;
   }
-  
+
   /* ====================
   [5] left design tool
   ==================== */
@@ -316,7 +398,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-radius: 4px;
   box-shadow: 0 1px 9px 1px #CCCCCC;
   }
-  
+
   .design_tool ul{
   list-style-type: none;
   margin: 0;
@@ -324,30 +406,30 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: 200px;
   background-color: #f1f1f1;
   }
-  
+
   .design_tool ul li {
   border-bottom: 1px solid #CCCCCC;
   }
-  
+
   .design_tool ul li:last-child {
   border-bottom: none;
   }
-  
+
   .design_tool ul li a {
   display: block;
   color: #000;
   padding: 8px 16px;
   text-decoration: none;
   }
-  
+
   .design_tool ul li a span{
   margin-left: 16px;
   }
-  
+
   .design_tool .add_text{
   position: relative;
   }
-  
+
   .text_tool_window{
   padding: 9px 14px;
   visibility: hidden;
@@ -360,7 +442,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-radius: 4px;
   box-shadow: 0 1px 9px 1px #CCCCCC;
   }
-  
+
   /* Popup arrow */
   .text_tool_window::before {
   content: "";
@@ -372,7 +454,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-style: solid;
   border-color: transparent #555 transparent transparent;
   }
-  
+
   /* Toggle this class - hide and show the popup */
   .help_area .show,
   .add_text .show {
@@ -380,24 +462,24 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
   }
-  
+
   .help_area a,
   .help_area a:hover{
   color: #000;
   text-decoration: none;
   }
-  
+
   /* animation (fade in the popup) */
   @-webkit-keyframes fadeIn {
   from {opacity: 0;}
   to {opacity: 1;}
   }
-  
+
   @Keyframes fadeIn {
   from {opacity: 0;}
   to {opacity:1 ;}
   }
-  
+
   .help_window .header,
   .text_tool_window .header{
   border-bottom: 1px solid #9E9E9E;
@@ -407,32 +489,32 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   .text_tool_window .title{
   float: left;
   }
-  
+
   .help_window #close_help_window,
   .text_tool_window #close_window{
   float: right;
   }
-  
+
   .text_tool_window .font_area{
   float: left;
   }
-  
+
   .text_tool_window .color_area{
   float: right;
   }
-  
+
   .font_area p,
   .color_area p,
   .font_style p{
   margin-bottom: 10px;
   }
-  
+
   #text_area, .wrapper,
   .font_style, .font_size
   {
   margin-top: 25px;
   }
-  
+
   .text_tool_window #text_area{
   overflow: hidden;
   height: 50px;
@@ -441,7 +523,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-radius: 3px;
   border: 1px solid #BDBDBD;
   }
-  
+
   .text_tool_window select{
   padding: 5px;
   background: none repeat scroll 0 0 #FFFFFF;
@@ -449,7 +531,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   border-radius: 3px;
   box-shadow: 0 2px 2px #CFD0CB inset, 0 2px 2px rgba(0, 0, 0, 0.2);
   }
-  
+
   .color_area input{
   width: 20px;
   height: 30px;
@@ -457,7 +539,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 2px;
   border-radius: 3px;
   }
-  
+
   /* ====================
   [6] front-back button section
   ==================== */
@@ -465,7 +547,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   text-align: center;
   margin-top: 20px;
   }
-  
+
   .change_side button{
   background-color: #e7e7e7;
   color: black;
@@ -473,7 +555,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 16px 32px;
   margin: 4px 2px;
   }
-  
+
   /* ====================
   [7] product modal
   ==================== */
@@ -482,31 +564,31 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: 270px;
   text-align: center;
   }
-  
+
   .product_details img{
   width: 250px;
   }
-  
+
   /* ====================
   [8] preview image modal
   ==================== */
   #previewModal .modal-body{
   text-align: center;
   }
-  
+
   #previewModal .canvas_wrapper{
   margin-bottom: 20px;
   }
-  
+
   #previewModal .canvas-container{
   margin: 0 auto;
   }
-  
+
   #back_preview{
   margin-top: 40px;
   margin-bottom: 40px;
   }
-  
+
   #previewModal a,
   #previewModal a:hover{
   text-decoration: none;
@@ -515,11 +597,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding: 11px 16px;
   border-radius: 3px;
   }
-  
+
   #previewModal a span{
   margin-left: 5px;
   }
-  
+
   /* styles for tab browsers smaller than 800px; */
   @media (max-width: 800px){
   .design_tool ul li a span{
@@ -529,9 +611,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   width: auto;
   }
   }
-  
+
   /* Canvas */
-  
+
   canvas{
   padding-left: 0;
   padding-right: 0;
@@ -540,14 +622,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   display: block;
   }
   .canvas-container{
-  
+
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   display: block;
   }
-  
   .canvas-bg{
   width: 430px;
   height: 460px;
@@ -559,24 +640,23 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-repeat: repeat;
   border:1px solid #ececec;
   }
-  
+
   canvas #front-canvas{
   }
-  
+
   canvas #back-canvas{
   }
-  
+
   .circle-picker{
   margin-left: auto;
   margin-right: auto;
   }
-  
-  /grouppage/
-  
+
+
   .SearchingBar {
   margin-bottom: 20px;
   }
-  
+
   .searching_input{
   box-sizing: border-box;
   display:inline-block;
@@ -589,7 +669,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 16px;
   background-color: #fff
   }
-  
+
   .searching_button{
   box-sizing: border-box;
   display:inline-block;
@@ -597,25 +677,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   height: 40px;
   padding: 0px 15px;
   margin-left: 10px;
-  
+
   }
-  
+
   .Group-List-Field{
   box-sizing: border-box;
   color: black;
   }
-  
+
   .Group-List-Field > ul {
   padding: 0px;
   margin: 20px 0px;
   }
-  
+
   .Group-Button-Field{
   box-sizing: border-box;
   font-size: 12px;
   color: black;
   margin: 10px 0px 10px 0px;
-  
+
   }
   .button_small{
   width: 30%;
@@ -628,7 +708,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-color: #FFB73B;
   color: #fff;
   }
-  
+
   .button_admin{
   width: 100%;
   height: 20px;

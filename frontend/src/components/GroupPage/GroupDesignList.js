@@ -6,11 +6,8 @@ const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {
             {designlist.map(design => 
                 <ul key={design.id}> 
                     <div>
-                        id: {design.id}<br/>
-                        owner: {design.owner}<br/>
-                        likes: {design.likes}<br/>
-                        body: {design.detail_body}<br/>
-                        sleeve: {design.detail_sleeve}
+                        <img src={design.front_image_url} />
+                        <img src={design.back_image_url} /> 
                     </div>
                     <button onClick={() => onClickDeleteDesign(groupid, design.id)}>DELETE</button>
                 </ul> 
