@@ -46,6 +46,7 @@ class DesignPage extends React.Component {
 			},
 
 			element: null,
+			text_element: null,
 			designClickedWhat: "body",
 			textClickedWhat: null,
 			logoClickedWhat: null,
@@ -146,7 +147,7 @@ class DesignPage extends React.Component {
 
 
 	componentWillUpdate = (nextProps, nextState) => {
-		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
         // If Updated Item is not the same as the old one
 		//         => Update the canvas with newer item
@@ -185,6 +186,7 @@ class DesignPage extends React.Component {
 		//update for logo element
 		for (let element of this.logo_element) {
 			if(nextState.logo[element] !== this.state.logo[element]) {
+				console.log("logo: ", nextState.logo[element])
 				if(element === "front") {
 					this.updateFrontCanvas(this.logoElementToImage(nextState.logo[element], element))
 				}
@@ -302,7 +304,7 @@ class DesignPage extends React.Component {
 	}
 
     designElementToImage(color, type, z_Index) {
-        console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
+        // console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
 
         var imgElement = document.createElement("img");
 
@@ -332,46 +334,72 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
+		console.log("design imgInstance: ", imgInstance)
 		return imgInstance;
 
     }
 
     textElementToImage(text, type) {
-        console.log("DesignPage - textElementToImage", text, type)
+        // console.log("DesignPage - textElementToImage", text, type)
 
-      	// const scope = this
-		// imgElement.addEventListener('load', function(event){
-		// 	var dataUrl = scope.getDataUrl(event.currentTarget)
-		// 	var img = document.createElement("img");
-		// 	img.src = dataUrl;
-		// 	var imgInstance = new fabric.Image(img, {
-		// 		width: 430,
-		// 		height: 460,
-		// 		the_type: type                                                         ,
-		// 		zIndex: z_Index
-		// 	});
-		// 	scope.setState({element: imgInstance});
+		// let imgText = new fabric.IText(text.textvalue, {
+		// 	fontFamily: text.fontFamily,
+		// 	fill: text.fill,
+		// 	fontStyle: text.fontStyle,
+		// 	fontSize: text.fontSize,
+		// 	stroke: text.stroke,
+		// 	strokeWidth: text.strokeWidth,
+		// 	textAlign: "center"
 		// })
-        let imgInstance = new fabric.IText(text.textvalue, {
+
+		// var dataUrl = this.getDataUrl(imgText)
+		// let imgElement
+		// imgElement.setAttribute("src", require(dataUrl))
+
+		// var imgInstance = new fabric.Image(imgElement, {
+		// 	the_type: type,
+		// 	zIndex: 10,
+		// 	left: text.left,
+		// 	top: text.top,
+		// })
+		
+		// let imgElement = new fabric.IText(text.textvalue, {
+		// 	fontFamily: text.fontFamily,
+		// 	fill: text.fill,
+		// 	fontStyle: text.fontStyle,
+		// 	fontSize: text.fontSize,
+		// 	stroke: text.stroke,
+		// 	strokeWidth: text.strokeWidth,
+		// 	textAlign: "center"
+		// })
+
+		// let imgInstance = new fabric.Image(imgElement, {
+		// 	the_type: type,
+		// 	zIndex: 10,
+		// 	left: text.left,
+		// 	top: text.top,
+		// })
+
+		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
 			fontStyle: text.fontStyle,
 			fontSize: text.fontSize,
 			stroke: text.stroke,
 			strokeWidth: text.strokeWidth,
+			textAlign: "center",
 			the_type: type,
 			zIndex: 10,
 			left: text.left,
 			top: text.top,
-			textAlign: "center"
 		})
 
-        // console.log("text imgInstance: ", imgInstance)
+        console.log("text imgInstance: ", imgInstance)
         return imgInstance;
     }
 
 	logoElementToImage(logo, type) {
-		console.log("FabricCanvas - textElementToImage")
+		// console.log("DesignPage - logoElementToImage", logo, type)
 
 		//let img = document.createElement("img");
 		//img.setAttribute("src", require(logo.src));
@@ -568,8 +596,8 @@ class DesignPage extends React.Component {
 						<option>bold</option>
 					</select>
 
-					<p>Size</p>
-					<input type="range"  min="0" max="200" defaultValue="100" id="text_size"
+					<p>Size</p> 
+					<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
 						name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
 					<p>Color</p>
