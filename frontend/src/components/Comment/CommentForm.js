@@ -5,8 +5,7 @@ import { toAddComment } from "../../actions";
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.contents = "";
+    this.message;
     // bind context to methods
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -23,17 +22,18 @@ class CommentForm extends React.Component {
       return;
     }
 
-    this.props.onAddComment(this.props.designid, this.contents)
+    this.props.onAddComment(this.props.designid, this.message.value)
   }
 
   /**
    * Simple validation
    */
   isFormValid() {
-    return this.contents !== "";
+    return this.message !== "";
   }
 
   render() {
+
     return (
       <div>
         <form onSubmit={this.onSubmit}>
@@ -50,9 +50,10 @@ class CommentForm extends React.Component {
 
           <div className="form-group">
             <textarea
-              value={this.contents}
+              ref={ node => {this.message=node;} }
+              // value={this.contents}
               className="form-control"
-              placeholder="🤬 Your Comment"
+              placeholder="Your Comment"
               name="message"
               rows="5"
             />
