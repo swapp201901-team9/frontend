@@ -49,7 +49,7 @@ class DesignPage extends React.Component {
 			text_element: null,
 			designClickedWhat: "body",
 			textClickedWhat: null,
-			logoClickedWhat: null,
+			logoClickedWhat: "front_close",
 
 			displayTextColor: false,
 			displayBorderColor: false,
@@ -73,6 +73,8 @@ class DesignPage extends React.Component {
 		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
 		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
+
+		//his.clickedAddButton = this.clickedAddButton.bind(this);
 
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
@@ -141,7 +143,9 @@ class DesignPage extends React.Component {
 		this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
 
 		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
-        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+		this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+		
+		this.setState({logoClickedWhat: "front_close"});
 
 	}
 
@@ -224,7 +228,7 @@ class DesignPage extends React.Component {
 	}
 
 	handleCanvasChange(tab) {
-		console.log("clicked tab "+tab);
+		console.log("logoClickedWhat tab value "+tab);
 		this.setState({logoClickedWhat: tab});
 	}
 
@@ -271,6 +275,10 @@ class DesignPage extends React.Component {
 	handleLogoChange = (e) => {
 		e.preventDefault();
 		let logo_element = this.state.logoClickedWhat;
+		if (logo_element === "front_close" || logo_element==="back_close") {
+			console.log("trying to add image but logoClickedWhat value close")
+		}
+		else {
 		const scope = this;
 		//var img = document.createElement("img");
 		var file = document.getElementById('input').files[0];
@@ -282,12 +290,14 @@ class DesignPage extends React.Component {
 			scope.setState({logo: ({...scope.state.logo,
 				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
-
-		})
+			//scope.setState({logoClickedWhat: logo_element+"_close"});
+		});
 
 		if (file) {
             reader.readAsDataURL(file);
-        }
+		}
+		e.target.value = '';
+		}
 	}
 
 	getDataUrl = (img) => {
@@ -340,46 +350,6 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-        // console.log("DesignPage - textElementToImage", text, type)
-
-		// let imgText = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// var dataUrl = this.getDataUrl(imgText)
-		// let imgElement
-		// imgElement.setAttribute("src", require(dataUrl))
-
-		// var imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-		
-		// let imgElement = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// let imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -399,11 +369,29 @@ class DesignPage extends React.Component {
     }
 
 	logoElementToImage(logo, type) {
-		// console.log("DesignPage - logoElementToImage", logo, type)
+		console.log("DesignPage - logoElementToImage", logo, type)
 
-		//let img = document.createElement("img");
-		//img.setAttribute("src", require(logo.src));
 		let img = new Image();
+		const scope = this;
+		img.addEventListener('load', function(event){
+			let imgInstance;
+        	imgInstance = new fabric.Image(event.currentTarget, {
+            width: 899,
+			height:959,
+			the_type: type,
+            zIndex: 10,
+            left: logo.left,
+            top: logo.top
+		});
+		imgInstance.set({
+            scaleY: 0.05,
+            scaleX: 0.05,
+            originX: "center",
+            originY: "center"
+        });
+
+		scope.setState({element: imgInstance});
+		})
 		img.src = logo.src;
 
         let imgInstance;
@@ -421,7 +409,6 @@ class DesignPage extends React.Component {
             originX: "center",
             originY: "center"
         });
-
         return imgInstance;
     }
 
@@ -466,9 +453,11 @@ class DesignPage extends React.Component {
             this.the_back_canvas.renderAll();
         }
     }
-
+	// clickedAddButton = () => {
+	// 	this.forceUpdate();
+	// }
 	clickedDesignPopButton = () => {
-		console.log("clicked", this.state.designClickedWhat)
+		//console.log("clicked", this.state.designClickedWhat)
 		this.state.designClickedWhat
 			? this.setState({designClickedWhat: null})
 			: this.setState({designClickedWhat: "body"});
@@ -479,11 +468,32 @@ class DesignPage extends React.Component {
 			? this.setState({textClickedWhat: null})
 			: this.setState({textClickedWhat: "frontchest"});
 	}
-	/*******************problem detected */
+	/******************* problem detected *************/
 	clickedLogoPopButton = () => {
-		this.state.logoClickedWhat
-			? this.setState({logoClickedWhat: null})
-			: this.setState({logoClickedWhat: "front"});
+		// this.state.logoClickedWhat
+		// 	? this.setState({logoClickedWhat: null})
+		// 	: this.setState({logoClickedWhat: "front"});
+		var temp = this.state.logoClickedWhat;
+
+		console.log("clickedLogoPopButton: logoClickedWhat "+ temp);
+
+		if (temp === "front_close"){
+			console.log("->front");
+			this.setState({logoClickedWhat: "front"});
+		}
+		else if (temp === "back_close") {
+			console.log("->back");
+			this.setState({logoClickedWhat: "back"});
+		}
+		else if (temp === "front") {
+			console.log("->front_close");
+			this.setState({logoClickedWhat: "front_close"});
+		}
+		else if (temp === "back") {
+			console.log("->back_close");
+			this.setState({logoClickedWhat: "back_close"})
+		}
+		
 	}
 
 	moveHandler = (e) =>{
@@ -621,16 +631,27 @@ class DesignPage extends React.Component {
 			</center>
 		: <div/>
 
-	  logoPicker = logoClickedWhat
-			? <center>
-				{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-								<option value="front">Front</option>
-								<option value="back">Lower</option>
-				</select>*/}
-				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-			</center>
-			: <div/>
 
+	//   logoPicker = logoClickedWhat
+	// 		? <center>
+	// 			{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+	// 							<option value="front">Front</option>
+	// 							<option value="back">Lower</option>
+	// 			</select>*/}
+	// 			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+	// 		</center>
+	// 		: <div/>
+		if (logoClickedWhat === "front_close" || logoClickedWhat === "back_close"){
+			logoPicker = <div/>
+		}
+		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
+			logoPicker = <center>
+				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+				</center>;
+		}
+		else {
+			logoPicker = <div>logoClickedWhat does not have valid value</div>
+		}
 
 
 		return (
