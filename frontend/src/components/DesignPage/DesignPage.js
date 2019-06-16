@@ -216,9 +216,9 @@ class DesignPage extends React.Component {
 		else if(id === "text_element") {
 			this.setState({textClickedWhat: value});
 		}
-		else if (id == "logo_element") {
-			this.setState({logoClickedWhat: value});
-		}
+		// else if (id == "logo_element") {
+		// 	this.setState({logoClickedWhat: value});
+		// }
 	}
 
 	handleCanvasChange(tab) {
