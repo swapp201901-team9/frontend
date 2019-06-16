@@ -342,44 +342,6 @@ class DesignPage extends React.Component {
     textElementToImage(text, type) {
         // console.log("DesignPage - textElementToImage", text, type)
 
-		// let imgText = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// var dataUrl = this.getDataUrl(imgText)
-		// let imgElement
-		// imgElement.setAttribute("src", require(dataUrl))
-
-		// var imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-		
-		// let imgElement = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// let imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
