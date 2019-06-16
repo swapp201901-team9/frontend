@@ -587,14 +587,18 @@ class DesignPage extends React.Component {
 
 		textPicker = textClickedWhat
 			? <center>
-					<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-						<option value="frontchest">Front Chest</option>
-						<option value="rightarm">Right Arm</option>
-						<option value="upperback">Upper Back</option>
-						<option value="middleback">Middle Back</option>
-						<option value="lowerback">Lower Back</option>
-					</select>
-
+					{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
+						? <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+							<option value="frontchest">Front Chest</option>
+							<option value="rightarm">Right Arm</option> )
+						 </select>
+						: <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+								<option value="upperback">Upper Back</option>
+								<option value="middleback">Middle Back</option>
+								<option value="lowerback">Lower Back</option>
+						</select>	
+					}
+						
 					<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
 						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
