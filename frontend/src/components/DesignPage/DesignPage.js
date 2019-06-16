@@ -74,6 +74,8 @@ class DesignPage extends React.Component {
 		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
+		this.clickedAddButton = this.clickedAddButton.bind(this);
+
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
 
@@ -141,7 +143,9 @@ class DesignPage extends React.Component {
 		this.the_back_canvas.add(this.textElementToImage(this.state.text.lowerback, "lowerback"))
 
 		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
-        this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+		this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
+		
+		this.setState({logoClickedWhat: "front_close"});
 
 	}
 
@@ -470,9 +474,11 @@ class DesignPage extends React.Component {
             this.the_back_canvas.renderAll();
         }
     }
-
+	clickedAddButton = () => {
+		this.forceUpdate();
+	}
 	clickedDesignPopButton = () => {
-		console.log("clicked", this.state.designClickedWhat)
+		//console.log("clicked", this.state.designClickedWhat)
 		this.state.designClickedWhat
 			? this.setState({designClickedWhat: null})
 			: this.setState({designClickedWhat: "body"});
@@ -489,16 +495,23 @@ class DesignPage extends React.Component {
 		// 	? this.setState({logoClickedWhat: null})
 		// 	: this.setState({logoClickedWhat: "front"});
 		var temp = this.state.logoClickedWhat;
+
+		console.log("clickedLogoPopButton: logoClickedWhat "+ temp);
+
 		if (temp === "front_close"){
+			console.log("->front");
 			this.setState({logoClickedWhat: "front"});
 		}
 		else if (temp === "back_close") {
+			console.log("->back");
 			this.setState({logoClickedWhat: "back"});
 		}
 		else if (temp === "front") {
+			console.log("->front_close");
 			this.setState({logoClickedWhat: "front_close"});
 		}
 		else if (temp === "back") {
+			console.log("->back_close");
 			this.setState({logoClickedWhat: "back_close"})
 		}
 		
@@ -653,7 +666,10 @@ class DesignPage extends React.Component {
 			logoPicker = <div/>
 		}
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
-			logoPicker = <input type = "file" id = "input" onChange = {this.handleLogoChange} />
+			logoPicker = <center>
+				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+				<button onClick = {this.clickedAddButton}> add </button>
+				</center>;
 		}
 		else {
 			logoPicker = <div>logoClickedWhat does not have valid value</div>
