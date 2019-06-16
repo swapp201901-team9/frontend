@@ -232,7 +232,13 @@ class DesignPage extends React.Component {
 
 	handleCanvasChange(tab) {
 		console.log("logoClickedWhat tab value "+tab);
-		this.setState({logoClickedWhat: tab});
+		let logoTab = this.state.logoClickedWhat
+		if(logoTab === "front_close" || logoTab === "back_close") {
+			this.setState({logoClickedWhat: tab + "_close"});
+		}
+		else {
+			this.setState({logoClickedWhat: tab});
+		}
 	}
 
 	handleDesignChange(color) {
@@ -625,58 +631,62 @@ class DesignPage extends React.Component {
 
 		textPicker = textClickedWhat
 			? <center>
-					<select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-						<option value="frontchest">Front Chest</option>
-						<option value="rightarm">Right Arm</option>
+			{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
+				? <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+					<option value="frontchest">Front Chest</option>
+					<option value="rightarm">Right Arm</option> )
+				 </select>
+				: <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 						<option value="upperback">Upper Back</option>
 						<option value="middleback">Middle Back</option>
 						<option value="lowerback">Lower Back</option>
-					</select>
+				</select>	
+			}
+				
+			<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
+				name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-					<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
-						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+			<p>Font</p>
+			<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+				<option>arial</option>
+				<option>tahoma</option>
+				<option>Alfa Slab One</option>
+				<option>Teko</option>
+				<option>Damion</option>
+			</select>
 
-					<p>Font</p>
-					<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-						<option>arial</option>
-						<option>tahoma</option>
-						<option>Alfa Slab One</option>
-						<option>Teko</option>
-						<option>Damion</option>
-					</select>
+			<p>Style</p>
+			<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+				<option>normal</option>
+				<option>italic</option>
+				<option>oblique</option>
+				<option>bold</option>
+			</select>
 
-					<p>Style</p>
-					<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-						<option>normal</option>
-						<option>italic</option>
-						<option>oblique</option>
-						<option>bold</option>
-					</select>
+			<p>Size</p> 
+			<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
+				name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 
-					<p>Size</p> 
-					<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
-						name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
-
-					<p>Color</p>
-					<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-						<button>pick color</button>
-					</div>
-					{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
-					</div> : null }
+			<p>Color</p>
+			<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+				<button>pick color</button>
+			</div>
+			{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+			</div> : null }
 
 
-					<p>Border</p>
-					<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
-						name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-					<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-						<button>pick color</button>
-					</div>
-					{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
-					</div> : null }
+			<p>Border</p>
+			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
+				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+				<button>pick color</button>
+			</div>
+			{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
+				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
+			</div> : null }
 			</center>
-		: <div/>
+			: <div/>
 
 
 	//   logoPicker = logoClickedWhat
@@ -702,101 +712,101 @@ class DesignPage extends React.Component {
 
 
 		return (
-		<section className="wrap clear col3">
-
-			{/*<!--========================================
-				LEFT SIDE BAR
-			=========================================-->*/}
-			<div className="aside">
-				<h2 className="h_white">SELECT STYLE</h2>
-
-				<div className="content">
-
-					{/*<!--========================================
-						Design section
-					=========================================-->*/}
-					<h1>Design</h1>
-					<button onClick={this.clickedDesignPopButton}>pop</button>
-					{colorPicker}
-
-
-					{/*<!--========================================
-						Text section
-					=========================================-->*/}
-					<h1>Text</h1>
-					<button onClick={this.clickedTextPopButton}>pop</button>
-					{textPicker}
-
-					{/*<!--========================================
-						Image Upload Section
-					=========================================-->*/}
-					<h1>Logo</h1>
-					<button onClick={this.clickedLogoPopButton}>pop</button>
-					{logoPicker}
-
-				</div>
-			</div>
-
-
-		{/*<!--========================================
-			CENTER DESIGN SECTION
-		=========================================-->*/}
-		<div className="main">
-			<h2 className="h_white">SAMPLE VIEW</h2>
-				<div className="content">
-
-					{/*<!--========================================
-						Fabric Canvas Section
-					=========================================-->*/}
-					{/*<ThreeScene/>*/}
-					<div id="plain-react">
-						<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
-
-							<TabLink to="front">FRONT</TabLink>
-							<TabLink to="back">BACK</TabLink>
-							<TabContent for="front">
-
-								<div classname="canvas-bg">
-									<canvas id="front-canvas" />
-								</div>
-							</TabContent>
-
-							<TabContent for="back">
-
-								<div classname="canvas-bg">
-									<canvas id="back-canvas"/>
-								</div>
-							</TabContent>
-						</Tabs>
+			<section className="wrap clear col3">
+	
+				{/*<!--========================================
+					LEFT SIDE BAR
+				=========================================-->*/}
+				<div className="aside">
+					<h2 className="h_white">SELECT STYLE</h2>
+	
+					<div className="content">
+	
+						{/*<!--========================================
+							Design section
+						=========================================-->*/}
+						<h1>Design</h1>
+						<button onClick={this.clickedDesignPopButton}>pop</button>
+						{colorPicker}
+	
+	
+						{/*<!--========================================
+							Text section
+						=========================================-->*/}
+						<h1>Text</h1>
+						<button onClick={this.clickedTextPopButton}>pop</button>
+						{textPicker}
+	
+						{/*<!--========================================
+							Image Upload Section
+						=========================================-->*/}
+						<h1>Logo</h1>
+						<button onClick={this.clickedLogoPopButton}>pop</button>
+						{logoPicker}
+	
 					</div>
-
-					{/*<!--========================================
-						NEW & SAVE Button Section
-					=========================================-->*/}
-					{this.props.isLoggedIn ?
-						(<div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-							{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
-							<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
-						</div>)
-						: <div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-						</div>
-					}
 				</div>
-			</div>
-
+	
+	
 			{/*<!--========================================
-				RIGHT SIDE BAR
+				CENTER DESIGN SECTION
 			=========================================-->*/}
-			<div className="aside">
-				<h2 className="h_black">MY GROUP</h2>
-				<div className="content">
-					{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+			<div className="main">
+				<h2 className="h_white">SAMPLE VIEW</h2>
+					<div className="content">
+	
+						{/*<!--========================================
+							Fabric Canvas Section
+						=========================================-->*/}
+						{/*<ThreeScene/>*/}
+						<div id="plain-react">
+							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
+	
+								<TabLink to="front">FRONT</TabLink>
+								<TabLink to="back">BACK</TabLink>
+								<TabContent for="front">
+	
+									<div classname="canvas-bg">
+										<canvas id="front-canvas" />
+									</div>
+								</TabContent>
+	
+								<TabContent for="back">
+	
+									<div classname="canvas-bg">
+										<canvas id="back-canvas"/>
+									</div>
+								</TabContent>
+							</Tabs>
+						</div>
+	
+						{/*<!--========================================
+							NEW & SAVE Button Section
+						=========================================-->*/}
+						{this.props.isLoggedIn ?
+							(<div>
+								<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
+								<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
+							</div>)
+							: <div>
+								<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+							</div>
+						}
+					</div>
 				</div>
-			</div>
-		</section>
-		);
+	
+				{/*<!--========================================
+					RIGHT SIDE BAR
+				=========================================-->*/}
+				<div className="aside">
+					<h2 className="h_black">MY GROUP</h2>
+					<div className="content">
+						{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+					</div>
+				</div>
+			</section>
+			);
     }
 }
 
