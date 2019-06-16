@@ -55,6 +55,7 @@ class DesignPage extends React.Component {
 		};
 
 		this.handleElementChange = this.handleElementChange.bind(this);
+		this.handleCanvasChange = this.handleCanvasChange.bind(this);
 		this.handleDesignChange = this.handleDesignChange.bind(this);
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
@@ -218,6 +219,10 @@ class DesignPage extends React.Component {
 		else if (id == "logo_element") {
 			this.setState({logoClickedWhat: value});
 		}
+	}
+
+	handleCanvasChange(tab) {
+		this.setState({logoClickedWhat: tab});
 	}
 
 	handleDesignChange(color) {
@@ -589,10 +594,10 @@ class DesignPage extends React.Component {
 
 	  logoPicker = logoClickedWhat
 			? <center>
-				<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
+				{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
 								<option value="front">Front</option>
 								<option value="back">Lower</option>
-				</select>
+				</select>*/}
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
 			</center>
 			: <div/>
@@ -648,18 +653,18 @@ class DesignPage extends React.Component {
 					=========================================-->*/}
 					{/*<ThreeScene/>*/}
 					<div id="plain-react">
-						<Tabs className="tabs tabs-1" onChange={tab => console.log(`Tab selected: ${tab}`)}> 
+						<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
 
-							<TabLink to="head">FRONT</TabLink>
-							<TabLink to="tail">BACK</TabLink>
-							<TabContent for="head">
+							<TabLink to="front">FRONT</TabLink>
+							<TabLink to="back">BACK</TabLink>
+							<TabContent for="front">
 
 								<div classname="canvas-bg">
 									<canvas id="front-canvas" />
 								</div>
 							</TabContent>
 
-							<TabContent for="tail">
+							<TabContent for="back">
 
 								<div classname="canvas-bg">
 									<canvas id="back-canvas"/>
