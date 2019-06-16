@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -179,6 +179,34 @@ export const toUnlikeDesign = (designid) => {
     return {
         type: UNLIKE_DESIGN,
         designid: designid,
+    }
+}
+
+
+
+export const toAddComment = (designid, contents) => {
+    console.log("addComment action: ", designid, contents)
+    return {
+        type: ADD_COMMENT,
+        designid: designid,
+        contents: contents,
+    }
+}
+
+export const toEditComment = (commentid, contents) => {
+    console.log("addComment action: ", commentid, contents)
+    return {
+        type: EDIT_COMMENT,
+        commentid: commentid,
+        contents: contents,
+    }
+}
+
+export const toDeleteComment = (commentid) => {
+    console.log("addComment action: ", commentid)
+    return {
+        type: DELETE_COMMENT,
+        commentid: commentid,
     }
 }
 
