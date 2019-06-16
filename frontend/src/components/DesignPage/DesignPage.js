@@ -614,7 +614,8 @@ class DesignPage extends React.Component {
 
 		colorPicker = designClickedWhat
 			? <center>
-				<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+				<select className = "select select_32"
+				id="design_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value = "body">body</option>
 					<option value = "sleeve">sleeve</option>
 					<option value = "banding">banding</option>
@@ -632,11 +633,13 @@ class DesignPage extends React.Component {
 		textPicker = textClickedWhat
 			? <center>
 			{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
-				? <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+				? <select className="select select_32"
+				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value="frontchest">Front Chest</option>
 					<option value="rightarm">Right Arm</option> )
 				 </select>
-				: <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+				: <select className="select select_32"
+				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 						<option value="upperback">Upper Back</option>
 						<option value="middleback">Middle Back</option>
 						<option value="lowerback">Lower Back</option>
@@ -646,7 +649,8 @@ class DesignPage extends React.Component {
 			<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
 				name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-			<p>Font</p>
+			<div className = "section-field">
+			<span id="title2">Font</span>
 			<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
 				<option>arial</option>
 				<option>tahoma</option>
@@ -654,37 +658,53 @@ class DesignPage extends React.Component {
 				<option>Teko</option>
 				<option>Damion</option>
 			</select>
+			<br/>
+			</div>
 
-			<p>Style</p>
+			<div className="section-field">
+			<span id="title2">Style</span>
 			<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
 				<option>normal</option>
 				<option>italic</option>
 				<option>oblique</option>
 				<option>bold</option>
 			</select>
+			<br/>
+			</div>
 
-			<p>Size</p> 
+			<div className="section-field2">
+			<span id="title2">Size</span> 
 			<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
 				name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+			</div>
 
-			<p>Color</p>
+			<div className="section-field">
+			<span id="title2">Color</span>
 			<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-				<button>pick color</button>
+				<button className="button button_60">pick color</button>
 			</div>
 			{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
 				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
 			</div> : null }
+			</div>
 
+			<div className="section-field">
+			</div>
 
-			<p>Border</p>
+			<div className="section-field">
+			<span id="title2">Border</span>
+			<button className="button button_60">Pick Color</button><br/>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
 			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-				<button>pick color</button>
+				{/*<button>pick color</button>*/}
 			</div>
+
 			{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
 				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
 			</div> : null }
+			</div>
+
 			</center>
 			: <div/>
 
@@ -725,27 +745,37 @@ class DesignPage extends React.Component {
 						{/*<!--========================================
 							Design section
 						=========================================-->*/}
-						<h1>Design</h1>
-						<button onClick={this.clickedDesignPopButton}>pop</button>
+						<div className="section-field">
+						<span className="title1"> Color Match</span>
+						<button id="popbtn" onClick={this.clickedDesignPopButton}>
+
+						</button>
 						{colorPicker}
-	
+						</div>
 	
 						{/*<!--========================================
 							Text section
 						=========================================-->*/}
-						<h1>Text</h1>
-						<button onClick={this.clickedTextPopButton}>pop</button>
+						<div className="section-field">
+						<span className="title1"> Text</span>
+						<button id="popbtn" onClick={this.clickedTextPopButton}>
+
+						</button>
 						{textPicker}
-	
+						</div>
 						{/*<!--========================================
 							Image Upload Section
 						=========================================-->*/}
-						<h1>Logo</h1>
-						<button onClick={this.clickedLogoPopButton}>pop</button>
+						<div className="section-field">
+						<span className="title1"> Logo</span>
+						<button id="popbtn" onClick={this.clickedLogoPopButton}>
+						</button>
 						{logoPicker}
-	
+						</div>
 					</div>
 				</div>
+
+
 	
 	
 			{/*<!--========================================
@@ -785,12 +815,12 @@ class DesignPage extends React.Component {
 						=========================================-->*/}
 						{this.props.isLoggedIn ?
 							(<div>
-								<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 								{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
-								<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
+								<button className="button save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 							</div>)
 							: <div>
-								<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 							</div>
 						}
 					</div>
