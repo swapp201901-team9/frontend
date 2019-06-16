@@ -693,18 +693,19 @@ class DesignPage extends React.Component {
 
 			<div className="section-field">
 			<span id="title2">Border</span>
+			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
 			<button className="button button_60">Pick Color</button><br/>
+			</div>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+			{/*<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>*/}
 				{/*<button>pick color</button>*/}
-			</div>
+			{/*</div>*/}
 
 			{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
 				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
 			</div> : null }
 			</div>
-
 			</center>
 			: <div/>
 
