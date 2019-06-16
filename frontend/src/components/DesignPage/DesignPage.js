@@ -290,11 +290,13 @@ class DesignPage extends React.Component {
 			scope.setState({logo: ({...scope.state.logo,
 				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
+			//scope.setState({logoClickedWhat: logo_element+"_close"});
 		});
 
 		if (file) {
             reader.readAsDataURL(file);
 		}
+		e.target.value = '';
 		}
 	}
 
@@ -348,46 +350,6 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-        // console.log("DesignPage - textElementToImage", text, type)
-
-		// let imgText = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// var dataUrl = this.getDataUrl(imgText)
-		// let imgElement
-		// imgElement.setAttribute("src", require(dataUrl))
-
-		// var imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-		
-		// let imgElement = new fabric.IText(text.textvalue, {
-		// 	fontFamily: text.fontFamily,
-		// 	fill: text.fill,
-		// 	fontStyle: text.fontStyle,
-		// 	fontSize: text.fontSize,
-		// 	stroke: text.stroke,
-		// 	strokeWidth: text.strokeWidth,
-		// 	textAlign: "center"
-		// })
-
-		// let imgInstance = new fabric.Image(imgElement, {
-		// 	the_type: type,
-		// 	zIndex: 10,
-		// 	left: text.left,
-		// 	top: text.top,
-		// })
-
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -407,11 +369,29 @@ class DesignPage extends React.Component {
     }
 
 	logoElementToImage(logo, type) {
-		// console.log("DesignPage - logoElementToImage", logo, type)
+		console.log("DesignPage - logoElementToImage", logo, type)
 
-		//let img = document.createElement("img");
-		//img.setAttribute("src", require(logo.src));
 		let img = new Image();
+		const scope = this;
+		img.addEventListener('load', function(event){
+			let imgInstance;
+        	imgInstance = new fabric.Image(event.currentTarget, {
+            width: 899,
+			height:959,
+			the_type: type,
+            zIndex: 10,
+            left: logo.left,
+            top: logo.top
+		});
+		imgInstance.set({
+            scaleY: 0.05,
+            scaleX: 0.05,
+            originX: "center",
+            originY: "center"
+        });
+
+		scope.setState({element: imgInstance});
+		})
 		img.src = logo.src;
 
         let imgInstance;
@@ -429,7 +409,6 @@ class DesignPage extends React.Component {
             originX: "center",
             originY: "center"
         });
-
         return imgInstance;
     }
 
