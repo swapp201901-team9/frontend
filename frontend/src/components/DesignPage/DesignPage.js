@@ -75,7 +75,7 @@ class DesignPage extends React.Component {
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
 		//his.clickedAddButton = this.clickedAddButton.bind(this);
-
+		this.scaleHandler = this.scaleHandler.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
 
@@ -119,11 +119,14 @@ class DesignPage extends React.Component {
 		});
 
 		this.the_front_canvas.on({
+			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
 		})
 
 		this.the_back_canvas.on({
+			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
+
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -236,7 +239,6 @@ class DesignPage extends React.Component {
 		else {
 			this.setState({logoClickedWhat: tab});
 		}
-		
 	}
 
 	handleDesignChange(color) {
@@ -248,7 +250,7 @@ class DesignPage extends React.Component {
 
 	handleTextChange(e) {
 		let text_element = document.getElementById("text_element").value;
-		console.log("DesignPage - handleTextChange e.target: ", e.target.name, e.target.value, " text element: ", text_element)
+		console.log("DesignPage - handleTextChange e.target: ", e.target, " text element: ", text_element)
 
 		this.setState({text : ({...this.state.text,
 			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
@@ -351,14 +353,12 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-		// console.log("design imgInstance: ", imgInstance)
+		console.log("design imgInstance: ", imgInstance)
 		return imgInstance;
 
     }
 
     textElementToImage(text, type) {
-        // console.log("DesignPage - textElementToImage", text, type)
-
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -373,62 +373,71 @@ class DesignPage extends React.Component {
 			top: text.top,
 		})
 
-        // console.log("text imgInstance: ", imgInstance)
+        console.log("text imgInstance: ", imgInstance)
         return imgInstance;
     }
 
 	logoElementToImage(logo, type) {
-		// console.log("DesignPage - logoElementToImage", logo, type)
+		console.log("DesignPage - logoElementToImage", logo, type)
 
 		let img = new Image();
 		const scope = this;
 		img.addEventListener('load', function(event){
 			let imgInstance;
         	imgInstance = new fabric.Image(event.currentTarget, {
-            width: 899,
-			height:959,
+            width: logo.width,
+			height: logo.height,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
-            top: logo.top
+            top: logo.top,
 		});
-		imgInstance.set({
-            scaleY: 0.05,
-            scaleX: 0.05,
-            originX: "center",
-            originY: "center"
-        });
+		// imgInstance.set({
+        //     scaleY: 0.05,
+        //     scaleX: 0.05,
+        //     originX: "center",
+        //     originY: "center"
+        // });
 
 		scope.setState({element: imgInstance});
 		})
 		img.src = logo.src;
 
-        let imgInstance;
+		let imgInstance;
+		console.log("logo.width "+ logo.width);
+		console.log("logo.height "+ logo.height);
         imgInstance = new fabric.Image(img, {
-            width: 899,
-			height:959,
+            width: logo.width,
+			height: logo.height,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
-            top: logo.top
-        });
+			top: logo.top,
+			scaleX: logo.scaleX,
+			scaleY: logo.scaleY,
+			originX: "center",
+			originY: "center",
+		});
+		if(imgInstance.width >= 500) {
+		console.log("logo element to image will be scaled")
         imgInstance.set({
-            scaleY: 0.05,
-            scaleX: 0.05,
+            scaleY: 0.1,
+            scaleX: 0.1,
             originX: "center",
             originY: "center"
-        });
+		});
+	}
         return imgInstance;
     }
 
     updateFrontCanvas = (next) => {
-        // console.log("DesignPage - updateFrontCanvas next: ", next)
+        console.log("DesignPage - updateFrontCanvas next: ", next)
 
         if(next){
             let to_remove;
             // Find the same kind of element
             this.the_front_canvas.forEachObject( (object) => {
-				console.log("object in front canvas: ", object)
+
                 if(object.the_type === next.the_type){
                     console.log("obcject.the_type: ", object.the_type, " next.the_type: ", next.the_type)
                     to_remove = object;
@@ -443,7 +452,7 @@ class DesignPage extends React.Component {
     }
 
     updateBackCanvas = (next) => {
-        // console.log("DesignPage - updateBackCanvas next: ", next)
+        console.log("DesignPage - updateBackCanvas next: ", next)
 
         if(next){
 
@@ -504,11 +513,46 @@ class DesignPage extends React.Component {
 		}
 		
 	}
+	scaleHandler = (e)=>{
+		let scalingObject = e.target;
+		var width = scalingObject.getScaledWidth()*10;
+		var height = scalingObject.getScaledHeight()*10;
+
+		console.log("scaling: ", scalingObject)
+		console.log("width: ", width, " height: ", height);
+
+		if (scalingObject.the_type === "frontchest" ||
+    		scalingObject.the_type === "rightarm" ||
+    		scalingObject.the_type === "upperback" ||
+    		scalingObject.the_type === "middleback" ||
+    		scalingObject.the_type === "lowerback") {
+    		this.setState({text : ({...this.state.text,
+        	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
+        	width: width,
+            height: height})
+    	})});
+		}
+		else if (scalingObject.the_type === "front" ||
+         	scalingObject.the_type === "back") {
+			console.log("scale handler logo width height")
+			var old_width = this.state.logo[scalingObject.the_type].width
+			var old_height = this.state.logo[scalingObject.the_type].height
+			console.log("old_width "+ old_width+ "old_height "+old_height)
+			var scaleX= width/old_width
+			var scaleY= height/old_height
+			console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
+    		this.setState({logo : ({...this.state.logo,
+        	[scalingObject.the_type]: ({...this.state.logo[scalingObject.the_type],
+        	width:width,
+            height: height, scaleX: scaleX, scaleY: scaleY})
+    	})});
+		}
+	}
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
-		// console.log("moving: ", movingObject)
-		// console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
+		console.log("moving: ", movingObject)
+		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
 
 		// this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
 		// this.logo_element = ["front", "back"]
@@ -545,7 +589,7 @@ class DesignPage extends React.Component {
 	}
 
     render() {
-		// console.log("DesignPage - render state: ", this.state)
+		console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
@@ -570,7 +614,8 @@ class DesignPage extends React.Component {
 
 		colorPicker = designClickedWhat
 			? <center>
-				<select id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+				<select className = "select select_32"
+				id="design_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value = "body">body</option>
 					<option value = "sleeve">sleeve</option>
 					<option value = "banding">banding</option>
@@ -587,62 +632,82 @@ class DesignPage extends React.Component {
 
 		textPicker = textClickedWhat
 			? <center>
-					{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
-						? <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-							<option value="frontchest">Front Chest</option>
-							<option value="rightarm">Right Arm</option> )
-						 </select>
-						: <select id="text_element" onChange={(e)=>this.handleElementChange(e)}>
-								<option value="upperback">Upper Back</option>
-								<option value="middleback">Middle Back</option>
-								<option value="lowerback">Lower Back</option>
-						</select>	
-					}
-						
-					<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
-						name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+			{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
+				? <select className="select select_32"
+				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+					<option value="frontchest">Front Chest</option>
+					<option value="rightarm">Right Arm</option> )
+				 </select>
+				: <select className="select select_32"
+				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+						<option value="upperback">Upper Back</option>
+						<option value="middleback">Middle Back</option>
+						<option value="lowerback">Lower Back</option>
+				</select>	
+			}
+				
+			<textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
+				name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
-					<p>Font</p>
-					<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
-						<option>arial</option>
-						<option>tahoma</option>
-						<option>Alfa Slab One</option>
-						<option>Teko</option>
-						<option>Damion</option>
-					</select>
+			<div className = "section-field">
+			<span id="title2">Font</span>
+			<select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+				<option>arial</option>
+				<option>tahoma</option>
+				<option>Alfa Slab One</option>
+				<option>Teko</option>
+				<option>Damion</option>
+			</select>
+			<br/>
+			</div>
 
-					<p>Style</p>
-					<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
-						<option>normal</option>
-						<option>italic</option>
-						<option>oblique</option>
-						<option>bold</option>
-					</select>
+			<div className="section-field">
+			<span id="title2">Style</span>
+			<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+				<option>normal</option>
+				<option>italic</option>
+				<option>oblique</option>
+				<option>bold</option>
+			</select>
+			<br/>
+			</div>
 
-					<p>Size</p> 
-					<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
-						name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+			<div className="section-field2">
+			<span id="title2">Size</span> 
+			<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
+				name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
+			</div>
 
-					<p>Color</p>
-					<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
-						<button>pick color</button>
-					</div>
-					{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
-					</div> : null }
+			<div className="section-field">
+			<span id="title2">Color</span>
+			<div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
+				<button className="button button_60">pick color</button>
+			</div>
+			{ this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
+				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+			</div> : null }
+			</div>
 
+			<div className="section-field">
+			</div>
 
-					<p>Border</p>
-					<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
-						name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-					<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-						<button>pick color</button>
-					</div>
-					{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-						<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
-					</div> : null }
+			<div className="section-field">
+			<span id="title2">Border</span>
+			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
+			<button className="button button_60">Pick Color</button><br/>
+			</div>
+			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
+				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
+			{/*<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>*/}
+				{/*<button>pick color</button>*/}
+			{/*</div>*/}
+
+			{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
+				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
+			</div> : null }
+			</div>
 			</center>
-		: <div/>
+			: <div/>
 
 
 	//   logoPicker = logoClickedWhat
@@ -668,101 +733,111 @@ class DesignPage extends React.Component {
 
 
 		return (
-		<section className="wrap clear col3">
+			<section className="wrap clear col3">
+	
+				{/*<!--========================================
+					LEFT SIDE BAR
+				=========================================-->*/}
+				<div className="aside">
+					<h2 className="h_white">SELECT STYLE</h2>
+	
+					<div className="content">
+	
+						{/*<!--========================================
+							Design section
+						=========================================-->*/}
+						<div className="section-field">
+						<span className="title1"> Color Match</span>
+						<button id="popbtn" onClick={this.clickedDesignPopButton}>
 
-			{/*<!--========================================
-				LEFT SIDE BAR
-			=========================================-->*/}
-			<div className="aside">
-				<h2 className="h_white">SELECT STYLE</h2>
-
-				<div className="content">
-
-					{/*<!--========================================
-						Design section
-					=========================================-->*/}
-					<h1>Design</h1>
-					<button onClick={this.clickedDesignPopButton}>pop</button>
-					{colorPicker}
-
-
-					{/*<!--========================================
-						Text section
-					=========================================-->*/}
-					<h1>Text</h1>
-					<button onClick={this.clickedTextPopButton}>pop</button>
-					{textPicker}
-
-					{/*<!--========================================
-						Image Upload Section
-					=========================================-->*/}
-					<h1>Logo</h1>
-					<button onClick={this.clickedLogoPopButton}>pop</button>
-					{logoPicker}
-
-				</div>
-			</div>
-
-
-		{/*<!--========================================
-			CENTER DESIGN SECTION
-		=========================================-->*/}
-		<div className="main">
-			<h2 className="h_white">SAMPLE VIEW</h2>
-				<div className="content">
-
-					{/*<!--========================================
-						Fabric Canvas Section
-					=========================================-->*/}
-					{/*<ThreeScene/>*/}
-					<div id="plain-react">
-						<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
-
-							<TabLink to="front">FRONT</TabLink>
-							<TabLink to="back">BACK</TabLink>
-							<TabContent for="front">
-
-								<div classname="canvas-bg">
-									<canvas id="front-canvas" />
-								</div>
-							</TabContent>
-
-							<TabContent for="back">
-
-								<div classname="canvas-bg">
-									<canvas id="back-canvas"/>
-								</div>
-							</TabContent>
-						</Tabs>
-					</div>
-
-					{/*<!--========================================
-						NEW & SAVE Button Section
-					=========================================-->*/}
-					{this.props.isLoggedIn ?
-						(<div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
-							{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
-							<button className="save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
-						</div>)
-						: <div>
-							<button className="new_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+						</button>
+						{colorPicker}
 						</div>
-					}
-				</div>
-			</div>
+	
+						{/*<!--========================================
+							Text section
+						=========================================-->*/}
+						<div className="section-field">
+						<span className="title1"> Text</span>
+						<button id="popbtn" onClick={this.clickedTextPopButton}>
 
-			{/*<!--========================================
-				RIGHT SIDE BAR
-			=========================================-->*/}
-			<div className="aside">
-				<h2 className="h_black">MY GROUP</h2>
-				<div className="content">
-					{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+						</button>
+						{textPicker}
+						</div>
+						{/*<!--========================================
+							Image Upload Section
+						=========================================-->*/}
+						<div className="section-field">
+						<span className="title1"> Logo</span>
+						<button id="popbtn" onClick={this.clickedLogoPopButton}>
+						</button>
+						{logoPicker}
+						</div>
+					</div>
 				</div>
-			</div>
-		</section>
-		);
+
+
+	
+	
+			{/*<!--========================================
+				CENTER DESIGN SECTION
+			=========================================-->*/}
+			<div className="main">
+				<h2 className="h_white">SAMPLE VIEW</h2>
+					<div className="content">
+	
+						{/*<!--========================================
+							Fabric Canvas Section
+						=========================================-->*/}
+						{/*<ThreeScene/>*/}
+						<div id="plain-react">
+							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
+	
+								<TabLink to="front">FRONT</TabLink>
+								<TabLink to="back">BACK</TabLink>
+								<TabContent for="front">
+	
+									<div classname="canvas-bg">
+										<canvas id="front-canvas" />
+									</div>
+								</TabContent>
+	
+								<TabContent for="back">
+	
+									<div classname="canvas-bg">
+										<canvas id="back-canvas"/>
+									</div>
+								</TabContent>
+							</Tabs>
+						</div>
+	
+						{/*<!--========================================
+							NEW & SAVE Button Section
+						=========================================-->*/}
+						{this.props.isLoggedIn ?
+							(<div>
+								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
+								<button className="button save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
+							</div>)
+							: <div>
+								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+							</div>
+						}
+					</div>
+				</div>
+	
+				{/*<!--========================================
+					RIGHT SIDE BAR
+				=========================================-->*/}
+				<div className="aside">
+					<h2 className="h_black">MY GROUP</h2>
+					<div className="content">
+						{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+					</div>
+				</div>
+			</section>
+			);
     }
 }
 
