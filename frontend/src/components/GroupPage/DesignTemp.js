@@ -28,7 +28,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                         <button class="post_btn" type="button"
                             onClick={() => {
                                 console.log("post_group: ", post_group)
-                                if(post_group === undefined || post_group === "그룹을 선택하세요") {
+                                if(post_group.value === undefined || post_group.value == "그룹을 선택하세요") {
                                     alert("그룹을 선택하세요")
                                 }
                                 else {
