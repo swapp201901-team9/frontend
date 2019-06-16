@@ -75,7 +75,7 @@ class DesignPage extends React.Component {
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
 		//his.clickedAddButton = this.clickedAddButton.bind(this);
-
+		this.scaleHandler = this.scaleHandler.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
 		this.onClickSave = this.onClickSave.bind(this);
 
@@ -119,11 +119,14 @@ class DesignPage extends React.Component {
 		});
 
 		this.the_front_canvas.on({
+			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
 		})
 
 		this.the_back_canvas.on({
+			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
+
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -376,39 +379,48 @@ class DesignPage extends React.Component {
 		img.addEventListener('load', function(event){
 			let imgInstance;
         	imgInstance = new fabric.Image(event.currentTarget, {
-            width: 899,
-			height:959,
+            width: logo.width,
+			height: logo.height,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
-            top: logo.top
+            top: logo.top,
 		});
-		imgInstance.set({
-            scaleY: 0.05,
-            scaleX: 0.05,
-            originX: "center",
-            originY: "center"
-        });
+		// imgInstance.set({
+        //     scaleY: 0.05,
+        //     scaleX: 0.05,
+        //     originX: "center",
+        //     originY: "center"
+        // });
 
 		scope.setState({element: imgInstance});
 		})
 		img.src = logo.src;
 
-        let imgInstance;
+		let imgInstance;
+		console.log("logo.width "+ logo.width);
+		console.log("logo.height "+ logo.height);
         imgInstance = new fabric.Image(img, {
-            width: 899,
-			height:959,
+            width: logo.width,
+			height: logo.height,
 			the_type: type,
             zIndex: 10,
             left: logo.left,
-            top: logo.top
-        });
+			top: logo.top,
+			scaleX: logo.scaleX,
+			scaleY: logo.scaleY,
+			originX: "center",
+			originY: "center",
+		});
+		if(imgInstance.width >= 500) {
+		console.log("logo element to image will be scaled")
         imgInstance.set({
-            scaleY: 0.05,
-            scaleX: 0.05,
+            scaleY: 0.1,
+            scaleX: 0.1,
             originX: "center",
             originY: "center"
-        });
+		});
+	}
         return imgInstance;
     }
 
@@ -494,6 +506,41 @@ class DesignPage extends React.Component {
 			this.setState({logoClickedWhat: "back_close"})
 		}
 		
+	}
+	scaleHandler = (e)=>{
+		let scalingObject = e.target;
+		var width = scalingObject.getScaledWidth()*10;
+		var height = scalingObject.getScaledHeight()*10;
+
+		console.log("scaling: ", scalingObject)
+		console.log("width: ", width, " height: ", height);
+
+		if (scalingObject.the_type === "frontchest" ||
+    		scalingObject.the_type === "rightarm" ||
+    		scalingObject.the_type === "upperback" ||
+    		scalingObject.the_type === "middleback" ||
+    		scalingObject.the_type === "lowerback") {
+    		this.setState({text : ({...this.state.text,
+        	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
+        	width: width,
+            height: height})
+    	})});
+		}
+		else if (scalingObject.the_type === "front" ||
+         	scalingObject.the_type === "back") {
+			console.log("scale handler logo width height")
+			var old_width = this.state.logo[scalingObject.the_type].width
+			var old_height = this.state.logo[scalingObject.the_type].height
+			console.log("old_width "+ old_width+ "old_height "+old_height)
+			var scaleX= width/old_width
+			var scaleY= height/old_height
+			console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
+    		this.setState({logo : ({...this.state.logo,
+        	[scalingObject.the_type]: ({...this.state.logo[scalingObject.the_type],
+        	width:width,
+            height: height, scaleX: scaleX, scaleY: scaleY})
+    	})});
+		}
 	}
 
 	moveHandler = (e) =>{
