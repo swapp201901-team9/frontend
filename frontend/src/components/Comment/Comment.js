@@ -105,9 +105,6 @@ class Comment extends React.Component {
             <p>좋아요 {this.props.comment.likes}개</p>
           <div className="Comment-Button-Field">
           {this.props.comment.auth
-
-
-
             // 댓글을 단 사람이면
             ? <div>
                 <button className="button button_delete" onClick={() => this.deleteCommentCheck()}>DELETE</button>
@@ -117,7 +114,7 @@ class Comment extends React.Component {
 
             : this.comment.liked
               ? <button className="button button_unlike" onClick={() => this.props.onUnlikeComment(this.comment.id)}}>좋아요 취소</button>
-              : <button className="button button_like" onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084;</button>
+              : <button className="button button_like" onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084; </button>
 
           }
           </div>
