@@ -897,6 +897,7 @@ function *updatePW(profuser, newpw){
             body: JSON.stringify({"username": profuser, "password": newpw})
         });
         console.log("put password succeed ");
+        localStorage.setItem("auth", window.btoa(profuser + ":" + newpw));
         //auto sign out
         yield put(actions.changeUrl('/main/'));
     }catch(error){
