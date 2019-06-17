@@ -11,31 +11,7 @@ class GroupAdminPage extends React.Component {
 	constructor(props) {
 		super(props)
 
-		this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
-		this.deleteUserCheck = this.deleteUserCheck.bind(this)
-		this.giveAdminCheck = this.giveAdminCheck.bind(this)
 		this.deleteGroupCheck = this.deleteGroupCheck.bind(this)
-	}
-
-	deleteDesignCheck(groupid, designid) {
-		if(confirm("정말 삭제하시겠습니까?") == true) 
-			return this.props.onDeleteDesign(groupid, designid)
-		else 
-			return false;
-	}
-
-	deleteUserCheck(groupid, userid) {
-		if(confirm("정말 삭제하시겠습니까?") == true)
-			return this.props.onDeleteUser(groupid, userid)
-		else 
-			return false;
-	}
-
-	giveAdminCheck(groupid, userid) {
-		if(confirm("정말 관리자 권한을 부여하시겠습니까?") == true)
-			return this.props.onGiveAdmin(groupid, userid)
-		else 
-			return false;
 	}
 
 	deleteGroupCheck(groupid) {
@@ -51,11 +27,6 @@ class GroupAdminPage extends React.Component {
 				<p>loading...</p>
 			)
 		}
-
-		let admin_userlist = this.props.group_users.filter(user => {
-			console.log("username: ", user.username)
-			return (user.username !== this.props.user.split(":")[0])
-		})
 
 		return (
 			<div className="GroupAdminPage">
@@ -76,23 +47,13 @@ class GroupAdminPage extends React.Component {
 					<div className="main">
 						<h2 className="h_white">DESIGNS</h2>
 						<div className="content">
-						<GroupDesignList
-							groupid={this.props.now_group.id}
-							designlist={this.props.group_designs}
-							onClickDeleteDesign={this.deleteDesignCheck}
-						/>
-
+							<GroupDesignList />
 						</div>
 					</div>
 					<div className="aside">
 						<h2 className="h_black">MEMBER LIST</h2>
 						<div className="content">
-						<GroupUserList
-							groupid={this.props.now_group.id}
-							userlist={admin_userlist}
-							onClickDeleteUser={this.deleteUserCheck}
-							onClickGiveAdmin={this.giveAdminCheck}
-						/>
+							<GroupUserList />
 						</div>
 					</div>
 				</section>
@@ -102,18 +63,12 @@ class GroupAdminPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	user: state.authorization,
 	now_group: state.now_group,
-    group_users: state.group_users,
-    group_designs: state.group_designs,
 	loading: state.loading
 })
 
 const mapDispatchToProps = (dispatch) => ({
 	onChangeGroupInfo: (groupid, grouptype, groupname) => dispatch(toChangeGroupInfo(groupid, grouptype, groupname)),
-	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid)),
-	onDeleteUser: (groupid, userid) => dispatch(toDeleteGroupUser(groupid, userid)),
-	onGiveAdmin: (groupid, userid) => dispatch(toGiveAdmin(groupid, userid)),
 	onDeleteGroup: (groupid) => dispatch(toDeleteGroup(groupid))
 })
 

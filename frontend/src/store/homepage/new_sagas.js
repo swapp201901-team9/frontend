@@ -854,7 +854,8 @@ function *signIn(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
-        alert("watch singIn error");
+        alert("아이디 또는 비밀번호가 ");
+        console.log(error)
     }
 }
 

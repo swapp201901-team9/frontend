@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import DesignTemp from './DesignTemp.js';
+import DesignForm from './DesignForm.js'
 import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign, toPostDesign, gotoEditDesign } from '../../actions/index.js';
 import NavBar from '../NavBar/NavBar.js';
 import MyGroupList from './MyGroupList.js';
@@ -46,7 +46,7 @@ class GroupDetailPage extends React.Component {
       							<div className="content">
                     <ul>
                       {this.props.group_designs.map(design => 
-                        <DesignTemp
+                        <DesignForm
                           key={design.id}
                           design={design}
                           group={this.props.now_group}

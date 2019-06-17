@@ -1,19 +1,46 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import { toDeleteGroupDesign } from '../../actions';
 
-const GroupDesignList = ({ groupid, designlist, onClickDeleteDesign }) => {    
-    return (
-        <div>
-            {designlist.map(design => 
-                <ul key={design.id}> 
-                    <div>
-                        <img src={design.front_image_url} />
-                        <img src={design.back_image_url} /> 
-                    </div>
-                    <button onClick={() => onClickDeleteDesign(groupid, design.id)}>삭제</button>
-                </ul> 
-            )}
-        </div>  
-    )
+class GroupDesignList extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
+    }
+
+    deleteDesignCheck = (designid) => {
+        if(confirm("정말 삭제하시겠습니까?") == true) 
+            return this.props.onDeleteDesign(this.props.now_group.id, designid)
+        else 
+            return false;
+    }
+
+    render() {
+        return (
+            <div>
+                {this.props.group_designs.map(design => 
+                    <ul key={design.id}> 
+                        <div>
+                            <img src={design.front_image_url} />
+                            <img src={design.back_image_url} /> 
+                        </div>
+                        <button onClick={() => this.deleteDesignCheck(design.id)}>삭제</button>
+                    </ul> 
+                )}
+            </div>  
+        )
+
+    }
 }
 
-export default GroupDesignList
+const mapStateToProps = (state) => ({
+	now_group: state.now_group,
+    group_designs: state.group_designs,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GroupDesignList);
