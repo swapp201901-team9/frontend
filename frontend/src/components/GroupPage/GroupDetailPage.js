@@ -8,7 +8,9 @@ import MyGroupList from './MyGroupList.js';
 
 class GroupDetailPage extends React.Component {
   constructor(props) {
-		super(props)
+    super(props)
+
+    this.design;
 
 		this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
 	}
@@ -21,80 +23,109 @@ class GroupDetailPage extends React.Component {
 	}
 
   render() {
-        if (!this.props.loading) {
-            return (
-                <p>loading...</p>
-            )
-        }
-        return (
-            <div >
-              <NavBar />
-              <section className="wrap clear col3">
-      					<div className="aside">
-      						<h2 className="h_white">GROUP DETAIL</h2>
-      							<div className="content">
-                      <p>타입: {this.props.now_group.group_type}</p>
-                      <p>이름: {this.props.now_group.group_name}</p>
-                      <p>멤버: {this.props.now_group.users.length}명</p>
-                      <p>디자인: {this.props.group_designs.length}개</p>
-                      <p>관리자: {this.props.now_group.master}</p>
-                      {console.log(this.props.now_group)}
-      							</div>
-      					</div>
-      					<div className="main">
-      						<h2 className="h_white">DESIGN LIST</h2>
-      							<div className="content">
-                    <ul>
-                      {this.props.group_designs.map(design => 
-                        <DesignForm
-                          key={design.id}
-                          design={design}
-                          group={this.props.now_group}
-                          my_groups={this.props.my_groups}
-                          onClickEdit={() => this.props.onToEdit(design.id)}
-                          onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, 
-                            {
-                              body: design.body,
-                              sleeve: design.sleeve,
-                              banding: design.banding,
-                              stripe: design.stripe,
-                              button: design.button,
-                            },
-                            {
-                              frontchest: design.front_chest_text,
-                              rightarm: design.right_arm_text,
-                              upperback: design.upper_back_text,
-                              middleback: design.front_back_text,
-                              lowerback: design.lower_back_text,
-                            },
-                            {
-                              frontImg: design.front_img_url,
-                              backImg: design.back_img_url,
-                            },
-                            {
-                              front: design.front_logo,
-                              back: design.back_logo,
-                            }
-                          )}
-                          onClickLike={() => this.props.onLikeDesign(design.id)}
-                          onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
-                          onClickDelete={() => this.deleteDesignCheck(this.props.now_group.id, design.id)}
-                         />
-                      )}
-                    </ul>
-      							</div>
-      					</div>
-      					<div className="aside">
-      						<h2 className="h_black">MY GROUP</h2>
-      							<div className="content">
-      							<MyGroupList />
-      							</div>
-      					</div>
-      				</section>
 
-            </div>
+
+
+    if (!this.props.loading) {
+        return (
+            <p>loading...</p>
         )
     }
+    return (
+        <div >
+          <NavBar />
+          <section className="wrap clear col3">
+            <div className="aside">
+              <h2 className="h_white">GROUP DETAIL</h2>
+                <div className="content">
+                  <p>타입: {this.props.now_group.group_type}</p>
+                  <p>이름: {this.props.now_group.group_name}</p>
+                  <p>멤버: {this.props.now_group.users.length}명</p>
+                  <p>디자인: {this.props.group_designs.length}개</p>
+                  <p>관리자: {this.props.now_group.master}</p>
+                  {console.log(this.props.now_group)}
+                </div>
+            </div>
+            <div className="main">
+              <h2 className="h_white">DESIGN LIST</h2>
+                <div className="content">
+                {this.props.now_group.grouptype === 'UR'
+                  ? <div>
+                      <form onSubmit={this.onPostDesign}>
+                        <div className="CreateGroup">
+                          <label htmlFor="group type">Design</label>
+                          <select
+                            name="design"
+                            ref={ node => {this.design=node;} }
+                            className="type-select"
+                          >
+                            {type_options.map(option => {
+                              return <option value={option} key={option} >{option}</option>
+                            })}
+                          </select>
+                          <br />
+                          <div className="Group-Button-Field">
+                          <button type="submit">CREATE GROUP</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  : <div/>
+                    
+                }
+
+
+                <ul>
+                  {this.props.group_designs.map(design => 
+                    <DesignForm
+                      key={design.id}
+                      design={design}
+                      group={this.props.now_group}
+                      my_groups={this.props.my_groups}
+                      onClickEdit={() => this.props.onToEdit(design.id)}
+                      onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, 
+                        {
+                          body: design.body,
+                          sleeve: design.sleeve,
+                          banding: design.banding,
+                          stripe: design.stripe,
+                          button: design.button,
+                        },
+                        {
+                          frontchest: design.front_chest_text,
+                          rightarm: design.right_arm_text,
+                          upperback: design.upper_back_text,
+                          middleback: design.front_back_text,
+                          lowerback: design.lower_back_text,
+                        },
+                        {
+                          frontImg: design.front_img_url,
+                          backImg: design.back_img_url,
+                        },
+                        {
+                          front: design.front_logo,
+                          back: design.back_logo,
+                        }
+                      )}
+                      onClickLike={() => this.props.onLikeDesign(design.id)}
+                      onClickUnlike={() => this.props.onUnlikeDesign(design.id)}
+                      onClickDelete={() => this.deleteDesignCheck(this.props.now_group.id, design.id)}
+                      />
+                  )}
+                </ul>
+                </div>
+            </div>
+            <div className="aside">
+              <h2 className="h_black">MY GROUP</h2>
+                <div className="content">
+                <MyGroupList />
+                </div>
+            </div>
+          </section>
+
+        </div>
+    )
+  }
 }
 
 const mapStateToProps = (state) => ({
