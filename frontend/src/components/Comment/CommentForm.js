@@ -19,19 +19,28 @@ class CommentForm extends React.Component {
     // prevent default form submission
     e.preventDefault();
 
-    if (!this.isFormValid()) {
-      this.setState({ error: "All fields are required." });
+    if (!this.isNameValid()) {
+      alert("이름을 적어주세요.")
       return;
     }
 
+    if (!this.isMessageValid()) {
+      alert("내용을 적어주세요.")
+      return;
+    }
+    
     this.props.onAddComment(this.props.designid, this.name.value, this.message.value)
   }
 
   /**
    * Simple validation
    */
-  isFormValid() {
-    return this.name !== "" && this.message !== "";
+  isNameValid() {
+    return this.name.value !== "";
+  }
+
+  isMessageValid() {
+    return this.message.value !== "";
   }
 
   render() {
