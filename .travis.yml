@@ -6,9 +6,9 @@ matrix:
     before_install: 
       - cd ./frontend/
     install:
-      - npm install 
+      - sudo npm install 
     script: 
-      - npm test 
+      - sudo npm test 
 
     
     #-language: python3
