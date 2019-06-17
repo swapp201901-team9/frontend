@@ -16,9 +16,9 @@ class GroupDetailPage extends React.Component {
 	}
 
 	deleteDesignCheck(groupid, designid) {
-		if(confirm("정말 삭제하시겠습니까?") == true) 
+		if(confirm("정말 삭제하시겠습니까?") == true)
 			return this.props.onDeleteDesign(groupid, designid)
-		else 
+		else
 			return false;
 	}
 
@@ -32,7 +32,7 @@ class GroupDetailPage extends React.Component {
         )
     }
     return (
-      
+
       <div >
         <NavBar />
         <section className="wrap clear col3">
@@ -52,7 +52,7 @@ class GroupDetailPage extends React.Component {
               <div className="content">
               {this.props.now_group.group_type === 'UR'
                 ? <div>
-                    <button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW DESIGN</button>
+                    <button className="button button_newdesign" type="button" onClick={() => this.props.onNew()}>새 과잠 디자인하기 &#10148;</button>
                   </div>
                 : <div>
                     {/* <form onSubmit={this.onPostDesign}>
@@ -74,19 +74,19 @@ class GroupDetailPage extends React.Component {
                       </div>
                     </form> */}
                   </div>
-                  
+
               }
 
 
               <ul>
-                {this.props.group_designs.map(design => 
+                {this.props.group_designs.map(design =>
                   <DesignForm
                     key={design.id}
                     design={design}
                     group={this.props.now_group}
                     my_groups={this.props.my_groups}
                     onClickEdit={() => this.props.onToEdit(design.id)}
-                    onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid, 
+                    onClickPost={(groupid) => this.props.onPostDesign(design.id, groupid,
                       {
                         body: design.body,
                         sleeve: design.sleeve,

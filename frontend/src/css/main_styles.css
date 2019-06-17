@@ -814,7 +814,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   .Comment-Field{
   padding: 6px 10px;
-  /*margin: 2px 0px 2px 2px;*/
+  margin: 2px 0px;
   box-sizing: border-box;
   color: black;
   border-radius: 4px;
@@ -835,19 +835,31 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   /*margin: 2px 0px 2px 2px;*/
   box-sizing: border-box;
   color: black;
+  background-color: #efefef;
+  border-radius: 4px;
 
-  border-bottom: 1px solid #efefef;
   }
   .Comment-List-Field{
   padding: 6px 0px;
   box-sizing: border-box;
   color: black;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #efefef;
   }
 
   .Comment-Button-Field{
   width:30%;
   margin-left: 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: black;
+  display: inline-block;
+  float: right;
+  top:0; bottom:0;
+
+  }
+  .DesignList-Button-Field{
+  width:80%;
+  margin:20px 0px;
   box-sizing: border-box;
   font-size: 12px;
   color: black;
@@ -894,13 +906,39 @@ form > .form-group{
    display: inline-block;
    float: right;
  }
+ .button_newdesign{
+   width: 40%;
+   height: 24px;
+   display: inline-block;
+
+
+   float: right;
+   border: none;
+   border-radius: 12px;
+   box-shadow: none;
+   background-color: transparent;
+   font-size: 14px;
+   color: #333;
+   top:0;
+   bottom:0;
+   text-align:right;
+ }
 
   #groupName{
     cursor:pointer;
   }
   .button_edit{
-    width: 40%;
-    height: 24px;
+    width: 30%;
+    display: inline-block;
+    margin-left:10px;
+    float: right;
+    border: none;
+    box-shadow: none;
+    top:0;
+    bottom:0;
+  }
+  .button_comment_delete{
+    width: 30%;
     display: inline-block;
     margin-left:4px;
     float: right;
@@ -912,9 +950,8 @@ form > .form-group{
     top:0;
     bottom:0;
   }
-  .button_delete{
-    width: 40%;
-    height: 24px;
+  .button_comment_edit{
+    width: 30%;
     display: inline-block;
     margin-left:4px;
     float: right;
@@ -925,6 +962,12 @@ form > .form-group{
     color: #777;
     top:0;
     bottom:0;
+  }
+  #post_group{
+    background-color:white;
+    width: 65%;
+    display: inline-block;
+    margin: 0px;
   }
 
   .button_like{
