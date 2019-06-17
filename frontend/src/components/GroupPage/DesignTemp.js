@@ -11,6 +11,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                 {console.log("design: ", design)}
                 <img src={design.front_image_url} />
                 <img src={design.back_image_url} />
+                <p>{design.likes}</p>
             </div>
             
             {(group.group_type === "UR")
@@ -39,7 +40,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                                     alert("그룹을 선택하세요")
                                 }
                                 else {
-                                    onClickPost(document.getElementById("post_group").value)
+                                    onClickPost(post_group.value)
                                 }
                                 }}>
                             POST

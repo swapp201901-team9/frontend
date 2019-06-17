@@ -1179,7 +1179,7 @@ function *addComment(data) {
 
 function *editComment(data) {
     console.log("editComment")
-    const path = 'groups/edit/' + data.designid + '/';
+    const path = 'groups/comment/' + data.designid + '/' + data.commentid + '/';
     try {
 		yield call(xhr.get, fixed_url + path, {
             headers: {
