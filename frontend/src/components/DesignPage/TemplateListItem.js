@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'react-image-resizer';
 
 export default class TemplateListItem extends React.Component{
-    localAddToCanvas = (e) => {
+    localAddToCanvas (e) {
         e.preventDefault();
         this.props.addToCanvas(e.target, this.props.property_type, this.props.zIndex);
     }
