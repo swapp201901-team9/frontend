@@ -153,7 +153,7 @@ class DesignPage extends React.Component {
 	}
 
 
-	componentWillUpdate = (nextProps, nextState) => {
+	componentWillUpdate (nextProps, nextState) {
 		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
         // If Updated Item is not the same as the old one

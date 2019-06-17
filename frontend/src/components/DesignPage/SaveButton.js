@@ -6,7 +6,7 @@ class SaveButton extends React.Component {
 
         return (
          <div>
-
+        <button> save </button>
 
         </div>
        )
