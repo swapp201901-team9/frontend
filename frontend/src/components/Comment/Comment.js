@@ -107,7 +107,9 @@ class Comment extends React.Component {
           }
           </div>
           </div>
-          {this.props.comment.comment}{this.props.comment.likes}
+
+            <span className="title4">{this.props.comment.comment}</span>
+              <p className="likes">&#10084; {this.props.comment.likes}</p>
 
       </div>
 

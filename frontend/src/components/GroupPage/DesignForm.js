@@ -58,7 +58,9 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
 
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
-                    {design.auth && <button onClick={onClickDelete}>DELETE DESIGN</button>}
+                    <div className="DesignList-Button-Field">
+                    {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                    </div>
                 <div>
                     {console.log("design: ", design)}
                     <img src={design.front_image_url} />

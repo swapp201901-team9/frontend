@@ -855,8 +855,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   display: inline-block;
   float: right;
   top:0; bottom:0;
-
   }
+  .Comment-Content-Field{
+    padding: 6px 0px;
+    box-sizing: border-box;
+    color: black;
+  }
+
   .DesignList-Button-Field{
   width:80%;
   margin:20px 0px;
@@ -866,10 +871,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   display: inline-block;
   float: right;
   top:0; bottom:0;
-
   }
+.likes{
+  text-align: right;
+  color:#D86B62;
+}
 
-
+.title4{
+  margin-left: 4px;
+  font-size: 14px;
+  vertical-align: middle;
+  }
 .title5{
   margin-left: 4px;
   font-size: 12px;
@@ -910,8 +922,6 @@ form > .form-group{
    width: 40%;
    height: 24px;
    display: inline-block;
-
-
    float: right;
    border: none;
    border-radius: 12px;
@@ -933,12 +943,12 @@ form > .form-group{
     margin-left:10px;
     float: right;
     border: none;
-    box-shadow: none;
     top:0;
     bottom:0;
   }
   .button_comment_delete{
     width: 30%;
+    height:24px;
     display: inline-block;
     margin-left:4px;
     float: right;
@@ -952,6 +962,7 @@ form > .form-group{
   }
   .button_comment_edit{
     width: 30%;
+    height:24px;
     display: inline-block;
     margin-left:4px;
     float: right;
@@ -991,7 +1002,7 @@ form > .form-group{
     border: none;
     border-radius: 12px;
     box-shadow: none;
-    background-color: #999;
+    background-color: #bbb;
     color: #fff;
 
   }
