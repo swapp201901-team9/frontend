@@ -1440,7 +1440,7 @@ function *saveDesign(data) {
             })
         });
         console.log("save design succeed ");
-        yield put(actions.changeUrl('/main/'));
+        alert("저장되었습니다.")
     }catch(error){
         console.log(error)
         alert("save design error");
