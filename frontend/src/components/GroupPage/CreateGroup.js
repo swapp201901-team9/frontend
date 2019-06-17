@@ -10,7 +10,6 @@ class CreateGroup extends React.Component {
 
 	render() {
 		const type_options= [
-			'Select an Option',
 			'Club',
 			'Department',
 			'Else'
@@ -19,7 +18,7 @@ class CreateGroup extends React.Component {
 		let onSubmit = (e) => {
 			console.log("create onSubmit")
 			e.preventDefault()
-			if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
+			if(this.grouptype !== undefined && this.groupname !== undefined) {
 				this.props.onCreateGroup(this.grouptype, this.groupname)
 			}
 		}
@@ -33,6 +32,7 @@ class CreateGroup extends React.Component {
 							name="grouptype"
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
+							defaultValue="Club"
 						>
 							{type_options.map(option => {
 								return <option value={option} key={option} >{option}</option>
