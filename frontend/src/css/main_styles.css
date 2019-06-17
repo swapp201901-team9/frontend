@@ -792,14 +792,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
   .Group-List-Field{
   margin: 5px 0px;
+  padding: 5px 0px;
   box-sizing: border-box;
   color: black;
   }
 
-  .Group-List-Field > ul {
-  padding: 0px;
-  margin: 20px 0px;
-  }
 
   .Group-Button-Field{
   width:16%;
@@ -809,7 +806,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   color: black;
   display: inline-block;
   float: right;
-  top:0; bottom:0;
 
   }
   .Comment-Field{
@@ -870,7 +866,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   color: black;
   display: inline-block;
   float: right;
-  top:0; bottom:0;
   }
 .likes{
   text-align: right;

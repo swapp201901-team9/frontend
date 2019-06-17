@@ -10,25 +10,25 @@ class GroupDesignList extends React.Component {
     }
 
     deleteDesignCheck = (designid) => {
-        if(confirm("정말 삭제하시겠습니까?") == true) 
+        if(confirm("정말 삭제하시겠습니까?") == true)
             return this.props.onDeleteDesign(this.props.now_group.id, designid)
-        else 
+        else
             return false;
     }
 
     render() {
         return (
             <div>
-                {this.props.group_designs.map(design => 
-                    <ul key={design.id}> 
+                {this.props.group_designs.map(design =>
+                    <ul key={design.id}>
                         <div>
                             <img src={design.front_image_url} />
-                            <img src={design.back_image_url} /> 
+                            <img src={design.back_image_url} />
                         </div>
-                        <button onClick={() => this.deleteDesignCheck(design.id)}>삭제</button>
-                    </ul> 
+                        <button onClick={() => this.deleteDesignCheck(design.id)}>DELETE DESIGN</button>
+                    </ul>
                 )}
-            </div>  
+            </div>
         )
 
     }

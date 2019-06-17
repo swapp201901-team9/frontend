@@ -19,32 +19,40 @@ class GroupUserList extends React.Component {
     deleteUserCheck = (userid) => {
         if(confirm("정말 삭제하시겠습니까?") == true)
             return this.props.onDeleteUser(this.props.now_group.id, userid)
-        else 
+        else
             return false;
     }
-    
+
     giveAdminCheck = (userid) => {
         if(confirm("정말 관리자 권한을 부여하시겠습니까?") == true)
             return this.props.onGiveAdmin(this.props.now_group.id, userid)
-        else 
+        else
             return false;
     }
 
     render() {
         return (
             <div>
-                {this.props.group_users.map(user => 
-                    <ul key={user.id}> 
-                        <p>{user.username}</p>
+            <div className="Group-List-Field">
+                {this.props.group_users.map(user =>
+                    <ul key={user.id}>
+                      <div className="Group-Name-Field">
+                        <span>{user.username}</span>
+                        </div>
                         {console.log(user)}
-                        <button className="Button button_small" onClick={() => this.deleteUserCheck(user.id)}>DELETE</button>
-                        {user.admin 
+                        <div className="Group-Button-Field">
+                        <button className="Button button_small" onClick={() => this.deleteUserCheck(user.id)}>삭제</button>
+                        {user.admin
                             ? <div></div>
-                            : <button className="Button button_small" onClick={() => this.giveAdminCheck(user.id)}>ADMIN</button>
+                            : <button className="Button button_small" onClick={() => this.giveAdminCheck(user.id)}>관리자</button>
                         }
-                    </ul> 
+                        </div>
+
+                    </ul>
                 )}
-            </div>  
+                </div>
+
+            </div>
         )
     }
 }
