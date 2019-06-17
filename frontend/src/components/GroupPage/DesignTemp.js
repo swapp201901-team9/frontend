@@ -11,12 +11,13 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                 {console.log("design: ", design)}
                 <img src={design.front_image_url} />
                 <img src={design.back_image_url} />
-                <p>{design.likes}</p>
+
             </div>
-            
+
             {(group.group_type === "UR")
                 /* grouptype이 user 그룹일때 - edit 및 post 가능 */
                 ? (<div>
+                    <span>{design.likes}명이 좋아합니다</span>
                         <button class="post_btn" type="button"
                             onClick={onClickEdit}>
                             EDIT
@@ -49,16 +50,25 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
 
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
+                <div className="Comment-List-Field">
+                <span className="title5">{design.likes}명이 좋아합니다</span>
+                    <div className="Group-Button-Field">
                         {design.liked
-                        ? (<button onClick={onClickUnlike}>UNLIKE DESIGN</button>)
-                        : (<button onClick={onClickLike}>LIKE DESIGN</button>)
+                        ? (<button className="button button_unlike" onClick={onClickUnlike}>좋아요 취소</button>)
+                        : (<button className="button button_like" onClick={onClickLike}>좋아요</button>)
                         }
-                        
-                        <h2>댓글</h2>
+                    </div>
+                    </div>
+                    <div className="Comment-List-Field">
+                        <span className="title5">댓글 쓰기..</span>
                         {console.log("DesignTemp design.comments: ", design.comments)}
                         <CommentForm designid={design.id}/>
+                    </div>
+                      <div className="Comment-List-Field">
                         <CommentList comments={design.comments}/>
                     </div>
+                    </div>
+
             }
             <br />
             {/* design의 주인일 때 - 삭제 가능 */}

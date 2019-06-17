@@ -39,32 +39,29 @@ class CommentForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+          
             <input
+              id="comment_name"
               ref={ node => {this.name=node;} }
               className="form-control"
-              placeholder="Your Name"
+              placeholder="Name"
               name="name"
               type="text"
             />
-          </div>
 
-          <div className="form-group">
-            <textarea
+            <input
+              id="comment_text"
               ref={ node => {this.message=node;} }
               // value={this.contents}
-              className="form-control"
-              placeholder="Your Comment"
+              className="form-control2"
+              placeholder="Comment"
               name="message"
               rows="5"
             />
-          </div>
+              <button className="button button_comment">
+                Comment &#10148;
+              </button>
 
-          <div className="form-group">
-            <button className="btn btn-primary">
-              Comment &#10148;
-            </button>
-          </div>
         </form>
       </div>
     );
