@@ -38,22 +38,22 @@ class CommentForm extends React.Component {
 
     return (
       <div>
+
         <form onSubmit={this.onSubmit}>
-          
+
             <input
-              id="comment_name"
               ref={ node => {this.name=node;} }
-              className="form-control"
+              className="comment_name"
               placeholder="Name"
               name="name"
               type="text"
             />
 
             <input
-              id="comment_text"
+
               ref={ node => {this.message=node;} }
               // value={this.contents}
-              className="form-control2"
+              className="comment_text"
               placeholder="Comment"
               name="message"
               rows="5"
@@ -63,6 +63,7 @@ class CommentForm extends React.Component {
               </button>
 
         </form>
+      
       </div>
     );
   }

@@ -812,18 +812,56 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   top:0; bottom:0;
 
   }
+  .Comment-Field{
+  padding: 6px 10px;
+  /*margin: 2px 0px 2px 2px;*/
+  box-sizing: border-box;
+  color: black;
+  border-radius: 4px;
+  border: 1px solid #efefef;
 
+  }
+  .Comment-Like-Field{
+  padding: 6px 10px;
+  /*margin: 2px 0px 2px 2px;*/
+  box-sizing: border-box;
+  color: black;
+  /*background-color: #efefef;
+  border-radius: 4px;*/
+  border-bottom: 1px solid #efefef;
+  }
+  .Comment-Write-Field{
+  padding: 6px 10px;
+  /*margin: 2px 0px 2px 2px;*/
+  box-sizing: border-box;
+  color: black;
+
+  border-bottom: 1px solid #efefef;
+  }
   .Comment-List-Field{
-  padding: 5px 0px;
+  padding: 6px 0px;
   box-sizing: border-box;
   color: black;
   border-bottom: 1px solid #eee;
   }
 
+  .Comment-Button-Field{
+  width:30%;
+  margin-left: 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: black;
+  display: inline-block;
+  float: right;
+  top:0; bottom:0;
+
+  }
+
+
 .title5{
   margin-left: 4px;
   font-size: 12px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 form > .form-group{
   /*width:100%;
@@ -834,19 +872,25 @@ form > .form-group{
 
     border-bottom:1px solid #fefefe;*/
 }
- .form-control{
+ .comment_name{
+
    width: 17%;
+   height: 30px;
    display: inline-block;
+   font-size: 12px;
    margin-right: 10px;
  }
- .form-control2{
-   width: 55%;
+ .comment_text{
+   width: 54%;
+   height: 30px;
    display: inline-block;
+   font-size: 12px;
    margin-right: 10px;
 
  }
  .button_comment{
    width: 20%;
+   height: 30px;
    display: inline-block;
    float: right;
  }
@@ -854,9 +898,38 @@ form > .form-group{
   #groupName{
     cursor:pointer;
   }
+  .button_edit{
+    width: 40%;
+    height: 24px;
+    display: inline-block;
+    margin-left:4px;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: transparent;
+    color: #777;
+    top:0;
+    bottom:0;
+  }
+  .button_delete{
+    width: 40%;
+    height: 24px;
+    display: inline-block;
+    margin-left:4px;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: transparent;
+    color: #777;
+    top:0;
+    bottom:0;
+  }
+
   .button_like{
     width: 100%;
-    height: 24px;
+    height: 22px;
     display: inline-block;
     float: right;
     border: none;
@@ -866,11 +939,10 @@ form > .form-group{
     color: #fff;
     top:0;
     bottom:0;
-
   }
   .button_unlike{
     width: 100%;
-    height: 24px;
+    height: 22px;
     display: inline-block;
     float: right;
     border: none;
