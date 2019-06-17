@@ -4,10 +4,12 @@ const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup, onClickWithdrawG
 
   return (
     <div>
-      <div className = "Group-List-Field">
+
         {grouplist.map(group =>
+          <div className = "Group-List-Field">
           <ul key={group.id}>
             <span onClick={() => onClickGroup(group.id)}>{group.group_type} {group.group_name}</span>
+
             <div className = "Group-Button-Field">
             {group.member
               ? ( <button className="button button_small" onClick={() => onClickWithdrawGroup(group.id)}>탈퇴</button> )
@@ -15,8 +17,9 @@ const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup, onClickWithdrawG
             }
             </div>
           </ul>
+          </div>
         )}
-      </div>
+
     </div>
   )
 }
