@@ -778,78 +778,7 @@ exports[`GroupPage renders without crashing 1`] = `
 </p>
 `;
 
-exports[`GroupPage renders without crashing 2`] = `
-<p>
-  loading...
-</p>
-`;
-
 exports[`GroupPage should render <CreateGroup /> 1`] = `
-<div>
-  <form
-    onSubmit={[Function]}
-  >
-    <div
-      className="CreateGroup"
-    >
-      <label
-        htmlFor="group type"
-      >
-        Group Type 
-      </label>
-      <select
-        className="type-select"
-        name="grouptype"
-      >
-        <option
-          value="Select an Option"
-        >
-          Select an Option
-        </option>
-        <option
-          value="Club"
-        >
-          Club
-        </option>
-        <option
-          value="Department"
-        >
-          Department
-        </option>
-        <option
-          value="Else"
-        >
-          Else
-        </option>
-      </select>
-      <br />
-      <br />
-      <label
-        htmlFor="group name"
-      >
-        Group Name
-      </label>
-      <input
-        className="name-input"
-        name="groupname"
-        type="text"
-      />
-      <br />
-      <div
-        className="Group-Button-Field"
-      >
-        <button
-          type="submit"
-        >
-          CREATE GROUP
-        </button>
-      </div>
-    </div>
-  </form>
-</div>
-`;
-
-exports[`GroupPage should render <CreateGroup /> 2`] = `
 <div>
   <form
     onSubmit={[Function]}
