@@ -1,10 +1,13 @@
-// import React from 'react';
+import React from 'react';
 // import {shallow, configure} from 'enzyme';
-// import {create} from 'react-test-renderer';
+import {create} from 'react-test-renderer';
 // import Adapter from 'enzyme-adapter-react-15';
 import * as actions from '../../actions/index'
-import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+
+
 import GroupPage from "./GroupPage";
 import { SEARCH_GROUP, LIKE_DESIGN } from '../../actions/types';
 // import GroupAdminPage from "./GroupAdminPage";
@@ -30,25 +33,30 @@ describe ('ACTIONS', ()=> {
         expect(actions.signOut()).toEqual(expectedAction)
     })
 
-    /*it('should create an action to search group', (newList) => {
+    it('should create an action to search group', () => {
         const expectedAction = {
-            type: SEARCH_GROUP,
-            newList: newList
+            type: 'SEARCH_GROUP'
         }
         expect(actions.toSearchGroup()).toEqual(expectedAction)
     })
 
-    it('should create an action to like design in group page', (designid) => {
-        const expectedAction = {
-            type: LIKE_DESIGN,
-            designid: designid,
+    // it('should create an action to like design in group page', (designid) => {
+    //     const expectedAction = {
+    //         type: LIKE_DESIGN,
+    //         designid: designid,
 
-        }
-        expect(actions.toLikeDesign()).toEqual(expectedAction)
-    })*/
+    //     }
+    //     expect(actions.toLikeDesign()).toEqual(expectedAction)
+    // })
 })
 
 describe('GroupPage', () => {
+    it('renders without crashing', () => {
+        const component = create(<GroupPage />);
+        expect(component.toJson()).toMatchSnapShot();
+    })
+
+    it('renders')
     //ReactDOM.render(<GroupPage/>, div);
     //ReactDOM.unmountComponentAtNode(div);
 
