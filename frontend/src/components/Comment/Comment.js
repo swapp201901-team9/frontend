@@ -26,9 +26,9 @@ class Comment extends React.Component {
 
   deleteCommentCheck() {
 
-		if(confirm("정말 삭제하시겠습니까?") == true) 
+		if(confirm("정말 삭제하시겠습니까?") == true)
 			return this.props.onDeleteComment(this.props.designid, this.props.comment.id)
-		else 
+		else
 
 			return false;
     }
@@ -84,58 +84,55 @@ class Comment extends React.Component {
 
   readModeRender() {
     return (
-      <div className="media mb-3">
-        {/* <img
-          className="mr-3 bg-light rounded"
-          width="48"
-          height="48"
-          src={`https://api.adorable.io/avatars/48/${name.toLowerCase()}@adorable.io.png`}
-          alt={name}
-        /> */}
+      <div className="Comment-Field">
 
-        <div className="media-body p-2 shadow-sm rounded bg-light border">
-          {/* <small className="float-right text-muted">{time}</small> */}
-          {/* <h6 className="mt-0 mb-1 text-muted">{name}</h6> */}
+          <div className="Comment-List-Field">
+            <div className="Group-Name-Field">
+              <span className="title5">{this.props.comment.name} </span>
+            </div>
 
-          
-          <p>{this.props.comment.name} {this.props.comment.comment}</p>
-          <p>좋아요 {this.props.comment.likes}개</p>
-          
-          {this.props.comment.auth 
-
+          <div className="Comment-Button-Field">
+          {this.props.comment.auth
             // 댓글을 단 사람이면
             ? <div>
-                <button onClick={() => this.onClickEditComment()}>EDIT COMMENT</button>
-                <button onClick={() => this.deleteCommentCheck()}>DELETE COMMENT</button>
+                <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}>DELETE</button>
+                <button className="button button_comment_edit" onClick={() => this.onClickEditComment()}>EDIT</button>
               </div>
             // 댓글을 단 사람이 아니면
 
-            : this.comment.liked 
-              ? <button onClick={() => this.props.onUnlikeComment(this.comment.id)}>좋아요 취소</button>
-              : <button onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084;</button>
+            : this.comment.liked
+              ? <button className="button button_comment_unlike" onClick={() => this.props.onUnlikeComment(this.comment.id)}>좋아요 취소</button>
+              : <button className="button button_comment_like" onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084; </button>
 
           }
+          </div>
+          </div>
+
+            <span className="title4">{this.props.comment.comment}</span>
+              <p className="likes">&#10084; {this.props.comment.likes}</p>
+
+      </div>
+
+    )
+  }
+
+
+
+    render() {
+      return (
+        <div>
+          {
+            this.state.editMode
+            ? this.editModeRender()
+            : this.readModeRender()
+            // :<div></div>
+          }
         </div>
-      </div>
-    )
+
+
+      )
+    }
   }
-
-
-  render() {
-    return (
-      <div>
-        {
-          this.state.editMode
-          ? this.editModeRender()
-          : this.readModeRender()
-          // :<div></div>
-        }
-      </div>
-
-
-    )
-  }
-}
 
 const mapDispatchToProps = (dispatch) => ({
 	onEditComment: (designid, commentid, name, message) => dispatch(toEditComment(designid, commentid, name, message)),
@@ -146,4 +143,3 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default connect(null, mapDispatchToProps)(Comment)
-
