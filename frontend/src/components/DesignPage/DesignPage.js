@@ -110,13 +110,13 @@ class DesignPage extends React.Component {
 		this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
             height:460,
-            width:430,
+			width:430,
         });
 
         this.the_back_canvas = new fabric.Canvas('back-canvas', {
             preserveObjectStacking: true,
             height:460,
-            width:430,
+			width:430,
 		});
 
 		this.the_front_canvas.on({
@@ -149,7 +149,11 @@ class DesignPage extends React.Component {
 		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
 		this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
 		
+		// this.the_front_canvas.hoverCursor = 'pointer';
+		// this.the_back_canvas.hoverCursor = 'pointer';
+		// this.__canvases.push(this.the_front_canvas);
 		this.setState({logoClickedWhat: "front_close"});
+
 
 	}
 
@@ -489,7 +493,7 @@ class DesignPage extends React.Component {
                 }
             } );
 
-            this.the_front_canvas.add(next);
+			this.the_front_canvas.add(next);
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
         }
@@ -578,14 +582,19 @@ class DesignPage extends React.Component {
     		scalingObject.the_type === "upperback" ||
     		scalingObject.the_type === "middleback" ||
     		scalingObject.the_type === "lowerback") {
-			width = width*2;
-			height = height*2;
+			
 			var old_width_text = this.state.text[scalingObject.the_type].width
 			var old_height_text = this.state.text[scalingObject.the_type].height
-			console.log("old_width_text "+ old_width_text+ "old_height_text "+old_height_text)
+			
 			var scaleX_text= width/old_width_text
 			var scaleY_text= height/old_height_text
 			if (old_width_text != 0) {
+			console.log("old_width_text "+ old_width_text+ "old_height_text "+old_height_text)
+			console.log("width_text"+width+"height_text"+height)
+			//width = width*2;
+			//height = height*2;
+			var scaleX_text= width/old_width_text
+			var scaleY_text= height/old_height_text
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
         	width: width,
