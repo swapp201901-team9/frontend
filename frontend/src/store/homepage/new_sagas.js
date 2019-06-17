@@ -898,7 +898,6 @@ function *updatePW(profuser, newpw){
         });
         console.log("put password succeed ");
         //auto sign out
-        localStorage.removeItem('auth');
         yield put(actions.changeUrl('/main/'));
     }catch(error){
         alert("updatePW error");
@@ -1180,6 +1179,49 @@ function *addComment(data) {
 function *editComment(data) {
     console.log("editComment")
     const path = 'groups/comment/' + data.designid + '/' + data.commentid + '/';
+    try{
+        yield call(xhr.send, fixed_url+path, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({"name": data.name, "comment": data.message})
+        });
+        console.log("edit comment succeed ");
+        yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        alert("update comment error");
+        return;
+    }
+}
+
+function *deleteComment(data) {
+    console.log("deleteComment")
+    const path = 'groups/comment/' + data.designid + '/' + data.commentid + '/';
+    try{
+        yield call(xhr.send, fixed_url+path,{
+            method : 'DELETE',
+            headers:{
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("delete comment succeed!");
+        yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        alert("delete comment error");
+        return ;
+
+    }
+}
+
+function *likeComment(data) {
+    console.log("likeComment")
+    const path = 'groups/comment/like/' + data.commentid + '/';
     try {
 		yield call(xhr.get, fixed_url + path, {
             headers: {
@@ -1189,68 +1231,30 @@ function *editComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl('/main/'));
+        yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*editComment error")
+        alert("*likeComment error")
     }
-}
-
-function *deleteComment(data) {
-    console.log("deleteComment")
-    // const path = 'groups/edit/' + data.designid + '/';
-    // try {
-	// 	yield call(xhr.get, fixed_url + path, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json'
-    //     });
-    //     yield put(actions.changeUrl('/main/'));
-    // } catch(error){
-    //     console.log(error)
-    //     alert("*deleteComment error")
-    // }
-}
-
-function *likeComment(data) {
-    console.log("likeComment")
-    // const path = 'groups/like/' + data.designid + '/';
-    // try {
-	// 	yield call(xhr.get, fixed_url + path, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json'
-    //     });
-    //     yield put(actions.changeUrl(window.location.pathname));
-    // } catch(error){
-    //     console.log(error)
-    //     alert("*likeComment error")
-    // }
 }
 
 function *unlikeComment(data) {
     console.log("unlikeComment")
-    // const path = 'groups/unlike/' + data.designid + '/';
-    // try {
-    //     yield call(xhr.get, fixed_url + path, {
-    //         headers: {
-    //             "Authorization": "Basic " + localStorage['auth'],
-    //             "Content-Type": 'application/json',
-    //             Accept: 'application/json'
-    //         },
-    //         contentType: 'json'
-    //     });
-    //     yield put(actions.changeUrl(window.location.pathname));
-    // } catch(error){
-    //     console.log(error)
-    //     alert("*unliikeComment error")
-    // }
+    const path = 'groups/comment/unlike/' + data.commentid + '/';
+    try {
+        yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("*unliikeComment error")
+    }
 }
 
 

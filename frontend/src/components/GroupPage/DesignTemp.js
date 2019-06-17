@@ -58,7 +58,6 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                         : (<button className="button button_like" onClick={onClickLike}>좋아요</button>)
                         }
                     </div>
-
                   </div>
 
                     {/* design의 주인일 때 - 삭제 가능 */}
@@ -70,6 +69,8 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                             {console.log("DesignTemp design.comments: ", design.comments)}
                             <CommentForm designid={design.id}/>
                         </div>
+
+                    
                     </div>
 
             }
