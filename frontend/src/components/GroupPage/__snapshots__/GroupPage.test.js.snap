@@ -786,20 +786,16 @@ exports[`GroupPage should render <CreateGroup /> 1`] = `
     <div
       className="CreateGroup"
     >
-      <label
-        htmlFor="group type"
+      <span
+        className="title1"
       >
         Group Type 
-      </label>
+      </span>
       <select
         className="type-select"
+        defaultValue="Club"
         name="grouptype"
       >
-        <option
-          value="Select an Option"
-        >
-          Select an Option
-        </option>
         <option
           value="Club"
         >
@@ -818,26 +814,22 @@ exports[`GroupPage should render <CreateGroup /> 1`] = `
       </select>
       <br />
       <br />
-      <label
-        htmlFor="group name"
+      <span
+        className="title1"
       >
         Group Name
-      </label>
+      </span>
       <input
         className="name-input"
         name="groupname"
         type="text"
       />
       <br />
-      <div
-        className="Group-Button-Field"
+      <button
+        type="submit"
       >
-        <button
-          type="submit"
-        >
-          CREATE GROUP
-        </button>
-      </div>
+        CREATE GROUP
+      </button>
     </div>
   </form>
 </div>
