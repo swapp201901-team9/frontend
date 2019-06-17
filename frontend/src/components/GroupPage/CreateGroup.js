@@ -10,9 +10,9 @@ class CreateGroup extends React.Component {
 
 	render() {
 		const type_options= [
-			'Club',
-			'Department',
-			'Else'
+			'[동아리]',
+			'[학과]',
+			'[기타]'
 			]
 
 		let onSubmit = (e) => {
@@ -32,7 +32,7 @@ class CreateGroup extends React.Component {
 							name="grouptype"
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
-							defaultValue="Club"
+							defaultValue="[동아리]"
 						>
 							{type_options.map(option => {
 								return <option value={option} key={option} >{option}</option>

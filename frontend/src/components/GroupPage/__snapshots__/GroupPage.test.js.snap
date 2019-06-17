@@ -789,7 +789,7 @@ exports[`GroupPage should render <CreateGroup /> 1`] = `
       <span
         className="title1"
       >
-        Group Type 
+        Group Type
       </span>
       <select
         className="type-select"
@@ -799,17 +799,17 @@ exports[`GroupPage should render <CreateGroup /> 1`] = `
         <option
           value="Club"
         >
-          Club
+          [동아리]
         </option>
         <option
           value="Department"
         >
-          Department
+          [학과]
         </option>
         <option
           value="Else"
         >
-          Else
+          [기타]
         </option>
       </select>
       <br />

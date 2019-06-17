@@ -5,9 +5,9 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
 
     const type_options = [
 		'Select an Option',
-		'Club',
-		'Department',
-		'Else'
+		'[동아리]',
+		'[학과]',
+		'[기타]'
         ]
 
     const onSubmit = () => {
@@ -37,7 +37,7 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
                         })}
                     </select>
                 </div>
-
+                  <br/>
                     <span className="title1">
                     GROUP NAME
                     </span>
