@@ -63,9 +63,11 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                         <span className="title5">댓글 쓰기..</span>
                         {console.log("DesignTemp design.comments: ", design.comments)}
                         <CommentForm designid={design.id}/>
+
                     </div>
                       <div className="Comment-List-Field">
                         <CommentList comments={design.comments}/>
+
                     </div>
                     </div>
 

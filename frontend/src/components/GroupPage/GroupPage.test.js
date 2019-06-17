@@ -272,19 +272,17 @@ describe ('ACTIONS', ()=> {
     it('should create an action to like comment', () => {
         const expectedAction = {
             type: 'LIKE_COMMENT',
-            designid: designid,
             commentid: commentid, 
         }
-        expect(actions.toLikeComment(designid, commentid)).toEqual(expectedAction)
+        expect(actions.toLikeComment(commentid)).toEqual(expectedAction)
     })
 
     it('should create an action to unlike comment', () => {
         const expectedAction = {
             type: 'UNLIKE_COMMENT',
-            designid: designid,
             commentid: commentid, 
         }
-        expect(actions.toUnlikeComment(designid, commentid)).toEqual(expectedAction)
+        expect(actions.toUnlikeComment(commentid)).toEqual(expectedAction)
     })
 
 
