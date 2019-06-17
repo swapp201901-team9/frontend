@@ -97,7 +97,7 @@ ShallowWrapper {
           }
     }
 >
-    <GroupDesignList />
+    <Connect(GroupDesignList) />
 </Provider>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -109,7 +109,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "function",
+    "nodeType": "class",
     "props": Object {},
     "ref": null,
     "rendered": null,
@@ -119,7 +119,7 @@ ShallowWrapper {
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "function",
+      "nodeType": "class",
       "props": Object {},
       "ref": null,
       "rendered": null,
@@ -173,7 +173,7 @@ ShallowWrapper {
           }
     }
 >
-    <GroupUserList />
+    <Connect(GroupUserList) />
 </Provider>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
@@ -185,7 +185,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "function",
+    "nodeType": "class",
     "props": Object {},
     "ref": null,
     "rendered": null,
@@ -195,7 +195,7 @@ ShallowWrapper {
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "function",
+      "nodeType": "class",
       "props": Object {},
       "ref": null,
       "rendered": null,
@@ -544,7 +544,7 @@ ShallowWrapper {
 }
 `;
 
-exports[`GroupDetailPage should render <DesignTemp /> 1`] = `
+exports[`GroupDetailPage should render <DesignForm /> 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <Provider
