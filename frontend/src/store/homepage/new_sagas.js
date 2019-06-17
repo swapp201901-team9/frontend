@@ -159,6 +159,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchSignOut);
     yield spawn(watchGoToMain);
 
+    yield spawn(watchNewDesign);
     yield spawn(watchToEditDesign);
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
