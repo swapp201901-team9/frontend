@@ -12,7 +12,7 @@ class Comment extends React.Component {
 
     console.log("Comment comment: ", props.comment)
     // console.log("c c: ", comment.comment)
-    
+
     this.state = {
       editMode: false,
     }
@@ -25,9 +25,11 @@ class Comment extends React.Component {
   }
 
   deleteCommentCheck() {
+
 		if(confirm("정말 삭제하시겠습니까?") == true) 
 			return this.props.onDeleteComment(this.props.designid, this.props.comment.id)
 		else 
+
 			return false;
     }
 
@@ -70,12 +72,12 @@ class Comment extends React.Component {
 
         <div className="form-group">
           <button className="btn btn-primary">
-            Done 
+            Done
           </button>
         </div>
       </form>
     )
-    
+
 
 
   }
@@ -94,20 +96,24 @@ class Comment extends React.Component {
         <div className="media-body p-2 shadow-sm rounded bg-light border">
           {/* <small className="float-right text-muted">{time}</small> */}
           {/* <h6 className="mt-0 mb-1 text-muted">{name}</h6> */}
+
           
           <p>{this.props.comment.name} {this.props.comment.comment}</p>
           <p>좋아요 {this.props.comment.likes}개</p>
           
           {this.props.comment.auth 
+
             // 댓글을 단 사람이면
             ? <div>
                 <button onClick={() => this.onClickEditComment()}>EDIT COMMENT</button>
                 <button onClick={() => this.deleteCommentCheck()}>DELETE COMMENT</button>
               </div>
             // 댓글을 단 사람이 아니면
+
             : this.comment.liked 
-              ? <button onClick={() => this.props.onUnlikeComment(this.comment.id)}>UNLIKE COMMENT</button>
-              : <button onClick={() => this.props.onLikeComment(this.comment.id)}>LIKE COMMENT</button>
+              ? <button onClick={() => this.props.onUnlikeComment(this.comment.id)}>좋아요 취소</button>
+              : <button onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084;</button>
+
           }
         </div>
       </div>
@@ -121,12 +127,12 @@ class Comment extends React.Component {
         {
           this.state.editMode
           ? this.editModeRender()
-          : this.readModeRender() 
+          : this.readModeRender()
           // :<div></div>
         }
       </div>
-      
-      
+
+
     )
   }
 }
@@ -138,4 +144,6 @@ const mapDispatchToProps = (dispatch) => ({
   onUnlikeComment: (commentid) => dispatch(toUnlikeComment(commentid)),
 })
 
+
 export default connect(null, mapDispatchToProps)(Comment)
+
