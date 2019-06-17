@@ -14,7 +14,7 @@ import SearchingGroup from './SearchingGroup';
 import MyGroupList from './MyGroupList';
 import NavBar from '../NavBar/NavBar';
 import GroupDetailPage from './GroupDetailPage';
-import DesignTemp from './DesignTemp';
+import DesignForm from './DesignForm';
 import GroupAdminPage from './GroupAdminPage';
 import ChangeGroupInfo from './ChangeGroupInfo';
 import GroupDesignList from './GroupDesignList';
@@ -373,8 +373,8 @@ describe('GroupDetailPage', () => {
         expect(component).toMatchSnapshot();
     })
 
-    it('should render <DesignTemp />', () => {
-        const component = shallow(<Provider store={store}><DesignTemp /></Provider>);
+    it('should render <DesignForm />', () => {
+        const component = shallow(<Provider store={store}><DesignForm /></Provider>);
         expect(component).toMatchSnapshot();
     })
 
