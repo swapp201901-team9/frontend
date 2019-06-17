@@ -95,7 +95,7 @@ class Comment extends React.Component {
           {/* <small className="float-right text-muted">{time}</small> */}
           {/* <h6 className="mt-0 mb-1 text-muted">{name}</h6> */}
           
-          <p>{this.props.comment.name} {this.props.comment.comment}</p>
+          <p>{this.props.comment.name} {this.props.comment.comment} {this.props.comment.likes}</p>
           
           {this.props.comment.auth 
             // 댓글을 단 사람이면

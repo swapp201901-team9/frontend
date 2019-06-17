@@ -194,36 +194,40 @@ export const toAddComment = (designid, name, message) => {
     }
 }
 
-export const toEditComment = (commentid, name, message) => {
+export const toEditComment = (designid, commentid, name, message) => {
     console.log("editComment action: ", commentid, name, message)
     return {
         type: EDIT_COMMENT,
+        designid: designid,
         commentid: commentid,
         name: name,
         message: message,
     }
 }
 
-export const toDeleteComment = (commentid) => {
-    console.log("deleteComment action: ", commentid)
+export const toDeleteComment = (designid, commentid) => {
+    console.log("deleteComment action: ", designid, commentid)
     return {
         type: DELETE_COMMENT,
+        designid: designid,
         commentid: commentid,
     }
 }
 
-export const toLikeComment = (commentid) => {
-    console.log("likeComment action: ", commentid)
+export const toLikeComment = (designid, commentid) => {
+    console.log("likeComment action: ", designid, commentid)
     return {
         type: LIKE_COMMENT,
+        designid: designid,
         commentid: commentid,
     }
 }
 
-export const toUnlikeComment = (commentid) => {
-    console.log("unlikeComment action: ", commentid)
+export const toUnlikeComment = (designid, commentid) => {
+    console.log("unlikeComment action: ", designid, commentid)
     return {
         type: UNLIKE_COMMENT,
+        designid: designid,
         commentid: commentid,
     }
 }
