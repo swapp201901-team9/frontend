@@ -182,10 +182,10 @@ class DesignPage extends React.Component {
             if(nextState.text[element] !== this.state.text[element]) {
 				console.log("text: ", nextState.text[element])
 
-				var x =this.textElementToImage(nextState.text[element], element);
-					this.setState({text : ({...this.state.text,
-						[element]: ({...this.state.text[element], width:x.width, height: x.height})
-					})});
+				// var x =this.textElementToImage(nextState.text[element], element);
+				// 	this.setState({text : ({...this.state.text,
+				// 		[element]: ({...this.state.text[element], width:x.width, height: x.height})
+				// 	})});
 
 				if(element === "frontchest" || element === "rightarm") {
 					
@@ -595,6 +595,7 @@ class DesignPage extends React.Component {
 
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
+		window.confirm("design saved. Do you want to modify some more?")
 	}
 
     render() {
@@ -867,6 +868,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
 	onNew: () => dispatch(toNewDesign()),
 	onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
+	//onView: () => dispatch(changeUrl('/group/1'))
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)
