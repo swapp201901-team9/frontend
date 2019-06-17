@@ -14,7 +14,7 @@ export default class ViewPage extends React.Component {
 		};
 	}
 
-	addToCanvas = (imgElement, property_type, z_Index) => {
+	addToCanvas (imgElement, property_type, z_Index)  {
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 400,
 			height: 400,
