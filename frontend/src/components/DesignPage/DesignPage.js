@@ -181,8 +181,15 @@ class DesignPage extends React.Component {
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
 				console.log("text: ", nextState.text[element])
+
+				var x =this.textElementToImage(nextState.text[element], element);
+					this.setState({text : ({...this.state.text,
+						[element]: ({...this.state.text[element], width:x.width, height: x.height})
+					})});
+
 				if(element === "frontchest" || element === "rightarm") {
-					this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
+					
+				this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
 				}
 				else {
 					this.updateBackCanvas(this.textElementToImage(nextState.text[element], element))
@@ -373,7 +380,9 @@ class DesignPage extends React.Component {
 			top: text.top,
 		})
 
-        console.log("text imgInstance: ", imgInstance)
+		console.log("text imgInstance: ", imgInstance)
+		console.log(imgInstance.width);
+		console.log(imgInstance.height);
         return imgInstance;
     }
 
