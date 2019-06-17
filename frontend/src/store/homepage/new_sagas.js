@@ -221,7 +221,7 @@ function *watchLoginState() {
                 console.log("GET now_design data: ", now_design_data.body)
             } catch(error) {
                 console.log(error)
-                alert("main now_design error")
+                alert("데이터 로딩에 실패했습니다.")
             }
 
             yield put(actions.setState({
@@ -259,7 +259,7 @@ function *watchLoginState() {
                     console.log("GET now_design data: ", now_design_data.body)
                 } catch(error) {
                     console.log(error)
-                    alert("main now_design error")
+                    alert("데이터 로딩에 실패했습니다.")
                 }
 
                 try {
@@ -274,7 +274,7 @@ function *watchLoginState() {
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
                     console.log(error)
-                    alert("main mygroups error");
+                    alert("데이터 로딩에 실패했습니다.");
                 }
 
                 yield put(actions.setState({
@@ -309,7 +309,7 @@ function *watchLoginState() {
                     console.log("GET all groups data: ", all_groups_data.body)
                 } catch(error){
                     console.log(error)
-                    alert("all groups data error")
+                    alert("데이터 로딩에 실패했습니다.")
                 }
 
                 //my_groups data
@@ -324,7 +324,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
-                    alert("my groups data error")
+                    alert("데이터 로딩에 실패했습니다.")
                 }
 
                 yield put(actions.setState({
@@ -344,7 +344,7 @@ function *watchLoginState() {
 
                 if (username === undefined || username === '') {
                     console.log("404 not found");
-                    alert("없는 장소");
+                    alert("없는 장소입니다.");
                     if(localStorage.getItem("auth") === null) {
                         // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
@@ -370,7 +370,7 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
-                        alert("profile error");
+                        alert("데이터 로딩에 실패했습니다.");
                     }
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
@@ -399,7 +399,7 @@ function *watchLoginState() {
                             });
                             console.log('GET now group data: ', now_group_data.body[0]);
                     } catch(error){
-                        alert("group data error");
+                        alert("데이터 로딩에 실패했습니다.");
                     }
 
                     //my_groups data
@@ -414,7 +414,7 @@ function *watchLoginState() {
                         });
                         console.log("GET my groups data: ", my_groups_data.body)
                     } catch(error){
-                        alert("my groups data error")
+                        alert("데이터 로딩에 실패했습니다.")
                     }
 
                     //group designs
@@ -436,7 +436,7 @@ function *watchLoginState() {
                         }
                         else {
                             console.log(error)
-                            alert("group designs error");
+                            alert("데이터 로딩에 실패했습니다.");
                         }
 
                     }
@@ -468,7 +468,7 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
-                        alert("group data error");
+                        alert("데이터 로딩에 실패했습니다.");
                     }
 
                     try{
@@ -482,7 +482,7 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
-                        alert("group users error");
+                        alert("데이터 로딩에 실패했습니다.");
                     }
 
                     try{
@@ -496,7 +496,7 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
-                        alert("group designs error");
+                        alert("데이터 로딩에 실패했습니다.");
                     }
 
                     yield put(actions.setState({
@@ -510,52 +510,13 @@ function *watchLoginState() {
                 }
 
                 else {
-                    // 스테이트의 articles에 들어갈 내용을 받는 try-catch 문
-                    let profile_data = null;
-                    try {
-                        // localStorage.setItem('parent', id);
-                        data = yield call(xhr.get, fixed_url+'article/'+id+'/total/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+ localStorage['auth'],
-                            Accept: 'application/json'
-                            },
-                            responseType: 'json'
-                        });
-                    } catch(error) {
-                        alert("get article in state error");
-                        return;
-                    }
-                    // 스테이트의 parent_article에 들어갈 내용을 받는 try-catch 문
-                    try {
-                        parent_data = yield call(xhr.get, fixed_url+'article/'+id+'/', {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': 'Basic '+ localStorage['auth'],
-                            Accept: 'application/json'
-                            },
-                            responseType: 'json'
-                        });
-                        console.log('Get data without exception');
-                    } catch(error) {
-                        alert("get parent article in state");
-                        return;
-                    }
-                    //TODO 이후 state에 새로운 element를 추가할 경우 이 부분에 try-catch를 추가하면 됩니다
-                    yield put(actions.setState({
-                        authorization: window.atob(localStorage['auth']),
-
-                        profile_user: profile_data !== null ? profile_data.body : null,
-                        load: 0,
-                        loading: true
-                        //TODO 이후 state 추가 시 여기에 스테이트 업데이트 추가
-                    }));
+                    alert("없는 장소입니다.");
+                    yield put(actions.changeUrl('/main/'))
                 }
             }
         }
     }
     console.log("after watchLoginState : ", yield select());
-    // console.log(localStorage['parent']);
 }
 
 // watchSignIn: 로그인 버튼 클릭 관찰
@@ -877,9 +838,8 @@ function *signUp(data) {
     }
     catch(error) {
         console.log(error)
-        alert("backend singup post error");
+        alert("회원가입에 실패했습니다.");
     }
-
 }
 
 
@@ -903,7 +863,7 @@ function *updatePW(profuser, newpw){
         //auto sign out
         yield put(actions.changeUrl('/main/'));
     }catch(error){
-        alert("updatePW error");
+        alert("비밀번호를 변경할 수 없습니다.");
         return;
     }
 }
@@ -937,7 +897,7 @@ function *updateIntro(profuser, myname, mybelong, myintro, removeImg, changeImg,
         yield put(actions.changeUrl('/profile/'+profuser+'/'))
     } catch(error){
 
-            console.log("change profile error");
+            console.log("프로필을 변경할 수 없습니다.");
             return ;
 
     }
@@ -957,7 +917,7 @@ function *escapeBook(profuser){
         localStorage.removeItem('auth');
         yield put(actions.changeUrl('/'));
     }catch(error){
-        alert("delete account error");
+        alert("탈퇴에 실패했습니다.");
         return ;
 
     }
@@ -985,7 +945,7 @@ function *createGroup(data){
         }
         else {
             console.log(error)
-            alert("*createGroup error")
+            alert("그룹을 만들 수 없습니다.")
         }
     }
 }
@@ -1008,7 +968,7 @@ function *searchGroup(data){
         console.log("GET all groups data: ", all_groups_data.body)
     } catch(error){
         console.log(error)
-        alert("all groups data error")
+        alert("데이터 로딩에 실패했습니다.")
     }
 
     //my_groups data
@@ -1023,7 +983,7 @@ function *searchGroup(data){
         });
         console.log("GET my groups data: ", my_groups_data.body)
     } catch(error){
-        alert("my groups data error")
+        alert("데이터 로딩에 실패했습니다.")
     }
 
     yield put(actions.setState({
@@ -1053,7 +1013,7 @@ function *joinGroup(data){
         yield put(actions.changeUrl('group/' + data.groupid + '/'));
     } catch(error){
         console.log(error)
-        alert("*joinGroup error")
+        alert("그룹에 가입할 수 없습니다.")
     }
 }
 
@@ -1073,7 +1033,7 @@ function *withdrawGroup(data){
         yield put(actions.changeUrl('groups/'));
     } catch(error) {
         console.log(error)
-        alert("*withdrawGroup error")
+        alert("그룹에서 탈퇴할 수 없습니다.")
     }
 }
 
@@ -1083,7 +1043,7 @@ function *toGroupDetail(data){
         yield put(actions.changeUrl('group/' + data.groupid + '/'));
     } catch(error) {
         console.log(error)
-        alert("*toGroupDetail error")
+        alert("그룹 페이지로 이동할 수 없습니다.")
     }
 }
 
@@ -1093,7 +1053,7 @@ function *toAdminGroup(data){
         yield put(actions.changeUrl('admin/' + data.groupid + '/'));
     } catch(error) {
         console.log(error)
-        alert("*toGroupDetail error")
+        alert("그룹 관리자 페이지로 이동할 수 없습니다.")
     }
 }
 
@@ -1114,7 +1074,7 @@ function *toEditDesign(data) {
         yield put(actions.changeUrl('/main/'));
     } catch(error){
         console.log(error)
-        alert("*toEditDesign error")
+        alert("디자인을 수정할 수 없습니다.")
     }
 }
 
@@ -1134,7 +1094,7 @@ function *likeDesign(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*likeDesign error")
+        alert("좋아요를 할 수 없습니다.")
     }
 }
 
@@ -1153,7 +1113,7 @@ function *unlikeDesign(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*unliikeDesign error")
+        alert("좋아요를 취소할 수 없습니다.")
     }
 }
 
@@ -1175,7 +1135,7 @@ function *addComment(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("addComment error")
+        alert("댓글을 달 수 없습니다.")
     }
 }
 
@@ -1196,7 +1156,7 @@ function *editComment(data) {
         console.log("edit comment succeed ");
         yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
-        alert("update comment error");
+        alert("댓글 수정에 실패했습니다.");
         return;
     }
 }
@@ -1216,7 +1176,7 @@ function *deleteComment(data) {
         console.log("delete comment succeed!");
         yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
-        alert("delete comment error");
+        alert("댓글 삭제에 실패했습니다.");
         return ;
 
     }
@@ -1237,7 +1197,7 @@ function *likeComment(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*likeComment error")
+        alert("댓글을 좋아요 할 수 없습니다.")
     }
 }
 
@@ -1256,7 +1216,7 @@ function *unlikeComment(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*unliikeComment error")
+        alert("댓글 좋아요를 취소할 수 없습니다.")
     }
 }
 
@@ -1289,7 +1249,7 @@ function *changeGroupInfo(data) {
     }catch(error){
         console.log(error)
         console.log("form: ", form['group_type'])
-        alert("chage groupinfo error");
+        alert("그룹 정보를 수정할 수 없습니다.");
         return;
     }
 }
@@ -1311,7 +1271,7 @@ function *deleteGroupUser(data) {
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
-        alert("delete user error");
+        alert("해당 멤버를 퇴장시킬 수 없습니다.");
         return ;
     }
 }
@@ -1334,7 +1294,7 @@ function *giveAdmin(data) {
         yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
         console.log(error)
-        alert("giveAdmin error");
+        alert("관리자 권한을 줄 수 없습니다.");
         return;
     }
 }
@@ -1356,7 +1316,7 @@ function *deleteGroupDesign(data) {
         yield put(actions.changeUrl('/group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
-        alert("delete design error");
+        alert("해당 디자인을 삭제할 수 없습니다.");
         return ;
 
     }
@@ -1379,7 +1339,7 @@ function *deleteGroup(data) {
         yield put(actions.changeUrl('/groups/'));
     }catch(error){
         console.log(error)
-        alert("delete group error");
+        alert("그룹을 삭제할 수 없습니다.");
         return ;
     }
 }
@@ -1402,7 +1362,7 @@ function *newDesign(data) {
         yield put(actions.changeUrl('/main/'));
     }catch(error) {
         console.log(error);
-        alert("new design error");
+        alert("새로운 디자인을 불러오는데 실패했습니다.");
         return;
     }
 }
@@ -1440,10 +1400,10 @@ function *saveDesign(data) {
             })
         });
         console.log("save design succeed ");
-        yield put(actions.changeUrl('/main/'));
+        alert("저장되었습니다.")
     }catch(error){
         console.log(error)
-        alert("save design error");
+        alert("저장에 실패했습니다.");
         return;
     }
 }
@@ -1465,7 +1425,7 @@ function *postDesign(data) {
         yield put(actions.changeUrl('group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
-        alert("post design error");
+        alert("디자인을 게시할 수 없습니다.");
         return ;
     }
 }
