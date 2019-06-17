@@ -249,62 +249,62 @@ describe('DesignPage', ()=> {
     })
 })
 
-describe('TemplateListItem', ()=> {
-    it('renders without crashing', ()=>{
-        //const component = create(<DesignPage/>);
-        //const instance = component.getInstance();
-        //await instance.componentDidMount();
+// describe('TemplateListItem', ()=> {
+//     it('renders without crashing', ()=>{
+//         //const component = create(<DesignPage/>);
+//         //const instance = component.getInstance();
+//         //await instance.componentDidMount();
         
-        const a = document.createElement('a');
-        ReactDOM.render(<TemplateListItem/>, a);
-        ReactDOM.unmountComponentAtNode(a);
+//         const a = document.createElement('a');
+//         ReactDOM.render(<TemplateListItem/>, a);
+//         ReactDOM.unmountComponentAtNode(a);
 
 
-        //mount(<DesignPage/>);
-        //shallow(<DesignPage />);
+//         //mount(<DesignPage/>);
+//         //shallow(<DesignPage />);
 
     
-    })
-})
+//     })
+// })
 
-describe('TemplateList', ()=> {
-    it('should be defined', ()=>{
-        expect(TemplateList).toBeDefined();
-    })
+// describe('TemplateList', ()=> {
+//     it('should be defined', ()=>{
+//         expect(TemplateList).toBeDefined();
+//     })
 
-    it('renders without crashing', ()=>{
-        //const component = create(<TemplateList/>);
-        // const instance = component.getInstance();
-        //await instance.componentDidMount();
+//     it('renders without crashing', ()=>{
+//         //const component = create(<TemplateList/>);
+//         // const instance = component.getInstance();
+//         //await instance.componentDidMount();
 
-        //const div = document.createElement('div');
-        //ReactDOM.render(<Clock/>, div);
+//         //const div = document.createElement('div');
+//         //ReactDOM.render(<Clock/>, div);
 
-        //mount(<DesignPage/>);
-        //shallow(<DesignPage />);
+//         //mount(<DesignPage/>);
+//         //shallow(<DesignPage />);
 
-        //const wrapper = shallow(<TemplateListItem/>);
-        //expect(wrapper.length).toBe(1);
-    })
-})
+//         //const wrapper = shallow(<TemplateListItem/>);
+//         //expect(wrapper.length).toBe(1);
+//     })
+// })
 
-describe('ViewPage', ()=> {
-    it('should be defined', ()=>{
-        expect(ViewPage).toBeDefined();
-    })
+// describe('ViewPage', ()=> {
+//     it('should be defined', ()=>{
+//         expect(ViewPage).toBeDefined();
+//     })
 
-    it('renders without crashing', ()=>{
-        //const component = create(<DesignPage/>);
-        //const instance = component.getInstance();
-        //await instance.componentDidMount();
+//     it('renders without crashing', ()=>{
+//         //const component = create(<DesignPage/>);
+//         //const instance = component.getInstance();
+//         //await instance.componentDidMount();
 
-        //const div = document.createElement('div');
-        //ReactDOM.render(<Clock/>, div);
+//         //const div = document.createElement('div');
+//         //ReactDOM.render(<Clock/>, div);
 
-        // mount(<ViewPage/>);
-        // shallow(<ViewPage />);
+//         // mount(<ViewPage/>);
+//         // shallow(<ViewPage />);
 
-        const wrapper = shallow(<div/>);
-        expect(wrapper.length).toBe(1);
-    })
-})
+//         const wrapper = shallow(<div/>);
+//         expect(wrapper.length).toBe(1);
+//     })
+// })
