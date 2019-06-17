@@ -195,7 +195,7 @@ export const toAddComment = (designid, name, message) => {
 }
 
 export const toEditComment = (designid, commentid, name, message) => {
-    console.log("editComment action: ", commentid, name, message)
+    console.log("editComment action: ", designid, commentid, name, message)
     return {
         type: EDIT_COMMENT,
         designid: designid,
@@ -214,20 +214,18 @@ export const toDeleteComment = (designid, commentid) => {
     }
 }
 
-export const toLikeComment = (designid, commentid) => {
-    console.log("likeComment action: ", designid, commentid)
+export const toLikeComment = (commentid) => {
+    console.log("likeComment action: ", commentid)
     return {
         type: LIKE_COMMENT,
-        designid: designid,
         commentid: commentid,
     }
 }
 
-export const toUnlikeComment = (designid, commentid) => {
-    console.log("unlikeComment action: ", designid, commentid)
+export const toUnlikeComment = (commentid) => {
+    console.log("unlikeComment action: ", commentid)
     return {
         type: UNLIKE_COMMENT,
-        designid: designid,
         commentid: commentid,
     }
 }
