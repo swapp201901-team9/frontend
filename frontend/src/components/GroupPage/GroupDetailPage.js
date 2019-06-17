@@ -49,7 +49,7 @@ class GroupDetailPage extends React.Component {
             <div className="main">
               <h2 className="h_white">DESIGN LIST</h2>
                 <div className="content">
-                {this.props.now_group.grouptype === 'UR'
+                {/* {this.props.now_group.grouptype === 'UR'
                   ? <div>
                       <form onSubmit={this.onPostDesign}>
                         <div className="CreateGroup">
@@ -72,7 +72,7 @@ class GroupDetailPage extends React.Component {
                     </div>
                   : <div/>
                     
-                }
+                } */}
 
 
                 <ul>
