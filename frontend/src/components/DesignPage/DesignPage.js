@@ -80,6 +80,7 @@ class DesignPage extends React.Component {
 		this.onClickSave = this.onClickSave.bind(this);
 
 		this.getDataUrl = this.getDataUrl.bind(this);
+		this.temp = this.temp.bind(this);
 
 	}
 
@@ -138,8 +139,8 @@ class DesignPage extends React.Component {
         this.the_front_canvas.add(this.designElementToImage(this.state.design.stripe, "front_stripe", 3))
         this.the_back_canvas.add(this.designElementToImage(this.state.design.stripe, "back_stripe", 3))
         this.the_front_canvas.add(this.designElementToImage(this.state.design.button, "front_button", 3))
-
-        this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
+		
+		this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
         this.the_front_canvas.add(this.textElementToImage(this.state.text.rightarm, "rightarm"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.upperback, "upperback"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
@@ -366,7 +367,29 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-		let imgInstance = new fabric.IText(text.textvalue, {
+		let imgInstance;
+		if (text.width == 0) {
+			console.log("text width 0")
+			imgInstance = new fabric.IText(text.textvalue, {
+				fontFamily: text.fontFamily,
+				fill: text.fill,
+				fontStyle: text.fontStyle,
+				fontSize: text.fontSize,
+				stroke: text.stroke,
+				strokeWidth: text.strokeWidth,
+				textAlign: "center",
+				the_type: type,
+				zIndex: 10,
+				left: text.left,
+				top: text.top,
+			})
+			this.setState({text : ({...this.state.text,
+				[type]: ({...this.state.text[type],
+				width: imgInstance.width,
+				height: imgInstance.height}) })})
+		}
+		else {
+		imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
 			fontStyle: text.fontStyle,
@@ -378,8 +401,20 @@ class DesignPage extends React.Component {
 			zIndex: 10,
 			left: text.left,
 			top: text.top,
+			width: text.width,
+			height: text.height,
+			scaleX: text.scaleX,
+			scaleY: text.scaleY,
+			originX: "center",
+			originY: "center",
 		})
-
+		}
+		// console.log(this.state.text[type].width+ "야")
+		// if(this.state.text[type].width == 0) {
+		// 	console.log(this.state.text[type].width+ "야")
+		// 	this.temp(imgInstance, type);
+		// }
+		
 		console.log("text imgInstance: ", imgInstance)
 		console.log(imgInstance.width);
 		console.log(imgInstance.height);
@@ -522,10 +557,18 @@ class DesignPage extends React.Component {
 		}
 		
 	}
+
+	temp (imgInstance, type) {
+		this.setState({text : ({...this.state.text,
+        	[type]: ({...this.state.text[type],
+        	width: imgInstance.width,
+            height: imgInstance.height}) })})
+	}
+
 	scaleHandler = (e)=>{
 		let scalingObject = e.target;
-		var width = scalingObject.getScaledWidth()*10;
-		var height = scalingObject.getScaledHeight()*10;
+		var width = scalingObject.getScaledWidth();
+		var height = scalingObject.getScaledHeight();
 
 		console.log("scaling: ", scalingObject)
 		console.log("width: ", width, " height: ", height);
@@ -535,15 +578,26 @@ class DesignPage extends React.Component {
     		scalingObject.the_type === "upperback" ||
     		scalingObject.the_type === "middleback" ||
     		scalingObject.the_type === "lowerback") {
+			width = width*2;
+			height = height*2;
+			var old_width_text = this.state.text[scalingObject.the_type].width
+			var old_height_text = this.state.text[scalingObject.the_type].height
+			console.log("old_width_text "+ old_width_text+ "old_height_text "+old_height_text)
+			var scaleX_text= width/old_width_text
+			var scaleY_text= height/old_height_text
+			if (old_width_text != 0) {
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
         	width: width,
-            height: height})
-    	})});
+            height: height, scaleX: scaleX_text, scaleY: scaleY_text})
+			})});
+			}
 		}
 		else if (scalingObject.the_type === "front" ||
          	scalingObject.the_type === "back") {
 			console.log("scale handler logo width height")
+			width = width*10;
+			height = height*10;
 			var old_width = this.state.logo[scalingObject.the_type].width
 			var old_height = this.state.logo[scalingObject.the_type].height
 			console.log("old_width "+ old_width+ "old_height "+old_height)
