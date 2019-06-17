@@ -19,53 +19,60 @@ class CommentForm extends React.Component {
     // prevent default form submission
     e.preventDefault();
 
-    if (!this.isFormValid()) {
-      this.setState({ error: "All fields are required." });
+    if (!this.isNameValid()) {
+      alert("이름을 적어주세요.")
       return;
     }
 
+    if (!this.isMessageValid()) {
+      alert("내용을 적어주세요.")
+      return;
+    }
+    
     this.props.onAddComment(this.props.designid, this.name.value, this.message.value)
   }
 
   /**
    * Simple validation
    */
-  isFormValid() {
-    return this.name !== "" && this.message !== "";
+  isNameValid() {
+    return this.name.value !== "";
+  }
+
+  isMessageValid() {
+    return this.message.value !== "";
   }
 
   render() {
 
     return (
       <div>
+
         <form onSubmit={this.onSubmit}>
-          <div className="form-group">
+
             <input
               ref={ node => {this.name=node;} }
-              className="form-control"
-              placeholder="Your Name"
+              className="comment_name"
+              placeholder="Name"
               name="name"
               type="text"
             />
-          </div>
 
-          <div className="form-group">
-            <textarea
+            <input
+
               ref={ node => {this.message=node;} }
               // value={this.contents}
-              className="form-control"
-              placeholder="Your Comment"
+              className="comment_text"
+              placeholder="Comment"
               name="message"
               rows="5"
             />
-          </div>
+              <button className="button button_comment">
+                Comment &#10148;
+              </button>
 
-          <div className="form-group">
-            <button className="btn btn-primary">
-              Comment &#10148;
-            </button>
-          </div>
         </form>
+      
       </div>
     );
   }

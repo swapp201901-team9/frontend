@@ -1,20 +1,25 @@
 import React from 'react';
 
 const GroupList = ({ grouplist, onClickGroup, onClickJoinGroup, onClickWithdrawGroup }) => {
-  
+
   return (
     <div>
-      <div className = "Group-List-Field">
+
         {grouplist.map(group =>
+          <div className = "Group-List-Field">
           <ul key={group.id}>
-            <p onClick={() => onClickGroup(group.id)}>{group.group_type} {group.group_name}</p>
+            <span onClick={() => onClickGroup(group.id)}>{group.group_type} {group.group_name}</span>
+
+            <div className = "Group-Button-Field">
             {group.member
               ? ( <button className="button button_small" onClick={() => onClickWithdrawGroup(group.id)}>탈퇴</button> )
-              : ( <button className="button button_small" onClick={() => onClickJoinGroup(group.id)}>가입</button>) 
+              : ( <button className="button button_small" onClick={() => onClickJoinGroup(group.id)}>가입</button>)
             }
+            </div>
           </ul>
+          </div>
         )}
-      </div>
+
     </div>
   )
 }

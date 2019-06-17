@@ -12,17 +12,17 @@ const CommentList = ({ designid, comments }) => {
       </h5>
 
       {comment_list.length === 0 ? (
-        <div className="alert text-center alert-info">
+        <span className="title5">
           첫번째 댓글을 남겨주세요
-        </div>
+        </span>
       ) : null}
 
-      {comment_list.map(comment => 
+      {comment_list.map(comment =>
         <ul key={comment.id}>
-          <Comment designid={designid} comment={comment} />      
+          <Comment designid={designid} comment={comment} />
         </ul>
       )}
-      
+
     </div>
   );
 }

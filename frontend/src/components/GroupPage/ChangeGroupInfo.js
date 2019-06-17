@@ -5,9 +5,9 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
 
     const type_options = [
 		'Select an Option',
-		'Club',
-		'Department',
-		'Else'
+		'[동아리]',
+		'[학과]',
+		'[기타]'
         ]
 
     const onSubmit = () => {
@@ -24,9 +24,9 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
                 onSubmit()
             }}>
                 <div>
-                    <label>
+                    <span className="title1">
                     GROUP TYPE
-                    </label>
+                    </span>
                     <select
                         name="grouptype"
                         ref={ node => {grouptype=node;} }
@@ -37,19 +37,20 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
                         })}
                     </select>
                 </div>
-
-                    <label>
+                  <br/>
+                    <span className="title1">
                     GROUP NAME
-                    </label>
+                    </span>
                     <input
                         type="text"
                         ref={ node => {groupname=node;}}
                         placeholder={group.group_name}
                     />
 
-
+                    <br/>
                 <button type="submit">CHANGE GROUP INFO</button>
-              
+
+
             </form>
         </div>
     )
