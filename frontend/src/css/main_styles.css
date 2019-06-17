@@ -183,7 +183,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   	width: 24px;
   	height: 30px;
     margin: 4px;
-  	background: url( "./open.png" ) no-repeat;
+  	background: transparent;
   	border-radius: 0px;
   	border: none;
     box-shadow: none;

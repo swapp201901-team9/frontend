@@ -749,6 +749,9 @@ class DesignPage extends React.Component {
 						<div className="section-field">
 						<span className="title1"> Color Match</span>
 						<button id="popbtn" onClick={this.clickedDesignPopButton}>
+						{this.state.designClickedWhat
+							? <img src="https://user-images.githubusercontent.com/44845920/59564888-1cd1b180-9087-11e9-918b-df35d1af3b1b.png"/>
+							: <img src="https://user-images.githubusercontent.com/44845920/59564889-1e9b7500-9087-11e9-9347-cea6011b6b72.png"/>}
 
 						</button>
 						{colorPicker}
@@ -760,7 +763,9 @@ class DesignPage extends React.Component {
 						<div className="section-field">
 						<span className="title1"> Text</span>
 						<button id="popbtn" onClick={this.clickedTextPopButton}>
-
+						{this.state.textClickedWhat
+							? <img src="https://user-images.githubusercontent.com/44845920/59564888-1cd1b180-9087-11e9-918b-df35d1af3b1b.png"/>
+							: <img src="https://user-images.githubusercontent.com/44845920/59564889-1e9b7500-9087-11e9-9347-cea6011b6b72.png"/>}
 						</button>
 						{textPicker}
 						</div>
@@ -770,6 +775,9 @@ class DesignPage extends React.Component {
 						<div className="section-field">
 						<span className="title1"> Logo</span>
 						<button id="popbtn" onClick={this.clickedLogoPopButton}>
+						{this.state.logoClickedWhat
+							? <img src="https://user-images.githubusercontent.com/44845920/59564888-1cd1b180-9087-11e9-918b-df35d1af3b1b.png"/>
+							: <img src="https://user-images.githubusercontent.com/44845920/59564889-1e9b7500-9087-11e9-9347-cea6011b6b72.png"/>}
 						</button>
 						{logoPicker}
 						</div>
