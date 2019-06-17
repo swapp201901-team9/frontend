@@ -8,7 +8,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
-import { toSaveDesign, toNewDesign } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign, changeUrl } from '../../actions/index.js';
 //import { tsImportEqualsDeclaration } from '@babel/types';
 
 //import logo from './images/templates/templatelist';
@@ -47,6 +47,7 @@ class DesignPage extends React.Component {
 
 			element: null,
 			text_element: null,
+
 			designClickedWhat: "body",
 			textClickedWhat: null,
 			logoClickedWhat: "front_close",
@@ -74,9 +75,10 @@ class DesignPage extends React.Component {
 		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
 
-		//his.clickedAddButton = this.clickedAddButton.bind(this);
 		this.scaleHandler = this.scaleHandler.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
+		this.selectHandler = this.selectHandler.bind(this);
+
 		this.onClickSave = this.onClickSave.bind(this);
 
 		this.getDataUrl = this.getDataUrl.bind(this);
@@ -122,12 +124,13 @@ class DesignPage extends React.Component {
 		this.the_front_canvas.on({
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
+			'mouse:up': this.selectHandler,
 		})
 
 		this.the_back_canvas.on({
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
-
+			'mouse:up': this.selectHandler,
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -365,7 +368,7 @@ class DesignPage extends React.Component {
 			zIndex: z_Index
 		});
 
-		console.log("design imgInstance: ", imgInstance)
+		// console.log("design imgInstance: ", imgInstance)
 		return imgInstance;
 
     }
@@ -426,7 +429,7 @@ class DesignPage extends React.Component {
     }
 
 	logoElementToImage(logo, type) {
-		console.log("DesignPage - logoElementToImage", logo, type)
+		// console.log("DesignPage - logoElementToImage", logo, type)
 
 		let img = new Image();
 		const scope = this;
@@ -452,8 +455,8 @@ class DesignPage extends React.Component {
 		img.src = logo.src;
 
 		let imgInstance;
-		console.log("logo.width "+ logo.width);
-		console.log("logo.height "+ logo.height);
+		// console.log("logo.width "+ logo.width);
+		// console.log("logo.height "+ logo.height);
         imgInstance = new fabric.Image(img, {
             width: logo.width,
 			height: logo.height,
@@ -467,7 +470,7 @@ class DesignPage extends React.Component {
 			originY: "center",
 		});
 		if(imgInstance.width >= 500) {
-		console.log("logo element to image will be scaled")
+		// console.log("logo element to image will be scaled")
         imgInstance.set({
             scaleY: 0.1,
             scaleX: 0.1,
@@ -544,19 +547,19 @@ class DesignPage extends React.Component {
 		console.log("clickedLogoPopButton: logoClickedWhat "+ temp);
 
 		if (temp === "front_close"){
-			console.log("->front");
+			// console.log("->front");
 			this.setState({logoClickedWhat: "front"});
 		}
 		else if (temp === "back_close") {
-			console.log("->back");
+			// console.log("->back");
 			this.setState({logoClickedWhat: "back"});
 		}
 		else if (temp === "front") {
-			console.log("->front_close");
+			// console.log("->front_close");
 			this.setState({logoClickedWhat: "front_close"});
 		}
 		else if (temp === "back") {
-			console.log("->back_close");
+			// console.log("->back_close");
 			this.setState({logoClickedWhat: "back_close"})
 		}
 		
@@ -574,8 +577,8 @@ class DesignPage extends React.Component {
 		var width = scalingObject.getScaledWidth();
 		var height = scalingObject.getScaledHeight();
 
-		console.log("scaling: ", scalingObject)
-		console.log("width: ", width, " height: ", height);
+		// console.log("scaling: ", scalingObject)
+		// console.log("width: ", width, " height: ", height);
 
 		if (scalingObject.the_type === "frontchest" ||
     		scalingObject.the_type === "rightarm" ||
@@ -623,8 +626,8 @@ class DesignPage extends React.Component {
 
 	moveHandler = (e) =>{
 		let movingObject = e.target;
-		console.log("moving: ", movingObject)
-		console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
+		// console.log("moving: ", movingObject)
+		// console.log("left: ", movingObject.get('left'), " top: ", movingObject.get('top'))
 
 		// this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
 		// this.logo_element = ["front", "back"]
@@ -649,6 +652,28 @@ class DesignPage extends React.Component {
 		}
 	}
 
+	selectHandler = (e) =>{
+		let selectedObject = e.target;
+		console.log("select: ", selectedObject)
+	
+		if (this.text_element.includes(selectedObject.the_type)) {
+			this.setState({
+				textClickedWhat: selectedObject.the_type,
+			});	
+		}
+		else if (this.logo_element.includes(selectedObject.the_type)) {
+			this.setState({
+				logoClickedWhat: selectedObject.the_type,
+			});	
+		}
+		else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
+			this.setState({
+				designClickedWhat: selectedObject.the_type.split('_')[1]
+			});
+		}
+
+	}
+
 	onClickSave = () => {
 		console.log("clickSave")
 		let image = {
@@ -658,11 +683,10 @@ class DesignPage extends React.Component {
 
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
-		window.confirm("design saved. Do you want to modify some more?")
 	}
 
     render() {
-		console.log("DesignPage - render state: ", this.state)
+		// console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
@@ -687,8 +711,8 @@ class DesignPage extends React.Component {
 
 		colorPicker = designClickedWhat
 			? <center>
-				<select className = "select select_32"
-				id="design_element" onChange={(e)=>this.handleElementChange(e)}>
+				<select className = "select select_32" value={this.state.designClickedWhat} 
+					id="design_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value = "body">body</option>
 					<option value = "sleeve">sleeve</option>
 					<option value = "banding">banding</option>
@@ -706,13 +730,13 @@ class DesignPage extends React.Component {
 		textPicker = textClickedWhat
 			? <center>
 			{(logoClickedWhat === "front" || logoClickedWhat === "front_close")
-				? <select className="select select_32"
-				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+				? <select className="select select_32" value={this.state.textClickedWhat} 
+					id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 					<option value="frontchest">Front Chest</option>
 					<option value="rightarm">Right Arm</option> )
 				 </select>
-				: <select className="select select_32"
-				id="text_element" onChange={(e)=>this.handleElementChange(e)}>
+				: <select className="select select_32" value={this.state.textClickedWhat} 
+					id="text_element" onChange={(e)=>this.handleElementChange(e)}>
 						<option value="upperback">Upper Back</option>
 						<option value="middleback">Middle Back</option>
 						<option value="lowerback">Lower Back</option>
