@@ -21,11 +21,14 @@ class GroupDesignList extends React.Component {
             <div>
                 {this.props.group_designs.map(design =>
                     <ul key={design.id}>
+                    <div className="DesignList-Button-Field">
+                      <button button className="button_edit" onClick={() => this.deleteDesignCheck(design.id)}>DELETE DESIGN</button>
+                      </div>
                         <div>
                             <img src={design.front_image_url} />
                             <img src={design.back_image_url} />
                         </div>
-                        <button onClick={() => this.deleteDesignCheck(design.id)}>DELETE DESIGN</button>
+
                     </ul>
                 )}
             </div>
