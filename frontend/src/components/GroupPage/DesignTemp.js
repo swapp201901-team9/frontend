@@ -40,7 +40,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                                     alert("그룹을 선택하세요")
                                 }
                                 else {
-                                    onClickPost(document.getElementById("post_group").value)
+                                    onClickPost(post_group.value)
                                 }
                                 }}>
                             POST
