@@ -1,7 +1,7 @@
 import React from "react";
 import Comment from "./Comment";
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ designid, comments }) => {
   let comment_list = comments
   console.log("CommentList comments: ", comment_list, " length: ", comment_list.length)
   return (
@@ -19,7 +19,7 @@ const CommentList = ({ comments }) => {
 
       {comment_list.map(comment => 
         <ul key={comment.id}>
-          <Comment comment={comment} />      
+          <Comment designid={designid} comment={comment} />      
         </ul>
       )}
       

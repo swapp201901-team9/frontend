@@ -11,7 +11,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                 {console.log("design: ", design)}
                 <img src={design.front_image_url} />
                 <img src={design.back_image_url} />
-                <p>{design.likes}</p>
+                <p>좋아요 {design.likes}개</p>
             </div>
             
             {(group.group_type === "UR")
@@ -57,7 +57,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                         <h2>댓글</h2>
                         {console.log("DesignTemp design.comments: ", design.comments)}
                         <CommentForm designid={design.id}/>
-                        <CommentList comments={design.comments}/>
+                        <CommentList designid={design.id} comments={design.comments}/>
                     </div>
             }
             <br />

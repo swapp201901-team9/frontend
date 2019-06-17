@@ -14,7 +14,7 @@ class Comment extends React.Component {
     // console.log("c c: ", comment.comment)
     
     this.state = {
-      editMode: false
+      editMode: false,
     }
 
     this.deleteCommentCheck = this.deleteCommentCheck.bind(this)
@@ -26,7 +26,7 @@ class Comment extends React.Component {
 
   deleteCommentCheck() {
 		if(confirm("정말 삭제하시겠습니까?") == true) 
-			return toDeleteComment(this.props.comment.id)
+			return this.props.onDeleteComment(this.props.designid, this.props.comment.id)
 		else 
 			return false;
     }
@@ -39,9 +39,9 @@ class Comment extends React.Component {
 
   onClickCompleteEditComment() {
     this.setState({
-      editMode: false
+      editMode: false,
     })
-    toEditComment(this.props.comment.id, this.new_name.value, this.new_message.value)
+    this.props.onEditComment(this.props.designid, this.props.comment.id, this.new_name.value, this.new_message.value)
   }
 
   editModeRender() {
@@ -95,7 +95,8 @@ class Comment extends React.Component {
           {/* <small className="float-right text-muted">{time}</small> */}
           {/* <h6 className="mt-0 mb-1 text-muted">{name}</h6> */}
           
-          <p>{this.props.comment.name} {this.props.comment.comment} {this.props.comment.likes}</p>
+          <p>{this.props.comment.name} {this.props.comment.comment}</p>
+          <p>좋아요 {this.props.comment.likes}개</p>
           
           {this.props.comment.auth 
             // 댓글을 단 사람이면
@@ -105,8 +106,8 @@ class Comment extends React.Component {
               </div>
             // 댓글을 단 사람이 아니면
             : this.comment.liked 
-              ? <button onClick={() => toUnlikeComment(this.comment.id)}>UNLIKE COMMENT</button>
-              : <button onClick={() => toLikeComment(this.comment.id)}>LIKE COMMENT</button>
+              ? <button onClick={() => this.props.onUnlikeComment(this.comment.id)}>UNLIKE COMMENT</button>
+              : <button onClick={() => this.props.onLikeComment(this.comment.id)}>LIKE COMMENT</button>
           }
         </div>
       </div>
@@ -130,5 +131,11 @@ class Comment extends React.Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+	onEditComment: (designid, commentid, name, message) => dispatch(toEditComment(designid, commentid, name, message)),
+  onDeleteComment: (designid, commentid) => dispatch(toDeleteComment(designid, commentid)),
+  onLikeComment: (commentid) => dispatch(toLikeComment(commentid)),
+  onUnlikeComment: (commentid) => dispatch(toUnlikeComment(commentid)),
+})
 
-export default Comment
+export default connect(null, mapDispatchToProps)(Comment)
