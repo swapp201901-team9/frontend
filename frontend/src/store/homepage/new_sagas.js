@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -163,6 +163,13 @@ function *groupDetailPageSaga() {
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
     yield spawn(watchUnlikeDesign);
+
+    yield spawn(watchAddComment);
+    yield spawn(watchEditComment);
+    yield spawn(watchDeleteComment);
+    yield spawn(watchLikeComment);
+    yield spawn(watchUnlikeComment);
+
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
     yield spawn(watchDeleteGroupDesign);
@@ -717,6 +724,49 @@ function *watchUnlikeDesign() {
 
 
 
+function *watchAddComment() {
+    while(true) {
+        const data = yield take(ADD_COMMENT);
+        console.log("watchAddComment");
+        yield call(addComment, data);
+    }
+}
+
+function *watchEditComment() {
+    while(true) {
+        const data = yield take(EDIT_COMMENT);
+        console.log("watchEditComment");
+        yield call(editComment, data);
+    }
+}
+
+function *watchDeleteComment() {
+    while(true) {
+        const data = yield take(DELETE_COMMENT);
+        console.log("watchDeleteComment");
+        yield call(deleteComment, data);
+    }
+}
+
+function *watchLikeComment() {
+    while(true) {
+        const data = yield take(LIKE_COMMENT);
+        console.log("watchLikeComment");
+        yield call(likeComment, data);
+    }
+}
+
+function *watchUnlikeComment() {
+    while(true) {
+        const data = yield take(UNLIKE_COMMENT);
+        console.log("watchUnlikeComment");
+        yield call(unlikeComment, data);
+    }
+}
+
+
+
+
 function *watchChangeGrouInfo() {
     while(true) {
         const data = yield take(CHANGE_GROUP_INFO);
@@ -782,50 +832,6 @@ function *watchPostDesign() {
         yield call(postDesign, data);
     }
 }
-
-
-
-
-
-// function *watchChangeBody() {
-//     while(true) {
-//         const data = yield take(CHANGE_BODY);
-//         console.log("watchChangeBody");
-//         yield call(changeBody, data);
-//     }
-// }
-
-// function *watchChangeSleeve() {
-//     while(true) {
-//         const data = yield take(CHANGE_SLEEVE);
-//         console.log("watchChangeSleeve");
-//         yield call(changeSleeve, data);
-//     }
-// }
-
-// function *watchChangeBanding() {
-//     while(true) {
-//         const data = yield take(CHANGE_BANDING);
-//         console.log("watchChangeBanding");
-//         yield call(changeBanding, data);
-//     }
-// }
-
-// function *watchChangeStripe() {
-//     while(true) {
-//         const data = yield take(CHANGE_STRIPE);
-//         console.log("watchChangeStripe");
-//         yield call(changeStripe, data);
-//     }
-// }
-
-// function *watchChangeButton() {
-//     while(true) {
-//         const data = yield take(CHANGE_BUTTON);
-//         console.log("watchChangeButton");
-//         yield call(changeButton, data);
-//     }
-// }
 
 
 
@@ -1126,7 +1132,7 @@ function *likeDesign(data) {
         yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
-        alert("*liikeDesign error")
+        alert("*likeDesign error")
     }
 }
 
@@ -1147,6 +1153,104 @@ function *unlikeDesign(data) {
         console.log(error)
         alert("*unliikeDesign error")
     }
+}
+
+
+
+function *addComment(data) {
+    console.log("addComment data.comment: ", data.name, data.message)
+    const path = 'groups/comment/' + data.designid + '/';
+    try {
+		yield call(xhr.post, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json',
+            body: JSON.stringify({"name": data.name, "comment": data.message})
+        });
+        yield put(actions.changeUrl(window.location.pathname));
+    } catch(error){
+        console.log(error)
+        alert("addComment error")
+    }
+}
+
+function *editComment(data) {
+    console.log("editComment")
+    const path = 'groups/edit/' + data.designid + '/';
+    try {
+		yield call(xhr.get, fixed_url + path, {
+            headers: {
+                "Authorization": "Basic " + localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            contentType: 'json'
+        });
+        yield put(actions.changeUrl('/main/'));
+    } catch(error){
+        console.log(error)
+        alert("*editComment error")
+    }
+}
+
+function *deleteComment(data) {
+    console.log("deleteComment")
+    // const path = 'groups/edit/' + data.designid + '/';
+    // try {
+	// 	yield call(xhr.get, fixed_url + path, {
+    //         headers: {
+    //             "Authorization": "Basic " + localStorage['auth'],
+    //             "Content-Type": 'application/json',
+    //             Accept: 'application/json'
+    //         },
+    //         contentType: 'json'
+    //     });
+    //     yield put(actions.changeUrl('/main/'));
+    // } catch(error){
+    //     console.log(error)
+    //     alert("*deleteComment error")
+    // }
+}
+
+function *likeComment(data) {
+    console.log("likeComment")
+    // const path = 'groups/like/' + data.designid + '/';
+    // try {
+	// 	yield call(xhr.get, fixed_url + path, {
+    //         headers: {
+    //             "Authorization": "Basic " + localStorage['auth'],
+    //             "Content-Type": 'application/json',
+    //             Accept: 'application/json'
+    //         },
+    //         contentType: 'json'
+    //     });
+    //     yield put(actions.changeUrl(window.location.pathname));
+    // } catch(error){
+    //     console.log(error)
+    //     alert("*likeComment error")
+    // }
+}
+
+function *unlikeComment(data) {
+    console.log("unlikeComment")
+    // const path = 'groups/unlike/' + data.designid + '/';
+    // try {
+    //     yield call(xhr.get, fixed_url + path, {
+    //         headers: {
+    //             "Authorization": "Basic " + localStorage['auth'],
+    //             "Content-Type": 'application/json',
+    //             Accept: 'application/json'
+    //         },
+    //         contentType: 'json'
+    //     });
+    //     yield put(actions.changeUrl(window.location.pathname));
+    // } catch(error){
+    //     console.log(error)
+    //     alert("*unliikeComment error")
+    // }
 }
 
 
