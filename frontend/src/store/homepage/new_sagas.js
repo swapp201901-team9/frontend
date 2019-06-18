@@ -393,7 +393,24 @@ function *watchLoginState() {
                     console.log("get group details...");
                     console.log("group id: ", id);
                     let username = window.atob(localStorage.getItem("auth")).split(":")[0]
-                    let now_group_data, my_groups_data, group_designs_data = null;
+                    let profile_data, now_group_data, my_groups_data, group_designs_data = null;
+
+                    //profile data
+                    try{
+                        profile_data = yield call(xhr.get, fixed_url+'profile/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                            });
+                            console.log('Get data without exception');
+                    } catch(error){
+                        console.log("profile data loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.");
+                    }
 
                     //now_group data
                     try{
@@ -456,6 +473,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        profile_user: profile_data.body,
                         now_group: now_group_data.body[0],
                         my_groups: my_groups_data.body,
                         group_designs: group_designs_data.body,
