@@ -122,15 +122,17 @@ class DesignPage extends React.Component {
 		});
 
 		this.the_front_canvas.on({
+			'mouse:up': this.selectHandler,
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
-			'mouse:up': this.selectHandler,
+			
 		})
 
 		this.the_back_canvas.on({
+			'mouse:up': this.selectHandler,
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
-			'mouse:up': this.selectHandler,
+			
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -162,7 +164,7 @@ class DesignPage extends React.Component {
 
 
 	componentWillUpdate (nextProps, nextState) {
-		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
         // If Updated Item is not the same as the old one
 		//         => Update the canvas with newer item
@@ -188,13 +190,10 @@ class DesignPage extends React.Component {
 		//update for text element
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
-				console.log("text: ", nextState.text[element])
-
-				// var x =this.textElementToImage(nextState.text[element], element);
-				// 	this.setState({text : ({...this.state.text,
-				// 		[element]: ({...this.state.text[element], width:x.width, height: x.height})
-				// 	})});
-
+				//console.log("text: ", nextState.text[element])
+				// if(nextState.text[element].width !== this.state.text[element].width) {
+				// 	return;
+				// }
 				if(element === "frontchest" || element === "rightarm") {
 					
 				this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
@@ -224,6 +223,21 @@ class DesignPage extends React.Component {
 	}
 
     // componentDidUpdate(nextProps, nextState) {
+	// 	for(let element of this.text_element){
+    //         if(nextState.text[element] !== this.state.text[element]) {
+				
+	// 			if(nextState.text[element].width !== this.state.text[element].width) {
+	// 				console.log("component did update")
+	// 			if(element === "frontchest" || element === "rightarm") {
+					
+	// 			this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
+	// 			}
+	// 			else {
+	// 				this.updateBackCanvas(this.textElementToImage(nextState.text[element], element))
+	// 			}
+	// 			}
+    //         }
+	// 	}
     //     this.the_front_canvas.renderAll();
     //     this.the_back_canvas.renderAll();
     // }
@@ -375,32 +389,11 @@ class DesignPage extends React.Component {
 
     textElementToImage(text, type) {
 		let imgInstance;
-		if (text.width == 0) {
-			console.log("text width 0")
-			imgInstance = new fabric.IText(text.textvalue, {
-				fontFamily: text.fontFamily,
-				fill: text.fill,
-				fontStyle: text.fontStyle,
-				fontSize: text.fontSize,
-				stroke: text.stroke,
-				strokeWidth: text.strokeWidth,
-				textAlign: "center",
-				the_type: type,
-				zIndex: 10,
-				left: text.left,
-				top: text.top,
-			})
-			this.setState({text : ({...this.state.text,
-				[type]: ({...this.state.text[type],
-				width: imgInstance.width,
-				height: imgInstance.height}) })})
-		}
-		else {
 		imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
 			fontStyle: text.fontStyle,
-			fontSize: text.fontSize,
+			//fontSize: text.fontSize,
 			stroke: text.stroke,
 			strokeWidth: text.strokeWidth,
 			textAlign: "center",
@@ -415,16 +408,15 @@ class DesignPage extends React.Component {
 			originX: "center",
 			originY: "center",
 		})
-		}
-		// console.log(this.state.text[type].width+ "야")
-		// if(this.state.text[type].width == 0) {
-		// 	console.log(this.state.text[type].width+ "야")
-		// 	this.temp(imgInstance, type);
-		// }
-		
+		console.log("*************")
 		console.log("text imgInstance: ", imgInstance)
-		console.log(imgInstance.width);
-		console.log(imgInstance.height);
+		console.log("text imgInstace width: " + imgInstance.width);
+		console.log("in text imagInstance this was put in"+ this.state.text[type].width)
+		console.log("text imgInstace height: "+ imgInstance.height);
+		console.log(this.state.text[type].height)
+		console.log("text imgInstace scaleX: " + imgInstance.scaleX);
+		console.log("text imgInstace scaleY: "+ imgInstance.scaleY);
+		console.log("*************")
         return imgInstance;
     }
 
@@ -574,11 +566,13 @@ class DesignPage extends React.Component {
 
 	scaleHandler = (e)=>{
 		let scalingObject = e.target;
-		var width = scalingObject.getScaledWidth();
-		var height = scalingObject.getScaledHeight();
+		var width_temp = scalingObject.getScaledWidth();
+		var height_temp = scalingObject.getScaledHeight();
 
-		// console.log("scaling: ", scalingObject)
-		// console.log("width: ", width, " height: ", height);
+		console.log("*************")
+		console.log("scaling: ", scalingObject)
+		console.log("getScaledWidth: ", width_temp, " getScaledHeight: ", height_temp);
+		console.log("*************")
 
 		if (scalingObject.the_type === "frontchest" ||
     		scalingObject.the_type === "rightarm" ||
@@ -589,37 +583,43 @@ class DesignPage extends React.Component {
 			var old_width_text = this.state.text[scalingObject.the_type].width
 			var old_height_text = this.state.text[scalingObject.the_type].height
 			
-			var scaleX_text= width/old_width_text
-			var scaleY_text= height/old_height_text
+			var scaleX_text= width_temp/old_width_text
+			var scaleY_text= height_temp/old_height_text
 			if (old_width_text != 0) {
+			console.log("*************")
 			console.log("old_width_text "+ old_width_text+ "old_height_text "+old_height_text)
-			console.log("width_text"+width+"height_text"+height)
+			console.log("width_text"+width_temp+"height_text"+height_temp)
+			console.log("*************")
 			//width = width*2;
 			//height = height*2;
-			var scaleX_text= width/old_width_text
-			var scaleY_text= height/old_height_text
+			var scaleX_text= width_temp/old_width_text
+			var scaleY_text= height_temp/old_height_text
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
-        	width: width,
-            height: height, scaleX: scaleX_text, scaleY: scaleY_text})
+        	width: width_temp,
+            height: height_temp, scaleX: scaleX_text, scaleY: scaleY_text})
 			})});
+			console.log("*************")
+			console.log("see if state is changed")
+			console.log(this.state.text[scalingObject.the_type].width);
+			console.log("*************")
 			}
 		}
 		else if (scalingObject.the_type === "front" ||
          	scalingObject.the_type === "back") {
-			console.log("scale handler logo width height")
-			width = width*10;
-			height = height*10;
+			// console.log("scale handler logo width height")
+			width_temp = width_temp*10;
+			height_temp = height_temp*10;
 			var old_width = this.state.logo[scalingObject.the_type].width
 			var old_height = this.state.logo[scalingObject.the_type].height
-			console.log("old_width "+ old_width+ "old_height "+old_height)
-			var scaleX= width/old_width
-			var scaleY= height/old_height
-			console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
+			// console.log("old_width "+ old_width+ "old_height "+old_height)
+			var scaleX= width_temp/old_width
+			var scaleY= height_temp/old_height
+			// console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
     		this.setState({logo : ({...this.state.logo,
         	[scalingObject.the_type]: ({...this.state.logo[scalingObject.the_type],
-        	width:width,
-            height: height, scaleX: scaleX, scaleY: scaleY})
+        	width:width_temp,
+            height: height_temp, scaleX: scaleX, scaleY: scaleY})
     	})});
 		}
 	}
@@ -653,24 +653,76 @@ class DesignPage extends React.Component {
 	}
 
 	selectHandler = (e) =>{
+
 		let selectedObject = e.target;
-		console.log("select: ", selectedObject)
+		var id;
+		//console.log("select handler object id" + id);
+		//console.log("select: ", selectedObject)
+		
+		if (this.state.logoClickedWhat == "front" || this.state.logoClickedWhat == "front_close") {
+			id = this.the_front_canvas.getObjects().indexOf(selectedObject);
+			if (this.text_element.includes(selectedObject.the_type)) {
+				this.setState({
+					textClickedWhat: selectedObject.the_type,
+				});	
+				if ((id != -1)) {
+					this.the_front_canvas.item(id).hasControls = false;
+					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
+					//this.__canvases.push(this.the_front_canvas);
+					}	
+			}
+			else if (this.logo_element.includes(selectedObject.the_type)) {
+				this.setState({
+					logoClickedWhat: selectedObject.the_type,
+				});	
+			}
+			else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
+				this.setState({
+					designClickedWhat: selectedObject.the_type.split('_')[1]
+				});
+				if ((id != -1)) {
+					this.the_front_canvas.item(id).hasControls = false;
+					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
+					//this.__canvases.push(this.the_front_canvas);
+					}	
+			}	
+		}
+		else {
+			id = this.the_back_canvas.getObjects().indexOf(selectedObject);
+			if (this.text_element.includes(selectedObject.the_type)) {
+				this.setState({
+					textClickedWhat: selectedObject.the_type,
+				});	
+				if ((id != -1)) {
+					this.the_front_canvas.item(id).hasControls = false;
+					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
+					//this.__canvases.push(this.the_front_canvas);
+					}	
+			}
+			else if (this.logo_element.includes(selectedObject.the_type)) {
+				this.setState({
+					logoClickedWhat: selectedObject.the_type,
+				});	
+			}
+			else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
+				this.setState({
+					designClickedWhat: selectedObject.the_type.split('_')[1]
+				});
+				if ((id != -1)) {
+					this.the_front_canvas.item(id).hasControls = false;
+					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
+					//this.__canvases.push(this.the_front_canvas);
+					}	
+			}
+		}	
 	
-		if (this.text_element.includes(selectedObject.the_type)) {
-			this.setState({
-				textClickedWhat: selectedObject.the_type,
-			});	
-		}
-		else if (this.logo_element.includes(selectedObject.the_type)) {
-			this.setState({
-				logoClickedWhat: selectedObject.the_type,
-			});	
-		}
-		else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
-			this.setState({
-				designClickedWhat: selectedObject.the_type.split('_')[1]
-			});
-		}
+		//if you select an object in canvas tab will flip open
+		// var element = document.getElementById('frontAndBack');
+		// console.log(element);
+		// var event = new Event('change');
+		// element.dispatchEvent(event);
+
+		
 
 	}
 
@@ -683,6 +735,7 @@ class DesignPage extends React.Component {
 
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
+		window.alert("saved")
 	}
 
     render() {
@@ -896,7 +949,8 @@ class DesignPage extends React.Component {
 						=========================================-->*/}
 						{/*<ThreeScene/>*/}
 						<div id="plain-react">
-							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
+							<Tabs className="tabs tabs-1" id = "frontAndBack"
+							onChange={(tab)=> this.handleCanvasChange(tab)}> 
 	
 								<TabLink to="front">FRONT</TabLink>
 								<TabLink to="back">BACK</TabLink>
