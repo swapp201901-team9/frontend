@@ -15,6 +15,10 @@ class Comment extends React.Component {
 
     this.state = {
       editMode: false,
+      name: props.comment.name,
+      message: props.comment.comment,
+      liked: props.comment.liked,
+      likes: props.comment.likes,
     }
 
     this.deleteCommentCheck = this.deleteCommentCheck.bind(this)
@@ -42,6 +46,8 @@ class Comment extends React.Component {
   onClickCompleteEditComment() {
     this.setState({
       editMode: false,
+      name: this.new_name.value,
+      message: this.new_message.value,
     })
     this.props.onEditComment(this.props.designid, this.props.comment.id, this.new_name.value, this.new_message.value)
   }
@@ -53,7 +59,7 @@ class Comment extends React.Component {
           <input
             ref={ node => {this.new_name=node;} }
             className="comment_name"
-            defaultValue={this.props.comment.name}
+            defaultValue={this.state.name}
             name="name"
             type="text"
           />
@@ -63,7 +69,7 @@ class Comment extends React.Component {
             ref={ node => {this.new_message=node;} }
             // value={this.contents}
             className="comment_text"
-            defaultValue={this.props.comment.comment}
+            defaultValue={this.state.message}
             name="message"
             rows="5"
           />
@@ -85,7 +91,7 @@ class Comment extends React.Component {
 
           <div className="Comment-List-Field">
             <div className="Group-Name-Field">
-              <span className="title5">{this.props.comment.name} </span>
+              <span className="title5">{this.state.name} </span>
             </div>
 
           <div className="Comment-Button-Field">
@@ -101,22 +107,33 @@ class Comment extends React.Component {
           </div>
           </div>
 
-            <span className="title4">{this.props.comment.comment}</span>
-              {this.props.comment.liked
+            <span className="title4">{this.state.message}</span>
+              {/* {this.props.comment.liked */}
+              {this.state.liked
               // 댓글을 좋아요 한 사람이면
               ? <span>
-                  <span className="likes_text"> {this.props.comment.likes} </span>
-                  <span className="unlikes" onClick={() => this.props.onUnikeComment(this.props.comment.id)}> &#10084; </span>                
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="unlikes" 
+                    onClick={() => {
+                      this.setState({liked: false, likes: this.state.likes - 1})
+                      this.props.onUnlikeComment(this.props.comment.id)}
+                    }> &#10084; 
+                  </span>                
                 </span>
-              // <button className="likes" onClick={() => this.props.onUnlikeComment(this.props.comment.id)}></button>
+
               // 아직 좋아요를 하지 않은 사람이면
               : <span>
-                  <span className="likes_text"> {this.props.comment.likes} </span>
-                  <span className="likes" onClick={() => this.props.onLikeComment(this.props.comment.id)}> &#10084; </span>                  
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="likes" 
+                    onClick={() => {
+                      this.setState({liked: true, likes: this.state.likes + 1})
+                      this.props.onLikeComment(this.props.comment.id)
+                    }}> &#10084; 
+                  </span>                  
                 </span>
-              // <button className="likes" onClick={() => this.props.onLikeComment(this.props.comment.id)}>&#10084; </button>
               }
-              {/* <p className="likes">&#10084; {this.props.comment.likes}</p> */}
 
       </div>
 
@@ -125,7 +142,7 @@ class Comment extends React.Component {
 
 
 
-    render() {
+  render() {
       return (
         <div>
           {

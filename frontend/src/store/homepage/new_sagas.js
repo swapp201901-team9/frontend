@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN, EDIT_DESIGN_NAME } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -121,11 +121,7 @@ function *loggedInMainPageSaga() {
 
     yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
-    // yield spawn(watchChangeBody);
-    // yield spawn(watchChangeSleeve);
-    // yield spawn(watchChangeBanding);
-    // yield spawn(watchChangeStripe);
-    // yield spawn(watchChangeButton);
+    yield spawn(watchEditDesignName);
 }
 
 function *profilePageSaga() {
@@ -160,6 +156,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchNewDesign);
+    yield spawn(watchEditDesignName);
     yield spawn(watchToEditDesign);
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
@@ -440,6 +437,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET profile_id_pw_data: ", profile_id_pw_data.body)
                     } catch(error){
                         console.log("profile data loading error")
                         console.log(error)
@@ -509,6 +507,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
                         console.log("now group data loading error")
                         console.log(error)
@@ -525,6 +524,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json',
                         });
+                        console.log("GET my_groups_data: ", my_groups_data.body)
                     } catch(error){
                         console.log("my_groups loading error")
                         console.log(error)
@@ -541,6 +541,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error) {
                         if(error.statusCode === 403) {
                             console.log("you are not permitted");
@@ -565,6 +566,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET my_designs_data: ", my_designs_data.body)
                     } catch(error) {
                         console.log("my designs data loading error")
                         console.log(error)
@@ -582,6 +584,7 @@ function *watchLoginState() {
                         load: 0,
                         loading: true
                     }))
+                    console.log("setState finished")
                 }
 
 
@@ -619,7 +622,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
                         console.log("now group data loading error")
                         console.log(error)
@@ -635,7 +639,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET group_users_data: ", group_users_data.body)
                     } catch(error){
                         console.log("group users data loading error")
                         console.log(error)
@@ -651,7 +656,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error){
                         console.log("group designs data loading error")
                         console.log(error)
@@ -818,6 +824,16 @@ function *watchGoToAdminGroup() {
 	}
 }
 
+
+
+
+function *watchEditDesignName() {
+    while(true) {
+        const data = yield take(EDIT_DESIGN_NAME);
+        console.log("watchEditDesignName");
+        yield call(editDesignName, data);
+    }
+}
 
 function *watchToEditDesign() {
     while(true) {
@@ -1236,6 +1252,28 @@ function *toAdminGroup(data){
 
 
 
+function *editDesignName(data) {
+    console.log("editDesignName")
+    const path = 'groups/edit/' + data.designid + '/';
+    try{
+        yield call(xhr.send, fixed_url+path, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({"name": data.name})
+        });
+        console.log("edit design name succeed ");
+        // yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        alert("디자인 이름 수정에 실패했습니다.");
+        return;
+    }
+}
+
 function *toEditDesign(data) {
     console.log("toEditDesign")
     const path = 'groups/edit/' + data.designid + '/';
@@ -1268,7 +1306,7 @@ function *likeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 할 수 없습니다.")
@@ -1287,7 +1325,7 @@ function *unlikeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 취소할 수 없습니다.")
@@ -1331,7 +1369,7 @@ function *editComment(data) {
             body: JSON.stringify({"name": data.name, "comment": data.message})
         });
         console.log("edit comment succeed ");
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
         alert("댓글 수정에 실패했습니다.");
         return;
@@ -1371,7 +1409,7 @@ function *likeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글을 좋아요 할 수 없습니다.")
@@ -1390,7 +1428,7 @@ function *unlikeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글 좋아요를 취소할 수 없습니다.")
@@ -1447,9 +1485,14 @@ function *deleteGroupUser(data) {
         alert("퇴장시켰습니다.")
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
-        console.log(error)
-        alert("해당 멤버를 퇴장시킬 수 없습니다.");
-        return ;
+        if(error.statusCode === 400) {
+            console.log("cannot delete oneself");
+            alert("본인은 삭제할 수 없습니다.")
+        }
+        else {
+            console.log(error)
+            alert("해당 멤버를 퇴장시킬 수 없습니다.");
+        }
     }
 }
 
@@ -1637,8 +1680,8 @@ function *postDesign(data) {
             responseType: 'json',
         });
         console.log("post design succeed!");
-        alert("게시되었습니다.")
-        yield put(actions.changeUrl('group/'+data.groupid+'/'));
+        if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
+            yield put(actions.changeUrl('group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
         alert("디자인을 게시할 수 없습니다.");

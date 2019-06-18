@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, LIKE_COMMENT, UNLIKE_COMMENT, RESET_DESIGN } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, LIKE_COMMENT, UNLIKE_COMMENT, RESET_DESIGN, EDIT_DESIGN_NAME } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -155,6 +155,16 @@ export const gotoAdminGroup = (groupid) => {
 }
 
 
+
+export const toEditDesignName = (designid, name) => {
+    console.log("toEditDesignName action")
+    console.log(designid)
+    return {
+        type: EDIT_DESIGN_NAME,
+        designid: designid,
+        name: name,
+    }
+}
 
 export const gotoEditDesign = (designid) => {
     console.log("gotoEditDesign action")

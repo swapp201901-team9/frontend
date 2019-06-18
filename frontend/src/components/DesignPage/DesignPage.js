@@ -8,7 +8,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
-import { toSaveDesign, toNewDesign, changeUrl, toResetDesign } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign, changeUrl, toResetDesign, toEditDesignName } from '../../actions/index.js';
 //import { tsImportEqualsDeclaration } from '@babel/types';
 
 //import logo from './images/templates/templatelist';
@@ -54,7 +54,12 @@ class DesignPage extends React.Component {
 
 			displayTextColor: false,
 			displayBorderColor: false,
+
+			editNameMode: false,
+            name: this.props.now_design.name,
 		};
+
+		this.new_name;
 
 		this.handleElementChange = this.handleElementChange.bind(this);
 		this.handleCanvasChange = this.handleCanvasChange.bind(this);
@@ -84,6 +89,11 @@ class DesignPage extends React.Component {
 		this.getDataUrl = this.getDataUrl.bind(this);
 
 		this.resetDesignCheck = this.resetDesignCheck.bind(this);
+
+        this.onClickEditDesignName = this.onClickEditDesignName.bind(this);
+        this.onClickCompleteEditDesignName = this.onClickCompleteEditDesignName.bind(this);
+        this.editNameModeRender = this.editNameModeRender.bind(this);
+        this.readNameModeRender = this.readNameModeRender.bind(this);
 
 	}
 
@@ -630,10 +640,63 @@ class DesignPage extends React.Component {
 			return this.props.onReset()
 		else
 			return false;
-  	}
+	}
+	
+	onClickEditDesignName() {
+        this.setState({
+          editNameMode: true
+        })
+    }
+    
+    onClickCompleteEditDesignName() {
+        this.setState({
+            editNameMode: false,
+            name: this.new_name.value,
+        })
+        this.props.onEditDesignName(this.props.now_design.id, this.new_name.value)
+    }
+
+    editNameModeRender() {
+        return (
+          <form onSubmit={this.onClickCompleteEditDesignName}>
+     
+              <input
+                ref={ node => {this.new_name=node;} }
+                className="design_name"
+                defaultValue={this.state.name}
+                name="name"
+                type="text"
+              />
+    
+              <button className="button button_comment">
+                Done &#10148;
+              </button>
+    
+          </form>
+        )
+    }
+    
+    readNameModeRender() {
+        return (
+          <div className="Comment-Field">
+    
+            <div className="Comment-List-Field">
+                <div className="Group-Name-Field">
+                  <span className="title5">{this.state.name} </span>
+                </div>
+    
+                <div className="Comment-Button-Field">
+					<button className="button button_comment_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                </div>
+            </div>
+    
+          </div>
+    
+        )
+    }
 
     render() {
-		console.log("DesignPage - render state: ", this.state)
+		// console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
@@ -843,6 +906,10 @@ class DesignPage extends React.Component {
 							Fabric Canvas Section
 						=========================================-->*/}
 						{/*<ThreeScene/>*/}
+						{this.state.editNameMode
+							? this.editNameModeRender()
+							: this.readNameModeRender()
+                    	}
 						<div id="plain-react">
 							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
 	
@@ -906,6 +973,7 @@ const mapDispatchToProps = (dispatch) => ({
 	onReset: () => dispatch(toResetDesign()),
 	onNew: () => dispatch(toNewDesign()),
 	onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
+	onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name))
 	//onView: () => dispatch(changeUrl('/group/1'))
 })
 
