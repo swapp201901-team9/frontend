@@ -20,7 +20,7 @@ Please reference our github wiki page for more information about the project.
 
 ## Demo
 
-will be updated soon 
+http://ec2-13-125-245-176.ap-northeast-2.compute.amazonaws.com:3000/
 
 ## Getting Started
 
