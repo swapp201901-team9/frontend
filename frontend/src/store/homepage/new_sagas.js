@@ -1456,9 +1456,14 @@ function *deleteGroupUser(data) {
         alert("퇴장시켰습니다.")
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
-        console.log(error)
-        alert("해당 멤버를 퇴장시킬 수 없습니다.");
-        return ;
+        if(error.statusCode === 400) {
+            console.log("cannot delete oneself");
+            alert("본인은 삭제할 수 없습니다.")
+        }
+        else {
+            console.log(error)
+            alert("해당 멤버를 퇴장시킬 수 없습니다.");
+        }
     }
 }
 
