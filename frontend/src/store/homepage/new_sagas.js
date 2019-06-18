@@ -1455,6 +1455,23 @@ function *newDesign(data) {
 function *saveDesign(data) {
     console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
+    let profile_data;
+
+    try{
+        profile_data = yield call(xhr.get, fixed_url+'profile/',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json'
+        });
+    } catch(error){
+        console.log("profile data loading error")
+        console.log(error)
+        alert("데이터 로딩에 실패했습니다.");
+    }
+
     try{
         yield call(xhr.send, fixed_url+backPath, {
             method: 'PUT',
@@ -1485,7 +1502,9 @@ function *saveDesign(data) {
             })
         });
         console.log("save design succeed ");
-        alert("저장되었습니다.")
+        if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
+            yield put(actions.changeUrl('/group/'+profile_data.body['user_group']+'/'))
+            
     }catch(error){
         console.log(error)
         alert("저장에 실패했습니다.");

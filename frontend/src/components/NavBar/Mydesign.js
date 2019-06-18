@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {changeUrl, } from '../../actions';
+import {changeUrl} from '../../actions';
 
-class Mypage extends React.Component {
+class Mydesign extends React.Component {
     render() {
         // const onSubmit = () => {
         //     if (this.username !== undefined && this.password !== undefined) {
@@ -10,27 +10,23 @@ class Mypage extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onToProfile(this.props.username)}>MY PAGE</a>
+        <a href="#" onClick={() => this.props.onToMydesign(this.props.profile_user['user_group'])}>MY DESIGN</a>
         )
     }
 }
 
 let mapStateToProps = (state) => {
   return{
-    username: state.authorization !== null? Object.assign(state.authorization).split(":")[0]:null,
+    profile_user: state.profile_user,
   }
 }
 
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onToProfile: (username) => dispatch(changeUrl('/profile/'+username+"/"))
+        onToMydesign: (groupid) => dispatch(changeUrl('/group/'+groupid+'/'))
 
     }
 }
 
-Mypage = connect(mapStateToProps, mapDispatchToProps)(Mypage);
-
-
-
-export default Mypage;
+export default connect(mapStateToProps, mapDispatchToProps)(Mydesign);
