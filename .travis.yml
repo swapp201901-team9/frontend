@@ -2,6 +2,7 @@ language: generic
 matrix:
   include:
     -language: node_js
+    sudo: required
     node_js: 11.12.0
     before_install: 
       - cd ./frontend/
@@ -33,8 +34,8 @@ matrix:
     #  - sudo python3 manage.py test
 
 
-notifications:
-  email: sally20921@snu.ac.kr
+#notifications:
+  #email: sally20921@snu.ac.kr
 
 
     

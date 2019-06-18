@@ -7,15 +7,15 @@ class ChangePWPage extends React.Component {
         const onChangeSubmit = () => {
             console.log("####"+this.props.profile_pw);
             if(this.currpw.value === "")
-                alert("Enter the current password");
+                alert("현재 비밀번호를 입력하세요.");
             else if(this.newpw.value === "")
-                alert("Enter the new password");
+                alert("새로운 비밀번호를 입력하세요.");
             else if(this.newpwre.value === "")
-                alert("Enter the new password verification");
-            else if(this.newpw.value !== this.newpwre.value)
-                alert("New password does not match");
+                alert("새로운 비밀번호를 확인해주세요.");
             else if(this.props.profile_pw !== this.currpw.value)
-                alert("Old password is not correct!");
+                alert("현재 비밀번호를 잘못 입력하셨습니다.");
+            else if(this.newpw.value !== this.newpwre.value)
+                alert("새로운 비밀번호가 일치하지 않습니다.");
             else this.props.onClick(this.props.profile_user,this.currpw.value, this.newpw.value)
         }
         return (

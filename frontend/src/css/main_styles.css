@@ -31,6 +31,25 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   text-align: center;
   line-height:60px;
   }
+
+  h2{
+    font-size: 18px;
+  }
+
+  .title1{
+  font-family: 'Bree Serif', serif;
+  text-align: left;
+  font-size: 17px;
+  line-height: 30px;
+  }
+
+#title2{
+    float: left;
+    margin-left: 8px;
+    font-size: 13px;
+    line-height: 32px;
+  }
+
   .h_white{
   color:#000;
   border-bottom:1px solid #d8d8d8;
@@ -133,8 +152,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   button{
-
-
   width: 100%;
   height: 40px;
   border-radius: 21px;
@@ -153,10 +170,66 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   background-color: #fff;
   color: #c13a3a;
 }
+  .button_60{
+    width: 60%;
+    height: 30px;
+    margin-top:8px;
+    display: inline-block;
+    float: right;
+    color: #fff;
+  }
+
+  #popbtn {
+  	width: 24px;
+  	height: 30px;
+    margin: 4px;
+  	background: transparent;
+  	border-radius: 0px;
+  	border: none;
+    box-shadow: none;
+  	outline: none;
+    float: right;
+  }
+
+
+
+  .section-field{
+    padding: 2px;
+    margin: 5px 2px 35px 2px;
+  }
+  .section-field2{
+    padding: 2px;
+    margin: 5px 2px 4px 2px;
+  }
+#stroke_width{
+  margin-left:8px;
+}
+#text_size{
+  margin-left:8px;
+}
+#input{
+  border:none;
+}
+.rst_btn{
+  width:42%;
+  margin:0px 16px;
+  border-radius: 21px;
+  box-shadow: 2px 4px 7px 0 rgba(244, 137, 137, 0.25);
+  border: solid 2px #c13a3a;
+  background-color: #fff;
+  color: #c13a3a;
+}
+.save_btn{
+  width:42%;
+  margin: 0px 16px;
+  float: right;
+}
+
   select {
     width: 100%;
     height: 40px;
     padding: 2px 14px;
+    margin: 4px 0px;
     font-size: 12px;
     color: #999;
     border: 2px solid #ddd;
@@ -166,6 +239,38 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -webkit-appearance: none;
   }
   select::-ms-expand {display:none;}
+  .select_32{
+    height : 32px;
+  }
+   #text_font{
+     width: 60%;
+     height: 32px;
+     padding: 2px 14px;
+     margin: 4px 0px;
+     float: right;
+     font-size: 12px;
+     color: #999;
+     border: 2px solid #ddd;
+     border-radius: 21px;
+     background: url("./selector.png") no-repeat right 12px center;
+     apperance: none;
+     -webkit-appearance: none;
+   }
+ #text_style{
+   width: 60%;
+   height: 32px;
+   padding: 2px 14px;
+   margin: 4px 0px;
+   float: right;
+   font-size: 12px;
+   color: #999;
+   border: 2px solid #ddd;
+   border-radius: 21px;
+   background: url("./selector.png") no-repeat right 12px center;
+   apperance: none;
+   -webkit-appearance: none;
+ }
+
 
   /*tab*/
 
@@ -269,6 +374,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   input:focus{
+  height: 40px;
   border: solid 2px #C13A3A;
   outline: none;
   background-color: #fff
@@ -509,10 +615,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-bottom: 10px;
   }
 
-  #text_area, .wrapper,
-  .font_style, .font_size
+  #text_area
   {
-  margin-top: 25px;
+  width: 94%;
+  margin-top: 2px;
   }
 
   .text_tool_window #text_area{
@@ -679,26 +785,224 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin-left: 10px;
 
   }
-
+  .Group-Name-Field{
+  width:50%;
+  margin-right: 20px;
+  display: inline-block;
+  }
   .Group-List-Field{
+  margin: 5px 0px;
+  padding: 5px 0px;
   box-sizing: border-box;
   color: black;
   }
 
-  .Group-List-Field > ul {
-  padding: 0px;
-  margin: 20px 0px;
-  }
 
   .Group-Button-Field{
+  width:16%;
+  margin-left: 5px;
   box-sizing: border-box;
   font-size: 12px;
   color: black;
-  margin: 10px 0px 10px 0px;
+  display: inline-block;
+  float: right;
+
+  }
+  .Comment-Field{
+  padding: 6px 10px;
+  margin: 2px 0px;
+  box-sizing: border-box;
+  color: black;
+  border-radius: 4px;
+  border: 1px solid #efefef;
+
+  }
+  .Comment-Like-Field{
+  padding: 6px 10px;
+  /*margin: 2px 0px 2px 2px;*/
+  box-sizing: border-box;
+  color: black;
+  /*background-color: #efefef;
+  border-radius: 4px;*/
+  border-bottom: 1px solid #efefef;
+  }
+  .Comment-Write-Field{
+  padding: 6px 10px;
+  /*margin: 2px 0px 2px 2px;*/
+  box-sizing: border-box;
+  color: black;
+  background-color: #efefef;
+  border-radius: 4px;
+
+  }
+  .Comment-List-Field{
+  padding: 6px 0px;
+  box-sizing: border-box;
+  color: black;
+  border-bottom: 1px solid #efefef;
+  }
+
+  .Comment-Button-Field{
+  width:30%;
+  margin-left: 5px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: black;
+  display: inline-block;
+  float: right;
+  top:0; bottom:0;
+  }
+  .Comment-Content-Field{
+    padding: 6px 0px;
+    box-sizing: border-box;
+    color: black;
+  }
+
+  .DesignList-Button-Field{
+  width:80%;
+  margin:20px 0px;
+  box-sizing: border-box;
+  font-size: 12px;
+  color: black;
+  display: inline-block;
+  float: right;
+  }
+.likes{
+  text-align: right;
+  color:#D86B62;
+}
+
+.title4{
+  margin-left: 4px;
+  font-size: 14px;
+  vertical-align: middle;
+  }
+.title5{
+  margin-left: 4px;
+  font-size: 12px;
+  vertical-align: top;
+}
+form > .form-group{
+  /*width:100%;
+  height: auto;
+  padding: 4px;
+  background-color: #fafafa;
+  border-radius: 24px;
+
+    border-bottom:1px solid #fefefe;*/
+}
+ .comment_name{
+
+   width: 17%;
+   height: 30px;
+   display: inline-block;
+   font-size: 12px;
+   margin-right: 10px;
+ }
+ .comment_text{
+   width: 54%;
+   height: 30px;
+   display: inline-block;
+   font-size: 12px;
+   margin-right: 10px;
+
+ }
+ .button_comment{
+   width: 20%;
+   height: 30px;
+   display: inline-block;
+   float: right;
+ }
+ .button_newdesign{
+   width: 40%;
+   height: 24px;
+   display: inline-block;
+   float: right;
+   border: none;
+   border-radius: 12px;
+   box-shadow: none;
+   background-color: transparent;
+   font-size: 14px;
+   color: #333;
+   top:0;
+   bottom:0;
+   text-align:right;
+ }
+
+  #groupName{
+    cursor:pointer;
+  }
+  .button_edit{
+    width: 30%;
+    display: inline-block;
+    margin-left:10px;
+    float: right;
+    border: none;
+    top:0;
+    bottom:0;
+  }
+  .button_comment_delete{
+    width: 30%;
+    height:24px;
+    display: inline-block;
+    margin-left:4px;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: transparent;
+    color: #777;
+    top:0;
+    bottom:0;
+  }
+  .button_comment_edit{
+    width: 30%;
+    height:24px;
+    display: inline-block;
+    margin-left:4px;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: transparent;
+    color: #777;
+    top:0;
+    bottom:0;
+  }
+  #post_group{
+    background-color:white;
+    width: 65%;
+    display: inline-block;
+    margin: 0px;
+  }
+
+  .button_like{
+    width: 100%;
+    height: 22px;
+    display: inline-block;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: #D86B62;
+    color: #fff;
+    top:0;
+    bottom:0;
+  }
+  .button_unlike{
+    width: 100%;
+    height: 22px;
+    display: inline-block;
+    float: right;
+    border: none;
+    border-radius: 12px;
+    box-shadow: none;
+    background-color: #bbb;
+    color: #fff;
 
   }
   .button_small{
-  width: 30%;
+  width: 100%;
   height: 24px;
   display: inline-block;
   float: right;
@@ -710,13 +1014,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   .button_admin{
-  width: 100%;
-  height: 20px;
-  display: inline-block;
-  float: right;
-  border: 1px solid #dcdcdc;
-  border-radius: 4px;
-  box-shadow: 1px 2px 3px 0 rgba(160, 160, 160, 0.1);
-  background-color: #fff;
-  color: #ababab;
+    width: 100%;
+    height: 24px;
+    display: inline-block;
+    float: right;
+    border: 1px solid #f39800;
+    border-radius: 4px;
+    box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
+    background-color: #f39800;
+    color: #fff;
   }

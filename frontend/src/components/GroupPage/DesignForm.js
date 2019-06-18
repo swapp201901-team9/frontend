@@ -12,6 +12,13 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
             {(group.group_type === "UR")
                 /* grouptype이 user 그룹일때 - edit 및 post 가능 */
                 ? (<div>
+                  <div className="DesignList-Button-Field">
+                  <button className="button_edit" type="button"
+                      onClick={onClickEdit}>
+                      EDIT
+                  </button>
+                  {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                  </div>
                   <div>
                       {console.log("design: ", design)}
                       <img src={design.front_image_url} />
@@ -19,14 +26,11 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
 
                   </div>
 
-                    <span>{design.likes}명이 좋아합니다</span>
-                        <button class="post_btn" type="button"
-                            onClick={onClickEdit}>
-                            EDIT
-                        </button>
-
-
-                        <select id="post_group" ref={node=>{post_group=node;}}>
+                  <div className="Comment-Like-Field">
+                  <span className="title5">{design.likes}명이 좋아합니다</span>
+                  </div>
+                  <div className="Comment-Write-Field">
+                      <select id="post_group" ref={node=>{post_group=node;}}>
                             <option>그룹을 선택하세요</option>
                             {my_groups.filter(group => {
                                 return group.group_type !== "UR"
@@ -35,7 +39,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                                 return <option key={option.id} value={option.id}> {option.group_type} {option.group_name} </option>
                             })}
                         </select>
-
+                        <div className="Comment-Button-Field">
                         <button class="post_btn" type="button"
                             onClick={() => {
                                 console.log("post_group: ", post_group)
@@ -48,12 +52,15 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                                 }}>
                             POST
                         </button>
+                        </div>
+                      </div>
                     </div>)
 
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
-                {/* design의 주인일 때 - 삭제 가능 */}
-                {design.auth && <button className="button button_edit" onClick={onClickDelete}>DELETE</button>}
+                    <div className="DesignList-Button-Field">
+                    {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                    </div>
                 <div>
                     {console.log("design: ", design)}
                     <img src={design.front_image_url} />
@@ -70,6 +77,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                     </div>
                   </div>
 
+                    {/* design의 주인일 때 - 삭제 가능 */}
 
                         <CommentList comments={design.comments}/>
                         <div className="Comment-Write-Field">

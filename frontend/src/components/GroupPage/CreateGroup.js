@@ -10,16 +10,15 @@ class CreateGroup extends React.Component {
 
 	render() {
 		const type_options= [
-			'Select an Option',
-			'Club',
-			'Department',
-			'Else'
+			'[동아리]',
+			'[학과]',
+			'[기타]'
 			]
 
 		let onSubmit = (e) => {
 			console.log("create onSubmit")
 			e.preventDefault()
-			if(this.grouptype !== undefined && this.grouptype.value !== 'Select an Option' && this.groupname !== undefined) {
+			if(this.grouptype !== undefined && this.groupname !== undefined) {
 				this.props.onCreateGroup(this.grouptype, this.groupname)
 			}
 		}
@@ -28,11 +27,12 @@ class CreateGroup extends React.Component {
 			<div>
 				<form onSubmit={onSubmit}>
 					<div className="CreateGroup">
-						<label htmlFor="group type">Group Type </label>
+						<span className="title1">Group Type </span>
 						<select
 							name="grouptype"
 							ref={ node => {this.grouptype=node;} }
 							className="type-select"
+							defaultValue="[동아리]"
 						>
 							{type_options.map(option => {
 								return <option value={option} key={option} >{option}</option>
@@ -40,7 +40,7 @@ class CreateGroup extends React.Component {
 						</select>
 						<br />
 						<br />
-						<label htmlFor="group name">Group Name</label>
+						<span className="title1">Group Name</span>
 						<input
 							type="text"
 							name="groupname"
@@ -49,9 +49,9 @@ class CreateGroup extends React.Component {
 							className="name-input"
 						/>
 						<br/>
-						<div className="Group-Button-Field">
+
 						<button type="submit">CREATE GROUP</button>
-						</div>
+
 					</div>
 				</form>
 			</div>

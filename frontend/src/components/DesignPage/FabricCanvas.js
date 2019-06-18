@@ -272,7 +272,7 @@ class FabricCanvas extends React.Component{
     }
 
 
-    componentWillReceiveProps = (newprops) => {
+    componentWillReceiveProps(newprops) {
         console.log("FabricCanvas - componentWillReceiveProps newprops: ", newprops)
 
         // If Updated Item is not the same as the old one
@@ -323,7 +323,7 @@ class FabricCanvas extends React.Component{
 
     }
 
-    updateFrontCanvasforImage = (next) => {
+    updateFrontCanvasforImage (next) {
         console.log("FabricCanvas - updateFrontCanvasForImage next: ", next)
 
         if(next){
@@ -360,7 +360,7 @@ class FabricCanvas extends React.Component{
         }
     }
 
-    updateBackCanvasforImage = (next) => {
+    updateBackCanvasforImage (next) {
 
         console.log("FabricCanvas - updateBackCanvasForImage")
 
@@ -396,7 +396,7 @@ class FabricCanvas extends React.Component{
         }
     }
 
-    onDrop = (e) => {
+    onDrop (e) {
         console.log("hey");
 
         e.preventDefault();
@@ -479,7 +479,7 @@ class FabricCanvas extends React.Component{
         this.the_front_canvas = canvas;
     }
 
-    saveToCanvas = () => {
+    saveToCanvas () {
         console.log("FabricCanvas - saveToCanvas")
 
         let link = document.createElement("a");
@@ -489,7 +489,7 @@ class FabricCanvas extends React.Component{
 
     }
 
-    fileChangedHandler = (event) => {
+    fileChangedHandler (event) {
         const file = event.target.files[0];
         this.setState({selectedFile: file});
     }
