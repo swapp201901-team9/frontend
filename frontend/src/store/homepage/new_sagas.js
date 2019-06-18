@@ -196,16 +196,27 @@ function *groupAdminPageSaga() {
 // <<주의>> 새로운 Page를 추가할 경우 PageSaga함수에 반드시 추가할 것
 // <<주의>> 새로운 state를 추가할 경우 try-catch문을 이용해 정보를 받아온 후 스테이트에 업데이트 해야 함
 function *watchLoginState() {
+
+    /* 
+     *   url 마지막에 '/'가 없는 경우
+     */
     if(window.location.pathname[window.location.pathname.length-1] !== '/') {
         console.log("without /")
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
 
-    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
+    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {      
+        /* 
+         *   로그인 되어 있는 상태로 가입, 로그인, 초기 페이지에 접근하는 경우
+         */
         if(localStorage.getItem("auth") !== null) {
             yield put(actions.changeUrl('/main/'));
         }
+        
+        /* 
+         *   로그인 되어 있지 않은 상태로 가입, 로그인, 초기 페이지에 접근하는 경우
+         */
         else {
             let now_design_data;
 
@@ -233,10 +244,18 @@ function *watchLoginState() {
             }))
         }
     }
+
     else {
+        /* 
+         *   로그인 되어 있지 않은 상태로 접근 불가 페이지에 접근하는 경우
+         */
         if(localStorage.getItem("auth") === null) {
             yield put(actions.changeUrl('/'));
         }
+
+        /* 
+         *   로그인 되어 있는 상태
+         */
         else {
             const path = window.location.pathname;
             let username = window.atob(localStorage.getItem("auth")).split(":")[0]
@@ -244,10 +263,30 @@ function *watchLoginState() {
             console.log(yield select())
             let data, parent_data;
 
-            if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
-                // localStorage.removeItem('parent');
-                let my_groups_data, now_design_data;
+            /* =====================================================================================
+                                                    메인 페이지                      
+            =======================================================================================*/
+            if(path === '/main/') { 
+                let profile_user_data, my_groups_data, now_design_data;
 
+                // 유저 정보
+                try{
+                    profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responsetype: 'json',
+                    });
+                    console.log("GET profile_user data: ", profile_user_data.body)
+                } catch(error) {
+                    console.log("profile_user loading error")
+                    console.log(error)
+                    alert("데이터 로딩에 실패했습니다.")
+                }
+
+                // 현재 디자인 정보
                 try{
                     now_design_data = yield call(xhr.get, fixed_url+'', {
                         headers: {
@@ -264,6 +303,7 @@ function *watchLoginState() {
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
+                // 내 그룹 정보
                 try {
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -282,6 +322,7 @@ function *watchLoginState() {
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    profile_user: profile_user_data.body,
                     now_design: now_design_data.body,
                     my_groups: my_groups_data.body,
                     load: 0,
@@ -290,16 +331,32 @@ function *watchLoginState() {
                 }));
             }
 
-            /* group 정보를 get 하는 부분
-             * 1) profile_data backend에서 get (url: 'users/'+username+'/')
-             * 2) all_groups_data backend에서 get (url: 'groups/')
-             * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
-             */
+
+            /* =====================================================================================
+                                                    그룹 페이지                      
+            =======================================================================================*/
             else if(path === '/groups/') {
                 console.log("get group details...");
-                let all_groups_data, my_groups_data;
+                let profile_user_data, all_groups_data, my_groups_data;
 
-                //all_groups data
+                // 유저 정보
+                try{
+                    profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responsetype: 'json',
+                    });
+                    console.log("GET profile_user data: ", profile_user_data.body)
+                } catch(error) {
+                    console.log("profile_user loading error")
+                    console.log(error)
+                    alert("데이터 로딩에 실패했습니다.")
+                }
+
+                // 전체 그룹 정보
                 try{
                     all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
                         headers: {
@@ -316,7 +373,7 @@ function *watchLoginState() {
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
-                //my_groups data
+                // 내 그룹 정보
                 try{
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -335,6 +392,7 @@ function *watchLoginState() {
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    profile_user: profile_user_data.body,
                     all_groups: all_groups_data.body,
                     my_groups: my_groups_data.body,
                     filtered_groups: all_groups_data.body,
@@ -343,7 +401,10 @@ function *watchLoginState() {
                 }))
             }
 
-            // username또는 id를 기준으로 backend에 겟을 날리는 경우
+
+            /* 
+             *   username 또는 id를 기준으로 backend에 겟을 날리는 경우 - 프로필, 그룹 디테일, 그룹 관리 페이지 
+             */
             else {
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];
@@ -361,12 +422,17 @@ function *watchLoginState() {
                     return;
                 }
 
-                //프로필 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                    프로필 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'profile'){
-                    console.log("get profile details...");
-                    let profile_data = null;
+                    console.log("get profile id & pw details...");
+                    let profile_id_pw_data, profile_user_data = null;
+
+                    // 유저 아이디/비밀번호 정보
                     try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                        profile_id_pw_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
@@ -379,38 +445,61 @@ function *watchLoginState() {
                         console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
+
+                    // 유저 정보
+                    try{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responsetype: 'json',
+                        });
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.")
+                    }
+
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data.body,
+                        profile_id_pw: profile_id_pw_data.body,
+                        profile_user: profile_user_data.body,
                         load: 0,
                         loading: true
                     }));
                 }
 
-                //group detail 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                그룹 디테일 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
                     console.log("group id: ", id);
                     let username = window.atob(localStorage.getItem("auth")).split(":")[0]
-                    let profile_data, now_group_data, my_groups_data, group_designs_data, my_designs_data = null;
+                    let profile_user_data, now_group_data, my_groups_data, group_designs_data, my_designs_data = null;
 
-                    //profile data
+                    // 유저 정보
                     try{
-                        profile_data = yield call(xhr.get, fixed_url+'profile/',{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
                                 Accept: 'application/json'
                             },
-                            responseType: 'json'
+                            responsetype: 'json',
                         });
-                    } catch(error){
-                        console.log("profile data loading error")
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
                         console.log(error)
-                        alert("데이터 로딩에 실패했습니다.");
+                        alert("데이터 로딩에 실패했습니다.")
                     }
 
-                    //now_group data
+                    // 현재 그룹 정보
                     try{
                         now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
                             headers: {
@@ -426,7 +515,7 @@ function *watchLoginState() {
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
-                    //my_groups data
+                    // 내 그룹 정보
                     try{
                         my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                             headers: {
@@ -442,7 +531,7 @@ function *watchLoginState() {
                         alert("데이터 로딩에 실패했습니다.")
                     }
 
-                    //group designs
+                    // 그룹 디자인 정보
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
                             headers: {
@@ -466,9 +555,9 @@ function *watchLoginState() {
 
                     }
 
-                    //my designs
+                    // 내 디자인 정보
                     try{
-                        my_designs_data = yield call(xhr.get, fixed_url+'groups/'+profile_data.body["user_group"]+'/',{
+                        my_designs_data = yield call(xhr.get, fixed_url+'groups/'+profile_user_data.body["user_group"]+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
@@ -478,15 +567,14 @@ function *watchLoginState() {
                         });
                     } catch(error) {
                         console.log("my designs data loading error")
-                            console.log(error)
-                            alert("데이터 로딩에 실패했습니다.");
-                            
-                        }
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.");
+                    }
 
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data.body,
+                        profile_user: profile_user_data.body,
                         now_group: now_group_data.body[0],
                         my_groups: my_groups_data.body,
                         group_designs: group_designs_data.body,
@@ -496,12 +584,33 @@ function *watchLoginState() {
                     }))
                 }
 
-                //group admin 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                그룹 관리 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'admin') {
                     console.log("get group admins...");
                     console.log("group id: ", id);
-                    let now_group_data, group_users_data, group_designs_data = null;
+                    let profile_user_data, now_group_data, group_users_data, group_designs_data = null;
 
+                    // 유저 정보
+                    try{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responsetype: 'json',
+                        });
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.")
+                    }
+
+                    // 현재 그룹 정보
                     try{
                         now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
                             headers: {
@@ -517,6 +626,7 @@ function *watchLoginState() {
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
+                    // 그룹 유저 정보
                     try{
                         group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
                             headers: {
@@ -532,6 +642,7 @@ function *watchLoginState() {
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
+                    // 그룹 디자인 정보
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
                             headers: {
@@ -549,6 +660,7 @@ function *watchLoginState() {
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        profile_user: profile_user_data.body,
                         now_group: now_group_data.body[0],
                         group_users: group_users_data.body,
                         group_designs: group_designs_data.body,

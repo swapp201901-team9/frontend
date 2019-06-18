@@ -10,7 +10,7 @@ class Login extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onClick()}>LOG IN</a>
+        <a href="#" onClick={() => {this.props.onClick(); return false;}}>LOG IN</a>
         )
     }
 }

@@ -44,6 +44,7 @@ import homepageApp from './index.js';
 
 const initState = {
     authorization: "",
+    profile_id_pw: null,
     profile_user: null,
 
     all_groups: [],
@@ -70,6 +71,7 @@ describe('homepage reducer', () => {
         const auth = 'test:testpasswd'
         expect(homepageApp(undefined, actions.authenticate(window.btoa(auth)))).toEqual({
             authorization: auth,
+            profile_id_pw: null,
             profile_user: null,
 
             all_groups: [],
@@ -95,6 +97,7 @@ describe('homepage reducer', () => {
 
         const state = {
             authorization: auth,
+            profile_id_pw: null,
             profile_user: null,
 
             all_groups: [],

@@ -10,7 +10,7 @@ class Mydesign extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onToMydesign(this.props.profile_user['user_group'])}>MY DESIGN</a>
+        <a href="#" onClick={() => {this.props.onToMydesign(this.props.profile_user['user_group']); return false;}}>MY DESIGN</a>
         )
     }
 }

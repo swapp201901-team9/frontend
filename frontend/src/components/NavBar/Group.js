@@ -10,7 +10,7 @@ class Group extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onClick()}>GROUP</a>
+        <a href="#" onClick={() => {this.props.onClick(); return false;}}>GROUP</a>
         )
     }
 }

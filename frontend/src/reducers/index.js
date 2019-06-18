@@ -2,6 +2,7 @@ import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from "constants";
 
 const homepageInitialState = {
     authorization: "",
+    profile_id_pw: null,
     profile_user: null,
 
     all_groups: [], //존재하는 모든 그룹 정보
@@ -39,6 +40,7 @@ const homepage = (state = homepageInitialState, action) => {
         case 'SET_STATE': {
             return Object.assign({}, state, {
                 authorization: action.state.authorization,
+                profile_id_pw: action.state.profile_id_pw,
                 profile_user: action.state.profile_user,
                 
                 all_groups: action.state.all_groups,
