@@ -15,6 +15,8 @@ class Comment extends React.Component {
 
     this.state = {
       editMode: false,
+      name: props.comment.name,
+      message: props.comment.comment,
       liked: props.comment.liked,
       likes: props.comment.likes,
     }
@@ -44,6 +46,8 @@ class Comment extends React.Component {
   onClickCompleteEditComment() {
     this.setState({
       editMode: false,
+      name: this.new_name.value,
+      message: this.new_message.value,
     })
     this.props.onEditComment(this.props.designid, this.props.comment.id, this.new_name.value, this.new_message.value)
   }
@@ -55,7 +59,7 @@ class Comment extends React.Component {
           <input
             ref={ node => {this.new_name=node;} }
             className="comment_name"
-            defaultValue={this.props.comment.name}
+            defaultValue={this.state.name}
             name="name"
             type="text"
           />
@@ -65,7 +69,7 @@ class Comment extends React.Component {
             ref={ node => {this.new_message=node;} }
             // value={this.contents}
             className="comment_text"
-            defaultValue={this.props.comment.comment}
+            defaultValue={this.state.message}
             name="message"
             rows="5"
           />
@@ -87,7 +91,7 @@ class Comment extends React.Component {
 
           <div className="Comment-List-Field">
             <div className="Group-Name-Field">
-              <span className="title5">{this.props.comment.name} </span>
+              <span className="title5">{this.state.name} </span>
             </div>
 
           <div className="Comment-Button-Field">
@@ -103,7 +107,7 @@ class Comment extends React.Component {
           </div>
           </div>
 
-            <span className="title4">{this.props.comment.comment}</span>
+            <span className="title4">{this.state.message}</span>
               {/* {this.props.comment.liked */}
               {this.state.liked
               // 댓글을 좋아요 한 사람이면
@@ -138,7 +142,7 @@ class Comment extends React.Component {
 
 
 
-    render() {
+  render() {
       return (
         <div>
           {

@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN, EDIT_DESIGN_NAME } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -121,11 +121,7 @@ function *loggedInMainPageSaga() {
 
     yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
-    // yield spawn(watchChangeBody);
-    // yield spawn(watchChangeSleeve);
-    // yield spawn(watchChangeBanding);
-    // yield spawn(watchChangeStripe);
-    // yield spawn(watchChangeButton);
+    yield spawn(watchEditDesignName);
 }
 
 function *profilePageSaga() {
@@ -160,6 +156,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchNewDesign);
+    yield spawn(watchEditDesignName);
     yield spawn(watchToEditDesign);
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
@@ -828,6 +825,16 @@ function *watchGoToAdminGroup() {
 }
 
 
+
+
+function *watchEditDesignName() {
+    while(true) {
+        const data = yield take(EDIT_DESIGN_NAME);
+        console.log("watchEditDesignName");
+        yield call(editDesignName, data);
+    }
+}
+
 function *watchToEditDesign() {
     while(true) {
         const data = yield take(TO_EDIT_DESIGN);
@@ -1245,6 +1252,28 @@ function *toAdminGroup(data){
 
 
 
+function *editDesignName(data) {
+    console.log("editDesignName")
+    const path = 'groups/edit/' + data.designid + '/';
+    try{
+        yield call(xhr.send, fixed_url+path, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({"name": data.name})
+        });
+        console.log("edit design name succeed ");
+        // yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        alert("디자인 이름 수정에 실패했습니다.");
+        return;
+    }
+}
+
 function *toEditDesign(data) {
     console.log("toEditDesign")
     const path = 'groups/edit/' + data.designid + '/';
@@ -1340,7 +1369,7 @@ function *editComment(data) {
             body: JSON.stringify({"name": data.name, "comment": data.message})
         });
         console.log("edit comment succeed ");
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
         alert("댓글 수정에 실패했습니다.");
         return;
