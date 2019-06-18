@@ -8,7 +8,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
-import { toSaveDesign, toNewDesign, changeUrl } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign, changeUrl, toResetDesign, toEditDesignName } from '../../actions/index.js';
 //import { tsImportEqualsDeclaration } from '@babel/types';
 
 //import logo from './images/templates/templatelist';
@@ -54,7 +54,12 @@ class DesignPage extends React.Component {
 
 			displayTextColor: false,
 			displayBorderColor: false,
+
+			editNameMode: false,
+            name: this.props.now_design.name,
 		};
+
+		this.new_name;
 
 		this.handleElementChange = this.handleElementChange.bind(this);
 		this.handleCanvasChange = this.handleCanvasChange.bind(this);
@@ -82,7 +87,13 @@ class DesignPage extends React.Component {
 		this.onClickSave = this.onClickSave.bind(this);
 
 		this.getDataUrl = this.getDataUrl.bind(this);
-		this.temp = this.temp.bind(this);
+
+		this.resetDesignCheck = this.resetDesignCheck.bind(this);
+
+        this.onClickEditDesignName = this.onClickEditDesignName.bind(this);
+        this.onClickCompleteEditDesignName = this.onClickCompleteEditDesignName.bind(this);
+        this.editNameModeRender = this.editNameModeRender.bind(this);
+        this.readNameModeRender = this.readNameModeRender.bind(this);
 
 	}
 
@@ -112,27 +123,25 @@ class DesignPage extends React.Component {
 		this.the_front_canvas = new fabric.Canvas('front-canvas', {
             preserveObjectStacking: true,
             height:460,
-			width:430,
+            width:430,
         });
 
         this.the_back_canvas = new fabric.Canvas('back-canvas', {
             preserveObjectStacking: true,
             height:460,
-			width:430,
+            width:430,
 		});
 
 		this.the_front_canvas.on({
-			'mouse:up': this.selectHandler,
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
-			
+			'mouse:up': this.selectHandler,
 		})
 
 		this.the_back_canvas.on({
-			'mouse:up': this.selectHandler,
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
-			
+			'mouse:up': this.selectHandler,
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -144,8 +153,8 @@ class DesignPage extends React.Component {
         this.the_front_canvas.add(this.designElementToImage(this.state.design.stripe, "front_stripe", 3))
         this.the_back_canvas.add(this.designElementToImage(this.state.design.stripe, "back_stripe", 3))
         this.the_front_canvas.add(this.designElementToImage(this.state.design.button, "front_button", 3))
-		
-		this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
+
+        this.the_front_canvas.add(this.textElementToImage(this.state.text.frontchest, "frontchest"))
         this.the_front_canvas.add(this.textElementToImage(this.state.text.rightarm, "rightarm"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.upperback, "upperback"))
         this.the_back_canvas.add(this.textElementToImage(this.state.text.middleback, "middleback"))
@@ -154,17 +163,13 @@ class DesignPage extends React.Component {
 		this.the_front_canvas.add(this.logoElementToImage(this.state.logo.front, "front"))
 		this.the_back_canvas.add(this.logoElementToImage(this.state.logo.back, "back"))
 		
-		// this.the_front_canvas.hoverCursor = 'pointer';
-		// this.the_back_canvas.hoverCursor = 'pointer';
-		// this.__canvases.push(this.the_front_canvas);
 		this.setState({logoClickedWhat: "front_close"});
-
 
 	}
 
 
 	componentWillUpdate (nextProps, nextState) {
-		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
         // If Updated Item is not the same as the old one
 		//         => Update the canvas with newer item
@@ -190,10 +195,13 @@ class DesignPage extends React.Component {
 		//update for text element
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
-				//console.log("text: ", nextState.text[element])
-				// if(nextState.text[element].width !== this.state.text[element].width) {
-				// 	return;
-				// }
+				console.log("text: ", nextState.text[element])
+
+				// var x =this.textElementToImage(nextState.text[element], element);
+				// 	this.setState({text : ({...this.state.text,
+				// 		[element]: ({...this.state.text[element], width:x.width, height: x.height})
+				// 	})});
+
 				if(element === "frontchest" || element === "rightarm") {
 					
 				this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
@@ -223,21 +231,6 @@ class DesignPage extends React.Component {
 	}
 
     // componentDidUpdate(nextProps, nextState) {
-	// 	for(let element of this.text_element){
-    //         if(nextState.text[element] !== this.state.text[element]) {
-				
-	// 			if(nextState.text[element].width !== this.state.text[element].width) {
-	// 				console.log("component did update")
-	// 			if(element === "frontchest" || element === "rightarm") {
-					
-	// 			this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
-	// 			}
-	// 			else {
-	// 				this.updateBackCanvas(this.textElementToImage(nextState.text[element], element))
-	// 			}
-	// 			}
-    //         }
-	// 	}
     //     this.the_front_canvas.renderAll();
     //     this.the_back_canvas.renderAll();
     // }
@@ -388,12 +381,11 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
-		let imgInstance;
-		imgInstance = new fabric.IText(text.textvalue, {
+		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
 			fontStyle: text.fontStyle,
-			//fontSize: text.fontSize,
+			fontSize: text.fontSize,
 			stroke: text.stroke,
 			strokeWidth: text.strokeWidth,
 			textAlign: "center",
@@ -401,22 +393,11 @@ class DesignPage extends React.Component {
 			zIndex: 10,
 			left: text.left,
 			top: text.top,
-			width: text.width,
-			height: text.height,
-			scaleX: text.scaleX,
-			scaleY: text.scaleY,
-			originX: "center",
-			originY: "center",
 		})
-		console.log("*************")
-		console.log("text imgInstance: ", imgInstance)
-		console.log("text imgInstace width: " + imgInstance.width);
-		console.log("in text imagInstance this was put in"+ this.state.text[type].width)
-		console.log("text imgInstace height: "+ imgInstance.height);
-		console.log(this.state.text[type].height)
-		console.log("text imgInstace scaleX: " + imgInstance.scaleX);
-		console.log("text imgInstace scaleY: "+ imgInstance.scaleY);
-		console.log("*************")
+
+		// console.log("text imgInstance: ", imgInstance)
+		// console.log(imgInstance.width);
+		// console.log(imgInstance.height);
         return imgInstance;
     }
 
@@ -488,7 +469,7 @@ class DesignPage extends React.Component {
                 }
             } );
 
-			this.the_front_canvas.add(next);
+            this.the_front_canvas.add(next);
             this.the_front_canvas.moveTo(next, next.zIndex);
             this.the_front_canvas.renderAll();
         }
@@ -557,69 +538,38 @@ class DesignPage extends React.Component {
 		
 	}
 
-	temp (imgInstance, type) {
-		this.setState({text : ({...this.state.text,
-        	[type]: ({...this.state.text[type],
-        	width: imgInstance.width,
-            height: imgInstance.height}) })})
-	}
-
 	scaleHandler = (e)=>{
 		let scalingObject = e.target;
-		var width_temp = scalingObject.getScaledWidth();
-		var height_temp = scalingObject.getScaledHeight();
+		var width = scalingObject.getScaledWidth()*10;
+		var height = scalingObject.getScaledHeight()*10;
 
-		console.log("*************")
-		console.log("scaling: ", scalingObject)
-		console.log("getScaledWidth: ", width_temp, " getScaledHeight: ", height_temp);
-		console.log("*************")
+		// console.log("scaling: ", scalingObject)
+		// console.log("width: ", width, " height: ", height);
 
 		if (scalingObject.the_type === "frontchest" ||
     		scalingObject.the_type === "rightarm" ||
     		scalingObject.the_type === "upperback" ||
     		scalingObject.the_type === "middleback" ||
     		scalingObject.the_type === "lowerback") {
-			
-			var old_width_text = this.state.text[scalingObject.the_type].width
-			var old_height_text = this.state.text[scalingObject.the_type].height
-			
-			var scaleX_text= width_temp/old_width_text
-			var scaleY_text= height_temp/old_height_text
-			if (old_width_text != 0) {
-			console.log("*************")
-			console.log("old_width_text "+ old_width_text+ "old_height_text "+old_height_text)
-			console.log("width_text"+width_temp+"height_text"+height_temp)
-			console.log("*************")
-			//width = width*2;
-			//height = height*2;
-			var scaleX_text= width_temp/old_width_text
-			var scaleY_text= height_temp/old_height_text
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
-        	width: width_temp,
-            height: height_temp, scaleX: scaleX_text, scaleY: scaleY_text})
-			})});
-			console.log("*************")
-			console.log("see if state is changed")
-			console.log(this.state.text[scalingObject.the_type].width);
-			console.log("*************")
-			}
+        	width: width,
+            height: height})
+    	})});
 		}
 		else if (scalingObject.the_type === "front" ||
          	scalingObject.the_type === "back") {
-			// console.log("scale handler logo width height")
-			width_temp = width_temp*10;
-			height_temp = height_temp*10;
+			console.log("scale handler logo width height")
 			var old_width = this.state.logo[scalingObject.the_type].width
 			var old_height = this.state.logo[scalingObject.the_type].height
-			// console.log("old_width "+ old_width+ "old_height "+old_height)
-			var scaleX= width_temp/old_width
-			var scaleY= height_temp/old_height
-			// console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
+			console.log("old_width "+ old_width+ "old_height "+old_height)
+			var scaleX= width/old_width
+			var scaleY= height/old_height
+			console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
     		this.setState({logo : ({...this.state.logo,
         	[scalingObject.the_type]: ({...this.state.logo[scalingObject.the_type],
-        	width:width_temp,
-            height: height_temp, scaleX: scaleX, scaleY: scaleY})
+        	width:width,
+            height: height, scaleX: scaleX, scaleY: scaleY})
     	})});
 		}
 	}
@@ -653,76 +603,24 @@ class DesignPage extends React.Component {
 	}
 
 	selectHandler = (e) =>{
-
 		let selectedObject = e.target;
-		var id;
-		//console.log("select handler object id" + id);
-		//console.log("select: ", selectedObject)
-		
-		if (this.state.logoClickedWhat == "front" || this.state.logoClickedWhat == "front_close") {
-			id = this.the_front_canvas.getObjects().indexOf(selectedObject);
-			if (this.text_element.includes(selectedObject.the_type)) {
-				this.setState({
-					textClickedWhat: selectedObject.the_type,
-				});	
-				if ((id != -1)) {
-					this.the_front_canvas.item(id).hasControls = false;
-					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
-					//this.__canvases.push(this.the_front_canvas);
-					}	
-			}
-			else if (this.logo_element.includes(selectedObject.the_type)) {
-				this.setState({
-					logoClickedWhat: selectedObject.the_type,
-				});	
-			}
-			else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
-				this.setState({
-					designClickedWhat: selectedObject.the_type.split('_')[1]
-				});
-				if ((id != -1)) {
-					this.the_front_canvas.item(id).hasControls = false;
-					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
-					//this.__canvases.push(this.the_front_canvas);
-					}	
-			}	
-		}
-		else {
-			id = this.the_back_canvas.getObjects().indexOf(selectedObject);
-			if (this.text_element.includes(selectedObject.the_type)) {
-				this.setState({
-					textClickedWhat: selectedObject.the_type,
-				});	
-				if ((id != -1)) {
-					this.the_front_canvas.item(id).hasControls = false;
-					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
-					//this.__canvases.push(this.the_front_canvas);
-					}	
-			}
-			else if (this.logo_element.includes(selectedObject.the_type)) {
-				this.setState({
-					logoClickedWhat: selectedObject.the_type,
-				});	
-			}
-			else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
-				this.setState({
-					designClickedWhat: selectedObject.the_type.split('_')[1]
-				});
-				if ((id != -1)) {
-					this.the_front_canvas.item(id).hasControls = false;
-					//this.the_front_canvas.setActiveObject(this.the_front_canvas.item(id))
-					//this.__canvases.push(this.the_front_canvas);
-					}	
-			}
-		}	
+		console.log("select: ", selectedObject)
 	
-		//if you select an object in canvas tab will flip open
-		// var element = document.getElementById('frontAndBack');
-		// console.log(element);
-		// var event = new Event('change');
-		// element.dispatchEvent(event);
-
-		
+		if (this.text_element.includes(selectedObject.the_type)) {
+			this.setState({
+				textClickedWhat: selectedObject.the_type,
+			});	
+		}
+		else if (this.logo_element.includes(selectedObject.the_type)) {
+			this.setState({
+				logoClickedWhat: selectedObject.the_type,
+			});	
+		}
+		else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
+			this.setState({
+				designClickedWhat: selectedObject.the_type.split('_')[1]
+			});
+		}
 
 	}
 
@@ -735,8 +633,67 @@ class DesignPage extends React.Component {
 
 		this.setState({image: image})
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
-		window.alert("saved")
 	}
+
+	resetDesignCheck() {
+		if(confirm("정말 리셋하시겠습니까?") == true)
+			return this.props.onReset()
+		else
+			return false;
+	}
+	
+	onClickEditDesignName() {
+        this.setState({
+          editNameMode: true
+        })
+    }
+    
+    onClickCompleteEditDesignName() {
+        this.setState({
+            editNameMode: false,
+            name: this.new_name.value,
+        })
+        this.props.onEditDesignName(this.props.now_design.id, this.new_name.value)
+    }
+
+    editNameModeRender() {
+        return (
+          <form onSubmit={this.onClickCompleteEditDesignName}>
+     
+              <input
+                ref={ node => {this.new_name=node;} }
+                className="design_name"
+                defaultValue={this.state.name}
+                name="name"
+                type="text"
+              />
+    
+              <button className="button button_comment">
+                Done &#10148;
+              </button>
+    
+          </form>
+        )
+    }
+    
+    readNameModeRender() {
+        return (
+          <div className="Comment-Field">
+    
+            <div className="Comment-List-Field">
+                <div className="Group-Name-Field">
+                  <span className="title5">{this.state.name} </span>
+                </div>
+    
+                <div className="Comment-Button-Field">
+					<button className="button button_comment_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                </div>
+            </div>
+    
+          </div>
+    
+        )
+    }
 
     render() {
 		// console.log("DesignPage - render state: ", this.state)
@@ -844,7 +801,7 @@ class DesignPage extends React.Component {
 			<div className="section-field">
 			<span id="title2">Border</span>
 			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-			<button className="button button_60">Pick Color</button><br/>
+			<button className="button button_60">pick Color</button><br/>
 			</div>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
@@ -875,6 +832,7 @@ class DesignPage extends React.Component {
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
 			logoPicker = <center>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+				{/* <button onClick={() => {this.setState({logo : {front: {src: ""}}})}}>Delete</button> */}
 				</center>;
 		}
 		else {
@@ -948,9 +906,12 @@ class DesignPage extends React.Component {
 							Fabric Canvas Section
 						=========================================-->*/}
 						{/*<ThreeScene/>*/}
+						{this.state.editNameMode
+							? this.editNameModeRender()
+							: this.readNameModeRender()
+                    	}
 						<div id="plain-react">
-							<Tabs className="tabs tabs-1" id = "frontAndBack"
-							onChange={(tab)=> this.handleCanvasChange(tab)}> 
+							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
 	
 								<TabLink to="front">FRONT</TabLink>
 								<TabLink to="back">BACK</TabLink>
@@ -974,13 +935,15 @@ class DesignPage extends React.Component {
 							NEW & SAVE Button Section
 						=========================================-->*/}
 						{this.props.isLoggedIn ?
+							// 로그인되어 있는 경우 - new(새로운 디자인 시작), save(현재 디자인 유저 그룹에 저장)
 							(<div>
 								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 								{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
 								<button className="button save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 							</div>)
+							// 로그인되어 있지 않은 경우 - reset(디자인 리셋)
 							: <div>
-								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								<button className="button rst_btn" type="button" onClick={() => this.resetDesignCheck()}>RESET</button>
 							</div>
 						}
 					</div>
@@ -992,7 +955,7 @@ class DesignPage extends React.Component {
 				<div className="aside">
 					<h2 className="h_black">MY GROUP</h2>
 					<div className="content">
-						{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+						{this.props.isLoggedIn? <MyGroupList /> : <center>로그인을 해주세요</center>}
 					</div>
 				</div>
 			</section>
@@ -1007,8 +970,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+	onReset: () => dispatch(toResetDesign()),
 	onNew: () => dispatch(toNewDesign()),
 	onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
+	onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name))
 	//onView: () => dispatch(changeUrl('/group/1'))
 })
 
