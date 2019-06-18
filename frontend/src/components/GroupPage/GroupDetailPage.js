@@ -68,7 +68,7 @@ class GroupDetailPage extends React.Component {
                           <option>디자인을 선택하세요</option>
                           {this.props.my_designs.map(design => {
                               console.log("option design: ", design)
-                              return <option key={design.id} value={design.id}>{design.id}</option>
+                              return <option key={design.id} value={design.id}>{design.name}</option>
                           })}
                       </select>
             
