@@ -17,7 +17,6 @@ class DesignForm extends React.Component {
 
         this.post_group;
         this.comment = this.props.design.comments;
-        console.log("design.comments: ", this.comment)
 
         this.deleteDesignCheck = this.deleteDesignCheck.bind(this);
     }
@@ -114,7 +113,7 @@ class DesignForm extends React.Component {
                         <div className="Comment-Write-Field">
 
                             <span className="title5">댓글 쓰기..</span>
-                            {console.log("DesignTemp design.comments: ", this.props.design.comments)}
+                            {/* {console.log("DesignForm design.comments: ", this.props.design.comments)} */}
                             <CommentForm designid={this.props.design.id}/>
                         </div>
 

@@ -378,17 +378,17 @@ describe('GroupDetailPage', () => {
         expect(component).toMatchSnapshot();
     })
 
-    it('should render <Comment /> in <DesignTemp />', () => {
+    it('should render <Comment /> in <DesignForm />', () => {
         const component = shallow(<Provider store={store}><Comment /></Provider>);
         expect(component).toMatchSnapshot();
     })
 
-    it('should render <CommentForm /> in <DesignTemp />', () => {
+    it('should render <CommentForm /> in <DesignForm />', () => {
         const component = shallow(<Provider store={store}><CommentForm /></Provider>);
         expect(component).toMatchSnapshot();
     })
 
-    it('should render <CommentList /> in <DesignTemp />', () => {
+    it('should render <CommentList /> in <DesignForm />', () => {
         const component = shallow(<Provider store={store}><CommentList /></Provider>);
         expect(component).toMatchSnapshot();
     })
