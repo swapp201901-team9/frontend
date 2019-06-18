@@ -4,7 +4,6 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
     let grouptype, groupname;
 
     const type_options = [
-		'Select an Option',
 		'[동아리]',
 		'[학과]',
 		'[기타]'
@@ -31,6 +30,7 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
                         name="grouptype"
                         ref={ node => {grouptype=node;} }
                         className="type-select"
+                        defaultValue={group.group_type}
                     >
                         {type_options.map(option => {
                             return <option value={option} key={option} >{option}</option>

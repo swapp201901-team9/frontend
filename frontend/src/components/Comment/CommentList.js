@@ -3,7 +3,7 @@ import Comment from "./Comment";
 
 const CommentList = ({ designid, comments }) => {
   let comment_list = comments
-  console.log("CommentList comments: ", comment_list, " length: ", comment_list.length)
+  console.log("CommentList comments: ", comment_list, " length: ", comment_list.length, "designid: ", designid)
   return (
     <div className="commentList">
       <h5 className="text-muted mb-4">

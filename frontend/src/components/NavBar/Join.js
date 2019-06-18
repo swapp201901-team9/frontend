@@ -10,7 +10,7 @@ class Join extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onClick()}>JOIN</a>
+        <a href="#" onClick={() => {this.props.onClick(); return false;}}>JOIN</a>
         )
     }
 }

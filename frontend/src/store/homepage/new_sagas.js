@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN, EDIT_DESIGN_NAME } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -56,7 +56,7 @@ export default function *saga() {
                     break;
                 default:
                     console.log("default state");
-                    alert("없는 장소");
+                    alert("없는 장소입니다.");
                     if(localStorage.getItem("auth") === null) {
                         // localStorage.removeItem('parent');
                         yield put(actions.changeUrl('/'));
@@ -99,7 +99,7 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
-    yield spawn(watchNewDesign);
+    yield spawn(watchResetDesign);
 
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
@@ -121,11 +121,7 @@ function *loggedInMainPageSaga() {
 
     yield spawn(watchNewDesign);
     yield spawn(watchSaveDesign);
-    // yield spawn(watchChangeBody);
-    // yield spawn(watchChangeSleeve);
-    // yield spawn(watchChangeBanding);
-    // yield spawn(watchChangeStripe);
-    // yield spawn(watchChangeButton);
+    yield spawn(watchEditDesignName);
 }
 
 function *profilePageSaga() {
@@ -160,6 +156,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchNewDesign);
+    yield spawn(watchEditDesignName);
     yield spawn(watchToEditDesign);
     yield spawn(watchPostDesign);
     yield spawn(watchLikeDesign);
@@ -196,16 +193,27 @@ function *groupAdminPageSaga() {
 // <<주의>> 새로운 Page를 추가할 경우 PageSaga함수에 반드시 추가할 것
 // <<주의>> 새로운 state를 추가할 경우 try-catch문을 이용해 정보를 받아온 후 스테이트에 업데이트 해야 함
 function *watchLoginState() {
+
+    /* 
+     *   url 마지막에 '/'가 없는 경우
+     */
     if(window.location.pathname[window.location.pathname.length-1] !== '/') {
         console.log("without /")
         yield put(actions.changeUrl(window.location.pathname+'/'));
         return;
     }
 
-    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {
+    if(window.location.pathname === '/' || window.location.pathname === '/sign_up/' || window.location.pathname === '/log_in/') {      
+        /* 
+         *   로그인 되어 있는 상태로 가입, 로그인, 초기 페이지에 접근하는 경우
+         */
         if(localStorage.getItem("auth") !== null) {
             yield put(actions.changeUrl('/main/'));
         }
+        
+        /* 
+         *   로그인 되어 있지 않은 상태로 가입, 로그인, 초기 페이지에 접근하는 경우
+         */
         else {
             let now_design_data;
 
@@ -220,6 +228,7 @@ function *watchLoginState() {
                 });
                 console.log("GET now_design data: ", now_design_data.body)
             } catch(error) {
+                console.log("now_design loading error")
                 console.log(error)
                 alert("데이터 로딩에 실패했습니다.")
             }
@@ -232,10 +241,18 @@ function *watchLoginState() {
             }))
         }
     }
+
     else {
+        /* 
+         *   로그인 되어 있지 않은 상태로 접근 불가 페이지에 접근하는 경우
+         */
         if(localStorage.getItem("auth") === null) {
             yield put(actions.changeUrl('/'));
         }
+
+        /* 
+         *   로그인 되어 있는 상태
+         */
         else {
             const path = window.location.pathname;
             let username = window.atob(localStorage.getItem("auth")).split(":")[0]
@@ -243,10 +260,30 @@ function *watchLoginState() {
             console.log(yield select())
             let data, parent_data;
 
-            if(path === '/main/') { // 여기가 바로 하드코딩된 부분입니다 여러분!
-                // localStorage.removeItem('parent');
-                let my_groups_data, now_design_data;
+            /* =====================================================================================
+                                                    메인 페이지                      
+            =======================================================================================*/
+            if(path === '/main/') { 
+                let profile_user_data, my_groups_data, now_design_data;
 
+                // 유저 정보
+                try{
+                    profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responsetype: 'json',
+                    });
+                    console.log("GET profile_user data: ", profile_user_data.body)
+                } catch(error) {
+                    console.log("profile_user loading error")
+                    console.log(error)
+                    alert("데이터 로딩에 실패했습니다.")
+                }
+
+                // 현재 디자인 정보
                 try{
                     now_design_data = yield call(xhr.get, fixed_url+'', {
                         headers: {
@@ -258,10 +295,12 @@ function *watchLoginState() {
                     });
                     console.log("GET now_design data: ", now_design_data.body)
                 } catch(error) {
+                    console.log("now_design loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
+                // 내 그룹 정보
                 try {
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -273,12 +312,14 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log("my_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.");
                 }
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    profile_user: profile_user_data.body,
                     now_design: now_design_data.body,
                     my_groups: my_groups_data.body,
                     load: 0,
@@ -287,16 +328,32 @@ function *watchLoginState() {
                 }));
             }
 
-            /* group 정보를 get 하는 부분
-             * 1) profile_data backend에서 get (url: 'users/'+username+'/')
-             * 2) all_groups_data backend에서 get (url: 'groups/')
-             * 3) my_groups_data backend에서 get (url: 'users/'+username+'/groups/')
-             */
+
+            /* =====================================================================================
+                                                    그룹 페이지                      
+            =======================================================================================*/
             else if(path === '/groups/') {
                 console.log("get group details...");
-                let all_groups_data, my_groups_data;
+                let profile_user_data, all_groups_data, my_groups_data;
 
-                //all_groups data
+                // 유저 정보
+                try{
+                    profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Basic '+localStorage['auth'],
+                            Accept: 'application/json'
+                        },
+                        responsetype: 'json',
+                    });
+                    console.log("GET profile_user data: ", profile_user_data.body)
+                } catch(error) {
+                    console.log("profile_user loading error")
+                    console.log(error)
+                    alert("데이터 로딩에 실패했습니다.")
+                }
+
+                // 전체 그룹 정보
                 try{
                     all_groups_data = yield call(xhr.get, fixed_url+'groups/', {
                         headers: {
@@ -308,11 +365,12 @@ function *watchLoginState() {
                     });
                     console.log("GET all groups data: ", all_groups_data.body)
                 } catch(error){
+                    console.log("all_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
-                //my_groups data
+                // 내 그룹 정보
                 try{
                     my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                         headers: {
@@ -324,11 +382,14 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
+                    console.log("my_groups loading error")
+                    console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
                 yield put(actions.setState({
                     authorization: window.atob(localStorage['auth']),
+                    profile_user: profile_user_data.body,
                     all_groups: all_groups_data.body,
                     my_groups: my_groups_data.body,
                     filtered_groups: all_groups_data.body,
@@ -337,7 +398,10 @@ function *watchLoginState() {
                 }))
             }
 
-            // username또는 id를 기준으로 backend에 겟을 날리는 경우
+
+            /* 
+             *   username 또는 id를 기준으로 backend에 겟을 날리는 경우 - 프로필, 그룹 디테일, 그룹 관리 페이지 
+             */
             else {
                 const username = path.split("/")[2];
                 const id = path.split("/")[2];
@@ -355,54 +419,102 @@ function *watchLoginState() {
                     return;
                 }
 
-                //프로필 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                    프로필 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'profile'){
-                    console.log("get profile details...");
-                    let profile_data = null;
+                    console.log("get profile id & pw details...");
+                    let profile_id_pw_data, profile_user_data = null;
+
+                    // 유저 아이디/비밀번호 정보
                     try{
-                        profile_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
+                        profile_id_pw_data = yield call(xhr.get, fixed_url+'users/'+username+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('Get data without exception');
+                        });
+                        console.log("GET profile_id_pw_data: ", profile_id_pw_data.body)
                     } catch(error){
+                        console.log("profile data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
+
+                    // 유저 정보
+                    try{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responsetype: 'json',
+                        });
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.")
+                    }
+
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
-                        profile_user: profile_data.body,
+                        profile_id_pw: profile_id_pw_data.body,
+                        profile_user: profile_user_data.body,
                         load: 0,
                         loading: true
                     }));
                 }
 
-                //group detail 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                그룹 디테일 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'group') {
                     console.log("get group details...");
                     console.log("group id: ", id);
                     let username = window.atob(localStorage.getItem("auth")).split(":")[0]
-                    let now_group_data, my_groups_data, group_designs_data = null;
+                    let profile_user_data, now_group_data, my_groups_data, group_designs_data, my_designs_data = null;
 
-                    //now_group data
+                    // 유저 정보
+                    try{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responsetype: 'json',
+                        });
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.")
+                    }
+
+                    // 현재 그룹 정보
                     try{
                         now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('GET now group data: ', now_group_data.body[0]);
+                        });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
-                    //my_groups data
+                    // 내 그룹 정보
                     try{
                         my_groups_data = yield call(xhr.get, fixed_url+'groups/'+username+'/', {
                             headers: {
@@ -412,22 +524,24 @@ function *watchLoginState() {
                             },
                             responseType: 'json',
                         });
-                        console.log("GET my groups data: ", my_groups_data.body)
+                        console.log("GET my_groups_data: ", my_groups_data.body)
                     } catch(error){
+                        console.log("my_groups loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.")
                     }
 
-                    //group designs
+                    // 그룹 디자인 정보
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('Get group designs data without exception');
+                        });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error) {
                         if(error.statusCode === 403) {
                             console.log("you are not permitted");
@@ -435,72 +549,124 @@ function *watchLoginState() {
                             yield put(actions.changeUrl('/groups/'))
                         }
                         else {
+                            console.log("group designs data loading error")
                             console.log(error)
                             alert("데이터 로딩에 실패했습니다.");
                         }
 
                     }
 
+                    // 내 디자인 정보
+                    try{
+                        my_designs_data = yield call(xhr.get, fixed_url+'groups/'+profile_user_data.body["user_group"]+'/',{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responseType: 'json'
+                        });
+                        console.log("GET my_designs_data: ", my_designs_data.body)
+                    } catch(error) {
+                        console.log("my designs data loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.");
+                    }
+
+
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        profile_user: profile_user_data.body,
                         now_group: now_group_data.body[0],
                         my_groups: my_groups_data.body,
                         group_designs: group_designs_data.body,
+                        my_designs: my_designs_data.body,
                         load: 0,
                         loading: true
                     }))
+                    console.log("setState finished")
                 }
 
-                //group admin 정보를 get하는 부분
+
+            /* =====================================================================================
+                                                그룹 관리 페이지                      
+            =======================================================================================*/
                 else if(path.split("/")[1] === 'admin') {
                     console.log("get group admins...");
                     console.log("group id: ", id);
-                    let now_group_data, group_users_data, group_designs_data = null;
+                    let profile_user_data, now_group_data, group_users_data, group_designs_data = null;
 
+                    // 유저 정보
+                    try{
+                        profile_user_data = yield call(xhr.get, fixed_url+'profile/', {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': 'Basic '+localStorage['auth'],
+                                Accept: 'application/json'
+                            },
+                            responsetype: 'json',
+                        });
+                        console.log("GET profile_user data: ", profile_user_data.body)
+                    } catch(error) {
+                        console.log("profile_user loading error")
+                        console.log(error)
+                        alert("데이터 로딩에 실패했습니다.")
+                    }
+
+                    // 현재 그룹 정보
                     try{
                         now_group_data = yield call(xhr.get, fixed_url+'groups/'+id+'/admin/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('Get data without exception');
+                        });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
+                    // 그룹 유저 정보
                     try{
                         group_users_data = yield call(xhr.get, fixed_url+'groups/'+id+'/members/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('Get data without exception');
+                        });
+                        console.log("GET group_users_data: ", group_users_data.body)
                     } catch(error){
+                        console.log("group users data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
+                    // 그룹 디자인 정보
                     try{
                         group_designs_data = yield call(xhr.get, fixed_url+'groups/'+id+'/',{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': 'Basic '+localStorage['auth'],
-                            Accept: 'application/json'
+                                Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
-                            console.log('Get data without exception');
+                        });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error){
+                        console.log("group designs data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
                     yield put(actions.setState({
                         authorization: window.atob(localStorage['auth']),
+                        profile_user: profile_user_data.body,
                         now_group: now_group_data.body[0],
                         group_users: group_users_data.body,
                         group_designs: group_designs_data.body,
@@ -659,6 +825,16 @@ function *watchGoToAdminGroup() {
 }
 
 
+
+
+function *watchEditDesignName() {
+    while(true) {
+        const data = yield take(EDIT_DESIGN_NAME);
+        console.log("watchEditDesignName");
+        yield call(editDesignName, data);
+    }
+}
+
 function *watchToEditDesign() {
     while(true) {
         const data = yield take(TO_EDIT_DESIGN);
@@ -770,6 +946,13 @@ function *watchDeleteGroup() {
 }
 
 
+function *watchResetDesign() {
+    while(true) {
+        const data = yield take(RESET_DESIGN);
+        console.log("watchResetDesign");
+        yield call(resetDesign, data);
+    }
+}
 
 function *watchNewDesign() {
     while(true) {
@@ -837,8 +1020,18 @@ function *signUp(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
-        console.log(error)
-        alert("회원가입에 실패했습니다.");
+        if(error.statusCode === 405) {
+            console.log("already existing name");
+            alert("이미 있는 username입니다")
+        }
+        else if(error.statusCode === 405) {
+            console.log("too short or long user name");
+            alert("username은 4글자 이상, 20글자 이하여야 합니다.")
+        }
+        else {
+            console.log(error)
+            alert("회원가입에 실패했습니다.");
+        } 
     }
 }
 
@@ -1009,7 +1202,7 @@ function *joinGroup(data){
             },
             contentType: 'json'
         });
-        alert("SUCCESS")
+        alert("가입되었습니다.")
         yield put(actions.changeUrl('group/' + data.groupid + '/'));
     } catch(error){
         console.log(error)
@@ -1029,7 +1222,7 @@ function *withdrawGroup(data){
             },
             contentType: 'json'
         });
-        alert("WITHDRAW SUCCESS")
+        alert("탈퇴하였습니다.")
         yield put(actions.changeUrl('groups/'));
     } catch(error) {
         console.log(error)
@@ -1058,6 +1251,28 @@ function *toAdminGroup(data){
 }
 
 
+
+function *editDesignName(data) {
+    console.log("editDesignName")
+    const path = 'groups/edit/' + data.designid + '/';
+    try{
+        yield call(xhr.send, fixed_url+path, {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Basic "+localStorage['auth'],
+                "Content-Type": 'application/json',
+                Accept: 'application/json',
+            },
+            responseType:'json',
+            body: JSON.stringify({"name": data.name})
+        });
+        console.log("edit design name succeed ");
+        // yield put(actions.changeUrl(window.location.pathname));
+    }catch(error){
+        alert("디자인 이름 수정에 실패했습니다.");
+        return;
+    }
+}
 
 function *toEditDesign(data) {
     console.log("toEditDesign")
@@ -1091,7 +1306,7 @@ function *likeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 할 수 없습니다.")
@@ -1110,7 +1325,7 @@ function *unlikeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 취소할 수 없습니다.")
@@ -1154,7 +1369,7 @@ function *editComment(data) {
             body: JSON.stringify({"name": data.name, "comment": data.message})
         });
         console.log("edit comment succeed ");
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     }catch(error){
         alert("댓글 수정에 실패했습니다.");
         return;
@@ -1194,7 +1409,7 @@ function *likeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글을 좋아요 할 수 없습니다.")
@@ -1213,7 +1428,7 @@ function *unlikeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글 좋아요를 취소할 수 없습니다.")
@@ -1267,12 +1482,17 @@ function *deleteGroupUser(data) {
             responseType: 'json',
         });
         console.log("delete user succeed!");
-        alert("Delete Success!")
+        alert("퇴장시켰습니다.")
         yield put(actions.changeUrl('/admin/'+data.groupid+'/'));
     }catch(error){
-        console.log(error)
-        alert("해당 멤버를 퇴장시킬 수 없습니다.");
-        return ;
+        if(error.statusCode === 400) {
+            console.log("cannot delete oneself");
+            alert("본인은 삭제할 수 없습니다.")
+        }
+        else {
+            console.log(error)
+            alert("해당 멤버를 퇴장시킬 수 없습니다.");
+        }
     }
 }
 
@@ -1312,7 +1532,7 @@ function *deleteGroupDesign(data) {
             responseType: 'json',
         });
         console.log("delete design succeed!");
-        alert("Delete Success!")
+        alert("삭제되었습니다.")
         yield put(actions.changeUrl('/group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
@@ -1335,7 +1555,7 @@ function *deleteGroup(data) {
             responseType: 'json',
         });
         console.log("delete group succeed!");
-        alert("Delete Success!")
+        alert("삭제되었습니다.")
         yield put(actions.changeUrl('/groups/'));
     }catch(error){
         console.log(error)
@@ -1345,6 +1565,26 @@ function *deleteGroup(data) {
 }
 
 
+
+function *resetDesign(data) {
+    console.log("resetDesign")
+    const backPath = '';
+    try{
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("reset design succeed!");
+        yield put(actions.changeUrl('/'));
+    }catch(error){
+        console.log(error);
+        alert("디자인을 리셋하는데 실패했습니다.");
+        return;
+    }
+}
 
 function *newDesign(data) {
     console.log("newDesign")
@@ -1380,6 +1620,23 @@ function *newDesign(data) {
 function *saveDesign(data) {
     console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
+    let profile_data;
+
+    try{
+        profile_data = yield call(xhr.get, fixed_url+'profile/',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic '+localStorage['auth'],
+                Accept: 'application/json'
+            },
+            responseType: 'json'
+        });
+    } catch(error){
+        console.log("profile data loading error")
+        console.log(error)
+        alert("데이터 로딩에 실패했습니다.");
+    }
+
     try{
         yield call(xhr.send, fixed_url+backPath, {
             method: 'PUT',
@@ -1410,7 +1667,9 @@ function *saveDesign(data) {
             })
         });
         console.log("save design succeed ");
-        alert("저장되었습니다.")
+        if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
+            yield put(actions.changeUrl('/group/'+profile_data.body['user_group']+'/'))
+            
     }catch(error){
         console.log(error)
         alert("저장에 실패했습니다.");
@@ -1419,7 +1678,7 @@ function *saveDesign(data) {
 }
 
 function *postDesign(data) {
-    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
+    console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid)
     const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
     try{
         yield call(xhr.get, fixed_url+backPath,{
@@ -1431,8 +1690,8 @@ function *postDesign(data) {
             responseType: 'json',
         });
         console.log("post design succeed!");
-        alert("POST Success!")
-        yield put(actions.changeUrl('group/'+data.groupid+'/'));
+        if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
+            yield put(actions.changeUrl('group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
         alert("디자인을 게시할 수 없습니다.");

@@ -15,6 +15,10 @@ class Comment extends React.Component {
 
     this.state = {
       editMode: false,
+      name: props.comment.name,
+      message: props.comment.comment,
+      liked: props.comment.liked,
+      likes: props.comment.likes,
     }
 
     this.deleteCommentCheck = this.deleteCommentCheck.bind(this)
@@ -31,7 +35,7 @@ class Comment extends React.Component {
 		else
 
 			return false;
-    }
+  }
 
   onClickEditComment() {
     this.setState({
@@ -42,6 +46,8 @@ class Comment extends React.Component {
   onClickCompleteEditComment() {
     this.setState({
       editMode: false,
+      name: this.new_name.value,
+      message: this.new_message.value,
     })
     this.props.onEditComment(this.props.designid, this.props.comment.id, this.new_name.value, this.new_message.value)
   }
@@ -49,32 +55,29 @@ class Comment extends React.Component {
   editModeRender() {
     return (
       <form onSubmit={this.onClickCompleteEditComment}>
-        <div className="form-group">
+ 
           <input
             ref={ node => {this.new_name=node;} }
-            className="form-control"
-            defaultValue={this.props.comment.name}
+            className="comment_name"
+            defaultValue={this.state.name}
             name="name"
             type="text"
           />
-        </div>
 
-        <div className="form-group">
-          <textarea
+
+          <input
             ref={ node => {this.new_message=node;} }
             // value={this.contents}
-            className="form-control"
-            defaultValue={this.props.comment.comment}
+            className="comment_text"
+            defaultValue={this.state.message}
             name="message"
             rows="5"
           />
-        </div>
 
-        <div className="form-group">
-          <button className="btn btn-primary">
-            Done
+          <button className="button button_comment">
+            Done &#10148;
           </button>
-        </div>
+
       </form>
     )
 
@@ -88,28 +91,49 @@ class Comment extends React.Component {
 
           <div className="Comment-List-Field">
             <div className="Group-Name-Field">
-              <span className="title5">{this.props.comment.name} </span>
+              <span className="title5">{this.state.name} </span>
             </div>
 
           <div className="Comment-Button-Field">
           {this.props.comment.auth
-            // 댓글을 단 사람이면
+            // 댓글을 단 사람이거나 그룹의 관리자이면
             ? <div>
-                <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}>DELETE</button>
-                <button className="button button_comment_edit" onClick={() => this.onClickEditComment()}>EDIT</button>
+                <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}> DELETE</button>
+                <button className="button button_comment_edit" onClick={() => this.onClickEditComment()}> EDIT </button>
               </div>
             // 댓글을 단 사람이 아니면
-
-            : this.comment.liked
-              ? <button className="button button_comment_unlike" onClick={() => this.props.onUnlikeComment(this.comment.id)}>좋아요 취소</button>
-              : <button className="button button_comment_like" onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084; </button>
-
+            : <div/>
           }
           </div>
           </div>
 
-            <span className="title4">{this.props.comment.comment}</span>
-              <p className="likes">&#10084; {this.props.comment.likes}</p>
+            <span className="title4">{this.state.message}</span>
+              {/* {this.props.comment.liked */}
+              {this.state.liked
+              // 댓글을 좋아요 한 사람이면
+              ? <span>
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="unlikes" 
+                    onClick={() => {
+                      this.setState({liked: false, likes: this.state.likes - 1})
+                      this.props.onUnlikeComment(this.props.comment.id)}
+                    }> &#10084; 
+                  </span>                
+                </span>
+
+              // 아직 좋아요를 하지 않은 사람이면
+              : <span>
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="likes" 
+                    onClick={() => {
+                      this.setState({liked: true, likes: this.state.likes + 1})
+                      this.props.onLikeComment(this.props.comment.id)
+                    }}> &#10084; 
+                  </span>                  
+                </span>
+              }
 
       </div>
 
@@ -118,7 +142,7 @@ class Comment extends React.Component {
 
 
 
-    render() {
+  render() {
       return (
         <div>
           {
