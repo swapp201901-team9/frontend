@@ -36,10 +36,10 @@ class DesignForm extends React.Component {
                 /* grouptype이 user 그룹일때 - edit 및 post 가능 */
                 ? <div>
                     <div className="DesignList-Button-Field">
-                        <button className="button button_comment_edit" type="button" onClick={this.props.onToEdit(this.props.design.id)}>
+                        <button className="button button_comment_edit" type="button" onClick={() => this.props.onToEditDesign(this.props.design.id)}>
                             EDIT
                         </button>
-                        {this.props.design.auth && <button className="button button_comment_edit" onClick={this.deleteDesignCheck}>DELETE</button>}
+                        {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>DELETE</button>}
                     </div>
 
                     <div>
@@ -79,10 +79,11 @@ class DesignForm extends React.Component {
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
                     <div className="DesignList-Button-Field">
-                        {this.props.design.auth && <button className="button button_comment_edit" onClick={this.deleteDesignCheck}>DELETE</button>}
+                        {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>DELETE</button>}
                     </div>
                     <div>
                         {console.log("design: ", this.props.design)}
+                        <p></p>
                         <img src={this.props.design.front_image_url} />
                         <img src={this.props.design.back_image_url} />
 
@@ -109,14 +110,13 @@ class DesignForm extends React.Component {
 
                     {/* design의 주인일 때 - 삭제 가능 */}
 
-                        <CommentList designid={this.props.design.id} comments={this.props.design.comments}/>
-                        <div className="Comment-Write-Field">
+                    <CommentList designid={this.props.design.id} comments={this.props.design.comments}/>
+                    <div className="Comment-Write-Field">
 
-                            <span className="title5">댓글 쓰기..</span>
-                            {/* {console.log("DesignForm design.comments: ", this.props.design.comments)} */}
-                            <CommentForm designid={this.props.design.id}/>
-                        </div>
-
+                        <span className="title5">댓글 쓰기..</span>
+                        {/* {console.log("DesignForm design.comments: ", this.props.design.comments)} */}
+                        <CommentForm designid={this.props.design.id}/>
+                    </div>
 
                 </div>
             }
@@ -133,7 +133,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onToEdit: (designid) => dispatch(gotoEditDesign(designid)),
+  onToEditDesign: (designid) => dispatch(gotoEditDesign(designid)),
   onPostDesign: (designid, groupid) => dispatch(toPostDesign(designid, groupid)),
   onLikeDesign: (designid) => dispatch(toLikeDesign(designid)),
   onUnlikeDesign: (designid) => dispatch(toUnlikeDesign(designid)),

@@ -633,7 +633,7 @@ class DesignPage extends React.Component {
   	}
 
     render() {
-		console.log("DesignPage - render state: ", this.state)
+		// console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;

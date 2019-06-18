@@ -440,6 +440,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET profile_id_pw_data: ", profile_id_pw_data.body)
                     } catch(error){
                         console.log("profile data loading error")
                         console.log(error)
@@ -509,6 +510,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
                         console.log("now group data loading error")
                         console.log(error)
@@ -525,6 +527,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json',
                         });
+                        console.log("GET my_groups_data: ", my_groups_data.body)
                     } catch(error){
                         console.log("my_groups loading error")
                         console.log(error)
@@ -541,6 +544,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error) {
                         if(error.statusCode === 403) {
                             console.log("you are not permitted");
@@ -565,6 +569,7 @@ function *watchLoginState() {
                             },
                             responseType: 'json'
                         });
+                        console.log("GET my_designs_data: ", my_designs_data.body)
                     } catch(error) {
                         console.log("my designs data loading error")
                         console.log(error)
@@ -582,6 +587,7 @@ function *watchLoginState() {
                         load: 0,
                         loading: true
                     }))
+                    console.log("setState finished")
                 }
 
 
@@ -619,7 +625,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
                         console.log("now group data loading error")
                         console.log(error)
@@ -635,7 +642,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET group_users_data: ", group_users_data.body)
                     } catch(error){
                         console.log("group users data loading error")
                         console.log(error)
@@ -651,7 +659,8 @@ function *watchLoginState() {
                                 Accept: 'application/json'
                             },
                             responseType: 'json'
-                            });
+                        });
+                        console.log("GET group_designs_data: ", group_designs_data.body)
                     } catch(error){
                         console.log("group designs data loading error")
                         console.log(error)

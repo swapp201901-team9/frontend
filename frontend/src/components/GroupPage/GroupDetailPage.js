@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import DesignForm from './DesignForm.js'
-import { toLikeDesign, toUnlikeDesign, toDeleteGroupDesign, toPostDesign, gotoEditDesign, toNewDesign } from '../../actions/index.js';
+import { toPostDesign, toNewDesign } from '../../actions/index.js';
 import NavBar from '../NavBar/NavBar.js';
 import MyGroupList from './MyGroupList.js';
 
@@ -90,7 +90,6 @@ class GroupDetailPage extends React.Component {
                   </div>
               }
 
-
               <ul>
                 {this.props.group_designs.map(design =>
                   <DesignForm
@@ -99,8 +98,9 @@ class GroupDetailPage extends React.Component {
                   />
                 )}
               </ul>
-              </div>
+            </div>
           </div>
+
           <div className="aside">
             <h2 className="h_black">MY GROUP</h2>
               <div className="content">
