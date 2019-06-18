@@ -79,7 +79,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
 
                     {/* design의 주인일 때 - 삭제 가능 */}
 
-                        <CommentList comments={design.comments}/>
+                        <CommentList designid={design.id} comments={design.comments}/>
                         <div className="Comment-Write-Field">
 
                             <span className="title5">댓글 쓰기..</span>
