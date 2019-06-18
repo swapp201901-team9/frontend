@@ -633,7 +633,7 @@ class DesignPage extends React.Component {
   	}
 
     render() {
-		// console.log("DesignPage - render state: ", this.state)
+		console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
@@ -738,7 +738,7 @@ class DesignPage extends React.Component {
 			<div className="section-field">
 			<span id="title2">Border</span>
 			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-			<button className="button button_60">Pick Color</button><br/>
+			<button className="button button_60">pick Color</button><br/>
 			</div>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
@@ -769,6 +769,7 @@ class DesignPage extends React.Component {
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
 			logoPicker = <center>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+				{/* <button onClick={() => {this.setState({logo : {front: {src: ""}}})}}>Delete</button> */}
 				</center>;
 		}
 		else {

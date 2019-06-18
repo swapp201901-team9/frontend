@@ -10,7 +10,7 @@ class Profile extends React.Component {
         //     }
 
         return (
-        <a href="#" onClick={() => this.props.onToProfile(this.props.username)}>PROFILE</a>
+        <a href="#" onClick={() => {this.props.onToProfile(this.props.username); return false;}}>PROFILE</a>
         )
     }
 }
