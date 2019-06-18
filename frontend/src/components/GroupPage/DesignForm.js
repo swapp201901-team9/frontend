@@ -94,7 +94,7 @@ class DesignForm extends React.Component {
           </div>
     
         )
-      }
+    }
 
     render() {
         return(
