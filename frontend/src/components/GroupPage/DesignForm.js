@@ -17,7 +17,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                       onClick={onClickEdit}>
                       EDIT
                   </button>
-                  {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                  {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE</button>}
                   </div>
                   <div>
                       {console.log("design: ", design)}
@@ -59,7 +59,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
                 : <div>
                     <div className="DesignList-Button-Field">
-                    {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                    {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE</button>}
                     </div>
                 <div>
                     {console.log("design: ", design)}
@@ -79,7 +79,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
 
                     {/* design의 주인일 때 - 삭제 가능 */}
 
-                        <CommentList comments={design.comments}/>
+                        <CommentList designid={design.id} comments={design.comments}/>
                         <div className="Comment-Write-Field">
 
                             <span className="title5">댓글 쓰기..</span>

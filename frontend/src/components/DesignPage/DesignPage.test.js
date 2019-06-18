@@ -171,12 +171,8 @@ describe ('ACTIONS', ()=> {
             type: 'POST_DESIGN',
             designid: 1,
             groupid: 1,
-            design: design,
-            text: text,
-            image: image,
-            logo: logo,
         }
-        expect(actions.toPostDesign(1, 1, design, text, image, logo)).toEqual(expectedAction)
+        expect(actions.toPostDesign(1, 1)).toEqual(expectedAction)
     })
 })
 

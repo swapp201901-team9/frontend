@@ -1,4 +1,4 @@
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, LIKE_COMMENT, UNLIKE_COMMENT } from './types.js'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, LIKE_COMMENT, UNLIKE_COMMENT, RESET_DESIGN } from './types.js'
 
 export const showNavBar = () => {
   return{
@@ -282,6 +282,12 @@ export const toGiveAdmin = (groupid, userid) => {
 
 
 
+export const toResetDesign = () => {
+    console.log("resetDesign action")
+    return {
+        type: RESET_DESIGN
+    }
+}
 
 export const toNewDesign = () => {
     console.log("newDesign action")
@@ -302,15 +308,11 @@ export const toSaveDesign = (designid, design, text, image, logo) => {
     }
 }
 
-export const toPostDesign = (designid, groupid, design, text, image, logo) => {
-    console.log("postDesign action, designid: ", designid, " groupid: ", groupid, " design: ", design, " text: ", text, " image: ", image, " logo: ", logo)
+export const toPostDesign = (designid, groupid) => {
+    console.log("postDesign action, designid: ", designid, " groupid: ", groupid)
     return {
         type: POST_DESIGN,
         designid: designid,
         groupid: groupid,
-        design: design,
-        text: text,
-        image: image,
-        logo: logo
     }
 }

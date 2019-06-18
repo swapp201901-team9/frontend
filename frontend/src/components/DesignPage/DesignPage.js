@@ -8,7 +8,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 //import ImageUploader from 'react-images-upload';
 
-import { toSaveDesign, toNewDesign, changeUrl } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign, changeUrl, toResetDesign } from '../../actions/index.js';
 //import { tsImportEqualsDeclaration } from '@babel/types';
 
 //import logo from './images/templates/templatelist';
@@ -82,6 +82,8 @@ class DesignPage extends React.Component {
 		this.onClickSave = this.onClickSave.bind(this);
 
 		this.getDataUrl = this.getDataUrl.bind(this);
+
+		this.resetDesignCheck = this.resetDesignCheck.bind(this);
 
 	}
 
@@ -525,6 +527,7 @@ class DesignPage extends React.Component {
 		}
 		
 	}
+
 	scaleHandler = (e)=>{
 		let scalingObject = e.target;
 		var width = scalingObject.getScaledWidth()*10;
@@ -622,8 +625,15 @@ class DesignPage extends React.Component {
 		this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
 	}
 
+	resetDesignCheck() {
+		if(confirm("정말 리셋하시겠습니까?") == true)
+			return this.props.onReset()
+		else
+			return false;
+  	}
+
     render() {
-		// console.log("DesignPage - render state: ", this.state)
+		console.log("DesignPage - render state: ", this.state)
 		const designClickedWhat = this.state.designClickedWhat;
 		const textClickedWhat = this.state.textClickedWhat;
 		const logoClickedWhat = this.state.logoClickedWhat;
@@ -728,7 +738,7 @@ class DesignPage extends React.Component {
 			<div className="section-field">
 			<span id="title2">Border</span>
 			<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-			<button className="button button_60">Pick Color</button><br/>
+			<button className="button button_60">pick Color</button><br/>
 			</div>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
@@ -759,6 +769,7 @@ class DesignPage extends React.Component {
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
 			logoPicker = <center>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
+				{/* <button onClick={() => {this.setState({logo : {front: {src: ""}}})}}>Delete</button> */}
 				</center>;
 		}
 		else {
@@ -857,13 +868,15 @@ class DesignPage extends React.Component {
 							NEW & SAVE Button Section
 						=========================================-->*/}
 						{this.props.isLoggedIn ?
+							// 로그인되어 있는 경우 - new(새로운 디자인 시작), save(현재 디자인 유저 그룹에 저장)
 							(<div>
 								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
 								{/* <button className="save_btn" type="button" onClick={() => this.props.onSave(this.props.now_design.id, this.state.design, this.state.text)}>SAVE</button> */}
 								<button className="button save_btn" type="button" onClick={() => this.onClickSave()}>SAVE</button>
 							</div>)
+							// 로그인되어 있지 않은 경우 - reset(디자인 리셋)
 							: <div>
-								<button className="button rst_btn" type="button" onClick={() => this.props.onNew()}>NEW</button>
+								<button className="button rst_btn" type="button" onClick={() => this.resetDesignCheck()}>RESET</button>
 							</div>
 						}
 					</div>
@@ -875,7 +888,7 @@ class DesignPage extends React.Component {
 				<div className="aside">
 					<h2 className="h_black">MY GROUP</h2>
 					<div className="content">
-						{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+						{this.props.isLoggedIn? <MyGroupList /> : <center>로그인을 해주세요</center>}
 					</div>
 				</div>
 			</section>
@@ -890,6 +903,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+	onReset: () => dispatch(toResetDesign()),
 	onNew: () => dispatch(toNewDesign()),
 	onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
 	//onView: () => dispatch(changeUrl('/group/1'))

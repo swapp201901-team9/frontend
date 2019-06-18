@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import {changeUrl} from '../../actions';
 import Logout from './Logout';
 import Group from './Group';
-import Mypage from './Mypage';
 import Login from './Login';
 import Join from './Join';
+import Profile from './Profile';
+import Mydesign from './Mydesign';
 
 class NavBar extends React.Component {
     render() {
@@ -21,9 +22,10 @@ class NavBar extends React.Component {
                  <div className="logo" onClick={() => this.props.onClick()}></div>
                  <nav className="navBar">
                    <ul>
-                     <li><Logout/></li>
-                     <li><Mypage/></li>
                      <li><Group/></li>
+                     <li><Mydesign/></li>
+                     <li><Profile/></li>
+                     <li><Logout/></li>
                    </ul>
                  </nav>
                </div>

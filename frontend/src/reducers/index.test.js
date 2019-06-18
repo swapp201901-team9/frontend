@@ -44,28 +44,22 @@ import homepageApp from './index.js';
 
 const initState = {
     authorization: "",
+    profile_id_pw: null,
     profile_user: null,
 
     all_groups: [],
     my_groups: [],
     filtered_groups: [],
-
+    
+    now_group: null,
     group_users: [], 
     group_designs: [], 
+    
+    now_design: {},
+    my_designs: [],
 
-    now_group: null,
-    now_design: {
-        /*detail_body: "001c58",
-        detail_sleeve: "f8f8f8",
-        detail_banding: "001c58",
-        detail_stripes: "ffffff",
-        detail_buttons: "001c58"*/
-
-    },
-
-    my_requests: [],
-    load : 0,
-    loading: false,
+    load: 0,
+    loading: false,   
 }
 
 
@@ -77,29 +71,22 @@ describe('homepage reducer', () => {
         const auth = 'test:testpasswd'
         expect(homepageApp(undefined, actions.authenticate(window.btoa(auth)))).toEqual({
             authorization: auth,
+            profile_id_pw: null,
             profile_user: null,
 
             all_groups: [],
             my_groups: [],
             filtered_groups: [],
             
+            now_group: null,
             group_users: [], 
             group_designs: [], 
+            
+            now_design: {},
+            my_designs: [],
 
-            now_group: null,
-            now_design: {
-                /*detail_body: "001c58",
-                detail_sleeve: "f8f8f8",
-                detail_banding: "001c58",
-                detail_stripes: "ffffff",
-                detail_buttons: "001c58"*/
-            },
-
-            my_requests: [],
             load: 0,
-            loading: false,
-           
-        
+            loading: false,      
             })
     })
     it('should return the signout state', () => {
@@ -110,29 +97,22 @@ describe('homepage reducer', () => {
 
         const state = {
             authorization: auth,
+            profile_id_pw: null,
             profile_user: null,
 
             all_groups: [],
             my_groups: [],
             filtered_groups: [],
-
+            
+            now_group: null,
             group_users: [], 
             group_designs: [], 
+            
+            now_design: {},
+            my_designs: [],
 
-            now_group: null,
-            now_design: {
-                /*detail_body: "001c58",
-                detail_sleeve: "f8f8f8",
-                detail_banding: "001c58",
-                detail_stripes: "ffffff",
-                detail_buttons: "001c58"*/
-        
-            },  
-
-            my_requests: [],
             load: 0,
-            loading: false,
-
+            loading: false,   
         }
 
         expect(homepageApp(undefined, actions.setState(state))).toEqual(state)

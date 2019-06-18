@@ -22,7 +22,9 @@ class MyGroupList extends React.Component {
             return (
                 <div>
                     <ul>
-                    {this.props.my_groups.map(group =>
+                    {this.props.my_groups.filter(group => {
+                        return group.group_type !== "UR"
+                    }).map(group =>
                         <MyGroup 
                             key={group.id}
                             group={group}

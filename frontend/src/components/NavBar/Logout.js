@@ -8,7 +8,7 @@ class Logout extends React.Component {
 
         return (
            <div>
-              <a href="#" onClick={this.props.onLogOut}>LOGOUT</a>
+              <a href="#" onClick={() => {this.props.onLogOut(); return false;}}>LOGOUT</a>
            </div>
 
        );

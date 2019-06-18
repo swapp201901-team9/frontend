@@ -789,25 +789,25 @@ exports[`GroupPage should render <CreateGroup /> 1`] = `
       <span
         className="title1"
       >
-        Group Type
+        Group Type 
       </span>
       <select
         className="type-select"
-        defaultValue="Club"
+        defaultValue="[동아리]"
         name="grouptype"
       >
         <option
-          value="Club"
+          value="[동아리]"
         >
           [동아리]
         </option>
         <option
-          value="Department"
+          value="[학과]"
         >
           [학과]
         </option>
         <option
-          value="Else"
+          value="[기타]"
         >
           [기타]
         </option>
