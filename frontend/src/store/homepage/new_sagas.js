@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -99,7 +99,7 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
-    yield spawn(watchNewDesign);
+    yield spawn(watchResetDesign);
 
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
@@ -220,6 +220,7 @@ function *watchLoginState() {
                 });
                 console.log("GET now_design data: ", now_design_data.body)
             } catch(error) {
+                console.log("now_design loading error")
                 console.log(error)
                 alert("데이터 로딩에 실패했습니다.")
             }
@@ -258,6 +259,7 @@ function *watchLoginState() {
                     });
                     console.log("GET now_design data: ", now_design_data.body)
                 } catch(error) {
+                    console.log("now_design loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
@@ -273,6 +275,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log("my_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.");
                 }
@@ -308,6 +311,7 @@ function *watchLoginState() {
                     });
                     console.log("GET all groups data: ", all_groups_data.body)
                 } catch(error){
+                    console.log("all_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
@@ -324,6 +328,8 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
+                    console.log("my_groups loading error")
+                    console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
@@ -370,6 +376,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("profile data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
                     yield put(actions.setState({
@@ -399,6 +407,8 @@ function *watchLoginState() {
                             });
                             console.log('GET now group data: ', now_group_data.body[0]);
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -414,6 +424,8 @@ function *watchLoginState() {
                         });
                         console.log("GET my groups data: ", my_groups_data.body)
                     } catch(error){
+                        console.log("my_groups loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.")
                     }
 
@@ -435,6 +447,7 @@ function *watchLoginState() {
                             yield put(actions.changeUrl('/groups/'))
                         }
                         else {
+                            console.log("group designs data loading error")
                             console.log(error)
                             alert("데이터 로딩에 실패했습니다.");
                         }
@@ -468,6 +481,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -482,6 +497,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("group users data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -496,6 +513,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("group designs data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -770,6 +789,13 @@ function *watchDeleteGroup() {
 }
 
 
+function *watchResetDesign() {
+    while(true) {
+        const data = yield take(RESET_DESIGN);
+        console.log("watchResetDesign");
+        yield call(resetDesign, data);
+    }
+}
 
 function *watchNewDesign() {
     while(true) {
@@ -837,8 +863,18 @@ function *signUp(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
-        console.log(error)
-        alert("회원가입에 실패했습니다.");
+        if(error.statusCode === 405) {
+            console.log("already existing name");
+            alert("이미 있는 username입니다")
+        }
+        else if(error.statusCode === 405) {
+            console.log("too short or long user name");
+            alert("username은 4글자 이상, 20글자 이하여야 합니다.")
+        }
+        else {
+            console.log(error)
+            alert("회원가입에 실패했습니다.");
+        } 
     }
 }
 
@@ -1345,6 +1381,26 @@ function *deleteGroup(data) {
 }
 
 
+
+function *resetDesign(data) {
+    console.log("resetDesign")
+    const backPath = '';
+    try{
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("reset design succeed!");
+        yield put(actions.changeUrl('/'));
+    }catch(error){
+        console.log(error);
+        alert("디자인을 리셋하는데 실패했습니다.");
+        return;
+    }
+}
 
 function *newDesign(data) {
     console.log("newDesign")
