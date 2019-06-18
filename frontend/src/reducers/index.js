@@ -8,13 +8,13 @@ const homepageInitialState = {
     my_groups: [], //내가 가입된 그룹 정보
     filtered_groups: [], //검색 결과 필터링된 그룹 정보
 
+    now_group: null, //현재 작업 or 구경(?) 중인 그룹
     group_users: [], //특정 그룹에 속한 모든 유저 리스트
     group_designs: [], //특정 그룹에 속한 모든 디자인 리스트
-
-    now_group: null, //현재 작업 or 구경(?) 중인 그룹
+    
     now_design: {}, //현재 메인 페이지에서 작업 중인(화면에 보이는) 디자인
+    my_designs: [],
 
-    my_requests: [],
     load : 0,
     loading: false,
     
@@ -45,13 +45,13 @@ const homepage = (state = homepageInitialState, action) => {
                 my_groups: action.state.my_groups,
                 filtered_groups: action.state.filtered_groups,
 
+                now_group: action.state.now_group,
                 group_users: action.state.group_users,
                 group_designs: action.state.group_designs,
 
-                now_group: action.state.now_group,
                 now_design: action.state.now_design,
-                
-                my_requests: action.state.my_requests,
+                my_designs: action.state.my_designs,
+
                 load : action.state.load,
                 loading: action.state.loading,
                 

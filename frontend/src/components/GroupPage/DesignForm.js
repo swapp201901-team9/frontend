@@ -17,7 +17,7 @@ const DesignTemp = ({ design, group, my_groups, onClickEdit, onClickPost, onClic
                       onClick={onClickEdit}>
                       EDIT
                   </button>
-                  {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE DESIGN</button>}
+                  {design.auth && <button className="button_edit" onClick={onClickDelete}>DELETE</button>}
                   </div>
                   <div>
                       {console.log("design: ", design)}

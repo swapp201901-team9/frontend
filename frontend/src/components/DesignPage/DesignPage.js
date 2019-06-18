@@ -887,7 +887,7 @@ class DesignPage extends React.Component {
 				<div className="aside">
 					<h2 className="h_black">MY GROUP</h2>
 					<div className="content">
-						{this.props.isLoggedIn? <MyGroupList /> : <p>로그인을 해주세요</p>}
+						{this.props.isLoggedIn? <MyGroupList /> : <center>로그인을 해주세요</center>}
 					</div>
 				</div>
 			</section>
