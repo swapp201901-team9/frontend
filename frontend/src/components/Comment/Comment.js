@@ -31,7 +31,7 @@ class Comment extends React.Component {
 		else
 
 			return false;
-    }
+  }
 
   onClickEditComment() {
     this.setState({

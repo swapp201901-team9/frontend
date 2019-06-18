@@ -1,6 +1,6 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
 import * as actions from './../../actions/index'
-import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './../../actions/types'
+import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN } from './../../actions/types'
 
 var xhr = require('xhr-promise-redux');
 
@@ -99,7 +99,7 @@ function *mainPageSaga() {
     yield spawn(watchLoginState);
     yield spawn(watchGoToMain);
 
-    yield spawn(watchNewDesign);
+    yield spawn(watchResetDesign);
 
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
@@ -789,6 +789,13 @@ function *watchDeleteGroup() {
 }
 
 
+function *watchResetDesign() {
+    while(true) {
+        const data = yield take(RESET_DESIGN);
+        console.log("watchResetDesign");
+        yield call(resetDesign, data);
+    }
+}
 
 function *watchNewDesign() {
     while(true) {
@@ -1374,6 +1381,26 @@ function *deleteGroup(data) {
 }
 
 
+
+function *resetDesign(data) {
+    console.log("resetDesign")
+    const backPath = '';
+    try{
+        yield call(xhr.get, fixed_url+backPath,{
+            headers:{
+                "Content-Type": 'application/json',
+                Accept: 'application/json'
+            },
+            responseType: 'json',
+        });
+        console.log("reset design succeed!");
+        yield put(actions.changeUrl('/'));
+    }catch(error){
+        console.log(error);
+        alert("디자인을 리셋하는데 실패했습니다.");
+        return;
+    }
+}
 
 function *newDesign(data) {
     console.log("newDesign")
