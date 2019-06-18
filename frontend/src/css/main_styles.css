@@ -160,6 +160,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   box-shadow: 2px 3px 7px 0 rgba(243, 138, 138, 0.5);
   background-color: #c13a3a;
   color: #fff;
+  cursor: pointer;
   }
   *:focus {
   outline: none;
@@ -788,7 +789,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   height: 40px;
   padding: 0px 15px;
   margin-left: 10px;
-
+  cursor: pointer;
   }
   .Group-Name-Field{
   width:50%;
