@@ -220,6 +220,7 @@ function *watchLoginState() {
                 });
                 console.log("GET now_design data: ", now_design_data.body)
             } catch(error) {
+                console.log("now_design loading error")
                 console.log(error)
                 alert("데이터 로딩에 실패했습니다.")
             }
@@ -258,6 +259,7 @@ function *watchLoginState() {
                     });
                     console.log("GET now_design data: ", now_design_data.body)
                 } catch(error) {
+                    console.log("now_design loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
@@ -273,6 +275,7 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error) {
+                    console.log("my_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.");
                 }
@@ -308,6 +311,7 @@ function *watchLoginState() {
                     });
                     console.log("GET all groups data: ", all_groups_data.body)
                 } catch(error){
+                    console.log("all_groups loading error")
                     console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
@@ -324,6 +328,8 @@ function *watchLoginState() {
                     });
                     console.log("GET my groups data: ", my_groups_data.body)
                 } catch(error){
+                    console.log("my_groups loading error")
+                    console.log(error)
                     alert("데이터 로딩에 실패했습니다.")
                 }
 
@@ -370,6 +376,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("profile data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
                     yield put(actions.setState({
@@ -399,6 +407,8 @@ function *watchLoginState() {
                             });
                             console.log('GET now group data: ', now_group_data.body[0]);
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -414,6 +424,8 @@ function *watchLoginState() {
                         });
                         console.log("GET my groups data: ", my_groups_data.body)
                     } catch(error){
+                        console.log("my_groups loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.")
                     }
 
@@ -435,6 +447,7 @@ function *watchLoginState() {
                             yield put(actions.changeUrl('/groups/'))
                         }
                         else {
+                            console.log("group designs data loading error")
                             console.log(error)
                             alert("데이터 로딩에 실패했습니다.");
                         }
@@ -468,6 +481,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("now group data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -482,6 +497,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("group users data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -496,6 +513,8 @@ function *watchLoginState() {
                             });
                             console.log('Get data without exception');
                     } catch(error){
+                        console.log("group designs data loading error")
+                        console.log(error)
                         alert("데이터 로딩에 실패했습니다.");
                     }
 
@@ -837,8 +856,18 @@ function *signUp(data) {
         yield put(actions.changeUrl('/main/'));
     }
     catch(error) {
-        console.log(error)
-        alert("회원가입에 실패했습니다.");
+        if(error.statusCode === 405) {
+            console.log("already existing name");
+            alert("이미 있는 username입니다")
+        }
+        else if(error.statusCode === 405) {
+            console.log("too short or long user name");
+            alert("username은 4글자 이상, 20글자 이하여야 합니다.")
+        }
+        else {
+            console.log(error)
+            alert("회원가입에 실패했습니다.");
+        } 
     }
 }
 
