@@ -93,17 +93,20 @@ class Comment extends React.Component {
 
           <div className="Comment-Button-Field">
           {this.props.comment.auth
-            // 댓글을 단 사람이면
+            // 댓글을 단 사람이거나 그룹의 관리자이면
             ? <div>
                 <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}>DELETE</button>
                 <button className="button button_comment_edit" onClick={() => this.onClickEditComment()}>EDIT</button>
               </div>
             // 댓글을 단 사람이 아니면
+            : <div/>
+          }
 
-            : this.comment.liked
-              ? <button className="button button_comment_unlike" onClick={() => this.props.onUnlikeComment(this.comment.id)}>좋아요 취소</button>
-              : <button className="button button_comment_like" onClick={() => this.props.onLikeComment(this.comment.id)}>좋아요 &#10084; </button>
-
+          {this.props.comment.liked
+            // 댓글을 좋아요 한 사람이면
+            ? <button className="button button_comment_unlike" onClick={() => this.props.onUnlikeComment(this.props.comment.id)}>좋아요 취소</button>
+            // 아직 좋아요를 하지 않은 사람이면
+            : <button className="button button_comment_like" onClick={() => this.props.onLikeComment(this.props.comment.id)}>좋아요 &#10084; </button>
           }
           </div>
           </div>
