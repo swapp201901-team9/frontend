@@ -1268,7 +1268,7 @@ function *likeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 할 수 없습니다.")
@@ -1287,7 +1287,7 @@ function *unlikeDesign(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("좋아요를 취소할 수 없습니다.")
@@ -1371,7 +1371,7 @@ function *likeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글을 좋아요 할 수 없습니다.")
@@ -1390,7 +1390,7 @@ function *unlikeComment(data) {
             },
             contentType: 'json'
         });
-        yield put(actions.changeUrl(window.location.pathname));
+        // yield put(actions.changeUrl(window.location.pathname));
     } catch(error){
         console.log(error)
         alert("댓글 좋아요를 취소할 수 없습니다.")
@@ -1637,8 +1637,8 @@ function *postDesign(data) {
             responseType: 'json',
         });
         console.log("post design succeed!");
-        alert("게시되었습니다.")
-        yield put(actions.changeUrl('group/'+data.groupid+'/'));
+        if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
+            yield put(actions.changeUrl('group/'+data.groupid+'/'));
     }catch(error){
         console.log(error)
         alert("디자인을 게시할 수 없습니다.");

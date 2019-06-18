@@ -15,6 +15,8 @@ class Comment extends React.Component {
 
     this.state = {
       editMode: false,
+      liked: props.comment.liked,
+      likes: props.comment.likes,
     }
 
     this.deleteCommentCheck = this.deleteCommentCheck.bind(this)
@@ -102,21 +104,32 @@ class Comment extends React.Component {
           </div>
 
             <span className="title4">{this.props.comment.comment}</span>
-              {this.props.comment.liked
+              {/* {this.props.comment.liked */}
+              {this.state.liked
               // 댓글을 좋아요 한 사람이면
               ? <span>
-                  <span className="likes_text"> {this.props.comment.likes} </span>
-                  <span className="unlikes" onClick={() => this.props.onUnikeComment(this.props.comment.id)}> &#10084; </span>                
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="unlikes" 
+                    onClick={() => {
+                      this.setState({liked: false, likes: this.state.likes - 1})
+                      this.props.onUnlikeComment(this.props.comment.id)}
+                    }> &#10084; 
+                  </span>                
                 </span>
-              // <button className="likes" onClick={() => this.props.onUnlikeComment(this.props.comment.id)}></button>
+
               // 아직 좋아요를 하지 않은 사람이면
               : <span>
-                  <span className="likes_text"> {this.props.comment.likes} </span>
-                  <span className="likes" onClick={() => this.props.onLikeComment(this.props.comment.id)}> &#10084; </span>                  
+                  {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
+                  <span className="likes_text"> {this.state.likes} </span>
+                  <span className="likes" 
+                    onClick={() => {
+                      this.setState({liked: true, likes: this.state.likes + 1})
+                      this.props.onLikeComment(this.props.comment.id)
+                    }}> &#10084; 
+                  </span>                  
                 </span>
-              // <button className="likes" onClick={() => this.props.onLikeComment(this.props.comment.id)}>&#10084; </button>
               }
-              {/* <p className="likes">&#10084; {this.props.comment.likes}</p> */}
 
       </div>
 
