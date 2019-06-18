@@ -39,7 +39,6 @@ class DesignPage extends React.Component {
 				backImg: this.props.now_design.image.backImg,
 			},
 
-			element: null,
 			text_element: null,
 
 			designClickedWhat: "body",
@@ -106,7 +105,8 @@ class DesignPage extends React.Component {
 
         //helper functions
         //get image path and return base64 encoding 
-		this.getDataUrl = this.getDataUrl.bind(this);
+		//this.getDataUrl = this.getDataUrl.bind(this);
+		//=> we don't really use it now
 
 		//for resetting design 
 		this.resetDesignCheck = this.resetDesignCheck.bind(this);
@@ -251,7 +251,7 @@ class DesignPage extends React.Component {
     //     this.the_back_canvas.renderAll();
     // }
 
-
+	//when options are clicked for select (design, text only)
 	handleElementChange(e){
 		console.log("DesignPage - handleElementChange target: ", e.target)
 		let id = e.target.id;
@@ -263,11 +263,9 @@ class DesignPage extends React.Component {
 		else if(id === "text_element") {
 			this.setState({textClickedWhat: value});
 		}
-		// else if (id == "logo_element") {
-		// 	this.setState({logoClickedWhat: value});
-		// }
 	}
 
+	//when tab is switched
 	handleCanvasChange(tab) {
 		console.log("logoClickedWhat tab value "+tab);
 		this.setState({handleCanvasChange: tab});
@@ -281,6 +279,8 @@ class DesignPage extends React.Component {
 		}
 	}
 
+	/****************************************************************************/
+	/*these functions sets state for changed options*/
 	handleDesignChange(color) {
 		console.log("DesignPage - handleDesignChange")
 		let design_element = document.getElementById("design_element").value;
@@ -315,48 +315,53 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-
+	//problem detected : this is especially tricky 
+	//input mounted => this.state.logo.src is changed in base64 encoding 
 	handleLogoChange = (e) => {
 		e.preventDefault();
 		let logo_element = this.state.logoClickedWhat;
-		if (logo_element === "front_close" || logo_element==="back_close") {
+		if (logo_element.includes("close")) {
 			console.log("trying to add image but logoClickedWhat value close")
 		}
-		else {
+		else { //when new image is mounted on input 
 		const scope = this;
-		//var img = document.createElement("img");
 		var file = document.getElementById('input').files[0];
 		let reader = new FileReader();
-		reader.addEventListener("load", function() {
-			//var image= new Image();
-			//image.src = reader.result;
-			console.log(reader.result);
+		reader.addEventListener("load", function() { //store the src in state
+			console.log("input is mounted" + reader.result);
 			scope.setState({logo: ({...scope.state.logo,
 				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
-			//scope.setState({logoClickedWhat: logo_element+"_close"});
+;
 		});
 
 		if (file) {
             reader.readAsDataURL(file);
 		}
-		e.target.value = '';
+		e.target.value = ''; //then input is reset to blank
 		}
 	}
+	/****************************************************************************/
+	
+	// getDataUrl = (img) => {
+	// 	var canvas = document.createElement('canvas')
+  	// 	var ctx = canvas.getContext('2d')
 
-	getDataUrl = (img) => {
-		var canvas = document.createElement('canvas')
-  		var ctx = canvas.getContext('2d')
+  	// 	canvas.width = img.width
+  	// 	canvas.height = img.height
+  	// 	ctx.drawImage(img, 0, 0)
 
-  		canvas.width = img.width
-  		canvas.height = img.height
-  		ctx.drawImage(img, 0, 0)
+  	// 	// If the image is not png, the format
+  	// 	// must be specified here
+  	// 	return canvas.toDataURL()
+	// }
 
-  		// If the image is not png, the format
-  		// must be specified here
-  		return canvas.toDataURL()
-	}
+	/****************************************************************************/
+	/*if this.state updates, it fires componentWillUpdate*/
+	/* make fabricjs element from this.state and return fabric js element, later update the canvas*/
 
+	//this function is tricy because it does not get src from this.state,
+	//but gets color from this.state => make src => make document element => fabric js element 
     designElementToImage(color, type, z_Index) {
         // console.log("DesignPage - designElementToImage - color: ", color, "type: ", type)
 
@@ -364,24 +369,12 @@ class DesignPage extends React.Component {
 
 		const scope = this
 		imgElement.addEventListener('load', function(event){
-			var dataUrl = scope.getDataUrl(event.currentTarget)
-			var img = document.createElement("img");
-			img.src = dataUrl;
-			// var imgInstance = new fabric.Image(img, {
-			// 	width: 430,
-			// 	height: 460,
-			// 	the_type: type                                                         ,
-			// 	zIndex: z_Index
-			// });
-			//scope.setState({element: imgInstance});
 			scope.forceUpdate();
 		})
 
 		var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
-
         // console.log("src: ", src)
 		imgElement.setAttribute("src", require(src));
-		// console.log(this.state.element);
 		var imgInstance = new fabric.Image(imgElement, {
 			width: 430,
 			height: 460,
@@ -415,6 +408,7 @@ class DesignPage extends React.Component {
         return imgInstance;
     }
 
+	//from src in this.state => make document element => make fabric js element
 	logoElementToImage(logo, type) {
 		// console.log("DesignPage - logoElementToImage", logo, type)
 
@@ -422,7 +416,7 @@ class DesignPage extends React.Component {
 		const scope = this;
 		img.addEventListener('load', function(event){
 			let imgInstance;
-        	imgInstance = new fabric.Image(event.currentTarget, {
+        	imgInstance = new fabric.Image(event.currentTarget, { //event.currentTarget is the mounted src
             width: logo.width,
 			height: logo.height,
 			the_type: type,
@@ -467,6 +461,7 @@ class DesignPage extends React.Component {
 	}
         return imgInstance;
     }
+	/****************************************************************************/
 
     updateFrontCanvas = (next) => {
         console.log("DesignPage - updateFrontCanvas next: ", next)
@@ -787,7 +782,6 @@ class DesignPage extends React.Component {
 			<select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
 				<option>normal</option>
 				<option>italic</option>
-				<option>oblique</option>
 				<option>bold</option>
 			</select>
 			<br/>
@@ -795,7 +789,7 @@ class DesignPage extends React.Component {
 
 			<div className="section-field2">
 			<span id="title2">Size</span> 
-			<input type="range"  min="0" max="100" defaultValue="50" id="text_size" 
+			<input type="range"  min="10" max="100" defaultValue="50" id="text_size" 
 				name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
 			</div>
 
