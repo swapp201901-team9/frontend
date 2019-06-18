@@ -35,17 +35,34 @@ class GroupDetailPage extends React.Component {
 
         <NavBar />
         <section className="wrap clear col3">
-          <div className="aside">
-            <h2 className="h_white">GROUP DETAIL</h2>
-              <div className="content">
-                <p>타입: {this.props.now_group.group_type}</p>
-                <p>이름: {this.props.now_group.group_name}</p>
-                <p>멤버: {this.props.now_group.users.length}명</p>
-                <p>디자인: {this.props.group_designs.length}개</p>
-                <p>관리자: {this.props.now_group.master}</p>
-                {console.log(this.props.now_group)}
+          {this.props.now_group.group_type === 'UR'
+            // MY DESIGN(user group)
+            ? <div className="aside">
+
+                <h2 className="h_white">DETAIL</h2>
+                <div className="content">
+                  <center>
+                  <p>디자인 총 {this.props.group_designs.length}개</p>
+                  </center>
+                  
+                </div>
+                
               </div>
-          </div>
+
+            // 일반 그룹
+            :  <div className="aside">      
+
+                  <h2 className="h_white">GROUP DETAIL</h2>
+                    <div className="content">
+                      <p>그룹 타입: {this.props.now_group.group_type}</p>
+                      <p>그룹 이름: {this.props.now_group.group_name}</p>
+                      <p>그룹 멤버: {this.props.now_group.users.length}명</p>
+                      <p>디자인: {this.props.group_designs.length}개</p>
+                    </div>
+
+                </div>
+          }
+          
           <div className="main">
             <h2 className="h_white">DESIGN LIST</h2>
               <div className="content">
