@@ -3,15 +3,9 @@ import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker, SketchPicker} from 'react-color';
 import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
-//import ThreeScene from './ThreeScene';
-//import FabricCanvas from './FabricCanvas';
+
 import MyGroupList from '../GroupPage/MyGroupList';
-//import ImageUploader from 'react-images-upload';
-
-import { toSaveDesign, toNewDesign, changeUrl, toResetDesign, toEditDesignName } from '../../actions/index.js';
-//import { tsImportEqualsDeclaration } from '@babel/types';
-
-//import logo from './images/templates/templatelist';
+import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName } from '../../actions/index.js';
 
 class DesignPage extends React.Component {
 	constructor(props){
@@ -51,6 +45,7 @@ class DesignPage extends React.Component {
 			designClickedWhat: "body",
 			textClickedWhat: null,
 			logoClickedWhat: "front_close",
+			tabClickedWhat: "front",
 
 			displayTextColor: false,
 			displayBorderColor: false,
@@ -61,40 +56,68 @@ class DesignPage extends React.Component {
 
 		this.new_name;
 
-		this.handleElementChange = this.handleElementChange.bind(this);
-		this.handleCanvasChange = this.handleCanvasChange.bind(this);
-		this.handleDesignChange = this.handleDesignChange.bind(this);
+		//select in options for design and text 
+        this.handleElementChange = this.handleElementChange.bind(this);
+
+        //connect front back tab with logo selection front/back
+        this.handleCanvasChange = this.handleCanvasChange.bind(this);
+        
+        /*******************************/
+        /*this section sets this.state */
+        //set this.state according to the design color clicked
+        this.handleDesignChange = this.handleDesignChange.bind(this);
+        
+        //set this.state according to the text options clicked
 		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleTextColorChange = this.handleTextColorChange.bind(this);
-		this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
+        this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
+        
+        //set this.state.logo[type].src according to the input image added 
 		this.handleLogoChange = this.handleLogoChange.bind(this);
+        /*******************************/
 
+        /*******************************/
+        /*this.section create and return fabricjs element according to this.state*/
 		this.designElementToImage = this.designElementToImage.bind(this);
 		this.textElementToImage = this.textElementToImage.bind(this);
-		this.logoElementToImage = this.logoElementToImage.bind(this);
+        this.logoElementToImage = this.logoElementToImage.bind(this);
+        /*******************************/
 
         this.updateFrontCanvas = this.updateFrontCanvas.bind(this);
 		this.updateBackCanvas = this.updateBackCanvas.bind(this);
 
+        /*******************************/
+        /*this section flips out and in select style section*/
 		this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
 		this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
 		this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
+        /*******************************/
 
-		this.scaleHandler = this.scaleHandler.bind(this);
+        /*******************************/
+        /*to control elements directly in fabric canvas */
+        //change set state and render new element in fabric canvas 
 		this.moveHandler = this.moveHandler.bind(this);
 		this.selectHandler = this.selectHandler.bind(this);
+		this.scaleHandler = this.scaleHandler.bind(this);
+        /*******************************/
 
+        //to save the fabric canvas design 
 		this.onClickSave = this.onClickSave.bind(this);
 
+        //helper functions
+        //get image path and return base64 encoding 
 		this.getDataUrl = this.getDataUrl.bind(this);
 
+		//for resetting design 
 		this.resetDesignCheck = this.resetDesignCheck.bind(this);
 
+		/*******************************/
+		/*design name related*/
         this.onClickEditDesignName = this.onClickEditDesignName.bind(this);
         this.onClickCompleteEditDesignName = this.onClickCompleteEditDesignName.bind(this);
         this.editNameModeRender = this.editNameModeRender.bind(this);
         this.readNameModeRender = this.readNameModeRender.bind(this);
-
+		/*******************************/
 	}
 
 	componentWillMount() {
@@ -167,12 +190,10 @@ class DesignPage extends React.Component {
 
 	}
 
-
+// If Updated Item is not the same as the old one in this.sate
+		//         => Update the canvas with newer item (for design, text, logo)
 	componentWillUpdate (nextProps, nextState) {
 		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
-
-        // If Updated Item is not the same as the old one
-		//         => Update the canvas with newer item
 
 		//update for design element
         for(let element of this.design_element){
@@ -196,12 +217,7 @@ class DesignPage extends React.Component {
         for(let element of this.text_element){
             if(nextState.text[element] !== this.state.text[element]) {
 				console.log("text: ", nextState.text[element])
-
-				// var x =this.textElementToImage(nextState.text[element], element);
-				// 	this.setState({text : ({...this.state.text,
-				// 		[element]: ({...this.state.text[element], width:x.width, height: x.height})
-				// 	})});
-
+				
 				if(element === "frontchest" || element === "rightarm") {
 					
 				this.updateFrontCanvas(this.textElementToImage(nextState.text[element], element))
@@ -254,6 +270,8 @@ class DesignPage extends React.Component {
 
 	handleCanvasChange(tab) {
 		console.log("logoClickedWhat tab value "+tab);
+		this.setState({handleCanvasChange: tab});
+
 		let logoTab = this.state.logoClickedWhat
 		if(logoTab === "front_close" || logoTab === "back_close") {
 			this.setState({logoClickedWhat: tab + "_close"});
@@ -297,11 +315,6 @@ class DesignPage extends React.Component {
 		})});
 	}
 
-
-    // componentDidUpdate(nextProps, nextState) {
-    //     this.the_front_canvas.renderAll();
-    //     this.the_back_canvas.renderAll();
-    // }
 
 	handleLogoChange = (e) => {
 		e.preventDefault();
@@ -354,13 +367,14 @@ class DesignPage extends React.Component {
 			var dataUrl = scope.getDataUrl(event.currentTarget)
 			var img = document.createElement("img");
 			img.src = dataUrl;
-			var imgInstance = new fabric.Image(img, {
-				width: 430,
-				height: 460,
-				the_type: type                                                         ,
-				zIndex: z_Index
-			});
-			scope.setState({element: imgInstance});
+			// var imgInstance = new fabric.Image(img, {
+			// 	width: 430,
+			// 	height: 460,
+			// 	the_type: type                                                         ,
+			// 	zIndex: z_Index
+			// });
+			//scope.setState({element: imgInstance});
+			scope.forceUpdate();
 		})
 
 		var src = './images/templates/' + type + '/' + type + color.substring(1)+'.png';
@@ -805,9 +819,7 @@ class DesignPage extends React.Component {
 			</div>
 			<input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
 				name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
-			{/*<div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>*/}
-				{/*<button>pick color</button>*/}
-			{/*</div>*/}
+
 
 			{ this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
 				<SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
@@ -817,15 +829,7 @@ class DesignPage extends React.Component {
 			: <div/>
 
 
-	//   logoPicker = logoClickedWhat
-	// 		? <center>
-	// 			{/*<select id="logo_element" onChange={(e)=>this.handleElementChange(e)}>
-	// 							<option value="front">Front</option>
-	// 							<option value="back">Lower</option>
-	// 			</select>*/}
-	// 			<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-	// 		</center>
-	// 		: <div/>
+	
 		if (logoClickedWhat === "front_close" || logoClickedWhat === "back_close"){
 			logoPicker = <div/>
 		}
@@ -883,8 +887,8 @@ class DesignPage extends React.Component {
 						<div className="section-field">
 						<span className="title1"> Logo</span>
 						<button id="popbtn" onClick={this.clickedLogoPopButton}>
-						{this.state.logoClickedWhat
-							? <img src="https://user-images.githubusercontent.com/44845920/59564888-1cd1b180-9087-11e9-918b-df35d1af3b1b.png"/>
+						{(!this.state.logoClickedWhat.includes("close"))
+							?<img src="https://user-images.githubusercontent.com/44845920/59564888-1cd1b180-9087-11e9-918b-df35d1af3b1b.png"/>
 							: <img src="https://user-images.githubusercontent.com/44845920/59564889-1e9b7500-9087-11e9-9347-cea6011b6b72.png"/>}
 						</button>
 						{logoPicker}
