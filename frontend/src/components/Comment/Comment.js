@@ -49,32 +49,29 @@ class Comment extends React.Component {
   editModeRender() {
     return (
       <form onSubmit={this.onClickCompleteEditComment}>
-        <div className="form-group">
+ 
           <input
             ref={ node => {this.new_name=node;} }
-            className="form-control"
+            className="comment_name"
             defaultValue={this.props.comment.name}
             name="name"
             type="text"
           />
-        </div>
 
-        <div className="form-group">
-          <textarea
+
+          <input
             ref={ node => {this.new_message=node;} }
             // value={this.contents}
-            className="form-control"
+            className="comment_text"
             defaultValue={this.props.comment.comment}
             name="message"
             rows="5"
           />
-        </div>
 
-        <div className="form-group">
-          <button className="btn btn-primary">
-            Done
+          <button className="button button_comment">
+            Done &#10148;
           </button>
-        </div>
+
       </form>
     )
 
