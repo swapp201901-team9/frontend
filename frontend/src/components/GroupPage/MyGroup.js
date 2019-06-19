@@ -2,6 +2,7 @@ import React from 'react';
 
 const MyGroup = ({ group, onClickGroup, onClickAdminGroup, onClickWithdrawGroup }) => {
     return (
+      
         <div>
           <div className="Group-List-Field">
             <div className="Group-Name-Field">

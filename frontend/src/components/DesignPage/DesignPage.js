@@ -121,7 +121,7 @@ class DesignPage extends React.Component {
     }
 
     componentWillMount() {
-        console.log("DesignPage - componentWillMount")
+        // console.log("DesignPage - componentWillMount")
         this.design_color = {
         body: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
                "#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"],
@@ -141,7 +141,7 @@ class DesignPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log("DesignPage - componentDidMount")
+        // console.log("DesignPage - componentDidMount")
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
                                                   preserveObjectStacking: true,
@@ -197,7 +197,7 @@ class DesignPage extends React.Component {
     // If Updated Item is not the same as the old one in this.sate
     //         => Update the canvas with newer item (for design, text, logo)
     componentWillUpdate (nextProps, nextState) {
-        console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+        // console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
         //update for design element
         for(let element of this.design_element){
@@ -639,7 +639,7 @@ class DesignPage extends React.Component {
         }
 
         this.setState({image: image})
-        this.props.onSave(this.props.now_design.id, this.props.now_design.name, this.state.design, this.state.text, image, this.state.logo)
+        this.props.onSave(this.props.now_design.id, this.state.name, this.state.design, this.state.text, image, this.state.logo)
     }
 
     resetDesignCheck() {
