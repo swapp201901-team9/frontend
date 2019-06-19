@@ -33,13 +33,13 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   }
 
   h2{
-    font-size: 18px;
+    font-size: 1.125em;
   }
 
   .title1{
   font-family: 'Bree Serif', serif;
   text-align: left;
-  font-size: 17px;
+  font-size: 1.063em;
   line-height: 30px;
   }
 
@@ -668,51 +668,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: 4px 2px;
   }
 
-  /* ====================
-  [7] product modal
-  ==================== */
-  .product_details{
-  float: left;
-  width: 270px;
-  text-align: center;
-  }
-
-  .product_details img{
-  width: 250px;
-  }
-
-  /* ====================
-  [8] preview image modal
-  ==================== */
-  #previewModal .modal-body{
-  text-align: center;
-  }
-
-  #previewModal .canvas_wrapper{
-  margin-bottom: 20px;
-  }
-
-  #previewModal .canvas-container{
-  margin: 0 auto;
-  }
-
-  #back_preview{
-  margin-top: 40px;
-  margin-bottom: 40px;
-  }
-
-  #previewModal a,
-  #previewModal a:hover{
-  text-decoration: none;
-  color: #fff;
-  background-color: #EF6C00;
-  padding: 11px 16px;
-  border-radius: 3px;
-  }
-
-  #previewModal a span{
-  margin-left: 5px;
-  }
 
   /* styles for tab browsers smaller than 800px; */
   @media (max-width: 800px){
@@ -1035,6 +990,7 @@ form > .form-group{
   box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
   background-color: #FFB73B;
   color: #fff;
+  font-size: 0.625em;
   }
 
   .button_admin{
@@ -1048,4 +1004,5 @@ form > .form-group{
     box-shadow: 2px 3px 7px 0 rgba(148, 60, 208, 0.1);
     background-color: #f39800;
     color: #fff;
+    font-size: 0.625em;
   }
