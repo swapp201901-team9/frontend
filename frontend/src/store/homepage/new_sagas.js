@@ -523,7 +523,7 @@ function *watchLoginState() {
                             yield put(actions.changeUrl('/groups/'))
                         }
                         else {
-                            console.log("group designs data loading error")
+                            console.log("now group data loading error")
                             console.log(error)
                             alert("데이터 로딩에 실패했습니다.");
                         }
