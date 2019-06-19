@@ -756,10 +756,10 @@ class DesignPage extends React.Component {
     editNameModeRender() {
         return (
                 <form onSubmit={this.onClickCompleteEditDesignName}>
-
+                  <div>
                 <input
                 ref={ node => {this.new_name=node;} }
-                className="design_name"
+                className="edit_name"
                 defaultValue={this.state.name}
                 name="name"
                 type="text"
@@ -768,14 +768,14 @@ class DesignPage extends React.Component {
                 <button className="button button_comment">
                 Done &#10148;
                 </button>
-
+                </div>
                 </form>
                 )
     }
 
     readNameModeRender() {
         return (
-                <div className="Comment-Field">
+
 
                 <div className="Comment-List-Field">
                 <div className="Group-Name-Field">
@@ -787,7 +787,7 @@ class DesignPage extends React.Component {
                 </div>
                 </div>
 
-                </div>
+
 
                 )
     }
