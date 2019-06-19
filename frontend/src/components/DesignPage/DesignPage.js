@@ -561,9 +561,24 @@ class DesignPage extends React.Component {
 
     }
     clickedTextPopButton = () => {
-        this.state.textClickedWhat
-        ? this.setState({textClickedWhat: null})
-        : this.setState({textClickedWhat: "frontchest"});
+        // this.state.textClickedWhat
+        // ? 
+        // this.setState({textClickedWhat: null})
+        // : this.setState({textClickedWhat: "frontchest"}), ;
+        if (this.state.textClickedWhat) { //text flip opened
+            this.setState({textClickedWhat: null});
+        }
+        else { //text flip 원래 shut
+            if (this.state.tabClickedWhat == "front") {
+                this.setState({textClickedWhat: "frontchest"})
+            }
+            else{
+                this.setState({textClickedWhat: "upperback"})
+            }
+            window.alert("캔버스 안에서 수정하고 싶은 텍스트를 클릭해도 됩니다.")
+
+        }
+
     }
 
     clickedLogoPopButton = () => {
@@ -608,7 +623,7 @@ class DesignPage extends React.Component {
                                    })});
         }
         else {
-            window.alert("캔버스 안에서 text 사이즈를 조정할 수 없습니다. 좌측의 font size를 이용해주세요.")
+            window.alert("캔버스 안에서 text 사이즈를 조정할 수 없습니다.\n 좌측의 font size를 이용해주세요.")
         }
     }
 
@@ -896,7 +911,7 @@ class DesignPage extends React.Component {
             logoPicker = <center>
             <input type = "file" id = "input" onChange = {this.handleLogoChange} />
               <button className="button button_60"
-              onClick={this.clickedDeleteButton}>Delete</button>
+              onClick={this.clickedDeleteButton}>Delete Loaded Logo</button>
             </center>;
         }
         else {
