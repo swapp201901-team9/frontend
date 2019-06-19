@@ -766,7 +766,7 @@ class DesignPage extends React.Component {
 
         <div className = "section-field">
         <span id="title2">Font</span>
-        <select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+        <select id="text_font" name="fontFamily" value={this.state.text[this.state.textClickedWhat].fontFamily} onChange={(e)=>this.handleTextChange(e)}>
         <option>arial</option>
         <option>tahoma</option>
         <option>Alfa Slab One</option>
@@ -778,7 +778,7 @@ class DesignPage extends React.Component {
 
         <div className="section-field">
         <span id="title2">Style</span>
-        <select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+        <select id="text_style" name="fontStyle" value={this.state.text[this.state.textClickedWhat].fontStyle} onChange={(e)=>this.handleTextChange(e)}>
         <option>normal</option>
         <option>italic</option>
         <option>bold</option>
@@ -788,7 +788,7 @@ class DesignPage extends React.Component {
 
         <div className="section-field2">
         <span id="title2">Size</span>
-        <input type="range"  min="10" max="100" defaultValue="50" id="text_size"
+        <input type="range"  min="10" max="100" value={this.state.text[this.state.textClickedWhat].fontSize} id="text_size"
         name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
         </div>
 
@@ -798,7 +798,7 @@ class DesignPage extends React.Component {
         <button className="button button_60">pick color</button>
         </div>
         { this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-            <SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+            <SketchPicker color={ this.state.text[this.state.textClickedWhat].fill } onChange={this.handleTextColorChange} />
             </div> : null }
         </div>
 
@@ -810,12 +810,12 @@ class DesignPage extends React.Component {
         <div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
         <button className="button button_60">pick Color</button><br/>
         </div>
-        <input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
+        <input type="range"  min="0" max="10" value={this.state.text[this.state.textClickedWhat].strokeWidth} id="stroke_width"
         name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
 
 
         { this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-            <SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
+            <SketchPicker color={ this.state.text[this.state.textClickedWhat].stroke } onChange={this.handleStrokeColorChange} />
             </div> : null }
         </div>
         </center>
