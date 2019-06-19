@@ -297,6 +297,7 @@ class DesignPage extends React.Component {
 		this.setState({text : ({...this.state.text,
 			[text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
 		})});
+		
 	}
 
 	handleTextColorChange(color) {
@@ -333,8 +334,8 @@ class DesignPage extends React.Component {
 			console.log("input is mounted" + reader.result);
 			var img = new Image();
 			//const scope = this;
-			var width = 0;
-			var height = 0;
+			// var width = 0;
+			// var height = 0;
 			img.onload = function(){
 				console.log("img.onload");
 				scope.setState({logo: ({...scope.state.logo,
@@ -406,6 +407,7 @@ class DesignPage extends React.Component {
     }
 
     textElementToImage(text, type) {
+		this.forceUpdate();
 		let imgInstance = new fabric.IText(text.textvalue, {
 			fontFamily: text.fontFamily,
 			fill: text.fill,
@@ -521,31 +523,12 @@ class DesignPage extends React.Component {
 			? this.setState({textClickedWhat: null})
 			: this.setState({textClickedWhat: "frontchest"});
 	}
-	/******************* problem detected *************/
+
 	clickedLogoPopButton = () => {
-		// this.state.logoClickedWhat
-		// 	? this.setState({logoClickedWhat: null})
-		// 	: this.setState({logoClickedWhat: "front"});
-		var temp = this.state.logoClickedWhat;
-
-		console.log("clickedLogoPopButton: logoClickedWhat "+ temp);
-
-		if (temp === "front_close"){
-			// console.log("->front");
-			this.setState({logoClickedWhat: "front"});
-		}
-		else if (temp === "back_close") {
-			// console.log("->back");
-			this.setState({logoClickedWhat: "back"});
-		}
-		else if (temp === "front") {
-			// console.log("->front_close");
-			this.setState({logoClickedWhat: "front_close"});
-		}
-		else if (temp === "back") {
-			// console.log("->back_close");
-			this.setState({logoClickedWhat: "back_close"})
-		}
+		
+		this.state.logoClickedWhat.includes("close")
+			?this.setState({logoClickedWhat: this.state.logoClickedWhat.split('_')[0]})
+			:this.setState({logoClickedWhat: this.state.logoClickedWhat+"_close"})
 		
 	}
 
