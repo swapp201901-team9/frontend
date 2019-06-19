@@ -21,7 +21,7 @@ Please reference our github wiki page for more information about the project.
 
 ## Demo
 
-http://ec2-13-125-245-176.ap-northeast-2.compute.amazonaws.com:3000/
+http://ec2-13-125-208-124.ap-northeast-2.compute.amazonaws.com:3000/
 
 ## Getting Started
 
