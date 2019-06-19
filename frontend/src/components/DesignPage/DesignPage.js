@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker, SketchPicker} from 'react-color';
 import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
-
+import FontFaceObserver from 'fontfaceobserver';
 import MyGroupList from '../GroupPage/MyGroupList';
 import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName } from '../../actions/index.js';
 
@@ -21,36 +21,36 @@ class DesignPage extends React.Component {
             button: this.props.now_design.design.button
             },
 
-        text: {
-        frontchest: this.props.now_design.text.frontchest,
-        rightarm: this.props.now_design.text.rightarm,
-        upperback: this.props.now_design.text.upperback,
-        middleback: this.props.now_design.text.middleback,
-        lowerback: this.props.now_design.text.lowerback,
-        },
+            text: {
+            frontchest: this.props.now_design.text.frontchest,
+            rightarm: this.props.now_design.text.rightarm,
+            upperback: this.props.now_design.text.upperback,
+            middleback: this.props.now_design.text.middleback,
+            lowerback: this.props.now_design.text.lowerback,
+            },
 
             logo : {
             front: this.props.now_design.logo.front,
             back: this.props.now_design.logo.back,
             },
 
-        image: {
-        frontImg: this.props.now_design.image.frontImg,
-        backImg: this.props.now_design.image.backImg,
-        },
+            image: {
+            frontImg: this.props.now_design.image.frontImg,
+            backImg: this.props.now_design.image.backImg,
+            },
 
-        text_element: null,
+            text_element: null,
 
-        designClickedWhat: "body",
-        textClickedWhat: null,
-        logoClickedWhat: "front_close",
-        tabClickedWhat: "front",
+            designClickedWhat: "body",
+            textClickedWhat: null,
+            logoClickedWhat: "front_close",
+            tabClickedWhat: "front",
 
-        displayTextColor: false,
-        displayBorderColor: false,
+            displayTextColor: false,
+            displayBorderColor: false,
 
-        editNameMode: false,
-        name: this.props.now_design.name,
+            editNameMode: false,
+            name: this.props.now_design.name,
         };
 
         this.new_name;
@@ -68,6 +68,7 @@ class DesignPage extends React.Component {
 
         //set this.state according to the text options clicked
         this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleFontChange = this.handleFontChange.bind(this);
         this.handleTextColorChange = this.handleTextColorChange.bind(this);
         this.handleStrokeColorChange = this.handleStrokeColorChange.bind(this);
 
@@ -90,6 +91,9 @@ class DesignPage extends React.Component {
         this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
         this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
         this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
+
+        //delete logo on canvas
+        this.clickedDeleteButton = this.clickedDeleteButton.bind(this);
         /*******************************/
 
         /*******************************/
@@ -122,6 +126,7 @@ class DesignPage extends React.Component {
 
     componentWillMount() {
         console.log("DesignPage - componentWillMount")
+        console.log("I am here!!!!!!!!");
         this.design_color = {
         body: ["#f29c9f", "#fff45c", "#80c269", "#00b7ee", "#aa89bd", "#910000", "#f39800",
                "#097c25", "#0075a9", "#601986", "#580b0b", "#cfcfcf", "#626262", "#001c58", "#232323"],
@@ -138,10 +143,23 @@ class DesignPage extends React.Component {
         this.design_element = ["body", "sleeve", "stripe", "banding", "button"]
         this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
         this.logo_element = ["front", "back"]
+        this.font_element = ["Alfa Slab One", "Teko", "Damion"]
+
+
     }
 
     componentDidMount() {
         console.log("DesignPage - componentDidMount")
+        Promise.all(
+
+            this.font_element.map(font => new FontFaceObserver(font).load())
+
+        ).then(function(){
+            console.log("all the fonts are loaded")
+        }).catch(function(e) {
+            console.log(e)
+            alert('font loading failed ');
+        });
 
         this.the_front_canvas = new fabric.Canvas('front-canvas', {
                                                   preserveObjectStacking: true,
@@ -272,7 +290,7 @@ class DesignPage extends React.Component {
     //when tab is switched
     handleCanvasChange(tab) {
         console.log("logoClickedWhat tab value "+tab);
-        this.setState({handleCanvasChange: tab});
+        this.setState({tabClickedWhat: tab});
 
         let logoTab = this.state.logoClickedWhat
         if(logoTab === "front_close" || logoTab === "back_close") {
@@ -293,13 +311,33 @@ class DesignPage extends React.Component {
     }
 
     handleTextChange(e) {
-        let text_element = document.getElementById("text_element").value;
-        console.log("DesignPage - handleTextChange e.target: ", e.target, " text element: ", text_element)
-
+        let location = document.getElementById("text_element").value;
+        console.log("DesignPage - handleTextChange e.target.name: ", e.target.name, "e.target.value"+e.target.value)
+        //e.target.name
         this.setState({text : ({...this.state.text,
-                               [text_element]: ({...this.state.text[text_element], [e.target.name]:e.target.value})
+                               [location]: ({...this.state.text[location], [e.target.name]:e.target.value})
                                })});
 
+    }
+
+    handleFontChange(e) {
+        // console.log("handleFontChange");
+        // var location = document.getElementById("text_element").value;
+        // var font = e.target.value
+        // console.log(e.target.name + " e.target.name");
+        // console.log(e.target.value + " e.target.value");
+        // var myfont = new FontFaceObserver("Damion")
+        // myfont.load()
+        // .then(function() {
+        //     // when font is loaded, use it.
+        //     this.setState({text : ({...this.state.text,
+        //         [location]: ({...this.state.text[location], [e.target.name]:e.target.value})
+        //         })});
+
+        // }).catch(function(e) {
+        //     console.log(e)
+        //     alert('font loading failed ' + font);
+        // });
     }
 
     handleTextColorChange(color) {
@@ -523,9 +561,24 @@ class DesignPage extends React.Component {
 
     }
     clickedTextPopButton = () => {
-        this.state.textClickedWhat
-        ? this.setState({textClickedWhat: null})
-        : this.setState({textClickedWhat: "frontchest"});
+        // this.state.textClickedWhat
+        // ?
+        // this.setState({textClickedWhat: null})
+        // : this.setState({textClickedWhat: "frontchest"}), ;
+        if (this.state.textClickedWhat) { //text flip opened
+            this.setState({textClickedWhat: null});
+        }
+        else { //text flip 원래 shut
+            if (this.state.tabClickedWhat == "front") {
+                this.setState({textClickedWhat: "frontchest"})
+            }
+            else{
+                this.setState({textClickedWhat: "upperback"})
+            }
+            window.alert("캔버스 안에서 수정하고 싶은 텍스트를 클릭해도 됩니다.")
+
+        }
+
     }
 
     clickedLogoPopButton = () => {
@@ -543,16 +596,17 @@ class DesignPage extends React.Component {
 
         console.log("scaling: ", scalingObject)
         // console.log("width: ", width, " height: ", height);
-
-        if (this.text_element.includes(scalingObject.the_type)) {
-
-            this.setState({text : ({...this.state.text,
-                                   [scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
-                                                              width: width,
-                                                              height: height})
-                                   })});
-        }
-        else if (this.logo_element.includes(scalingObject.the_type)) {
+        console.log("out")
+        // if (this.text_element.includes(scalingObject.the_type)) {
+        //     console.log("text handler scale ")
+        //     // this.setState({text : ({...this.state.text,
+        //     //                        [scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
+        //     //                                                   width: width,
+        //     //                                                   height: height})
+        //     //                        })});
+        //     window.alert("캔버스 안에서 text 사이즈를 조정할 수 없습니다. 좌측의 font size를 이용해주세요.")
+        // }
+        if (this.logo_element.includes(scalingObject.the_type)) {
             console.log("scale handler logo width height")
             //var old_width = this.state.logo[scalingObject.the_type].width
             //var old_height = this.state.logo[scalingObject.the_type].height
@@ -567,6 +621,9 @@ class DesignPage extends React.Component {
                                                               //scaleX: scaleX, scaleY: scaleY
                                                               })
                                    })});
+        }
+        else {
+            window.alert("캔버스 안에서 text 사이즈를 조정할 수 없습니다.\n 좌측의 font size를 이용해주세요.")
         }
     }
 
@@ -701,7 +758,31 @@ class DesignPage extends React.Component {
 
                 )
     }
-    clickedDeleteButton
+    clickedDeleteButton = () => {
+        var temp = this.state.tabClickedWhat; //remove the front canvas logo
+        if (temp == "front") {
+            var front_canvas_objects = this.the_front_canvas.getObjects();
+            console.log("front_canvas_objects");
+            console.log(front_canvas_objects);
+            for (var obj of front_canvas_objects) {
+                if (obj.the_type == "front") {
+                    this.the_front_canvas.remove(obj);
+                }
+            }
+            //find the logo element and remove
+            this.the_front_canvas.renderAll();
+        }
+        else {//remove the back canvas logo
+            var back_canvas_objects = this.the_back_canvas.getObjects();
+            //find the logo element and remove
+            for (var obj of back_canvas_objects) {
+                if (obj.the_type == "back") {
+                    this.the_back_canvas.remove(obj);
+                }
+            }
+            this.the_back_canvas.renderAll();
+        }
+    }
 
     render() {
         // console.log("DesignPage - render state: ", this.state)
@@ -765,8 +846,10 @@ class DesignPage extends React.Component {
         name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
         <div className = "section-field">
+
         <span className="title2">Font</span>
-        <select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
+        <select id="text_font" name="fontFamily" value={this.state.text[this.state.textClickedWhat].fontFamily} onChange={(e)=>this.handleTextChange(e)}>
+
         <option>arial</option>
         <option>tahoma</option>
         <option>Alfa Slab One</option>
@@ -777,8 +860,10 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field">
+
         <span className="title2">Style</span>
-        <select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
+        <select id="text_style" name="fontStyle" value={this.state.text[this.state.textClickedWhat].fontStyle} onChange={(e)=>this.handleTextChange(e)}>
+
         <option>normal</option>
         <option>italic</option>
         <option>bold</option>
@@ -787,8 +872,10 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field2">
+
         <span className="title2">Size</span>
-        <input type="range"  min="10" max="100" defaultValue="50" id="text_size"
+        <input type="range"  min="10" max="100" value={this.state.text[this.state.textClickedWhat].fontSize} id="text_size"
+
         name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
         </div>
 
@@ -798,7 +885,7 @@ class DesignPage extends React.Component {
         <button className="button button_60">pick color</button>
         </div>
         { this.state.displayTextColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayTextColor: false})}}/>
-            <SketchPicker color={ this.state.text[document.getElementById("text_element").value].fill } onChange={this.handleTextColorChange} />
+            <SketchPicker color={ this.state.text[this.state.textClickedWhat].fill } onChange={this.handleTextColorChange} />
             </div> : null }
         </div>
 
@@ -810,12 +897,12 @@ class DesignPage extends React.Component {
         <div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
         <button className="button button_60">pick Color</button><br/>
         </div>
-        <input type="range"  min="0" max="10" defaultValue="2" id="stroke_width"
+        <input type="range"  min="0" max="10" value={this.state.text[this.state.textClickedWhat].strokeWidth} id="stroke_width"
         name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
 
 
         { this.state.displayBorderColor ? <div style={popover}> <div style={cover} onClick={()=>{this.setState({displayBorderColor: false})}}/>
-            <SketchPicker color={ this.state.text[document.getElementById("text_element").value].stroke } onChange={this.handleStrokeColorChange} />
+            <SketchPicker color={ this.state.text[this.state.textClickedWhat].stroke } onChange={this.handleStrokeColorChange} />
             </div> : null }
         </div>
         </center>
@@ -829,12 +916,8 @@ class DesignPage extends React.Component {
         else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
             logoPicker = <center>
             <input type = "file" id = "input" onChange = {this.handleLogoChange} />
-            {/*this.state.logoClickedWhat.includes("front")?
               <button className="button button_60"
-              onClick={() => {this.setState({logo : {front: {src: x}}})}}>Delete</button>
-              :<button className="button button_60"
-              onClick={() => {this.setState({logo : {back: {src: x}}})}}>Delete</button>*/
-            }
+              onClick={this.clickedDeleteButton}>Delete Loaded Logo</button>
             </center>;
         }
         else {
