@@ -53,19 +53,18 @@ class DesignForm extends React.Component {
     editNameModeRender() {
         return (
           <form onSubmit={this.onClickCompleteEditDesignName}>
-
+            <div className="Design-Title-Field">
               <input
                 ref={ node => {this.new_name=node;} }
-                className="design_name"
+                className="edit_name"
                 defaultValue={this.state.name}
                 name="name"
                 type="text"
               />
-
               <button className="button button_comment">
                 Done &#10148;
               </button>
-
+              </div>
           </form>
         )
     }
@@ -103,11 +102,11 @@ class DesignForm extends React.Component {
 
                             <div>
                             <div className="DesignList-Button-Field">
-                            <button className="button button_comment_edit" type="button" onClick={() => this.props.onToEditDesign(this.props.design.id)}>
-                                   EDIT
+                            <button className="button button_design_edit_delete" type="button" onClick={() => this.props.onToEditDesign(this.props.design.id)}>
+                                   MODIFY
                                    </button>
-                                   {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>
-                                   DELETE123123
+                                   {this.props.design.auth && <button className="button button_design_edit_delete" onClick={() => this.deleteDesignCheck()}>
+                                   DELETE
                                     </button>}
                                    </div>
                                 {console.log("design: ", this.props.design)}
@@ -150,7 +149,7 @@ class DesignForm extends React.Component {
                         : this.readNameModeRender()
                     }
                     <div className="DesignList-Button-Field">
-                        {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>DELETE</button>}
+                        {this.props.design.auth && <button className="button button_design_edit_delete" onClick={() => this.deleteDesignCheck()}>DELETE</button>}
                     </div>
                     <div>
                         {console.log("design: ", this.props.design)}
@@ -169,15 +168,21 @@ class DesignForm extends React.Component {
                                 onClick={() => {
                                     this.setState({liked: false, likes: this.state.likes - 1})
                                     this.props.onUnlikeDesign(this.props.design.id)}
-                                }>좋아요 취소</button>
+                                }> 좋아요 취소</button>
                             : <button className="button button_like"
                                 onClick={() => {
                                     this.setState({liked: true, likes: this.state.likes + 1})
                                     this.props.onLikeDesign(this.props.design.id)}
-                                }>좋아요</button>
+                                }> 좋아요 </button>
                             }
                         </div>
                     </div>
+
+
+
+
+
+
 
                     {/* design의 주인일 때 - 삭제 가능 */}
 

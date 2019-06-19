@@ -56,7 +56,7 @@ class GroupDetailPage extends React.Component {
                             <button className="button button_newdesign" type="button" onClick={() => this.props.onNew()}>새 과잠 디자인하기 &#10148;</button>
                           </div>
                         : <div>
-                            <div className="Comment-Write-Field">
+
                               <select id="post_design" ref={node=>{this.post_design=node;}}>
                                   <option>디자인을 선택하세요</option>
                                   {this.props.my_designs.map(design => {
@@ -65,8 +65,8 @@ class GroupDetailPage extends React.Component {
                                   })}
                               </select>
 
-                              <div className="Comment-Button-Field">
-                                <button class="post_btn" type="button"
+
+                                <button type="button"
                                     onClick={() => {
                                         console.log("post_design: ", this.post_design)
                                         if(this.post_design.value === undefined || this.post_design.value == "디자인을 선택하세요") {
@@ -79,8 +79,8 @@ class GroupDetailPage extends React.Component {
                                     POST
                                 </button>
                               </div>
-                            </div>
-                          </div>
+                        
+
                       }
 
                     </div>

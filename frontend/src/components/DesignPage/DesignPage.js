@@ -726,7 +726,7 @@ class DesignPage extends React.Component {
                 {
                     label: '아니오',
                     onClick: () => {return}
-                    
+
                 }
             ]
         });
@@ -949,7 +949,7 @@ class DesignPage extends React.Component {
         else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
             logoPicker = <center>
             <input type = "file" id = "input" onChange = {this.handleLogoChange} />
-              <button className="button button_60"
+              <button className="button button_white"
               onClick={this.clickedDeleteButton}>Delete Loaded Logo</button>
              </center>;
         }

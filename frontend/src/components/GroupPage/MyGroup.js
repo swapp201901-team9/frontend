@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyGroup = ({ group, onClickGroup, onClickAdminGroup, onClickWithdrawGroup }) => {
     return (
-      
+
         <div>
           <div className="Group-List-Field">
             <div className="Group-Name-Field" onClick={onClickGroup}>
@@ -15,7 +15,7 @@ const MyGroup = ({ group, onClickGroup, onClickAdminGroup, onClickWithdrawGroup 
                 <button className="button button_small" onClick={onClickWithdrawGroup}>탈퇴</button>
                 {group.admin && (group.group_type !== "UR") &&
                   (
-                    <button className="button button_admin" onClick={onClickAdminGroup}>관리자</button>
+                    <button className="button button_admin" onClick={onClickAdminGroup}>관리</button>
                   )
                 }
                   </div>
