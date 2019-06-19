@@ -223,7 +223,7 @@ function *watchLoginState() {
          */
         else {
             let now_design_data;
-            console.log("hash: ", window.location.hash)
+//             console.log("hash: ", window.location.hash)
 
             try{
                 now_design_data = yield call(xhr.get, fixed_url+'', {
