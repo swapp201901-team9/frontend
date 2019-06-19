@@ -1597,16 +1597,6 @@ function *newDesign(data) {
                 Accept: 'application/json'
             },
             responseType: 'json',
-            body: JSON.stringify({
-                "id": data.designid,
-                "design": {
-                    "body": data.design["body"],
-                    "sleeve": data.design["sleeve"],
-                    "banding": data.design["banding"],
-                    "stripe": data.design["stripe"],
-                    "button": data.design["button"],
-                },
-            })
         });
         console.log("new design succeed!");
         yield put(actions.changeUrl('/main/'));

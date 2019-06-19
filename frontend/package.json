@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "fabric": "^2.7.0",
     "fabric-webpack": "^1.6.0-rc.1",
     "fabricjs": "^1.0.0",
     "jest": "^19.0.2",
@@ -15,6 +16,7 @@
     "react-dom": "^15.5.4",
     "react-fabric": "^0.4.1",
     "react-favicon": "0.0.8",
+    "react-images-upload": "^1.2.6",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -35,7 +37,6 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-15": "^1.4.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "fabric": "^2.7.0",
     "jest": "^19.0.2",
     "react-image-resizer": "^1.3.0",
     "react-scripts": "^0.9.5",
