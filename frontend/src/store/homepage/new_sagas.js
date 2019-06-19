@@ -1608,7 +1608,7 @@ function *newDesign(data) {
 }
 
 function *saveDesign(data) {
-    console.log("saveDesign designid: ", data.designid, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
+    console.log("saveDesign designid: ", data.designid, " designname: ", data.designname, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
     let profile_data;
 
@@ -1638,6 +1638,7 @@ function *saveDesign(data) {
             responseType:'json',
             body: JSON.stringify({
                 "id": data.designid,
+                "name": data.designname,
                 "design": {
                     "body": data.design["body"],
                     "sleeve": data.design["sleeve"],

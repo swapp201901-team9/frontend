@@ -306,11 +306,12 @@ export const toNewDesign = () => {
     }
 }
 
-export const toSaveDesign = (designid, design, text, image, logo) => {
-    console.log("saveDesign action", designid, design, text, image, logo)
+export const toSaveDesign = (designid, designname, design, text, image, logo) => {
+    console.log("saveDesign action", designid, designname, design, text, image, logo)
     return {
         type: SAVE_DESIGN,
         designid: designid, 
+        designname: designname,
         design: design,
         text: text,
         image: image,
