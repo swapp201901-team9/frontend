@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker, SketchPicker} from 'react-color';
 import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
+import FontFaceObserver from 'fontfaceobserver';
 import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
