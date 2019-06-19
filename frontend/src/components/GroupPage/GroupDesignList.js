@@ -4,16 +4,16 @@ import { toDeleteGroupDesign } from '../../actions';
 
 class GroupDesignList extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
-        this.deleteDesignCheck = this.deleteDesignCheck.bind(this)
+        this.deleteDesignCheck = this.deleteDesignCheck.bind(this);
     }
 
-    deleteDesignCheck = (designid) => {
-        if(confirm("정말 삭제하시겠습니까?") == true)
-            return this.props.onDeleteDesign(this.props.now_group.id, designid)
-        else
-            return false;
+    deleteDesignCheck() {
+		if(confirm("정말 삭제하시겠습니까?") == true)
+			return this.props.onDeleteDesign(this.props.now_group.id, this.props.design.id)
+		else
+			return false;
     }
 
     render() {
@@ -22,8 +22,9 @@ class GroupDesignList extends React.Component {
                 {this.props.group_designs.map(design =>
                     <ul key={design.id}>
                     <div className="DesignList-Button-Field">
-                      <button button className="button_edit" onClick={() => this.deleteDesignCheck(design.id)}>DELETE DESIGN</button>
-                      </div>
+                       <span>{design.name}</span>
+                        <button button className="button button_comment_delete" onClick={() => this.deleteDesignCheck(design.id)}>DELETE</button>
+                    </div>
                         <div>
                             <img src={design.front_image_url} />
                             <img src={design.back_image_url} />
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-	onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid)),
+    onDeleteDesign: (groupid, designid) => dispatch(toDeleteGroupDesign(groupid, designid)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupDesignList);
