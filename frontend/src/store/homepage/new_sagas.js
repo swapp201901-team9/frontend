@@ -1,4 +1,7 @@
 import { put, take, call, fork, select, spawn } from 'redux-saga/effects'
+import {confirmAlert} from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 import * as actions from './../../actions/index'
 import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP, LIKE_DESIGN, CHANGE_GROUP_INFO, DELETE_GROUP_USER, DELETE_GRUOP_DESIGN, SAVE_DESIGN, POST_DESIGN, WITHDRAW_GROUP, UNLIKE_DESIGN, DELETE_GROUP, GIVE_ADMIN, NEW_DESIGN, TO_EDIT_DESIGN, UNLIKE_COMMENT, LIKE_COMMENT, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, RESET_DESIGN, EDIT_DESIGN_NAME } from './../../actions/types'
 
@@ -1610,10 +1613,10 @@ function *newDesign(data) {
 function *saveDesign(data) {
     console.log("saveDesign designid: ", data.designid, " designname: ", data.designname, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
-    let profile_data;
+    let profile_user_data;
 
     try{
-        profile_data = yield call(xhr.get, fixed_url+'profile/',{
+        profile_user_data = yield call(xhr.get, fixed_url+'profile/',{
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic '+localStorage['auth'],
@@ -1659,8 +1662,7 @@ function *saveDesign(data) {
         });
         console.log("save design succeed ");
         if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
-            yield put(actions.changeUrl('/group/'+profile_data.body['user_group']+'/'))
-            
+            yield put(actions.changeUrl('group/'+profile_user_data.body['user_group']+'/'))
     }catch(error){
         console.log(error)
         alert("저장에 실패했습니다.");
@@ -1681,8 +1683,15 @@ function *postDesign(data) {
             responseType: 'json',
         });
         console.log("post design succeed!");
-        if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
+        if(window.location.pathname === '/group/'+data.groupid+'/') {
+            alert("게시되었습니다.")
+            yield put(actions.changeUrl(window.location.pathname))
+        }
+        else {
+            if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
             yield put(actions.changeUrl('group/'+data.groupid+'/'));
+        }
+
     }catch(error){
         console.log(error)
         alert("디자인을 게시할 수 없습니다.");

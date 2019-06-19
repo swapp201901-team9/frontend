@@ -3,9 +3,11 @@ import {connect} from 'react-redux';
 import {fabric} from 'fabric';
 import {CirclePicker, SketchPicker} from 'react-color';
 import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
+import {confirmAlert} from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import MyGroupList from '../GroupPage/MyGroupList';
-import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName } from '../../actions/index.js';
+import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName, changeUrl } from '../../actions/index.js';
 
 class DesignPage extends React.Component {
     constructor(props){
@@ -102,6 +104,7 @@ class DesignPage extends React.Component {
 
         //to save the fabric canvas design
         this.onClickSave = this.onClickSave.bind(this);
+        this.onClickLoggedOutSave = this.onClickLoggedOutSave.bind(this);
 
         //helper functions
         //get image path and return base64 encoding
@@ -642,6 +645,29 @@ class DesignPage extends React.Component {
         this.props.onSave(this.props.now_design.id, this.state.name, this.state.design, this.state.text, image, this.state.logo)
     }
 
+    onClickLoggedOutSave = () => {
+        console.log("onClickLoggedOutSave")
+        confirmAlert({
+            title: "디자인 저장을 위해 로그인 또는 가입 하시겠습니까?",
+            // message: '로그인 또는 가입 하시겠습니까?',
+            buttons: [
+                {
+                    label: '로그인',
+                    onClick: () => this.props.onClickLogin()
+                },
+                {
+                    label: '가입',
+                    onClick: () => this.props.onClickJoin()
+                },
+                {
+                    label: '아니오',
+                    onClick: () => {return}
+                    
+                }
+            ]
+        });
+    }
+
     resetDesignCheck() {
         if(confirm("정말 리셋하시겠습니까?") == true)
             return this.props.onReset()
@@ -952,6 +978,7 @@ class DesignPage extends React.Component {
                 // 로그인되어 있지 않은 경우 - reset(디자인 리셋)
                 : <div>
                 <button className="button rst_btn" type="button" onClick={() => this.resetDesignCheck()}>RESET</button>
+                <button className="button save_btn" type="button" onClick={this.onClickLoggedOutSave}>SAVE</button>
                 </div>
                 }
                 </div>
@@ -973,6 +1000,7 @@ class DesignPage extends React.Component {
 
 const mapStateToProps = (state) => ({
     isLoggedIn: state.authorization,
+    profile_user: state.profile_user,
     now_design: state.now_design,
     my_groups: state.my_groups,
 })
@@ -981,8 +1009,10 @@ const mapDispatchToProps = (dispatch) => ({
     onReset: () => dispatch(toResetDesign()),
     onNew: () => dispatch(toNewDesign()),
     onSave: (designid, designname, design, text, image, logo) => dispatch(toSaveDesign(designid, designname, design, text, image, logo)),
-    onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name))
+    onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name)),
     //onView: () => dispatch(changeUrl('/group/1'))
+    onClickLogin: () => dispatch(changeUrl('/log_in/')),
+    onClickJoin: () => dispatch(changeUrl('/sign_up/')),
 })
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)

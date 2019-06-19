@@ -18,9 +18,6 @@ const ChangeGroupInfo = ({ group, onClickChangeSubmit }) => {
 
     return (
         <div>
-            {/* <script src='./confirm.html' */}
-            <a class="checked" href="#">Click here</a>
-
             <form onSubmit={e => {
                 e.preventDefault()
                 onSubmit()
