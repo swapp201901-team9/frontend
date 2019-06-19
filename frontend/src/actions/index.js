@@ -48,7 +48,7 @@ export const SIGN_OUT = 'SIGN_OUT'
 export const changeUrl = (pathname) => {
     return {
         type: 'CHANGE_URL',
-        path: pathname
+        path: pathname,
     }
 }
 

@@ -14,6 +14,7 @@
     "lodash": "^4.17.11",
     "react": "^15.5.4",
     "react-color": "^2.17.3",
+    "react-confirm-alert": "^2.4.1",
     "react-dom": "^15.5.4",
     "react-fabric": "^0.4.1",
     "react-favicon": "0.0.8",
