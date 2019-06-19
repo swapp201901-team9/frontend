@@ -159,12 +159,14 @@ class DesignPage extends React.Component {
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
 			'mouse:up': this.selectHandler,
+			
 		})
 
 		this.the_back_canvas.on({
 			'object:scaled': this.scaleHandler,
 			'object:moved': this.moveHandler,
 			'mouse:up': this.selectHandler,
+			
 		})
 
 		this.the_front_canvas.add(this.designElementToImage(this.state.design.body, "front_body", 0))
@@ -195,7 +197,7 @@ class DesignPage extends React.Component {
 // If Updated Item is not the same as the old one in this.sate
 		//         => Update the canvas with newer item (for design, text, logo)
 	componentWillUpdate (nextProps, nextState) {
-		// console.log("DesignPage - componentWillUpdate nextState: ", nextState)
+		console.log("DesignPage - componentWillUpdate nextState: ", nextState)
 
 		//update for design element
         for(let element of this.design_element){
@@ -420,6 +422,8 @@ class DesignPage extends React.Component {
 			zIndex: 10,
 			left: text.left,
 			top: text.top,
+			width: text.width,
+			height : text.height,
 		})
 
 		// console.log("text imgInstance: ", imgInstance)
@@ -449,8 +453,8 @@ class DesignPage extends React.Component {
             zIndex: 10,
             left: logo.left,
 			top: logo.top,
-			scaleX: logo.scaleX,
-			scaleY: logo.scaleY,
+			//scaleX: logo.scaleX,
+			//scaleY: logo.scaleY,
 			originX: "center",
 			originY: "center",
 		});
@@ -537,33 +541,30 @@ class DesignPage extends React.Component {
 		var width = scalingObject.getScaledWidth()*10;
 		var height = scalingObject.getScaledHeight()*10;
 
-		// console.log("scaling: ", scalingObject)
+		console.log("scaling: ", scalingObject)
 		// console.log("width: ", width, " height: ", height);
 
-		if (scalingObject.the_type === "frontchest" ||
-    		scalingObject.the_type === "rightarm" ||
-    		scalingObject.the_type === "upperback" ||
-    		scalingObject.the_type === "middleback" ||
-    		scalingObject.the_type === "lowerback") {
+		if (this.text_element.includes(scalingObject.the_type)) {
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
         	width: width,
             height: height})
     	})});
 		}
-		else if (scalingObject.the_type === "front" ||
-         	scalingObject.the_type === "back") {
+		else if (this.logo_element.includes(scalingObject.the_type)) {
 			console.log("scale handler logo width height")
-			var old_width = this.state.logo[scalingObject.the_type].width
-			var old_height = this.state.logo[scalingObject.the_type].height
-			console.log("old_width "+ old_width+ "old_height "+old_height)
-			var scaleX= width/old_width
-			var scaleY= height/old_height
-			console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
+			//var old_width = this.state.logo[scalingObject.the_type].width
+			//var old_height = this.state.logo[scalingObject.the_type].height
+			//console.log("old_width "+ old_width+ "old_height "+old_height)
+			//var scaleX= width/old_width
+			//var scaleY= height/old_height
+			//console.log("scaleX " + scaleX+ "scaleY "+ scaleY);
     		this.setState({logo : ({...this.state.logo,
         	[scalingObject.the_type]: ({...this.state.logo[scalingObject.the_type],
         	width:width,
-            height: height, scaleX: scaleX, scaleY: scaleY})
+			height: height, 
+			//scaleX: scaleX, scaleY: scaleY
+			})
     	})});
 		}
 	}
@@ -596,23 +597,34 @@ class DesignPage extends React.Component {
 		}
 	}
 
+
 	selectHandler = (e) =>{
 		let selectedObject = e.target;
 		console.log("select: ", selectedObject)
-	
-		if (this.text_element.includes(selectedObject.the_type)) {
+		//if selected object is text
+		var type = selectedObject.the_type;
+		if (this.text_element.includes(type)) {
+			this.setState({ 
+				textClickedWhat: selectedObject.the_type, });	
+			if (selectedObject.text != this.state.text[type].textvalue){
+				console.log("text is changed via canvas")
+				this.setState({text: ({...this.state.text,
+					[type]: 
+					({...this.state.text[type], 
+						textvalue:selectedObject.text}) }) });
+				this.forceUpdate();
+			}
+			console.log(selectedObject.text);
+			
+		}
+		else if (this.logo_element.includes(type)) {
 			this.setState({
-				textClickedWhat: selectedObject.the_type,
+				logoClickedWhat: type,
 			});	
 		}
-		else if (this.logo_element.includes(selectedObject.the_type)) {
+		else if (this.design_element.includes(type.split('_')[1])) {
 			this.setState({
-				logoClickedWhat: selectedObject.the_type,
-			});	
-		}
-		else if (this.design_element.includes(selectedObject.the_type.split('_')[1])) {
-			this.setState({
-				designClickedWhat: selectedObject.the_type.split('_')[1]
+				designClickedWhat: type.split('_')[1]
 			});
 		}
 
