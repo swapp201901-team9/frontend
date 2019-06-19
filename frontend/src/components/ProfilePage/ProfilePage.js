@@ -17,14 +17,14 @@ class ProfilePage extends React.Component {
             <section className="wrap clear">
 
                 <div className="main">
-                <h2 className="h_white">MY PAGE</h2>
+                <h2 className="h_white">CHANGE PROFILE</h2>
                   <div className="Text-Field">
                     <label>
                     ID
                     </label>
                     <div className="bordered_textarea">{this.props.profile_user}</div>
                   </div>
-                
+
                     <ChangePWPage/>
                     <EscapePage/>
                     </div>

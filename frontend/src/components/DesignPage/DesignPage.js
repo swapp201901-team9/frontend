@@ -761,11 +761,11 @@ class DesignPage extends React.Component {
             </select>
         }
 
-        <textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
+        <input className="input_text" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
         name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
         <div className = "section-field">
-        <span id="title2">Font</span>
+        <span className="title2">Font</span>
         <select id="text_font" name="fontFamily" onChange={(e)=>this.handleTextChange(e)}>
         <option>arial</option>
         <option>tahoma</option>
@@ -777,7 +777,7 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field">
-        <span id="title2">Style</span>
+        <span className="title2">Style</span>
         <select id="text_style" name="fontStyle" onChange={(e)=>this.handleTextChange(e)}>
         <option>normal</option>
         <option>italic</option>
@@ -787,13 +787,13 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field2">
-        <span id="title2">Size</span>
+        <span className="title2">Size</span>
         <input type="range"  min="10" max="100" defaultValue="50" id="text_size"
         name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
         </div>
 
         <div className="section-field">
-        <span id="title2">Color</span>
+        <span className="title2">Color</span>
         <div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
         <button className="button button_60">pick color</button>
         </div>
@@ -806,7 +806,7 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field">
-        <span id="title2">Border</span>
+        <span className="title2">Border</span>
         <div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
         <button className="button button_60">pick Color</button><br/>
         </div>
