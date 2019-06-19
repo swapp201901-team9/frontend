@@ -7,7 +7,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName } from '../../actions/index.js';
 
-import x from './image'
+// import x from './image'
 class DesignPage extends React.Component {
     constructor(props){
         console.log("DesignPage - constructor")
@@ -640,7 +640,7 @@ class DesignPage extends React.Component {
         }
         
         this.setState({image: image})
-        this.props.onSave(this.props.now_design.id, this.state.design, this.state.text, image, this.state.logo)
+        this.props.onSave(this.props.now_design.id, this.props.now_design.name, this.state.design, this.state.text, image, this.state.logo)
     }
     
     resetDesignCheck() {
@@ -909,10 +909,11 @@ class DesignPage extends React.Component {
                   Fabric Canvas Section
                   =========================================-->*/}
                 {/*<ThreeScene/>*/}
-                {this.props.isLoggedIn?
-				this.state.editNameMode
-                ? this.editNameModeRender()
-                : this.readNameModeRender()
+                {this.props.isLoggedIn
+                ? this.state.editNameMode
+                    ? this.editNameModeRender()
+                    : this.readNameModeRender()
+                : <div/>
                 }
                 <div id="plain-react">
                 <Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}>
@@ -968,17 +969,17 @@ class DesignPage extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-                                    isLoggedIn: state.authorization,
-                                    now_design: state.now_design,
-                                    my_groups: state.my_groups,
-                                    })
+    isLoggedIn: state.authorization,
+    now_design: state.now_design,
+    my_groups: state.my_groups,
+})
 
 const mapDispatchToProps = (dispatch) => ({
-                                          onReset: () => dispatch(toResetDesign()),
-                                          onNew: () => dispatch(toNewDesign()),
-                                          onSave: (designid, design, text, image, logo) => dispatch(toSaveDesign(designid, design, text, image, logo)),
-                                          onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name))
-                                          //onView: () => dispatch(changeUrl('/group/1'))
-                                          })
+    onReset: () => dispatch(toResetDesign()),
+    onNew: () => dispatch(toNewDesign()),
+    onSave: (designid, designname, design, text, image, logo) => dispatch(toSaveDesign(designid, designname, design, text, image, logo)),
+    onEditDesignName: (designid, name) => dispatch(toEditDesignName(designid, name))
+    //onView: () => dispatch(changeUrl('/group/1'))
+})
 
 export default connect (mapStateToProps, mapDispatchToProps)(DesignPage)
