@@ -158,12 +158,13 @@ describe ('ACTIONS', ()=> {
         const expectedAction = {
             type: 'SAVE_DESIGN',
             designid: 1, 
+            designname: "new_design_1",
             design: design,
             text: text,
             image: image,
             logo: logo,
         }
-        expect(actions.toSaveDesign(1, design, text, image, logo)).toEqual(expectedAction)
+        expect(actions.toSaveDesign(1, "new_design_1", design, text, image, logo)).toEqual(expectedAction)
     })
 
     it('should post design', () => {
