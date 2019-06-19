@@ -93,8 +93,8 @@ class DesignPage extends React.Component {
         this.clickedDesignPopButton = this.clickedDesignPopButton.bind(this);
         this.clickedTextPopButton = this.clickedTextPopButton.bind(this);
         this.clickedLogoPopButton = this.clickedLogoPopButton.bind(this);
-        
-        //delete logo on canvas 
+
+        //delete logo on canvas
         this.clickedDeleteButton = this.clickedDeleteButton.bind(this);
         /*******************************/
 
@@ -147,16 +147,16 @@ class DesignPage extends React.Component {
         this.text_element = ["frontchest", "rightarm", "upperback", "middleback", "lowerback"]
         this.logo_element = ["front", "back"]
         this.font_element = ["Alfa Slab One", "Teko", "Damion"]
-        
+
 
     }
 
     componentDidMount() {
         console.log("DesignPage - componentDidMount")
         Promise.all(
-            
+
             this.font_element.map(font => new FontFaceObserver(font).load())
-            
+
         ).then(function(){
             console.log("all the fonts are loaded")
         }).catch(function(e) {
@@ -316,7 +316,7 @@ class DesignPage extends React.Component {
     handleTextChange(e) {
         let location = document.getElementById("text_element").value;
         console.log("DesignPage - handleTextChange e.target.name: ", e.target.name, "e.target.value"+e.target.value)
-        //e.target.name 
+        //e.target.name
         this.setState({text : ({...this.state.text,
                                [location]: ({...this.state.text[location], [e.target.name]:e.target.value})
                                })});
@@ -329,14 +329,14 @@ class DesignPage extends React.Component {
         // var font = e.target.value
         // console.log(e.target.name + " e.target.name");
         // console.log(e.target.value + " e.target.value");
-        // var myfont = new FontFaceObserver("Damion") 
+        // var myfont = new FontFaceObserver("Damion")
         // myfont.load()
         // .then(function() {
         //     // when font is loaded, use it.
         //     this.setState({text : ({...this.state.text,
         //         [location]: ({...this.state.text[location], [e.target.name]:e.target.value})
         //         })});
-            
+
         // }).catch(function(e) {
         //     console.log(e)
         //     alert('font loading failed ' + font);
@@ -565,7 +565,7 @@ class DesignPage extends React.Component {
     }
     clickedTextPopButton = () => {
         // this.state.textClickedWhat
-        // ? 
+        // ?
         // this.setState({textClickedWhat: null})
         // : this.setState({textClickedWhat: "frontchest"}), ;
         if (this.state.textClickedWhat) { //text flip opened
@@ -801,12 +801,12 @@ class DesignPage extends React.Component {
                     this.the_front_canvas.remove(obj);
                 }
             }
-            //find the logo element and remove 
+            //find the logo element and remove
             this.the_front_canvas.renderAll();
         }
         else {//remove the back canvas logo
             var back_canvas_objects = this.the_back_canvas.getObjects();
-            //find the logo element and remove 
+            //find the logo element and remove
             for (var obj of back_canvas_objects) {
                 if (obj.the_type == "back") {
                     this.the_back_canvas.remove(obj);
@@ -874,12 +874,14 @@ class DesignPage extends React.Component {
             </select>
         }
 
-        <textarea id="text_area" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
+        <input className="input_text" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
         name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
 
         <div className = "section-field">
-        <span id="title2">Font</span>
+
+        <span className="title2">Font</span>
         <select id="text_font" name="fontFamily" value={this.state.text[this.state.textClickedWhat].fontFamily} onChange={(e)=>this.handleTextChange(e)}>
+
         <option>arial</option>
         <option>tahoma</option>
         <option>Alfa Slab One</option>
@@ -890,8 +892,10 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field">
-        <span id="title2">Style</span>
+
+        <span className="title2">Style</span>
         <select id="text_style" name="fontStyle" value={this.state.text[this.state.textClickedWhat].fontStyle} onChange={(e)=>this.handleTextChange(e)}>
+
         <option>normal</option>
         <option>italic</option>
         <option>bold</option>
@@ -900,13 +904,15 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field2">
-        <span id="title2">Size</span>
+
+        <span className="title2">Size</span>
         <input type="range"  min="10" max="100" value={this.state.text[this.state.textClickedWhat].fontSize} id="text_size"
+
         name="fontSize" onChange={(e)=>this.handleTextChange(e)}/>
         </div>
 
         <div className="section-field">
-        <span id="title2">Color</span>
+        <span className="title2">Color</span>
         <div onClick={()=>{this.setState({displayTextColor: !this.state.displayTextColor})}}>
         <button className="button button_60">pick color</button>
         </div>
@@ -919,7 +925,7 @@ class DesignPage extends React.Component {
         </div>
 
         <div className="section-field">
-        <span id="title2">Border</span>
+        <span className="title2">Border</span>
         <div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
         <button className="button button_60">pick Color</button><br/>
         </div>

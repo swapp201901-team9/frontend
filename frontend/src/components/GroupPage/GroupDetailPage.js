@@ -36,13 +36,13 @@ class GroupDetailPage extends React.Component {
                   <center>
                   <p>디자인 총 {this.props.group_designs.length}개</p>
                   </center>
-                  
+
                 </div>
-                
+
               </div>
 
             // 일반 그룹
-            :  <div className="aside">      
+            :  <div className="aside">
 
                   <h2 className="h_white">GROUP DETAIL</h2>
                     <div className="content">
@@ -50,45 +50,48 @@ class GroupDetailPage extends React.Component {
                       <p>그룹 이름: {this.props.now_group.group_name}</p>
                       <p>그룹 멤버: {this.props.now_group.users.length}명</p>
                       <p>디자인: {this.props.group_designs.length}개</p>
+                      <p>그룹에 내 디자인 올리기 </p>
+                      {this.props.now_group.group_type === 'UR'
+                        ? <div>
+                            <button className="button button_newdesign" type="button" onClick={() => this.props.onNew()}>새 과잠 디자인하기 &#10148;</button>
+                          </div>
+                        : <div>
+                            <div className="Comment-Write-Field">
+                              <select id="post_design" ref={node=>{this.post_design=node;}}>
+                                  <option>디자인을 선택하세요</option>
+                                  {this.props.my_designs.map(design => {
+                                      console.log("option design: ", design)
+                                      return <option key={design.id} value={design.id}>{design.name}</option>
+                                  })}
+                              </select>
+
+                              <div className="Comment-Button-Field">
+                                <button class="post_btn" type="button"
+                                    onClick={() => {
+                                        console.log("post_design: ", this.post_design)
+                                        if(this.post_design.value === undefined || this.post_design.value == "디자인을 선택하세요") {
+                                            alert("디자인을 선택하세요")
+                                        }
+                                        else {
+                                          this.props.onPostDesign(this.post_design.value, this.props.now_group.id)
+                                        }
+                                    }}>
+                                    POST
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                      }
+
                     </div>
 
                 </div>
           }
-          
+
           <div className="main">
             <h2 className="h_white">DESIGN LIST</h2>
               <div className="content">
-              {this.props.now_group.group_type === 'UR'
-                ? <div>
-                    <button className="button button_newdesign" type="button" onClick={() => this.props.onNew()}>새 과잠 디자인하기 &#10148;</button>
-                  </div>
-                : <div>
-                    <div className="Comment-Write-Field">
-                      <select id="post_design" ref={node=>{this.post_design=node;}}>
-                          <option>디자인을 선택하세요</option>
-                          {this.props.my_designs.map(design => {
-                              console.log("option design: ", design)
-                              return <option key={design.id} value={design.id}>{design.name}</option>
-                          })}
-                      </select>
-            
-                      <div className="Comment-Button-Field">
-                        <button class="post_btn" type="button"
-                            onClick={() => {
-                                console.log("post_design: ", this.post_design)
-                                if(this.post_design.value === undefined || this.post_design.value == "디자인을 선택하세요") {
-                                    alert("디자인을 선택하세요")
-                                }
-                                else {
-                                  this.props.onPostDesign(this.post_design.value, this.props.now_group.id)
-                                }
-                            }}>
-                            POST
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-              }
+
 
               <ul>
                 {this.props.group_designs.map(design =>
@@ -108,7 +111,7 @@ class GroupDetailPage extends React.Component {
               </div>
           </div>
         </section>
-       
+
       </div>
     )
   }

@@ -54,8 +54,11 @@ class Comment extends React.Component {
 
   editModeRender() {
     return (
+      <div className="Comment-Edit-Field">
+
+      <span className="title5">댓글 편집</span>
       <form onSubmit={this.onClickCompleteEditComment}>
- 
+
           <input
             ref={ node => {this.new_name=node;} }
             className="comment_name"
@@ -79,6 +82,7 @@ class Comment extends React.Component {
           </button>
 
       </form>
+      </div>
     )
 
 
@@ -114,24 +118,24 @@ class Comment extends React.Component {
               ? <span>
                   {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
                   <span className="likes_text"> {this.state.likes} </span>
-                  <span className="unlikes" 
+                  <span className="unlikes"
                     onClick={() => {
                       this.setState({liked: false, likes: this.state.likes - 1})
                       this.props.onUnlikeComment(this.props.comment.id)}
-                    }> &#10084; 
-                  </span>                
+                    }> &#10084;
+                  </span>
                 </span>
 
               // 아직 좋아요를 하지 않은 사람이면
               : <span>
                   {/* <span className="likes_text"> {this.props.comment.likes} </span> */}
                   <span className="likes_text"> {this.state.likes} </span>
-                  <span className="likes" 
+                  <span className="likes"
                     onClick={() => {
                       this.setState({liked: true, likes: this.state.likes + 1})
                       this.props.onLikeComment(this.props.comment.id)
-                    }}> &#10084; 
-                  </span>                  
+                    }}> &#10084;
+                  </span>
                 </span>
               }
 

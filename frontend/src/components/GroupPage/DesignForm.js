@@ -41,7 +41,7 @@ class DesignForm extends React.Component {
           editNameMode: true
         })
     }
-    
+
     onClickCompleteEditDesignName() {
         this.setState({
             editNameMode: false,
@@ -53,7 +53,7 @@ class DesignForm extends React.Component {
     editNameModeRender() {
         return (
           <form onSubmit={this.onClickCompleteEditDesignName}>
-     
+
               <input
                 ref={ node => {this.new_name=node;} }
                 className="design_name"
@@ -61,67 +61,61 @@ class DesignForm extends React.Component {
                 name="name"
                 type="text"
               />
-    
+
               <button className="button button_comment">
                 Done &#10148;
               </button>
-    
+
           </form>
         )
     }
-    
+
     readNameModeRender() {
         return (
-          <div className="Comment-Field">
-    
-            <div className="Comment-List-Field">
-                <div className="Group-Name-Field">
-                  <span className="title5">{this.state.name} </span>
-                </div>
-    
-                <div className="Comment-Button-Field">
-                    {this.props.design.auth
-                        // 디자인의 주인이거나 그룹의 관리자면
-                        ? <div>
-                            <button className="button button_comment_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
-                        </div>
-                        // 디자인 주인이 아니면
-                        : <div/>
-                    }
-                </div>
+            <div>
+              <div className="Design-Title-Field">
+                  <span className="design_name"> {this.state.name} </span>
+
+                      {this.props.design.auth
+                          // 디자인의 주인이거나 그룹의 관리자면
+                          ?<button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                          // 디자인 주인이 아니면
+                          : <div/>
+                      }
+                  </div>
             </div>
-    
-          </div>
-    
+
+
         )
     }
 
     render() {
         return(
             <div>
-                
 
-            {(this.props.now_group.group_type === "UR")
-                /* grouptype이 user 그룹일때 - edit 및 post 가능 */
-                ? <div>
-                    {this.state.editNameMode
-                        ? this.editNameModeRender()
-                        : this.readNameModeRender()
-                    }
-                    <div className="DesignList-Button-Field">
-                        <button className="button button_comment_edit" type="button" onClick={() => this.props.onToEditDesign(this.props.design.id)}>
-                            EDIT
-                        </button>
-                        {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>DELETE</button>}
-                    </div>
+                    {(this.props.now_group.group_type === "UR")
+                        /* grouptype이 user 그룹일때 - edit 및 post 가능 */
+                        ? <div>
+                            {this.state.editNameMode
+                                ? this.editNameModeRender()
+                                : this.readNameModeRender()
+                            }
 
-                    <div>
-                        {console.log("design: ", this.props.design)}
-                        <img src={this.props.design.front_image_url} />
-                        <img src={this.props.design.back_image_url} />
-                    </div>
+                            <div>
+                            <div className="DesignList-Button-Field">
+                            <button className="button button_comment_edit" type="button" onClick={() => this.props.onToEditDesign(this.props.design.id)}>
+                                   EDIT
+                                   </button>
+                                   {this.props.design.auth && <button className="button button_comment_edit" onClick={() => this.deleteDesignCheck()}>
+                                   DELETE123123
+                                    </button>}
+                                   </div>
+                                {console.log("design: ", this.props.design)}
+                                <p></p>
+                                <img src={this.props.design.front_image_url} />
+                                <img src={this.props.design.back_image_url} />
 
-                    <div className="Comment-Write-Field">
+                            </div>
                         <select id="post_group" ref={node=>{this.post_group=node;}}>
                                 <option>그룹을 선택하세요</option>
                                 {this.props.my_groups.filter(group => {
@@ -146,7 +140,7 @@ class DesignForm extends React.Component {
                                     POST
                                 </button>
                             </div>
-                    </div>
+
                  </div>
 
                 /* grouptype이 user 그룹이 아닐 때 - like 및 댓글 가능 */
@@ -171,12 +165,12 @@ class DesignForm extends React.Component {
 
                         <div className="Group-Button-Field">
                             {this.state.liked
-                            ? <button className="button button_unlike" 
+                            ? <button className="button button_unlike"
                                 onClick={() => {
                                     this.setState({liked: false, likes: this.state.likes - 1})
                                     this.props.onUnlikeDesign(this.props.design.id)}
                                 }>좋아요 취소</button>
-                            : <button className="button button_like" 
+                            : <button className="button button_like"
                                 onClick={() => {
                                     this.setState({liked: true, likes: this.state.likes + 1})
                                     this.props.onLikeDesign(this.props.design.id)}
@@ -190,14 +184,15 @@ class DesignForm extends React.Component {
                     <CommentList designid={this.props.design.id} comments={this.props.design.comments}/>
                     <div className="Comment-Write-Field">
 
-                        <span className="title5">댓글 쓰기..</span>
+                        <span className="title5">댓글 쓰기</span>
                         {/* {console.log("DesignForm design.comments: ", this.props.design.comments)} */}
                         <CommentForm designid={this.props.design.id}/>
                     </div>
 
                 </div>
             }
-
+            <br/>
+            <br/>
         </div>
 
         )
