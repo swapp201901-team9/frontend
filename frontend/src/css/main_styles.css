@@ -765,12 +765,12 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .likes{
   float: right;
-  color:#D86B62;
+  color:#bbb;
   cursor: pointer;
 }
 .unlikes{
   float: right;
-  color:#bbb;
+  color:#D86B62;
   cursor: pointer;
 }
 .likes_text{
