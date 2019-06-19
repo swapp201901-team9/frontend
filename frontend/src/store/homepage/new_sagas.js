@@ -517,9 +517,16 @@ function *watchLoginState() {
                         });
                         console.log("GET now_group_data: ", now_group_data.body)
                     } catch(error){
-                        console.log("now group data loading error")
-                        console.log(error)
-                        alert("데이터 로딩에 실패했습니다.");
+                        if(error.statusCode === 403) {
+                            console.log("you are not permitted");
+                            alert("가입하지 않은 그룹입니다")
+                            yield put(actions.changeUrl('/groups/'))
+                        }
+                        else {
+                            console.log("now group data loading error")
+                            console.log(error)
+                            alert("데이터 로딩에 실패했습니다.");
+                        }
                     }
 
                     // 내 그룹 정보
