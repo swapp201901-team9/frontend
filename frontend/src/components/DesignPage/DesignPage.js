@@ -337,14 +337,19 @@ class DesignPage extends React.Component {
 			var height = 0;
 			img.onload = function(){
 				console.log("img.onload");
+				scope.setState({logo: ({...scope.state.logo,
+					[logo_element]: ({...scope.state.logo[logo_element], 
+						src :img.src,
+					width: img.width, height : img.height })
+				}) });
 				
 			}
 			//console.log("scope.width");
 			//console.log(scope.width);
 			img.src = reader.result;
-			scope.setState({logo: ({...scope.state.logo,
-				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
-			}) });
+			// scope.setState({logo: ({...scope.state.logo,
+			// 	[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
+			// }) });
 ;
 		});
 
@@ -428,23 +433,7 @@ class DesignPage extends React.Component {
 		let img = new Image();
 		const scope = this;
 		img.addEventListener('load', function(event){
-			let imgInstance;
-        	imgInstance = new fabric.Image(event.currentTarget, {
-            width: logo.width,
-			height: logo.height,
-			the_type: type,
-            zIndex: 10,
-            left: logo.left,
-            top: logo.top,
-		});
-		// imgInstance.set({
-        //     scaleY: 0.05,
-        //     scaleX: 0.05,
-        //     originX: "center",
-        //     originY: "center"
-        // });
-
-		scope.setState({element: imgInstance});
+			scope.forceUpdate();
 		})
 		img.src = logo.src;
 
@@ -463,7 +452,7 @@ class DesignPage extends React.Component {
 			originX: "center",
 			originY: "center",
 		});
-		if(imgInstance.width >= 500) {
+		if (imgInstance.width >= 500) {
 		// console.log("logo element to image will be scaled")
         imgInstance.set({
             scaleY: 0.1,
