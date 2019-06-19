@@ -189,7 +189,9 @@ class DesignPage extends React.Component {
 		this.setState({logoClickedWhat: "front_close"});
 
 	}
-
+	// shouldComponentUpdate(nextProps, nextState) {
+		
+	// }
 // If Updated Item is not the same as the old one in this.sate
 		//         => Update the canvas with newer item (for design, text, logo)
 	componentWillUpdate (nextProps, nextState) {
@@ -329,6 +331,17 @@ class DesignPage extends React.Component {
 		let reader = new FileReader();
 		reader.addEventListener("load", function() { //store the src in state
 			console.log("input is mounted" + reader.result);
+			var img = new Image();
+			//const scope = this;
+			var width = 0;
+			var height = 0;
+			img.onload = function(){
+				console.log("img.onload");
+				
+			}
+			//console.log("scope.width");
+			//console.log(scope.width);
+			img.src = reader.result;
 			scope.setState({logo: ({...scope.state.logo,
 				[logo_element]: ({...scope.state.logo[logo_element], src :reader.result})
 			}) });
@@ -416,7 +429,7 @@ class DesignPage extends React.Component {
 		const scope = this;
 		img.addEventListener('load', function(event){
 			let imgInstance;
-        	imgInstance = new fabric.Image(event.currentTarget, { //event.currentTarget is the mounted src
+        	imgInstance = new fabric.Image(event.currentTarget, {
             width: logo.width,
 			height: logo.height,
 			the_type: type,
