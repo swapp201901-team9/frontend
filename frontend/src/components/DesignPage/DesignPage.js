@@ -984,7 +984,7 @@ class DesignPage extends React.Component {
                 // 로그인되어 있지 않은 경우 - reset(디자인 리셋)
                 : <div>
                 <button className="button rst_btn" type="button" onClick={() => this.resetDesignCheck()}>RESET</button>
-                <button className="button save_btn" type="button" onClick={this.onClickLoggedOutSave}>SAVE</button>
+//                 <button className="button save_btn" type="button" onClick={this.onClickLoggedOutSave}>SAVE</button>
                 </div>
                 }
                 </div>
