@@ -53,7 +53,7 @@ class DesignForm extends React.Component {
     editNameModeRender() {
         return (
           <form onSubmit={this.onClickCompleteEditDesignName}>
-            <div className="">
+            <div className="Design-Title-Field">
               <input
                 ref={ node => {this.new_name=node;} }
                 className="edit_name"
@@ -61,11 +61,10 @@ class DesignForm extends React.Component {
                 name="name"
                 type="text"
               />
-
               <button className="button button_comment">
                 Done &#10148;
               </button>
-
+              </div>
           </form>
         )
     }

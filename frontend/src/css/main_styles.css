@@ -799,6 +799,9 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 .edit_name{
   height:30px;
+  width: 70%;
+  font-size: 0.688em;
+  display:inline-block;
 }
 
 .likes{
