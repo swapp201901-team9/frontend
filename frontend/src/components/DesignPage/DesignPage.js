@@ -290,7 +290,7 @@ class DesignPage extends React.Component {
     //when tab is switched
     handleCanvasChange(tab) {
         console.log("logoClickedWhat tab value "+tab);
-        this.setState({handleCanvasChange: tab});
+        this.setState({tabClickedWhat: tab});
 
         let logoTab = this.state.logoClickedWhat
         if(logoTab === "front_close" || logoTab === "back_close") {
@@ -747,13 +747,25 @@ class DesignPage extends React.Component {
         var temp = this.state.tabClickedWhat; //remove the front canvas logo
         if (temp == "front") {
             var front_canvas_objects = this.the_front_canvas.getObjects();
+            console.log("front_canvas_objects");
+            console.log(front_canvas_objects);
+            for (var obj of front_canvas_objects) {
+                if (obj.the_type == "front") {
+                    this.the_front_canvas.remove(obj);
+                }
+            }
             //find the logo element and remove 
             this.the_front_canvas.renderAll();
         }
         else {//remove the back canvas logo
             var back_canvas_objects = this.the_back_canvas.getObjects();
             //find the logo element and remove 
-            this.the__canvas.renderAll();
+            for (var obj of back_canvas_objects) {
+                if (obj.the_type == "back") {
+                    this.the_back_canvas.remove(obj);
+                }
+            }
+            this.the_back_canvas.renderAll();
         }
     }
 
