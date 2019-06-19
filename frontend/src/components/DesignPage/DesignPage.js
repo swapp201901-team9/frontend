@@ -906,10 +906,12 @@ class DesignPage extends React.Component {
 							Fabric Canvas Section
 						=========================================-->*/}
 						{/*<ThreeScene/>*/}
-						{this.state.editNameMode
+						{this.props.isLoggedIn
+						? this.state.editNameMode
 							? this.editNameModeRender()
 							: this.readNameModeRender()
-                    	}
+                    	: <div/>
+						}
 						<div id="plain-react">
 							<Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}> 
 	
