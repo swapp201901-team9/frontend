@@ -7,6 +7,7 @@ import { CREATE_GROUP, SEARCH_GROUP, JOIN_GROUP, TO_GROUP_DETAIL, TO_ADMIN_GROUP
 
 var xhr = require('xhr-promise-redux');
 
+const front_url = "http://localhost:3000";
 const fixed_url = "http://localhost:8000/";
 const auth_check_url = fixed_url+'auth/';
 
@@ -103,6 +104,7 @@ function *mainPageSaga() {
     yield spawn(watchGoToMain);
 
     yield spawn(watchResetDesign);
+    yield spawn(watchSaveDesign);
 
     // yield spawn(watchChangeBody);
     // yield spawn(watchChangeSleeve);
@@ -171,6 +173,7 @@ function *groupDetailPageSaga() {
     yield spawn(watchLikeComment);
     yield spawn(watchUnlikeComment);
 
+    yield spawn(watchWithdrawGroup);
     yield spawn(watchGoToGroupDetail);
     yield spawn(watchGoToAdminGroup);
     yield spawn(watchDeleteGroupDesign);
@@ -196,6 +199,7 @@ function *groupAdminPageSaga() {
 // <<주의>> 새로운 Page를 추가할 경우 PageSaga함수에 반드시 추가할 것
 // <<주의>> 새로운 state를 추가할 경우 try-catch문을 이용해 정보를 받아온 후 스테이트에 업데이트 해야 함
 function *watchLoginState() {
+    console.log("pathname: ", window.location.pathname)
 
     /* 
      *   url 마지막에 '/'가 없는 경우
@@ -219,6 +223,7 @@ function *watchLoginState() {
          */
         else {
             let now_design_data;
+            console.log("hash: ", window.location.hash)
 
             try{
                 now_design_data = yield call(xhr.get, fixed_url+'', {
@@ -1613,66 +1618,116 @@ function *newDesign(data) {
 function *saveDesign(data) {
     console.log("saveDesign designid: ", data.designid, " designname: ", data.designname, " design: ", data.design, " text: ", data.text, " image: ", data.image, " logo: ", data.logo)
     const backPath = '';
-    let profile_user_data;
+    let profile_user_data, design_data = null;
 
-    try{
-        profile_user_data = yield call(xhr.get, fixed_url+'profile/',{
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic '+localStorage['auth'],
-                Accept: 'application/json'
-            },
-            responseType: 'json'
-        });
-    } catch(error){
-        console.log("profile data loading error")
-        console.log(error)
-        alert("데이터 로딩에 실패했습니다.");
-    }
-
-    try{
-        yield call(xhr.send, fixed_url+backPath, {
-            method: 'PUT',
-            headers: {
-                "Authorization": "Basic "+localStorage['auth'],
-                "Content-Type": 'application/json',
-                Accept: 'application/json',
-            },
-            responseType:'json',
-            body: JSON.stringify({
-                "id": data.designid,
-                "name": data.designname,
-                "design": {
-                    "body": data.design["body"],
-                    "sleeve": data.design["sleeve"],
-                    "banding": data.design["banding"],
-                    "stripe": data.design["stripe"],
-                    "button": data.design["button"],
+    console.log("auth: ", localStorage['auth'])
+    // 로그인 되지 않은 상태에서의 저장
+    if(localStorage['auth'] === undefined) {
+        console.log("로그인 없이 저장")
+        try{
+            design_data = yield call(xhr.send, fixed_url+backPath, {
+                method: 'PUT',
+                headers: {
+                    // "Authorization": "Basic "+localStorage['auth'],
+                    "Content-Type": 'application/json',
+                    Accept: 'application/json',
                 },
-                "text": data.text,
-                "image": {
-                    "frontImg": data.image["frontImg"],
-                    "backImg": data.image["backImg"]
-                },
-                "logo": {
-                    "front": data.logo["front"],
-                    "back": data.logo["back"]
-                }
-            })
-        });
-        console.log("save design succeed ");
-        if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
-            yield put(actions.changeUrl('group/'+profile_user_data.body['user_group']+'/'))
-    }catch(error){
-        console.log(error)
-        alert("저장에 실패했습니다.");
-        return;
+                responseType:'json',
+                body: JSON.stringify({
+                    "id": data.designid,
+                    "name": data.designname,
+                    "design": {
+                        "body": data.design["body"],
+                        "sleeve": data.design["sleeve"],
+                        "banding": data.design["banding"],
+                        "stripe": data.design["stripe"],
+                        "button": data.design["button"],
+                    },
+                    "text": data.text,
+                    "image": {
+                        "frontImg": data.image["frontImg"],
+                        "backImg": data.image["backImg"]
+                    },
+                    "logo": {
+                        "front": data.logo["front"],
+                        "back": data.logo["back"]
+                    }
+                })
+            });
+            console.log("save design succeed design id: ", design_data.body.id);
+            yield put(actions.changeUrl("/log_in/", design_data.body.id))
+            // if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
+                // yield put(actions.changeUrl('group/'+profile_user_data.body['user_group']+'/'))
+        }catch(error){
+            console.log(error)
+            alert("저장에 실패했습니다.");
+            return;
+        }
     }
+    
+    // 로그인 된 상태에서의 저장
+    else {
+        try{
+            profile_user_data = yield call(xhr.get, fixed_url+'profile/',{
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic '+localStorage['auth'],
+                    Accept: 'application/json'
+                },
+                responseType: 'json'
+            });
+        } catch(error){
+            console.log("profile data loading error")
+            console.log(error)
+            alert("데이터 로딩에 실패했습니다.");
+        }
+    
+        try{
+            yield call(xhr.send, fixed_url+backPath, {
+                method: 'PUT',
+                headers: {
+                    "Authorization": "Basic "+localStorage['auth'],
+                    "Content-Type": 'application/json',
+                    Accept: 'application/json',
+                },
+                responseType:'json',
+                body: JSON.stringify({
+                    "id": data.designid,
+                    "name": data.designname,
+                    "design": {
+                        "body": data.design["body"],
+                        "sleeve": data.design["sleeve"],
+                        "banding": data.design["banding"],
+                        "stripe": data.design["stripe"],
+                        "button": data.design["button"],
+                    },
+                    "text": data.text,
+                    "image": {
+                        "frontImg": data.image["frontImg"],
+                        "backImg": data.image["backImg"]
+                    },
+                    "logo": {
+                        "front": data.logo["front"],
+                        "back": data.logo["back"]
+                    }
+                })
+            });
+            console.log("save design succeed ");
+            if(confirm("저장되었습니다.\n저장된 디자인을 확인하시겠습니까?") === true) 
+                yield put(actions.changeUrl('group/'+profile_user_data.body['user_group']+'/'))
+        }catch(error){
+            console.log(error)
+            alert("저장에 실패했습니다.");
+            return;
+        }
+    }
+    
 }
 
 function *postDesign(data) {
     console.log("postDesign designid: ", data.designid, " groupid: ", data.groupid)
     const backPath = 'groups/'+data.groupid+'/post/'+data.designid+'/';
+    // let temp;
     try{
         yield call(xhr.get, fixed_url+backPath,{
             headers:{
@@ -1691,6 +1746,28 @@ function *postDesign(data) {
             if(confirm("게시되었습니다.\n해당 그룹으로 이동하시겠습니까?") === true)
             yield put(actions.changeUrl('group/'+data.groupid+'/'));
         }
+        
+        // if(window.location.pathname === '/group/'+data.groupid+'/') {
+        //     confirmAlert({
+        //         title: "디자인 저장을 위해 로그인 또는 가입 하시겠습니까?",
+        //         // message: '로그인 또는 가입 하시겠습니까?',
+        //         buttons: [
+        //             {
+        //                 label: '로그인',
+        //                 onClick: function* click() {yield put(actions.changeUrl('/main/'))}
+        //             },
+        //             {
+        //                 label: '가입',
+        //                 onClick: () => this.props.onClickJoin()
+        //             },
+        //             {
+        //                 label: '아니오',
+        //                 onClick: () => {return}
+                        
+        //             }
+        //         ]
+        //     });
+        // }
 
     }catch(error){
         console.log(error)

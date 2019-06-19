@@ -35,6 +35,7 @@ const homepage = (state = homepageInitialState, action) => {
         }
         case 'CHANGE_URL': {
             window.location.pathname = action.path
+            window.location.hash = action.hash
             return state
         }
         case 'SET_STATE': {

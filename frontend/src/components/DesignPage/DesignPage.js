@@ -653,7 +653,13 @@ class DesignPage extends React.Component {
             buttons: [
                 {
                     label: '로그인',
-                    onClick: () => this.props.onClickLogin()
+                    onClick: () => {
+                        let image = {
+                                frontImg: this.the_front_canvas.toDataURL({format:'png'}),
+                                backImg: this.the_back_canvas.toDataURL({format: 'png'})
+                                }
+                        this.props.onSave(null, null, this.state.design, this.state.text, image, this.state.logo)
+                    }
                 },
                 {
                     label: '가입',
