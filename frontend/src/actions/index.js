@@ -45,11 +45,10 @@ export const SIGN_OUT = 'SIGN_OUT'
 
 
 // Move to another page
-export const changeUrl = (pathname, hash) => {
+export const changeUrl = (pathname) => {
     return {
         type: 'CHANGE_URL',
         path: pathname,
-        hash: hash,
     }
 }
 
