@@ -7,6 +7,7 @@ import {Tabs, TabContent, TabLink} from 'react-tabs-redux';
 import MyGroupList from '../GroupPage/MyGroupList';
 import { toSaveDesign, toNewDesign, toResetDesign, toEditDesignName } from '../../actions/index.js';
 
+import x from './image'
 class DesignPage extends React.Component {
 	constructor(props){
 		console.log("DesignPage - constructor")
@@ -244,7 +245,7 @@ class DesignPage extends React.Component {
 				}
             }
 		}
-
+		
 		this.the_front_canvas.renderAll();
         this.the_back_canvas.renderAll();
 
@@ -545,6 +546,7 @@ class DesignPage extends React.Component {
 		// console.log("width: ", width, " height: ", height);
 
 		if (this.text_element.includes(scalingObject.the_type)) {
+
     		this.setState({text : ({...this.state.text,
         	[scalingObject.the_type]: ({...this.state.text[scalingObject.the_type],
         	width: width,
@@ -699,7 +701,8 @@ class DesignPage extends React.Component {
           </div>
     
         )
-    }
+	}
+	clickedDeleteButton
 
     render() {
 		// console.log("DesignPage - render state: ", this.state)
@@ -827,7 +830,12 @@ class DesignPage extends React.Component {
 		else if (logoClickedWhat === "front" || logoClickedWhat === "back") {
 			logoPicker = <center>
 				<input type = "file" id = "input" onChange = {this.handleLogoChange} />
-				{/* <button onClick={() => {this.setState({logo : {front: {src: ""}}})}}>Delete</button> */}
+				{/*this.state.logoClickedWhat.includes("front")?
+				<button className="button button_60"
+				onClick={() => {this.setState({logo : {front: {src: x}}})}}>Delete</button>
+				:<button className="button button_60"
+				onClick={() => {this.setState({logo : {back: {src: x}}})}}>Delete</button>*/
+				}
 				</center>;
 		}
 		else {
