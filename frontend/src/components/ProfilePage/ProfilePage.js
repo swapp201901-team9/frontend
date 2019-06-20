@@ -18,6 +18,9 @@ class ProfilePage extends React.Component {
 
                 <div className="main">
                 <h2 className="h_white">CHANGE PROFILE</h2>
+
+                <div className="illust">
+                </div>
                   <div className="Text-Field">
                     <label>
                     ID

@@ -45,6 +45,7 @@ class GroupDetailPage extends React.Component {
             :  <div className="aside">
 
                   <h2 className="h_white">GROUP DETAIL</h2>
+                  <div className="content">
                     <div className="group-detail">
                       <span className="group-detail-title">타입</span>
                       <span className="group-detail-content">{this.props.now_group.group_type}</span><br/>
@@ -56,7 +57,7 @@ class GroupDetailPage extends React.Component {
                       <span className="group-detail-content">{this.props.group_designs.length}개</span>
                       <br/><br/>
 
-                      <h5 className="title2">그룹에 내 디자인 올리기 </h5><br/>
+                      <span className="title2">그룹에 내 디자인 올리기 </span><br/>
                       {this.props.now_group.group_type === 'UR'
                         ? <div>
                             <button className="button button_newdesign" type="button" onClick={() => this.props.onNew()}>새 과잠 디자인하기 &#10148;</button>
@@ -85,12 +86,12 @@ class GroupDetailPage extends React.Component {
                                     POST
                                 </button>
                               </div>
-                        
+
 
                       }
 
                     </div>
-
+                    </div>
                 </div>
           }
 
