@@ -75,13 +75,14 @@ class DesignForm extends React.Component {
               <div className="Design-Title-Field">
                   <span className="design_name"> {this.state.name} </span>
 
-                      {this.props.design.auth
-                          // 디자인의 주인이거나 그룹의 관리자면
-                          ?<button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
-                          // 디자인 주인이 아니면
-                          : <div/>
-                      }
-                  </div>
+                    {this.props.design.auth
+                        // 디자인의 주인이거나 그룹의 관리자면
+                        ?<button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                        // 디자인 주인이 아니면
+                        : <div/>
+                    }
+                    </div>
+
             </div>
 
 
@@ -196,6 +197,8 @@ class DesignForm extends React.Component {
 
                 </div>
             }
+            <br/>
+            <br/>
             <br/>
             <br/>
         </div>

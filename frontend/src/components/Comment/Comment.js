@@ -102,7 +102,7 @@ class Comment extends React.Component {
           {this.props.comment.auth
             // 댓글을 단 사람이거나 그룹의 관리자이면
             ? <div>
-                <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}> DELETE</button>
+                <button className="button button_comment_delete" onClick={() => this.deleteCommentCheck()}> DEL</button>
                 <button className="button button_comment_edit" onClick={() => this.onClickEditComment()}> EDIT </button>
               </div>
             // 댓글을 단 사람이 아니면
@@ -111,8 +111,10 @@ class Comment extends React.Component {
           </div>
           </div>
 
-            <span className="title4">{this.state.message}</span>
+            <span className="title4">{this.state.message}
+            </span>
               {/* {this.props.comment.liked */}
+
               {this.state.liked
               // 댓글을 좋아요 한 사람이면
               ? <span>
@@ -138,7 +140,7 @@ class Comment extends React.Component {
                   </span>
                 </span>
               }
-
+            
       </div>
 
     )

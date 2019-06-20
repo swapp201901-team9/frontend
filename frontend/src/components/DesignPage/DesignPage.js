@@ -755,6 +755,7 @@ class DesignPage extends React.Component {
 
     editNameModeRender() {
         return (
+          <div className="Name-Field">
                 <form onSubmit={this.onClickCompleteEditDesignName}>
                   <div>
                 <input
@@ -770,6 +771,7 @@ class DesignPage extends React.Component {
                 </button>
                 </div>
                 </form>
+                </div>
                 )
     }
 
@@ -777,15 +779,15 @@ class DesignPage extends React.Component {
         return (
 
 
-                <div className="Comment-List-Field">
+            <div className="Name-Field">
                 <div className="Group-Name-Field">
                 <span className="title5">{this.state.name} </span>
                 </div>
+                <div className="Comment-Name-Field">
+                <button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT</button>
+                </div>
+                </div>
 
-                <div className="Comment-Button-Field">
-                <button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT NAME </button>
-                </div>
-                </div>
 
 
 
@@ -1027,12 +1029,7 @@ class DesignPage extends React.Component {
 
 
 
-                {this.props.isLoggedIn
-                ? this.state.editNameMode
-                    ? this.editNameModeRender()
-                    : this.readNameModeRender()
-                : <div/>
-                }
+
 
                 <div id="plain-react">
                 <Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}>
@@ -1054,6 +1051,15 @@ class DesignPage extends React.Component {
                 </TabContent>
                 </Tabs>
                 </div>
+
+
+                {this.props.isLoggedIn
+                ? this.state.editNameMode
+                    ? this.editNameModeRender()
+                    : this.readNameModeRender()
+                : <div/>
+                }
+
 
                 {/*<!--========================================
                   NEW & SAVE Button Section

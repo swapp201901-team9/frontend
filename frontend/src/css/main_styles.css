@@ -106,6 +106,14 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   cursor: pointer;
   display:inline-block;
   }
+  .illust{
+
+    width: 300px;
+    height: 300px;
+    margin: 20px auto;
+    background: url("./illust.png") no-repeat;
+    background-size:300px;
+  }
   .navBar{
   text-align:right;
   }
@@ -626,6 +634,24 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   canvas #back-canvas{
   }
 
+  .Name-Field{
+    height: 30px;
+    margin: 14px 16px;
+    padding: 4px;
+    border-bottom: 2px solid #f7f7f7;
+  }
+
+  .Comment-Name-Field{
+  width:13%;
+  margin-left: 5px;
+  box-sizing: border-box;
+  font-size: 0.75em;
+  color: black;
+  display: inline-block;
+  float: right;
+  top:0; bottom:0;
+  }
+
   .circle-picker{
   margin-left: auto;
   margin-right: auto;
@@ -702,7 +728,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     box-sizing: border-box;
     color: black;
     margin-bottom:20px;
-    background-color: transparent;
+    background-color: #f8f8f8;
     display: inline-block;
     float: right;
     }
@@ -724,10 +750,10 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     bottom:0;
   }
   .button_name_edit{
-    width:100%;
-    margin-left:6px;
+    width:50px;
+    margin-right:6px;
     background-color: transparent;
-    color:#989898;
+    color:#dcdcdc;
     font-size: 0.75em;
     height:20px;
     display: inline-block;
@@ -773,7 +799,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   margin: 2px 0px ;
   box-sizing: border-box;
   color: black;
-  background-color: #ededed;
+  background-color: #f7f7f7;
   border-radius: 4px;
   }
   .Comment-Edit-Field{
@@ -807,9 +833,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     color: black;
   }
 
-.Edit-Name-field{
-
-}
 .edit_name{
   height:30px;
   width: 70%;
@@ -913,7 +936,7 @@ form > .form-group{
     cursor:pointer;
   }
   .button_edit{
-    width: 30%;
+    width: 20%;
     display: inline-block;
     float: right;
     cursor: pointer;
@@ -1017,6 +1040,8 @@ form > .form-group{
   .group-detail-title{
     margin-left: 8px;
     margin-right: 8px;
+    padding: 2px 6px;
+    border-radius: 2px;
     font-size: 0.75em;
     vertical-align: middle;
     background-color: #f3f3f3;

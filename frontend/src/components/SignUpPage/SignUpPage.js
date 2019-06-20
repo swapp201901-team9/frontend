@@ -25,7 +25,8 @@ class SignUpPage extends React.Component {
            <div className= "main">
            <h2 className="h_white">JOIN</h2>
              <div >
-
+               <div className="illust">
+               </div>
 
                  <form onSubmit={e => {
                      e.preventDefault()
