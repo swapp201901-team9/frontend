@@ -783,7 +783,7 @@ class DesignPage extends React.Component {
                 </div>
 
                 <div className="Comment-Button-Field">
-                <button className="button button_comment_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                <button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT NAME </button>
                 </div>
                 </div>
 

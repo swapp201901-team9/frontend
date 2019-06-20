@@ -253,7 +253,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     background: url("./selector.png") no-repeat right 12px center;
     apperance: none;
     -webkit-appearance: none;
-  
+
   }
   .select_group_detail{
     width: 70%;
@@ -263,7 +263,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   .select_32{
     height : 32px;
   }
-  
+
    #text_font{
      width: 60%;
      height: 32px;
@@ -724,7 +724,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     bottom:0;
   }
   .button_name_edit{
-    width:40px;
+    width:100%;
     margin-left:6px;
     background-color: transparent;
     color:#989898;
@@ -1013,18 +1013,18 @@ form > .form-group{
   }
 
 
-  
+
   .group-detail-title{
     margin-left: 8px;
     margin-right: 8px;
     font-size: 0.75em;
     vertical-align: middle;
-    background-color: #f3f3f3;  
+    background-color: #f3f3f3;
   }
   .group-detail-content{
     margin-left: 4px;
     font-size: 0.8em;
     vertical-align: middle;
-    
+
 
   }
