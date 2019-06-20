@@ -321,6 +321,7 @@ class DesignPage extends React.Component {
         this.setState({text : ({...this.state.text,
                                [location]: ({...this.state.text[location], [e.target.name]:e.target.value})
                                })});
+                               this.forceUpdate();
 
     }
 
@@ -877,8 +878,10 @@ class DesignPage extends React.Component {
             </select>
         }
 
-        <input className="input_text" placeholder={this.state.text[this.state.textClickedWhat].textvalue}
+        {/* <input className="input_text" 
+        placeholder={this.state.text[this.state.textClickedWhat].textvalue} 
         name="textvalue" onChange={(e)=>this.handleTextChange(e)}/>
+        {console.log("textClickedWhat: ", this.state.textClickedWhat)} */}
 
         <div className = "section-field">
 
