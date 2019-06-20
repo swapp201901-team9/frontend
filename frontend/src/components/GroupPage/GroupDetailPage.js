@@ -52,7 +52,7 @@ class GroupDetailPage extends React.Component {
                       <span className="group-detail-title">이름</span>
                       <span className="group-detail-content">{this.props.now_group.group_name}</span><br/>
                       <span className="group-detail-title">멤버</span>
-                      <span className="group-detail-content">{this.props.now_group.users.length}명&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span className="group-detail-content">{this.props.now_group.users.length}명</span><br/>
                       <span className="group-detail-title">디자인</span>
                       <span className="group-detail-content">{this.props.group_designs.length}개</span>
                       <br/><br/>
