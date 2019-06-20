@@ -755,11 +755,12 @@ class DesignPage extends React.Component {
 
     editNameModeRender() {
         return (
+          <div className="Name-Field">
                 <form onSubmit={this.onClickCompleteEditDesignName}>
-
+                  <div>
                 <input
                 ref={ node => {this.new_name=node;} }
-                className="design_name"
+                className="edit_name"
                 defaultValue={this.state.name}
                 name="name"
                 type="text"
@@ -768,26 +769,27 @@ class DesignPage extends React.Component {
                 <button className="button button_comment">
                 Done &#10148;
                 </button>
-
+                </div>
                 </form>
+                </div>
                 )
     }
 
     readNameModeRender() {
         return (
-                <div className="Comment-Field">
 
-                <div className="Comment-List-Field">
+
+            <div className="Name-Field">
                 <div className="Group-Name-Field">
                 <span className="title5">{this.state.name} </span>
                 </div>
-
-                <div className="Comment-Button-Field">
-                <button className="button button_comment_edit" onClick={() => this.onClickEditDesignName()}> EDIT </button>
+                <div className="Comment-Name-Field">
+                <button className="button button_name_edit" onClick={() => this.onClickEditDesignName()}> EDIT</button>
                 </div>
                 </div>
 
-                </div>
+
+
 
                 )
     }
@@ -1027,12 +1029,7 @@ class DesignPage extends React.Component {
 
 
 
-                {this.props.isLoggedIn
-                ? this.state.editNameMode
-                    ? this.editNameModeRender()
-                    : this.readNameModeRender()
-                : <div/>
-                }
+
 
                 <div id="plain-react">
                 <Tabs className="tabs tabs-1" onChange={(tab)=> this.handleCanvasChange(tab)}>
@@ -1054,6 +1051,15 @@ class DesignPage extends React.Component {
                 </TabContent>
                 </Tabs>
                 </div>
+
+
+                {this.props.isLoggedIn
+                ? this.state.editNameMode
+                    ? this.editNameModeRender()
+                    : this.readNameModeRender()
+                : <div/>
+                }
+
 
                 {/*<!--========================================
                   NEW & SAVE Button Section

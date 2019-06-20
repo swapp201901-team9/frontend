@@ -12,6 +12,8 @@ class LoginPage extends Component {
 
             <div className="main">
             <h2 className="h_white">LOG IN</h2>
+              <div className="illust">
+              </div>
                 <SignIn />
                 <SignUp />
             </div>
