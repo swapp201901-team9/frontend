@@ -7,6 +7,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font: inherit;
   vertical-align: baseline;
   }
+
   .app{
   margin: auto;
   padding: auto;
@@ -140,6 +141,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   padding:20px;
   }
 
+
   .Button-Field{
   box-sizing: border-box;
   color: black;
@@ -182,6 +184,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     display: inline-block;
     float: right;
     color: #fff;
+  }
+
+  .button_group_detail{
+    width: 25%;
+    margin-left: 4px;
   }
 
   #popbtn {
@@ -246,11 +253,17 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     background: url("./selector.png") no-repeat right 12px center;
     apperance: none;
     -webkit-appearance: none;
+  
+  }
+  .select_group_detail{
+    width: 70%;
+    margin-left: 4px;
   }
   select::-ms-expand {display:none;}
   .select_32{
     height : 32px;
   }
+  
    #text_font{
      width: 60%;
      height: 32px;
@@ -893,7 +906,7 @@ form > .form-group{
  }
 
   .group_type{
-    cursor:pointer;
+    /* cursor:pointer; */
     font-size: 0.750em;
   }
   .group_name{
@@ -997,4 +1010,21 @@ form > .form-group{
     background-color: transparent;
     color: #C13A3A;
     font-size: 0.750em;
+  }
+
+
+  
+  .group-detail-title{
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 0.75em;
+    vertical-align: middle;
+    background-color: #f3f3f3;  
+  }
+  .group-detail-content{
+    margin-left: 4px;
+    font-size: 0.8em;
+    vertical-align: middle;
+    
+
   }

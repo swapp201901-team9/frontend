@@ -928,7 +928,7 @@ class DesignPage extends React.Component {
         <div className="section-field">
         <span className="title2">Border</span>
         <div onClick={()=>{this.setState({displayBorderColor: !this.state.displayBorderColor})}}>
-        <button className="button button_60">pick Color</button><br/>
+        <button className="button button_60">pick color</button><br/>
         </div>
         <input type="range"  min="0" max="10" value={this.state.text[this.state.textClickedWhat].strokeWidth} id="stroke_width"
         name="strokeWidth" onChange={(e)=>this.handleTextChange(e)}/>
