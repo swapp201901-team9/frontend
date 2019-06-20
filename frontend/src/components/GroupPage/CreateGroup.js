@@ -44,6 +44,7 @@ class CreateGroup extends React.Component {
 						<input
 							type="text"
 							name="groupname"
+							placeholder="Name"
 							ref={ node => {this.groupname=node;} }
 							//value={this.groupname}
 							className="name-input"
