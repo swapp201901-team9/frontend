@@ -28,7 +28,7 @@
     "react-test-renderer": "^15.6.2",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.8",
-    "three": "^0.104.0",
+    "three": "^0.125.0",
     "xhr-promise-redux": "^1.2.1"
   },
   "devDependencies": {
